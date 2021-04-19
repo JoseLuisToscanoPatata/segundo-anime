@@ -1,3 +1,3 @@
 # Privacy Policy
 
-Edit this file to define the privacy policy for your application.
+NOOOOOOOOO OBAMAAAA TE DIJE QUE NO QUIERO IR A BRASIL

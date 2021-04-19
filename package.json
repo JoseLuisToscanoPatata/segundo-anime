@@ -25,5 +25,8 @@
         "tailwindcss": "^2.0.1",
         "vue": "^3.0.5",
         "vue-loader": "^16.1.2"
+    },
+    "dependencies": {
+        "alga-js": "0.0.1-alpha9"
     }
 }

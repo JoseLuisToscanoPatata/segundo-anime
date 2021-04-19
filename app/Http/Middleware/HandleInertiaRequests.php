@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Cookie;
+use Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -36,8 +38,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
+
+         if(Auth::user()) {
+
+            if(!isset($_COOKIE['apiToken'])) {
+                Auth::user()->tokens()->delete();
+                $token =  Auth::user()->createToken('token')->plainTextToken;
+                setcookie('apiToken',$token,time() + (86400*30),"/");
+            }
+            
+            } else {
+                
+                if(isset($_COOKIE['apiToken'])) {
+                    setcookie('apiToken','',time() - (86400*3000),"/");
+                }
+
+            }
+
         return array_merge(parent::share($request), [
-            //
+            'clave' => isset($_COOKIE['apiToken'])? $_COOKIE['apiToken'] : "",
+           
         ]);
     }
 }

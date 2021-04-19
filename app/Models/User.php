@@ -59,4 +59,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function animes() {
+        return $this->belongsToMany(Anime::class,'watches')->withPivot('watchStatus','score','favourite');
+    }
+
+    public function mangas() {
+        return $this->belongsToMany(Manga::class,'reads')->withPivot('readStatus','score','favourite');
+    }
 }
