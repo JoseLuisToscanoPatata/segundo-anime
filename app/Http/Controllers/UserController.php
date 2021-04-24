@@ -170,7 +170,7 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        if(Auth::user()->role=="admin" || Auth::user()->id = $id) {
+        if(Auth::user()->role=="admin" && Auth::user()->id != $id) {
 
             if(!is_null($user)) {
                 $user->delete();

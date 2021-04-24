@@ -57,6 +57,7 @@ class HandleInertiaRequests extends Middleware
 
         return array_merge(parent::share($request), [
             'clave' => isset($_COOKIE['apiToken'])? $_COOKIE['apiToken'] : "",
+            'usuario' => !is_null(Auth::user()) ? Auth::user() : "", 
            
         ]);
     }

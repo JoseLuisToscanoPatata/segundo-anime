@@ -4,76 +4,186 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN USERS LIST</h2>
     </template>
 
-    <div class="py-12">
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-          <div v-if="!cargando">
-            <input type="text" v-model="filtrado" @change="filtrar()" />
-            <input type="text" v-model="paginacion" />
+    <div
+      class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden shadow-xl"
+    >
+      <template v-if="!cargando">
+        <jet-dialog-modal :show="hayError" @close="hayError = false">
+          <template #title> No permissions </template>
 
-            <table
-              class="border-collapse table-fixed min-w-full divide-y divide-gray-200 my-3 rounded-lg"
-            >
-              <thead>
-                <tr>
-                  <template v-for="(campo, indice) in campos" :key="indice">
-                    <th v-if="mostrar(indice)">
-                      <div class="flex flex-row">
-                        <span>{{ indice }}</span>
-                        <button @click="ordenar(indice)">
-                          <img src="img/sort.svg" alt="" class="h-4 w-auto" />
-                        </button>
-                      </div>
-                    </th>
-                  </template>
-                </tr>
-              </thead>
-              <tbody>
-                <template
-                  v-for="(dato, indice) in ordenados.slice(primero - 1, ultimo - 1)"
-                  :key="indice"
-                >
-                  <tr>
-                    <template v-for="(campo, campoActual) in dato" :key="campoActual">
-                      <td v-if="mostrar(campoActual)">{{ campo }}</td>
-                    </template>
-                  </tr>
-                </template>
-              </tbody>
-            </table>
+          <template #content>
+            You can neither delete nor change role of your own user, you can delete it
+            form your account settings page, and your role can only be changed by another
+            user.
+          </template>
 
-            <span>Showing results {{ primero }} to {{ ultimo }} </span>
-          </div>
+          <template #footer>
+            <jet-danger-button class="ml-2" @click="hayError = false">
+              Close
+            </jet-danger-button>
+          </template>
+        </jet-dialog-modal>
 
-          <div v-else>
-            <span>Cargando...</span>
-          </div>
-        </div>
-      </div>
+        <jet-dialog-modal :show="borrandoUsu" @close="borrandoUsu = false">
+          <template #title> Delete User </template>
+
+          <template #content>
+            Are you sure you want to delete the specified user? He will probably create
+            another account so this will be useless lol.
+
+            <div class="block mt-4">
+              <label class="flex items-start">
+                <jet-checkbox v-model="saltarModal" />
+                <span class="ml-2 text-sm text-gray-600">Dont ask me again lol</span>
+              </label>
+            </div>
+          </template>
+
+          <template #footer>
+            <jet-secondary-button @click="borrandoUsu = false" class="ml-2">
+              Cancel
+            </jet-secondary-button>
+
+            <jet-danger-button class="ml-2" @click="borrarUsuario(idActual)">
+              Delete
+            </jet-danger-button>
+          </template>
+        </jet-dialog-modal>
+
+        <data-table-area
+          :datos="datos"
+          :columnas="campos"
+          :cantidadPaginas="paginacion"
+          :botones="botones"
+          :emisiones="emisiones"
+          :imagenes="imagenes"
+          @borrar-usu="pulsadoBorrar"
+          @cambiar-rol="cambiarRolUsu"
+        >
+        </data-table-area>
+      </template>
+
+      <template v-else>
+        <span>Cargando...</span>
+      </template>
     </div>
   </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import DataTableArea from "@/Pages/Componentes/DataTableArea";
+import JetDialogModal from "@/Jetstream/DialogModal";
+import JetDangerButton from "@/Jetstream/DangerButton";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 
 export default {
   components: {
     AppLayout,
+    DataTableArea,
+    JetDialogModal,
+    JetDangerButton,
+    JetCheckbox,
+    JetSecondaryButton,
   },
 
-  props: ["clave"],
+  props: ["clave", "usuario"],
 
   data() {
     return {
+      paginacion: [
+        { texto: "5", numero: 5 },
+        { texto: "10", numero: 10 },
+        { texto: "15", numero: 15 },
+        { texto: "20", numero: 20 },
+        { texto: "25", numero: 25 },
+      ],
       datos: {},
-      campos: {},
-      orden: "desc",
-      sorteado: "id",
-      ordenados: {},
-      filtrado: "",
+      emisiones: ["cambiar-rol", "borrar-usu"],
+      imagenes: "h-10 w-10 rounded-full m-1",
+      botones: [
+        {
+          abbr: "Cambiar rol usuario",
+          icono: "img/turnAdminUser.svg",
+          emit: "cambiar-rol",
+          alt: "Botón de cambiar rol al usuario",
+        },
+        {
+          abbr: "Borrar usuario",
+          icono: "img/deleteUser.svg",
+          emit: "borrar-usu",
+          alt: "Botón de borrar usuario",
+        },
+      ],
+      campos: [
+        {
+          nombre: "id",
+          titulo: "ID",
+          tipo: "numero",
+          sorteable: true,
+          filtrable: false,
+          color: "text-purple-500",
+          width: "min-width: 60px",
+          alineacion: "izquierda",
+        },
+
+        {
+          nombre: "profile_photo_url",
+          titulo: "Image",
+          tipo: "imagen",
+          sorteable: false,
+          filtrable: false,
+          color: "text-blue-500",
+          width: "min-width: 65px",
+          alineacion: "izquierda",
+        },
+        {
+          nombre: "name",
+          titulo: "Name",
+          tipo: "texto",
+          sorteable: true,
+          filtrable: true,
+          color: "text-red-500",
+          width: "min-width: 215px",
+          alineacion: "izquierda",
+        },
+        {
+          nombre: "email",
+          titulo: "Email",
+          tipo: "texto",
+          sorteable: true,
+          filtrable: true,
+          color: "text-pink-500",
+          width: "min-width: 325px",
+          alineacion: "izquierda",
+        },
+        {
+          nombre: "created_at",
+          titulo: "Register Date",
+          tipo: "date",
+          sorteable: true,
+          filtrable: false,
+          color: "text-yellow-500",
+          width: "min-width: 315px",
+          alineacion: "izquierda",
+        },
+
+        {
+          nombre: "buttons",
+          titulo: "Options",
+          tipo: "botones",
+          sorteable: false,
+          filtrable: false,
+          color: "text-green-500",
+          width: "min-width: 125px",
+        },
+      ],
       cargando: true,
-      paginacion: 0,
+      hayError: false,
+      idActual: 10,
+      borrandoUsu: false,
+      saltarModal: false,
     };
   },
 
@@ -81,77 +191,7 @@ export default {
     this.obtenerDatos();
   },
 
-  computed: {
-    primero() {
-      return 1 + this.paginacion * 10;
-    },
-
-    ultimo() {
-      if (10 + paginacion * 10 > this.datos.length) {
-        return this.datos.length;
-      } else {
-        return 10 + paginacion * 10;
-      }
-    },
-  },
-
   methods: {
-    mostrar(campo) {
-      if (
-        campo == "email_verified_at" ||
-        campo == "profile_photo_path" ||
-        campo == "profile_photo_url" ||
-        campo == "updated_at"
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-
-    filtrar() {
-      var valor = this.filtrado;
-
-      this.ordenados = this.datos.filter(function (dato) {
-        if (dato.name.includes(valor) || dato.email.includes(valor)) {
-          return true;
-        }
-      });
-
-      this.ordenar(this.sorteado, 0);
-    },
-
-    ordenar(key, nuevo = 1) {
-      if (this.sorteado == key && nuevo == 1) {
-        if (this.orden == "desc") {
-          this.orden = "asc";
-        } else {
-          this.orden = "desc";
-        }
-      } else if (key != this.sorteado) {
-        this.sorteado = key;
-        this.orden = "asc";
-      }
-
-      var orden = this.orden;
-
-      this.ordenados = this.ordenados.sort(function (a, b) {
-        var x = a[key];
-        var y = b[key];
-
-        if (key == "name" || key == "email") {
-          x = x.toLowerCase();
-          y = y.toLowerCase();
-        }
-
-        if (orden == "asc") {
-          return x < y ? -1 : x > y ? 1 : 0;
-        } else {
-          return x > y ? -1 : x < y ? 1 : 0;
-        }
-      });
-    },
-
     obtenerDatos() {
       axios
         .get(route("users.index"), {
@@ -161,10 +201,65 @@ export default {
         })
         .then((res) => {
           this.datos = res.data.data;
-          this.ordenados = this.datos;
-          this.campos = res.data.data[0];
           this.cargando = false;
-          this.ordenar(this.sorteado);
+        });
+    },
+
+    cambiarRolUsu(id) {
+      if (id == this.usuario.id) {
+        this.hayError = true;
+      } else {
+        axios
+          .put(route("users.update", id), id, {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          })
+          .then((res) => {
+            for (let actual = 0; actual < this.datos.length; actual++) {
+              if (this.datos[actual].id == id) {
+                if (this.datos[actual].role == "admin") {
+                  this.datos[actual].role = "user";
+                } else if (this.datos[actual].role == "user") {
+                  this.datos[actual].role = "admin";
+                }
+              }
+            }
+          });
+      }
+    },
+    pulsadoBorrar(id) {
+      if (id == this.usuario.id) {
+        this.hayError = true;
+      } else {
+        if (this.saltarModal) {
+          this.idActual = id;
+          this.borrarUsuario(this.idActual);
+        } else {
+          this.idActual = id;
+          this.borrandoUsu = true;
+        }
+      }
+    },
+
+    borrarUsuario(id) {
+      this.borrandoUsu = false;
+
+      axios
+        .delete(route("users.destroy", id), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < this.datos.length; actual++) {
+            if (this.datos[actual].id == id) {
+              this.datos.splice(actual, 1);
+            }
+          }
+        })
+        .catch((err) => {
+          alert("An error ocurred: " + err);
         });
     },
   },
