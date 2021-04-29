@@ -7,6 +7,8 @@ use App\Models\Anime;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 class AnimeController extends Controller
@@ -39,13 +41,13 @@ class AnimeController extends Controller
 
             $validator = Validator::make($request->all(), [
                 "title" =>  "required|string|filled",
-                "synopsis" =>  "string|nullable",
-                "episodes" =>"numeric|integer",
+                "synopsis" =>  "string|required|filled",
+                "episodes" =>"numeric|integer|required",
                 "episodeLength"=>"numeric|integer|nullable",
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
-                "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
+                "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:1000'],
             ]);
 
             if($validator->fails()) {
@@ -81,13 +83,23 @@ class AnimeController extends Controller
             $anime->userCount = 0;
             $anime->rating = 0;
 
-            if($request->cover) {
-                $anime->cover = $request->cover;
-            }
-
             $anime->save();
 
-            return response()->json(["status"=>"success","message" => "Anime created successfully :)"],200);
+            $image = $request->file('cover');
+            
+                if($image) {
+
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $image_name = strval($anime->id) . '.' . $extension;
+                    
+
+                    Storage::disk('public')->put("/anime-photos/".$image_name,File::get($image));
+                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$image_name;
+
+                    $anime->save();
+                }
+
+            return response()->json(["status"=>"success","message" => "Anime created successfully :)","data"=>$anime],200);
 
           } else {
             return response()->json(["status"=>"failed","message"=>"You dont have permissions :("],401);
@@ -133,7 +145,7 @@ class AnimeController extends Controller
                     "title" =>  "required|string|filled",
                     "synopsis" =>  "required|string|filled",
                     "episodes" =>"numeric|integer|required",
-                    "episodeLength"=>"numeric|integer|required",
+                    "episodeLength"=>"numeric|integer|nullable",
                     "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                     "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                     "status"=>["required",Rule::in(['current','finished','tba'])],
@@ -168,11 +180,25 @@ class AnimeController extends Controller
 
                 $anime->status = $request->status;
 
-                 if($request->cover) {
-                    $anime->cover = $request->cover;
-                }
-
                 $anime->save();
+
+                $image = $request->cover;
+
+                if($image) {
+
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $nueva = strval($anime->id) . '.' . $extension;
+
+                    if(!is_null(Storage::disk('public')->get("/anime-photos/".substr($anime->cover,43)))) {
+                        Storage::disk('public')->delete("/anime-photos/".substr($anime->cover,43));
+                    }
+
+                    Storage::disk('public')->put("/anime-photos/".$nueva,File::get($image));
+                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$nueva;
+
+                    $anime->save();
+                }
+                
 
                 return response()->json(["status"=>"success","message" => "Anime updated successfully :)"],200);
             
@@ -181,7 +207,7 @@ class AnimeController extends Controller
             }
 
           } else {
-            return response()->json(["status"=>"failed","message"=>"You dont have permissions :("],401);
+            return response()->json(["status"=>"failed","message"=>"You dont have permissions :(","data"=>$anime],401);
             
           }
     }

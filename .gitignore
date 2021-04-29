@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
-/public/storage
+
+/public/storage/profile-photos/*
+/public/storage/manga-photos/*
+/public/storage/anime-photos/*
 /storage/*.key
 /vendor
 .env

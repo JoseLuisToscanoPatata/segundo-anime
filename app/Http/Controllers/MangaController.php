@@ -7,6 +7,8 @@ use App\Models\Manga;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class MangaController extends Controller
 {
@@ -37,13 +39,13 @@ class MangaController extends Controller
         if(Auth::user()->role=="admin") {
 
             $validator = Validator::make($request->all(), [
-                "title" =>  "required|string",
-                "synopsis" =>  "nullable|string",
-                "chapters" =>"numeric|integer|nullable",
+                "title" =>  "required|string|filled",
+                "synopsis" =>  "required|string|filled",
+                "chapters" =>"numeric|integer|required",
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
-                "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
+                'cover' =>  ["max:1000","file","mimes:jpg,jpeg,png","nullable"],
             ]);
 
             if($validator->fails()) {
@@ -75,13 +77,23 @@ class MangaController extends Controller
             $manga->userCount = 0;
             $manga->rating = 0;
 
-            if($request->cover) {
-                $manga->cover = $request->cover;
-            }
-
             $manga->save();
 
-            return response()->json(["status"=>"success","message" => "Manga created successfully :)"],200);
+            $image = $request->file('cover');
+
+                if($image) {
+
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $image_name = strval($manga->id) . '.' . $extension;
+                    
+
+                    Storage::disk('public')->put("/manga-photos/".$image_name,File::get($image));
+                    $manga->cover = env('APP_URL') . "/storage/manga-photos/" .$image_name;
+
+                    $manga->save();
+                }
+
+            return response()->json(["status"=>"success","message" => "Manga created successfully :)","data"=>$manga],200);
 
           } else {
             return response()->json(["status"=>"failed","message"=>"You dont have permissions :("],401);
@@ -124,13 +136,13 @@ class MangaController extends Controller
             if(!is_null($manga)) {
 
                 $validator = Validator::make($request->all(), [
-                    "title" =>  "required|string|filled",
-                    "synopsis" =>  "nullable|string|filled",
-                    "chapters" =>"nullable|integer|required",
-                    "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
-                    "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
-                    "status"=>["required",Rule::in(['current','finished','tba'])],
-                    "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
+                "title" =>  "required|string|filled",
+                "synopsis" =>  "required|string|filled",
+                "chapters" =>"numeric|integer|required",
+                "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
+                "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
+                "status"=>["required",Rule::in(['current','finished','tba'])],
+                'cover' =>  ["max:1000","file","mimes:jpg,jpeg,png","nullable"],
                 ]);
 
                 if($validator->fails()) {
@@ -139,31 +151,46 @@ class MangaController extends Controller
 
                 $manga->title = $request->title;
 
-                if($manga->synopsis) {
+                if($request->synopsis) {
                     $manga->synopsis = $request->synopsis;
                 }
 
-                if($manga->chapters) {
+                if($request->chapters) {
                     $manga->chapters = $request->chapters;
                 }
 
-                if($manga->ageRating) {
+                if($request->ageRating) {
                     $manga->ageRating = $request->ageRating;
                 }
 
-                if($manga->subType) {
+                if($request->subType) {
                     $manga->subType = $request->subType;
                 }
 
                 $manga->status = $request->status;
-
-                if($request->cover) {
-                    $manga->cover = $request->cover;
-                }
-
+                
                 $manga->save();
 
-                return response()->json(["status"=>"success","message" => "Manga updated successfully :)"],200);
+                $image = $request->cover;
+
+                if($image) {
+
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $nueva = strval($manga->id) . '.' . $extension;
+
+                    if(($manga->cover != null && strpos($manga->cover,'original') === false)) {
+                        Storage::disk('public')->delete("/manga-photos/".substr($manga->cover,43));
+                    }
+
+                    Storage::disk('public')->put("/manga-photos/".$nueva,File::get($image));
+                    $manga->cover = env('APP_URL') . "/storage/manga-photos/" .$nueva;
+
+                    $manga->save();
+                }
+
+                
+
+                return response()->json(["status"=>"success","message" => "Manga updated successfully :)","data"=>$manga],200);
             
             } else {
                 return response()->json(["status"=>"failed","message"=>"Manga not found :("],404);

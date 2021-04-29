@@ -14,12 +14,31 @@ export default {
     AppLayout,
   },
 
-  props: ["clave"],
+  props: ["clave", "manga"],
 
   data() {
     return {
       titulo: "PARTICULAR",
     };
+  },
+
+  created() {
+    this.obtenerDatos();
+  },
+
+  methods: {
+    obtenerDatos() {
+      axios
+        .get(route("mangas.show", this.manga), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          this.titulo = res.data.data.title;
+          this.cargando = false;
+        });
+    },
   },
 };
 </script>

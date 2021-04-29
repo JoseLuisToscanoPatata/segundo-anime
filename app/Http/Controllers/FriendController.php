@@ -80,10 +80,11 @@ class FriendController extends Controller
             if(!is_null($user)) {
                 
                 $friend = new Friend;
+                $friend->user1_id = Auth::user()->id;
                 $friend->user2_id = $id;
                 $friend->save();
                 
-                 return response()->json(["status"=>"success","message" => "User added as friend :)"],200);
+                 return response()->json(["status"=>"success","message" => "User added as friend :)",""],200);
 
             } else {
                 return response()->json(["status"=>"failed","message"=>"User not found :("],404);
@@ -166,7 +167,8 @@ class FriendController extends Controller
         if(!is_null($friend)) {
             
             if(Auth::user()->id == $friend->user1_id  || Auth::user()->id == $friend->user2_id ) {
-                 
+
+                    $friend->delete(); 
                     return response()->json(["status"=>"success","message" => "You have deleted this relationship :("],200);
 
                 } else {

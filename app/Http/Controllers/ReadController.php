@@ -41,6 +41,7 @@ class ReadController extends Controller
      */
     public function store(Request $request)
     {
+
             $validator = Validator::make($request->all(), [
                "manga_id"=>"required|integer|numeric",
                "score"=>"nullable|integer|numeric",
@@ -51,6 +52,14 @@ class ReadController extends Controller
             if($validator->fails()) {
                 return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
             }
+
+            
+        $existe = Read::where('user_id',Auth::user()->id)->where('manga_id',$request->manga_id)->get()->all();
+
+        if(count($existe)>0) {
+             return response()->json(["status"=>"failed","message" => "An user cant read the same manga twice :("],400);
+  
+        } else {
 
             $read = new Read;
 
@@ -66,7 +75,14 @@ class ReadController extends Controller
 
             $read->save();
 
-           return response()->json(["status"=>"success","message" => "Manga added successfully to your list :)"],200);
+            $manga = Manga::find($request->manga_id);
+            $manga->userCount = $manga->userCount + 1;
+            $manga->rating = round((($request->score + ($manga->rating * $manga->ratingCount)) / ($manga->ratingCount + 1)),2);
+            $manga->ratingCount = $manga->ratingCount + 1;
+            $manga->save();
+
+           return response()->json(["status"=>"success","message" => "Manga added successfully to your list :)","data"=>$read],200); 
+        }
     }
 
     /**
@@ -147,8 +163,22 @@ class ReadController extends Controller
 
         if(!is_null($read)) {
 
-            if(Auth::user->id == $read->user_id) {
+            if(Auth::user()->id == $read->user_id) {
+                $manga = Manga::find($read->manga_id);
+                $manga->userCount = $manga->userCount - 1;
+
+                if(($manga->ratingCount - 1) == 0) {
+                    $manga->rating = 0;
+                } else {
+                    $manga->rating = round(((($manga->rating * $manga->ratingCount) - $read->score) / ($manga->ratingCount - 1)),2);
+                }       
+                $manga->ratingCount = $manga->ratingCount - 1;
+                $manga->save();
+
+                $read->delete();
+
                  return response()->json(["status"=>"success","message"=>"Manga deleted from your list :)"],200);
+
             } else {
                 return response()->json(["status"=>"failed","message"=>"You cant delete a manga from other people lists :("],403);
             }
