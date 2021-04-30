@@ -22,7 +22,9 @@
                   :href="route('AnimeList')"
                   :active="route().current('AnimeList')"
                   class="text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800"
-                  :class="{ 'border-red-700': route().current('AnimeList') }"
+                  :class="{
+                    'border-red-700': route().current('AnimeList'),
+                  }"
                 >
                   ANIME
                 </jet-nav-link>
@@ -33,7 +35,9 @@
                   :href="route('MangaList')"
                   :active="route().current('MangaList')"
                   class="text-pink-500 hover:text-pink-700 focus:text-pink-800 hover:border-pink-700 focus:border-pink-800"
-                  :class="{ 'border-pink-700': route().current('MangaList') }"
+                  :class="{
+                    'border-pink-700': route().current('MangaList'),
+                  }"
                 >
                   MANGA
                 </jet-nav-link>
@@ -178,10 +182,10 @@
                   <template #trigger>
                     <button
                       v-if="$page.props.jetstream.managesProfilePhotos"
-                      class="flex text-sm border-2 border-transparent rounded-full focus:outline-none bg-white focus:border-gray-300 transition duration-150 ease-in-out"
+                      class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
                     >
                       <img
-                        class="h-11 w-11 rounded-full object-cover m-1"
+                        class="h-11 w-11 rounded-full object-cover"
                         :src="$page.props.user.profile_photo_url"
                         :alt="$page.props.user.name"
                       />
@@ -272,7 +276,9 @@
               :href="route('AnimeList')"
               :active="route().current('AnimeList')"
               class="text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800"
-              :class="{ 'border-red-700': route().current('AnimeList') }"
+              :class="{
+                'border-red-700': route().current('AnimeList'),
+              }"
             >
               ANIME
             </jet-responsive-nav-link>
@@ -283,7 +289,9 @@
               :href="route('MangaList')"
               :active="route().current('MangaList')"
               class="text-pink-500 hover:text-pink-700 focus:text-pink-800 hover:border-pink-700 focus:border-pink-800"
-              :class="{ 'border-pink-700': route().current('MangaList') }"
+              :class="{
+                'border-pink-700': route().current('MangaList'),
+              }"
             >
               MANGA
             </jet-responsive-nav-link>
@@ -309,7 +317,9 @@
                   :href="route('AnimeUserList')"
                   :active="route().current('AnimeUserList')"
                   class="text-purple-500 hover:text-purple-700 focus:text-purple-800 hover:border-purple-700 focus:border-purple-800"
-                  :class="{ 'border-white': route().current('AnimeUserList') }"
+                  :class="{
+                    'border-white': route().current('AnimeUserList'),
+                  }"
                 >
                   ANIME LIST
                 </jet-responsive-nav-link>
@@ -320,7 +330,9 @@
                   :href="route('MangaUserList')"
                   :active="route().current('MangaUserList')"
                   class="text-yellow-500 hover:text-yellow-700 focus:text-yellow-800 hover:border-yellow-700 focus:border-yellow-800"
-                  :class="{ 'border-white': route().current('MangaUserList') }"
+                  :class="{
+                    'border-white': route().current('MangaUserList'),
+                  }"
                 >
                   MANGA LIST
                 </jet-responsive-nav-link>
@@ -350,7 +362,9 @@
                   :href="route('AnimeAdminList')"
                   :active="route().current('AnimeAdminList')"
                   class="text-green-500 hover:text-green-700 focus:text-green-800 hover:border-green-700 focus:border-green-800"
-                  :class="{ 'border-white': route().current('AnimeAdminList') }"
+                  :class="{
+                    'border-white': route().current('AnimeAdminList'),
+                  }"
                 >
                   ANIME DATABASE
                 </jet-responsive-nav-link>
@@ -361,7 +375,9 @@
                   :href="route('MangaAdminList')"
                   :active="route().current('MangaAdminList')"
                   class="text-blue-500 hover:text-blue-700 focus:text-blue-800 hover:border-blue-700 focus:border-blue-800"
-                  :class="{ 'border-white': route().current('MangaAdminList') }"
+                  :class="{
+                    'border-white': route().current('MangaAdminList'),
+                  }"
                 >
                   MANGA DATABASE
                 </jet-responsive-nav-link>
@@ -372,7 +388,9 @@
                   :href="route('UserAdminList')"
                   :active="route().current('UserAdminList')"
                   class="text-indigo-500 hover:text-indigo-700 focus:text-indigo-800 hover:border-indigo-700 focus:border-indigo-800"
-                  :class="{ 'border-white': route().current('UserAdminList') }"
+                  :class="{
+                    'border-white': route().current('UserAdminList'),
+                  }"
                 >
                   USER DATABASE
                 </jet-responsive-nav-link>
@@ -408,7 +426,9 @@
                 :href="route('UserShow')"
                 :active="route().current('UserShow')"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
-                :class="{ 'border-white': route().current('UserShow') }"
+                :class="{
+                  'border-white': route().current('UserShow'),
+                }"
               >
                 My Profile
               </jet-responsive-nav-link>
@@ -417,7 +437,9 @@
                 :href="route('profile.show')"
                 :active="route().current('profile.show')"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
-                :class="{ 'border-white': route().current('profile.show') }"
+                :class="{
+                  'border-white': route().current('profile.show'),
+                }"
               >
                 Account Settings
               </jet-responsive-nav-link>
@@ -426,7 +448,9 @@
                 :href="route('FriendsList')"
                 :active="route().current('FriendsList')"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
-                :class="{ 'border-white': route().current('FriendsList') }"
+                :class="{
+                  'border-white': route().current('FriendsList'),
+                }"
               >
                 Friends
               </jet-responsive-nav-link>
@@ -435,7 +459,9 @@
                 :href="route('MessagesList')"
                 :active="route().current('MessagesList')"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
-                :class="{ 'border-white': route().current('MessagesList') }"
+                :class="{
+                  'border-white': route().current('MessagesList'),
+                }"
               >
                 Messages
               </jet-responsive-nav-link>

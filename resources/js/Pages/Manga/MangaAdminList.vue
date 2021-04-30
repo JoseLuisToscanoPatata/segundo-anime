@@ -290,7 +290,7 @@ export default {
       ],
       datos: {},
       emisiones: ["borrar-manga", "editar-manga", "crear-manga", "ver-manga"],
-      imagenes: "h-20 w-12 rounded-full m-1",
+      imagenes: "h-14 w-14 rounded-full m-1 object-cover",
 
       botonesExtras: [
         {
