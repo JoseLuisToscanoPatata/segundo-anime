@@ -105,6 +105,8 @@ class MessageController extends Controller
         if(!is_null($message)) {
             
             if($message->emisor == Auth::user->id) {
+
+                $message->delete();
                 return response()->json(["status"=>"success","message" => "Message deleted successfully :) "],200);
             
             } else {

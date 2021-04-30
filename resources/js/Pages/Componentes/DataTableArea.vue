@@ -10,7 +10,7 @@
       />
       <select
         v-model="paginas"
-        class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm"
+        class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
         @change="paginacion = 0"
       >
         <option
@@ -22,6 +22,16 @@
           {{ opcion.texto }}
         </option>
       </select>
+
+      <template v-for="extra in botonesExtras" :key="extra">
+        <jet-button
+          style="min-width: 110px"
+          @click="$emit(extra.emit)"
+          :class="extra.clases"
+        >
+          {{ extra.texto }}
+        </jet-button>
+      </template>
     </div>
 
     <div class="w-full overflow-x-auto overflow-y-auto">
@@ -117,7 +127,7 @@
 
     <div class="grid grid-cols-6 mt-6 justify-start">
       <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 200px"
-        >Showing results {{ primero }} to {{ ultimo }}
+        >Showing results {{ primero }} to {{ ultimo }} of {{ datosOrdenados.length }}
       </span>
 
       <div class="col-span-4 sm:col-span-2 mt-1 sm:mt-0">
@@ -136,7 +146,7 @@
           style="min-width: 70px"
           class="ml-2 bg-purple-400 hover:bg-purple-500 active:bg-purple-700 disabled:opacity-40"
           @click="paginacion = paginacion + 1"
-          :disabled="ultimo >= this.datosOrdenados.length"
+          :disabled="ultimo >= datosOrdenados.length"
         >
           Next
         </jet-button>
@@ -173,6 +183,7 @@ export default {
     botones: {},
     emisiones: {},
     imagenes: "",
+    botonesExtras: {},
   },
 
   emits: {},

@@ -3,37 +3,692 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN ANIME LIST</h2>
     </template>
+    <div
+      class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden shadow-xl"
+    >
+      <template v-if="!cargando">
+        <!-- MODAL DE MENSAJES-->
 
-    <button @click="enviar">PATATA</button>
+        <jet-dialog-modal
+          :show="datosInfo['mostrar']"
+          @close="datosInfo['mostrar'] = false"
+        >
+          <template #title>
+            <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
+              datosInfo["titulo"]
+            }}</span></template
+          >
+
+          <template #content>
+            <span :class="'text-' + datosInfo['color'] + '-500'">{{
+              datosInfo["mensaje"]
+            }}</span>
+          </template>
+
+          <template #footer>
+            <jet-button
+              class="ml-2 text-white"
+              :class="
+                'bg-' +
+                datosInfo['color'] +
+                '-300 hover:bg-' +
+                datosInfo['color'] +
+                '-600'
+              "
+              @click="datosInfo['mostrar'] = false"
+            >
+              Close
+            </jet-button>
+          </template>
+        </jet-dialog-modal>
+
+        <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
+          <template #title> Delete Anime </template>
+
+          <template #content>
+            Are you sure you want to delete the specified anime? It will be removed from
+            every user list who had included it.
+
+            <div class="block mt-4">
+              <label class="flex items-start">
+                <jet-checkbox v-model="saltarModal" />
+                <span class="ml-2 text-sm text-gray-600">Dont ask me again lol</span>
+              </label>
+            </div>
+          </template>
+
+          <template #footer>
+            <jet-secondary-button @click="operacion = ''" class="ml-2">
+              Cancel
+            </jet-secondary-button>
+
+            <jet-danger-button class="ml-2" @click="borrarAnime(idActual)">
+              Delete
+            </jet-danger-button>
+          </template>
+        </jet-dialog-modal>
+
+        <!-- MODAL DE CREACIÓN Y ACTUALIZACIÓN-->
+
+        <jet-dialog-modal :show="operacion == 'crearEditar'" @close="operacion = ''">
+          <template #title>
+            <span class="text-green-500 font-bold">ANIME FORM </span>
+          </template>
+
+          <template #content>
+            <form @submit.prevent="crearOEditar">
+              <div class="grid grid-cols-6 sm:grid-cols-12 m-5 gap-x-10 gap-y-5">
+                <div class="col-span-6">
+                  <!-- Profile Photo File Input -->
+                  <input
+                    type="file"
+                    ref="photo"
+                    class="hidden"
+                    @change="updatePhotoPreview"
+                  />
+
+                  <jet-label for="photo" value="Photo" />
+
+                  <div class="mt-2" v-show="mostrarImagen == 'original'">
+                    <img
+                      :src="datosActual['cover']"
+                      :alt="datosActual['title']"
+                      class="rounded-full h-20 w-20 object-cover"
+                    />
+                  </div>
+
+                  <div class="mt-2" v-show="mostrarImagen == 'preview'">
+                    <span
+                      class="block rounded-full w-20 h-20"
+                      :style="
+                        'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' +
+                        photoPreview +
+                        '\');'
+                      "
+                    >
+                    </span>
+                  </div>
+
+                  <jet-secondary-button
+                    class="mt-2 mr-2 text-white bg-green-400 hover:bg-green-600"
+                    type="button"
+                    @click.prevent="selectNewPhoto"
+                  >
+                    Select A New Cover
+                  </jet-secondary-button>
+
+                  <jet-input-error :message="errores['cover']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="synopsis" value="Synopsis" />
+                  <textarea
+                    id="synopsis"
+                    type="text"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    style="resize: none"
+                    v-model="datosActual['synopsis']"
+                    rows="4"
+                  />
+                  <jet-input-error :message="errores['synopsis']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="title" value="Title" />
+                  <jet-input
+                    id="title"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="datosActual['title']"
+                  />
+                  <jet-input-error :message="errores['title']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="episodes" value="Episodes" />
+                  <jet-input
+                    id="episodes"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="datosActual['episodes']"
+                  />
+                  <jet-input-error :message="errores['episodes']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="episodeLength" value="EpisodeLength" />
+                  <jet-input
+                    id="episodeLength"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="datosActual['episodeLength']"
+                  />
+                  <jet-input-error :message="errores['episodeLength']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="ageRating" value="Age Rating" />
+                  <select
+                    id="ageRating"
+                    v-model="datosActual['ageRating']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  >
+                    <option disabled value="">Please select one</option>
+                    <option>G</option>
+                    <option>PG</option>
+                    <option>R</option>
+                    <option>R18</option>
+                  </select>
+                  <jet-input-error :message="errores['ageRating']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="status" value="Status" />
+                  <select
+                    id="status"
+                    v-model="datosActual['status']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  >
+                    <option disabled value="">Please select one</option>
+                    <option>current</option>
+                    <option>finished</option>
+                    <option>tba</option>
+                  </select>
+                  <jet-input-error :message="errores['status']" class="mt-2" />
+                </div>
+
+                <div class="col-span-6">
+                  <jet-label for="subType" value="Subtype" />
+                  <select
+                    id="subType"
+                    v-model="datosActual['subType']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  >
+                    <option disabled value="">Please select one</option>
+                    <option>ONA</option>
+                    <option>OVA</option>
+                    <option>TV</option>
+                    <option>movie</option>
+                    <option>music</option>
+                    <option>special</option>
+                  </select>
+                  <jet-input-error :message="errores['subType']" class="mt-2" />
+                </div>
+              </div>
+            </form>
+          </template>
+
+          <template #footer>
+            <jet-secondary-button
+              type="button"
+              @click.prevent="operacion = ''"
+              class="mr-2"
+            >
+              Cancel
+            </jet-secondary-button>
+
+            <jet-secondary-button
+              class="mt-2 ml-2 text-white bg-green-400 hover:bg-green-600"
+              type="button"
+              @click.prevent="crearOEditar"
+            >
+              Upload
+            </jet-secondary-button>
+          </template>
+        </jet-dialog-modal>
+
+        <data-table-area
+          :datos="datos"
+          :columnas="campos"
+          :cantidadPaginas="paginacion"
+          :botones="botones"
+          :emisiones="emisiones"
+          :imagenes="imagenes"
+          @borrar-anime="pulsadoBorrar"
+          @editar-anime="pulsadoEditar"
+          @crear-anime="pulsadoCrear"
+          @ver-anime="pulsadoVer"
+          :botonesExtras="botonesExtras"
+          :key="datos"
+        >
+        </data-table-area>
+      </template>
+
+      <template v-else>
+        <span>Cargando...</span>
+      </template>
+    </div>
   </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import DataTableArea from "@/Pages/Componentes/DataTableArea";
+import JetDialogModal from "@/Jetstream/DialogModal";
+import JetDangerButton from "@/Jetstream/DangerButton";
+import JetButton from "@/Jetstream/Button";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import JetInputError from "@/Jetstream/InputError";
+import JetLabel from "@/Jetstream/Label";
+import JetInput from "@/Jetstream/Input";
 
 export default {
   components: {
     AppLayout,
+    DataTableArea,
+    JetDialogModal,
+    JetDangerButton,
+    JetCheckbox,
+    JetSecondaryButton,
+    JetButton,
+    JetLabel,
+    JetInput,
+    JetInputError,
   },
 
-  props: ["clave"],
-  methods: {
-    enviar() {
-      this.$inertia.post(
-        "api/mangas",
+  props: ["clave", "usuario"],
+
+  data() {
+    return {
+      paginacion: [
+        { texto: "10", numero: 10 },
+        { texto: "20", numero: 20 },
+        { texto: "30", numero: 30 },
+        { texto: "40", numero: 40 },
+        { texto: "50", numero: 50 },
+      ],
+      datos: {},
+      emisiones: ["borrar-anime", "editar-anime", "crear-anime", "ver-anime"],
+      imagenes: "h-20 w-12 rounded-full m-1",
+
+      botonesExtras: [
         {
-          title: "Patata",
-          synopsis: "Ostia pilotes",
-          chapters: 15,
-          ageRating: "PG",
-          status: "current",
+          texto: "New Anime",
+          emit: "crear-anime",
+          clases: "text-white bg-pink-400 hover:bg-pink-600",
+        },
+      ],
+
+      botones: [
+        {
+          abbr: "Editar anime",
+          icono: "img/updateOther.svg",
+          emit: "editar-anime",
+          alt: "Botón de edición de anime",
         },
         {
+          abbr: "Borrar anime",
+          icono: "img/deleteOther.svg",
+          emit: "borrar-anime",
+          alt: "Botón de borrar anime",
+        },
+
+        {
+          abbr: "Mostrar anime",
+          icono: "img/eye.svg",
+          emit: "ver-anime",
+          alt: "Botón de ver anime",
+        },
+      ],
+
+      campos: [
+        {
+          nombre: "id",
+          titulo: "ID",
+          tipo: "numero",
+          sorteable: true,
+          filtrable: false,
+          color: "text-green-500",
+          width: "min-width: 60px",
+          alineacion: "izquierda",
+        },
+
+        {
+          nombre: "cover",
+          titulo: "Cover",
+          tipo: "imagen",
+          sorteable: false,
+          filtrable: false,
+          color: "text-yellow-500",
+          width: "min-width: 80px",
+          alineacion: "izquierda",
+        },
+        {
+          nombre: "title",
+          titulo: "Title",
+          tipo: "texto",
+          sorteable: true,
+          filtrable: true,
+          color: "text-purple-500",
+          width: "min-width: 250px; max-width: 250px;",
+          alineacion: "izquierda",
+        },
+        {
+          nombre: "rating",
+          titulo: "User Score",
+          tipo: "numero",
+          sorteable: true,
+          filtrable: false,
+          color: "text-pink-500",
+          width: "min-width: 115px",
+          alineacion: "centrado",
+        },
+        {
+          nombre: "userCount",
+          titulo: "user Count",
+          tipo: "numero",
+          sorteable: true,
+          filtrable: false,
+          color: "text-red-500",
+          width: "min-width: 115px",
+          alineacion: "centrado",
+        },
+
+        {
+          nombre: "ageRating",
+          titulo: "age Rating",
+          tipo: "texto",
+          sorteable: true,
+          filtrable: true,
+          color: "text-blue-500",
+          width: "min-width: 115px",
+          alineacion: "centrado",
+        },
+
+        {
+          nombre: "status",
+          titulo: "Status",
+          tipo: "texto",
+          sorteable: true,
+          filtrable: true,
+          color: "text-indigo-500",
+          width: "min-width: 125px",
+          alineacion: "izquierda",
+        },
+
+        {
+          nombre: "buttons",
+          titulo: "Options",
+          tipo: "botones",
+          sorteable: false,
+          filtrable: false,
+          color: "text-gray-500",
+          width: "min-width: 125px",
+        },
+      ],
+      cargando: true,
+      datosInfo: {
+        mostrar: false,
+        titulo: "",
+        mensaje: "",
+        color: "black",
+      },
+      idActual: 10,
+      operacion: "",
+      saltarModal: false,
+      modoAnime: "",
+      photoPreview: null,
+      datosActual: {
+        title: "",
+        synopsis: "",
+        episodes: 0,
+        episodeLength: 0,
+        ageRating: "",
+        subType: "",
+        status: "",
+        cover: "",
+      },
+
+      errores: {
+        title: null,
+        synopsis: null,
+        episodes: null,
+        episodeLength: null,
+        ageRating: null,
+        subType: null,
+        status: null,
+        cover: null,
+      },
+    };
+  },
+
+  created() {
+    this.obtenerDatos();
+  },
+
+  computed: {
+    //METODO PARA MOSTRAR / NO MOSTRAR IMÁGENES EN EL MODAL DEL FORMULARIO
+    mostrarImagen() {
+      if (this.photoPreview == null && this.modoAnime == "editar") {
+        return "original";
+      } else if (this.photoPreview) {
+        return "preview";
+      } else {
+        return "nada";
+      }
+    },
+  },
+
+  methods: {
+    selectNewPhoto() {
+      this.$refs.photo.click();
+    },
+
+    //CARGAR LA PREVIEW DE LA IMAGEN NUEVA
+    updatePhotoPreview() {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.photoPreview = e.target.result;
+      };
+
+      reader.readAsDataURL(this.$refs.photo.files[0]);
+    },
+
+    //OBTENER LOS DATOS DE ANIMES
+    obtenerDatos() {
+      axios
+        .get(route("animes.index"), {
           headers: {
             Authorization: "Bearer " + this.clave,
           },
+        })
+        .then((res) => {
+          this.datos = res.data.data;
+          this.cargando = false;
+        });
+    },
+
+    //METODOS DE BOTONES PULSADOS
+    pulsadoCrear() {
+      for (const key in this.datosActual) {
+        if (Object.hasOwnProperty.call(this.datosActual, key)) {
+          this.datosActual[key] = null;
         }
-      );
+      }
+
+      this.modoAnime = "nuevo";
+      this.operacion = "crearEditar";
+      this.photoPreview = null;
+    },
+
+    pulsadoVer($id) {
+      window.location.href = route("AnimeProfile", $id);
+    },
+
+    pulsadoEditar(id) {
+      this.idActual = id;
+
+      for (let actual = 0; actual < this.datos.length; actual++) {
+        if (this.datos[actual].id == this.idActual) {
+          for (const key in this.datosActual) {
+            if (Object.hasOwnProperty.call(this.datosActual, key)) {
+              this.datosActual[key] = this.datos[actual][key];
+            }
+          }
+        }
+      }
+
+      this.modoAnime = "editar";
+      this.operacion = "crearEditar";
+    },
+    pulsadoBorrar(id) {
+      this.idActual = id;
+
+      if (this.saltarModal) {
+        this.borrarAnime(this.idActual);
+      } else {
+        this.operacion = "borrar";
+      }
+    },
+
+    //METODO DE CREACIÓN O EDICIÓN DE ANIME
+    crearOEditar() {
+      var datos = new FormData();
+
+      datos.append("title", this.datosActual["title"]);
+      datos.append("synopsis", this.datosActual["synopsis"]);
+      datos.append("episodes", this.datosActual["episodes"]);
+      datos.append("episodeLength", this.datosActual["episodeLength"]);
+      datos.append("ageRating", this.datosActual["ageRating"]);
+      datos.append("subType", this.datosActual["subType"]);
+      if (this.photoPreview) {
+        this.datosActual["cover"] = this.$refs.photo.files[0];
+        datos.append("cover", this.$refs.photo.files[0]);
+      }
+      datos.append("status", this.datosActual["status"]);
+
+      //CREACIÓN DE NUEVO ANIME
+
+      if (this.modoAnime == "nuevo") {
+        axios
+          .post(route("animes.store"), datos, {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          })
+          .then((res) => {
+            //EXITO
+            this.operacion = "";
+            this.datosInfo["color"] = "green";
+            this.datosInfo["titulo"] = "Operation success";
+            this.datosInfo["mensaje"] = res.data.message;
+            this.datosInfo["mostrar"] = true;
+
+            this.obtenerDatos();
+          })
+          .catch((err) => {
+            //FALLO
+            if (err.response.data.message != null) {
+              //FALLO EXTERNO
+              this.operacion = "";
+              this.datosInfo["color"] = "red";
+              this.datosInfo["titulo"] = "There was an error :(";
+              this.datosInfo["mensaje"] = err.response.data.message;
+              this.datosInfo["mostrar"] = true;
+              this.photoPreview = null;
+            } else if (err.response.data.validation_errors != null) {
+              //FALLO DE VALIDACIÓN
+              this.errores["title"] = err.response.data.validation_errors["title"];
+              this.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
+              this.errores["episodes"] = err.response.data.validation_errors["episodes"];
+              this.errores["episodeLength"] =
+                err.response.data.validation_errors["episodeLength"];
+              this.errores["ageRating"] =
+                err.response.data.validation_errors["ageRating"];
+              this.errores["subType"] = err.response.data.validation_errors["subType"];
+              this.errores["status"] = err.response.data.validation_errors["status"];
+              this.errores["cover"] = err.response.data.validation_errors["cover"];
+            }
+          });
+
+        //EDICIÓN DE ANIME
+      } else if (this.modoAnime == "editar") {
+        datos.append("_method", "PUT");
+
+        axios
+          .post(route("animes.update", this.idActual), datos, {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          })
+          .then((res) => {
+            //EXITO
+            for (let actual = 0; actual < this.datos.length; actual++) {
+              if (this.datos[actual].id == this.idActual) {
+                this.datos[actual].title = this.datosActual["title"];
+                this.datos[actual].synopsis = this.datosActual["synopsis"];
+                this.datos[actual].episodes = this.datosActual["episodes"];
+                this.datos[actual].episodeLength = this.datosActual["episodeLength"];
+                this.datos[actual].status = this.datosActual["status"];
+                this.datos[actual].ageRating = this.datosActual["ageRating"];
+                this.datos[actual].subType = this.datosActual["subType"];
+                this.datos[actual].cover = res.data.data.cover;
+              }
+            }
+
+            this.operacion = "";
+            this.datosInfo["color"] = "green";
+            this.datosInfo["titulo"] = "Operation success";
+            this.datosInfo["mensaje"] = res.data.message;
+            this.datosInfo["mostrar"] = true;
+          })
+          .catch((err) => {
+            //FALLOS
+            if (err.response.data.message) {
+              //FALLO EXTERNO
+              this.operacion = "";
+              this.datosInfo["color"] = "red";
+              this.datosInfo["titulo"] = "There was an error :(";
+              this.datosInfo["mensaje"] = err.response.data.message;
+              this.datosInfo["mostrar"] = true;
+              this.photoPreview = null;
+            } else if (err.response.data.validation_errors) {
+              //FALLO DE VALIDACIÓN
+              this.errores["title"] = err.response.data.validation_errors["title"];
+              this.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
+              this.errores["episodes"] = err.response.data.validation_errors["episodes"];
+              this.errores["episodeLength"] =
+                err.response.data.validation_errors["episodeLength"];
+              this.errores["ageRating"] =
+                err.response.data.validation_errors["ageRating"];
+              this.errores["subType"] = err.response.data.validation_errors["subType"];
+              this.errores["status"] = err.response.data.validation_errors["status"];
+              this.errores["cover"] = err.response.data.validation_errors["cover"];
+            }
+          });
+      }
+    },
+
+    //BORRAR ANIME EXISTENTE
+    borrarAnime() {
+      this.operacion = "";
+
+      axios
+        .delete(route("animes.destroy", this.idActual), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < this.datos.length; actual++) {
+            if (this.datos[actual].id == this.idActual) {
+              this.datos.splice(actual, 1);
+            }
+          }
+
+          this.datosInfo["color"] = "green";
+          this.datosInfo["titulo"] = "Operation success :(";
+          this.datosInfo["mensaje"] = res.data.message;
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["titulo"] = "There was an error :(";
+          this.datosInfo["mensaje"] = err.data.message;
+        });
+
+      this.datosInfo["mostrar"] = true;
     },
   },
 };

@@ -53,6 +53,13 @@ class WatchController extends Controller
                 return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
             }
 
+             $existe = Watch::where('user_id',Auth::user()->id)->where('anime_id',$request->anime_id)->get()->all();
+
+        if(count($existe)>0) {
+             return response()->json(["status"=>"failed","message" => "An user cant watch the same anime twice :("],400);
+  
+        } else {
+
             $watch = new Watch;
 
             $watch->user_id = Auth::user()->id;
@@ -67,7 +74,14 @@ class WatchController extends Controller
 
             $watch->save();
 
-           return response()->json(["status"=>"success","message" => "Anime added successfully to your list :)"],200);
+            $anime = Anime::find($request->anime_id);
+            $anime->userCount = $anime->userCount + 1;
+            $anime->rating = round((($request->score + ($anime->rating * $anime->ratingCount)) / ($anime->ratingCount + 1)),2);
+            $anime->ratingCount = $anime->ratingCount + 1;
+            $anime->save();
+
+           return response()->json(["status"=>"success","message" => "Anime added successfully to your list :)","data"=>$watch],200);
+        }
     }
 
     /**
@@ -147,7 +161,20 @@ class WatchController extends Controller
 
         if(!is_null($watch)) {
             
-            if(Auth::user->id == $watch->user_id) {
+            if(Auth::user()->id == $watch->user_id) {
+
+                $anime = Anime::find($watch->anime_id);
+                $anime->userCount = $anime->userCount - 1;
+
+                if(($anime->ratingCount - 1) == 0) {
+                    $anime->rating = 0;
+                } else {
+                    $anime->rating = round(((($anime->rating * $anime->ratingCount) - $watch->score) / ($anime->ratingCount - 1)),2);
+                }
+                $anime->ratingCount = $anime->ratingCount - 1;
+                $anime->save();
+
+                $watch->delete();
                  return response()->json(["status"=>"success","message"=>"Anime deleted from your list :)"],200);
             } else {
                 return response()->json(["status"=>"failed","message"=>"You cant delete an anime from other people lists :("],403);

@@ -174,6 +174,8 @@ class UserController extends Controller
 
             if(!is_null($user)) {
                 $user->delete();
+
+                $user->delete();
                 return response()->json(["status"=>"success","message"=>"User deleted successfully"],200);
 
             } else {
