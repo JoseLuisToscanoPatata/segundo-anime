@@ -3,6 +3,7 @@ require("./bootstrap");
 // Import modules...
 
 import { createApp, h } from "vue";
+
 import {
     App as InertiaApp,
     plugin as InertiaPlugin,

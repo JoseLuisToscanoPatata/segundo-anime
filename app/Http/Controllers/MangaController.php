@@ -45,6 +45,8 @@ class MangaController extends Controller
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
+                "startDate" =>  "nullable|string",
+                "endDate" =>  "nullable|string|gte:startDate",
                 'cover' =>  ["max:1000","file","mimes:jpg,jpeg,png","nullable"],
             ]);
 
@@ -70,6 +72,14 @@ class MangaController extends Controller
 
             if($request->subType) {
                 $manga->subType = $request->subType;
+            }
+
+            if($request->startDate) {
+                $manga->startDate = $request->startDate;
+            }
+
+            if($request->endDate) {
+                $manga->endDate = $request->endDate;
             }
             
             $manga->status = $request->status;
@@ -142,6 +152,8 @@ class MangaController extends Controller
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
+                "startDate" =>  "nullable|string",
+                "endDate" =>  "nullable|string|after_or_equal:startDate",
                 'cover' =>  ["max:1000","file","mimes:jpg,jpeg,png","nullable"],
                 ]);
 
@@ -165,6 +177,14 @@ class MangaController extends Controller
 
                 if($request->subType) {
                     $manga->subType = $request->subType;
+                }
+
+                if($request->startDate) {
+                    $manga->startDate = $request->startDate;
+                }
+
+                if($request->endDate) {
+                    $manga->endDate = $request->endDate;
                 }
 
                 $manga->status = $request->status;

@@ -3,9 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN MANGA LIST</h2>
     </template>
-    <div
-      class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden shadow-xl"
-    >
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
       <template v-if="!cargando">
         <!-- MODAL DE MENSAJES-->
 
@@ -204,6 +202,27 @@
                   </select>
                   <jet-input-error :message="errores['subType']" class="mt-2" />
                 </div>
+
+                <div class="col-span-6">
+                  <jet-label for="startDate" value="start Date" />
+                  <input
+                    id="startDate"
+                    type="date"
+                    v-model="datosActual['startDate']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  />
+                  <jet-input-error :message="errores['startDate']" class="mt-2" />
+                </div>
+                <div class="col-span-6">
+                  <jet-label for="endDate" value="end Date" />
+                  <input
+                    id="endDate"
+                    type="date"
+                    v-model="datosActual['endDate']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  />
+                  <jet-input-error :message="errores['endDate']" class="mt-2" />
+                </div>
               </div>
             </form>
           </template>
@@ -232,6 +251,7 @@
           :columnas="campos"
           :cantidadPaginas="paginacion"
           :botones="botones"
+          :filtros="filtros"
           :emisiones="emisiones"
           :imagenes="imagenes"
           @borrar-manga="pulsadoBorrar"
@@ -240,12 +260,13 @@
           @ver-manga="pulsadoVer"
           :botonesExtras="botonesExtras"
           :key="datos"
+          color="blue"
         >
         </data-table-area>
       </template>
 
       <template v-else>
-        <span>Cargando...</span>
+        <loading color="blue"></loading>
       </template>
     </div>
   </app-layout>
@@ -262,6 +283,7 @@ import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetInput from "@/Jetstream/Input";
+import Loading from "@/Pages/Componentes/Loading";
 
 export default {
   components: {
@@ -275,6 +297,7 @@ export default {
     JetLabel,
     JetInput,
     JetInputError,
+    Loading,
   },
 
   props: ["clave", "usuario"],
@@ -283,20 +306,37 @@ export default {
     return {
       paginacion: [
         { texto: "10", numero: 10 },
-        { texto: "20", numero: 20 },
         { texto: "30", numero: 30 },
-        { texto: "40", numero: 40 },
         { texto: "50", numero: 50 },
+        { texto: "100", numero: 100 },
+        { texto: "200", numero: 200 },
       ],
       datos: {},
       emisiones: ["borrar-manga", "editar-manga", "crear-manga", "ver-manga"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
 
+      filtros: [
+        {
+          nombre: "ageRating",
+          titulo: "age Rating",
+          opciones: ["G", "PG", "PR", "R18"],
+          actual: "",
+          ancho: "col-span-2",
+        },
+        {
+          nombre: "status",
+          titulo: "Status",
+          opciones: ["current", "finished", "tba"],
+          actual: "",
+          ancho: "col-span-2",
+        },
+      ],
+
       botonesExtras: [
         {
           texto: "New Manga",
           emit: "crear-manga",
-          clases: "text-white bg-pink-400 hover:bg-pink-600",
+          clases: "text-white bg-blue-400 hover:bg-blue-600",
         },
       ],
 
@@ -379,8 +419,8 @@ export default {
           nombre: "ageRating",
           titulo: "age Rating",
           tipo: "texto",
-          sorteable: true,
-          filtrable: true,
+          sorteable: false,
+          filtrable: false,
           color: "text-blue-500",
           width: "min-width: 115px",
           alineacion: "centrado",
@@ -390,8 +430,8 @@ export default {
           nombre: "status",
           titulo: "Status",
           tipo: "texto",
-          sorteable: true,
-          filtrable: true,
+          sorteable: false,
+          filtrable: false,
           color: "text-indigo-500",
           width: "min-width: 125px",
           alineacion: "izquierda",
@@ -427,6 +467,8 @@ export default {
         subType: "",
         status: "",
         cover: "",
+        startDate: "",
+        endDate: "",
       },
 
       errores: {
@@ -437,6 +479,8 @@ export default {
         subType: null,
         status: null,
         cover: null,
+        startDate: null,
+        endDate: null,
       },
     };
   },
@@ -539,6 +583,8 @@ export default {
       datos.append("chapters", this.datosActual["chapters"]);
       datos.append("ageRating", this.datosActual["ageRating"]);
       datos.append("subType", this.datosActual["subType"]);
+      datos.append("startDate", this.datosActual["startDate"]);
+      datos.append("endDate", this.datosActual["endDate"]);
       if (this.photoPreview) {
         this.datosActual["cover"] = this.$refs.photo.files[0];
         datos.append("cover", this.$refs.photo.files[0]);
@@ -584,6 +630,9 @@ export default {
               this.errores["subType"] = err.response.data.validation_errors["subType"];
               this.errores["status"] = err.response.data.validation_errors["status"];
               this.errores["cover"] = err.response.data.validation_errors["cover"];
+              this.errores["startDate"] =
+                err.response.data.validation_errors["startDate"];
+              this.errores["endDate"] = err.response.data.validation_errors["endDate"];
             }
           });
 
@@ -607,6 +656,8 @@ export default {
                 this.datos[actual].status = this.datosActual["status"];
                 this.datos[actual].ageRating = this.datosActual["ageRating"];
                 this.datos[actual].subType = this.datosActual["subType"];
+                this.datos[actual].startDate = this.datosActual["startDate"];
+                this.datos[actual].endDate = this.datosActual["endDate"];
                 this.datos[actual].cover = res.data.data.cover;
               }
             }
@@ -637,6 +688,9 @@ export default {
               this.errores["subType"] = err.response.data.validation_errors["subType"];
               this.errores["status"] = err.response.data.validation_errors["status"];
               this.errores["cover"] = err.response.data.validation_errors["cover"];
+              this.errores["startDate"] =
+                err.response.data.validation_errors["startDate"];
+              this.errores["endDate"] = err.response.data.validation_errors["endDate"];
             }
           });
       }

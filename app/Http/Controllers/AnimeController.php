@@ -47,6 +47,9 @@ class AnimeController extends Controller
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
+                "startDate" =>  "nullable|string",
+                "endDate" =>  "nullable|string|gte:startDate",
+                "trailer" => "nullable|string",
                 "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:1000'],
             ]);
 
@@ -76,6 +79,19 @@ class AnimeController extends Controller
 
             if($request->subType) {
                 $anime->subType = $request->subType;
+            }
+
+            
+            if($request->trailer) {
+                $anime->trailer = $request->trailer;
+            }
+
+            if($request->startDate) {
+                $anime->startDate = $request->startDate;
+            }
+
+            if($request->endDate) {
+                $anime->endDate = $request->endDate;
             }
      
             $anime->status = $request->status;
@@ -149,6 +165,9 @@ class AnimeController extends Controller
                     "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                     "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                     "status"=>["required",Rule::in(['current','finished','tba'])],
+                    "startDate" =>  "nullable|string",
+                     "endDate" =>  "nullable|string|gte:startDate",
+                     "trailer" => "nullable|string",
                     "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
                 ]);
 
@@ -178,6 +197,18 @@ class AnimeController extends Controller
                     $anime->subType = $request->subType;
                 }
 
+                if($request->trailer) {
+                    $anime->trailer = $request->trailer;
+                }
+
+                if($request->startDate) {
+                    $anime->startDate = $request->startDate;
+                }
+
+                if($request->endDate) {
+                    $anime->endDate = $request->endDate;
+                }
+
                 $anime->status = $request->status;
 
                 $anime->save();
@@ -200,14 +231,14 @@ class AnimeController extends Controller
                 }
                 
 
-                return response()->json(["status"=>"success","message" => "Anime updated successfully :)"],200);
+                return response()->json(["status"=>"success","message" => "Anime updated successfully :)","data"=>$anime],200);
             
             } else {
                 return response()->json(["status"=>"failed","message"=>"Anime not found :("],404);
             }
 
           } else {
-            return response()->json(["status"=>"failed","message"=>"You dont have permissions :(","data"=>$anime],401);
+            return response()->json(["status"=>"failed","message"=>"You dont have permissions :("],401);
             
           }
     }

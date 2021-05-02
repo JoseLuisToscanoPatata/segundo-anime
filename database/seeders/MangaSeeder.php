@@ -18,7 +18,7 @@ class MangaSeeder extends Seeder
     {
         $url = 'https://kitsu.io/api/edge/manga';
 
-        for ($i=1; $i < 500 ; $i++) { 
+        for ($i=58000; $i > 53000 ; $i--) { 
             
             $response = Http::get($url."/".($i));
 
@@ -43,9 +43,11 @@ class MangaSeeder extends Seeder
                     'ageRating'=>$manga['attributes']['ageRating'],
                     'subtype' =>  $manga['attributes']['subtype'],
                     'status'=>$manga['attributes']['status'],
+                      'startDate'=>$manga['attributes']['startDate'],
+                    'endDate'=>$manga['attributes']['endDate'],
                     'ratingCount'=>0,
                     'userCount'=>0,
-                    'cover'=>$manga['attributes']['posterImage']['original'],
+                    'cover'=>$manga['attributes']['posterImage']?$manga['attributes']['posterImage']['original']: null,
                 ]);
             }
         }

@@ -24,6 +24,8 @@ class CreateMangasTable extends Migration
             $table->enum('status',['current','finished','tba']);
             $table->integer('ratingCount')->default(0);
             $table->integer('userCount')->default(0);
+            $table->string('startDate')->nullable();
+            $table->string('endDate')->nullable();
             $table->string('cover',255)->nullable();
             $table->timestamps();
         });

@@ -1,3 +1,10 @@
-*
-!public/
+!public/anime-photos
+!public/manga-photos
+!public/profile-photos
+!public/profile-photos/BigChungus.png
+!public/profile-photos/knucles.png
+!public/profile-photos/shrek.png
+public/profile-photos/*
+public/manga-photos/*
+public/anime-photos/*
 !.gitignore

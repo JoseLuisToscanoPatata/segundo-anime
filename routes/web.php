@@ -37,8 +37,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('Anime/AnimeUserList');
     })->name('AnimeUserList');
 
-    route::get('/AnimeProfile', function () {
-        return Inertia::render('Anime/AnimeShow');
+    route::get('/AnimeProfile/{id}', function ($id) {
+        return Inertia::render('Anime/AnimeShow',['anime'=>$id]);
     })->name('AnimeProfile');
 
     route::get('/MangaList', function () {

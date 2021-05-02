@@ -18,7 +18,7 @@ class AnimeSeeder extends Seeder
     {
         $url = 'https://kitsu.io/api/edge/anime';
 
-        for ($i=1; $i < 500 ; $i++) { 
+        for ($i=45000; $i > 40000 ; $i--) { 
             
             $response = Http::get($url."/".($i));
 
@@ -42,11 +42,14 @@ class AnimeSeeder extends Seeder
                     'episodes' => $anime['attributes']['episodeCount']? $anime['attributes']['episodeCount']: 0,
                     'episodeLength' => $anime['attributes']['episodeLength']? $anime['attributes']['episodeLength']: 0,
                     'ageRating'=>$anime['attributes']['ageRating'],
+                    'startDate'=>$anime['attributes']['startDate'],
+                    'endDate'=>$anime['attributes']['endDate'],
                     'subtype' =>  $anime['attributes']['subtype'],
                     'status'=>$anime['attributes']['status'],
+                    'trailer'=>$anime['attributes'][''.'youtubeVideoId']?'https://www.youtube.com/embed/'.$anime['attributes'][''.'youtubeVideoId']: null,
                     'ratingCount'=>0,
                     'userCount'=>0,
-                    'cover'=>$anime['attributes']['posterImage']['original'],
+                    'cover'=>$anime['attributes']['posterImage']?$anime['attributes']['posterImage']['original']: null,
                 ]);
             }
         }

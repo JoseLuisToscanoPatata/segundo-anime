@@ -4,9 +4,7 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN USERS LIST</h2>
     </template>
 
-    <div
-      class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden shadow-xl"
-    >
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
       <template v-if="!cargando">
         <jet-dialog-modal :show="hayError" @close="hayError = false">
           <template #title> No permissions </template>
@@ -59,12 +57,13 @@
           :imagenes="imagenes"
           @borrar-usu="pulsadoBorrar"
           @cambiar-rol="cambiarRolUsu"
+          color="indigo"
         >
         </data-table-area>
       </template>
 
       <template v-else>
-        <span>Cargando...</span>
+        <loading color="indigo"></loading>
       </template>
     </div>
   </app-layout>
@@ -77,6 +76,7 @@ import JetDialogModal from "@/Jetstream/DialogModal";
 import JetDangerButton from "@/Jetstream/DangerButton";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import Loading from "@/Pages/Componentes/Loading";
 
 export default {
   components: {
@@ -86,6 +86,7 @@ export default {
     JetDangerButton,
     JetCheckbox,
     JetSecondaryButton,
+    Loading,
   },
 
   props: ["clave", "usuario"],
@@ -95,9 +96,9 @@ export default {
       paginacion: [
         { texto: "5", numero: 5 },
         { texto: "10", numero: 10 },
-        { texto: "15", numero: 15 },
-        { texto: "20", numero: 20 },
         { texto: "25", numero: 25 },
+        { texto: "50", numero: 50 },
+        { texto: "100", numero: 100 },
       ],
       datos: {},
       emisiones: ["cambiar-rol", "borrar-usu"],

@@ -22,7 +22,10 @@ class CreateAnimesTable extends Migration
             $table->integer('episodeLength')->nullable()->default(0);
             $table->enum('ageRating',['G','PG','R','R18'])->nullable()->default('G');
             $table->enum('subType',['ONA','OVA','TV','movie','music','special'])->nullable();
+            $table->string("trailer")->nullable();
             $table->enum('status',['current','finished','tba']);
+            $table->string("startDate")->nullable();
+            $table->string("endDate")->nullable();
             $table->integer('ratingCount')->default(0);
             $table->integer('userCount')->default(0);
             $table->string('cover',255)->nullable();
