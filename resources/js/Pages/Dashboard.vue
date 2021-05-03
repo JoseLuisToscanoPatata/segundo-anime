@@ -6,14 +6,15 @@
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
       <div
-        class="p-6 bg-fuchsia-200 overflow-hidden shadow-xl rounded-lg grid grid-cols-12"
+        class="p-6 bg-fuchsia-200 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
       >
         <template v-if="!cargando">
           <div
             class="col-span-12 dashboard:col-span-9 flex flex-col mr-5 overflow-hidden"
           >
             <div class="flex flex-col">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+              <span
+                class="text-gray-500 text-lg font-semibold mb-3 border-b-2 border-gray-500"
                 >Current season Animes</span
               >
               <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
@@ -54,7 +55,8 @@
               </div>
             </div>
             <div class="flex flex-col mt-6">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+              <span
+                class="text-gray-500 text-lg font-semibold mb-3 border-b-2 border-gray-500"
                 >Recommended animes</span
               >
               <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
@@ -95,7 +97,8 @@
               </div>
             </div>
             <div class="flex flex-col mt-6">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+              <span
+                class="text-gray-500 font-semibold text-lg mb-3 border-b-2 border-gray-500"
                 >Recommended Mangas</span
               >
               <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
@@ -135,8 +138,9 @@
                 <div class="h-2 entrada"></div>
               </div>
             </div>
-            <div class="flex flex-col 6">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+            <div class="flex flex-col 6 mt-6">
+              <span
+                class="text-gray-500 font-semibold text-lg mb-3 border-b-2 border-gray-500"
                 >Most seen Trailers</span
               >
               <div class="flex flex-row overflow-x-auto overflow-hidden">
@@ -144,11 +148,10 @@
                   <div class="flex flex-col">
                     <iframe
                       :src="actual['trailer']"
-                      width="320"
-                      height="180"
+                      width="432"
+                      height="243"
                       title="Trailer"
                       frameborder="0"
-                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen
                       class="m-2"
                     />
@@ -160,80 +163,102 @@
               </div>
             </div>
           </div>
-          <div class="col-span-12 dashboard:col-span-3 flex flex-col">
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+          <div
+            class="col-span-11 dashboard:col-span-2 col-start-1 dashboard:col-start-11 mt-5 dashboard:mt-0 flex flex-row dashboard:flex-col"
+          >
+            <div class="flex flex-col dashboard:items-center overflow-x-auto">
+              <span
+                class="w-full text-gray-500 font-semibold text-lg mb-3 border-b-2 border-gray-500"
                 >Best Animes</span
               >
               <div
-                class="flex flex-row dashboard:flex-col overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
+                class="flex flex-row dashboard:flex-col dashboard:w-28 dashboard:items-center overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
               >
                 <div
-                  class="flex flex-row mr-3 pt-2 mb-1 pb-2"
+                  class="block h-48 mt-2 mr-4 dashboard:mr-0 hover:opacity-80"
                   v-for="actual in mejoresAnimes"
                   :key="actual"
                 >
-                  <a :href="route('AnimeProfile', actual['id'])">
-                    <img
-                      v-if="actual['cover'] != null"
-                      alt="Cover del anime"
-                      :src="actual['cover']"
-                      class="h-44 w-32 max-w-none rounded-l-md"
-                    />
-                    <img
-                      v-else
-                      src="img/no_foto.jpg"
-                      class="h-44 w-32 max-w-none rounded-l-md"
-                      alt="Sin cover"
-                    />
-                  </a>
-                  <div class="flex flex-col text-md bg-white rounded-r-md p-2 w-32 h-44">
-                    <span class="text-gray-400 h-24">{{ actual["title"] }}</span>
-                    <div class="flex flex-row">
-                      <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
-                      <span class="text-md text-yellow-400 h-20">{{
-                        actual["rating"]
-                      }}</span>
-                    </div>
+                  <div class="flex flex-row h-5 justify-center">
+                    <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
+                    <span class="text-md text-yellow-400 h-20">{{
+                      actual["rating"]
+                    }}</span>
                   </div>
+
+                  <a :href="route('AnimeProfile', actual['id'])" class="hover:opacity-70">
+                    <abbr :title="actual['title']">
+                      <div class="hover:opacity-80 hover:bg-white transition-all h-40">
+                        <img
+                          v-if="actual['cover'] != null"
+                          alt="Cover del anime"
+                          :src="actual['cover']"
+                          class="h-40 w-28 max-w-none rounded-md"
+                        />
+                        <img
+                          v-else
+                          src="img/no_foto.jpg"
+                          class="h-40 w-28 max-w-none rounded-md"
+                          alt="Sin cover"
+                        />
+                        <span
+                          class="block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all"
+                          style="color: #d61dc9"
+                        >
+                          {{ actual["title"] }}
+                        </span>
+                      </div>
+                    </abbr>
+                  </a>
                 </div>
               </div>
             </div>
-            <div class="flex flex-col">
-              <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+            <div
+              class="flex flex-col ml-10 dashboard:ml-0 dashboard:items-center overflow-x-auto"
+            >
+              <span
+                class="w-full text-gray-500 font-semibold text-lg mb-3 border-b-2 border-gray-500"
                 >Best Mangas</span
               >
               <div
-                class="flex flex-row dashboard:flex-col overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
+                class="flex flex-row dashboard:flex-col dashboard:w-28 dashboard:items-center overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
               >
                 <div
-                  class="flex flex-row mr-3 pt-2 mb-1 pb-2"
+                  class="block h-48 mt-2 mr-4 dashboard:mr-0 hover:opacity-80"
                   v-for="actual in mejoresMangas"
                   :key="actual"
                 >
-                  <a :href="route('MangaProfile', actual['id'])">
-                    <img
-                      v-if="actual['cover'] != null"
-                      alt="Cover del manga"
-                      :src="actual['cover']"
-                      class="h-44 w-32 max-w-none rounded-l-md"
-                    />
-                    <img
-                      v-else
-                      src="img/no_foto.jpg"
-                      class="h-44 w-32 max-w-none rounded-l-md"
-                      alt="Sin cover"
-                    />
-                  </a>
-                  <div class="flex flex-col text-md bg-white rounded-r-md p-2 w-32 h-44">
-                    <span class="text-gray-400 h-24">{{ actual["title"] }}</span>
-                    <div class="flex flex-row">
-                      <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
-                      <span class="text-md text-yellow-400 h-20">{{
-                        actual["rating"]
-                      }}</span>
-                    </div>
+                  <div class="flex flex-row h-5 justify-center">
+                    <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
+                    <span class="text-md text-yellow-400 h-20">{{
+                      actual["rating"]
+                    }}</span>
                   </div>
+
+                  <a :href="route('MangaProfile', actual['id'])" class="hover:opacity-70">
+                    <abbr :title="actual['title']">
+                      <div class="hover:opacity-80 hover:bg-white transition-all h-40">
+                        <img
+                          v-if="actual['cover'] != null"
+                          alt="Cover del manga"
+                          :src="actual['cover']"
+                          class="h-40 w-28 max-w-none rounded-md"
+                        />
+                        <img
+                          v-else
+                          src="img/no_foto.jpg"
+                          class="h-40 w-28 max-w-none rounded-md"
+                          alt="Sin cover"
+                        />
+                        <span
+                          class="block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all"
+                          style="color: #d61dc9"
+                        >
+                          {{ actual["title"] }}
+                        </span>
+                      </div>
+                    </abbr>
+                  </a>
                 </div>
               </div>
             </div>

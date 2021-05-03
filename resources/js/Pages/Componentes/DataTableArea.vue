@@ -345,3 +345,31 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555455;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #242424;
+}
+
+::-webkit-scrollbar-track-piece {
+  background: white;
+  border-radius: 10px;
+}
+</style>
