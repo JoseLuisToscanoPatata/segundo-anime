@@ -16,108 +16,146 @@
               <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
                 >Current season Animes</span
               >
-              <div class="flex flex-row overflow-hidden overflow-x-auto Flipped">
-                <div
-                  class="flex flex-col mr-3 entrada pt-2"
-                  v-for="actual in animesActuales"
-                  :key="actual"
-                >
-                  <a :href="route('AnimeProfile', actual['id'])">
-                    <img
-                      v-if="actual['cover'] != null"
-                      alt="Cover del anime"
-                      :src="actual['cover']"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                    />
-                    <img
-                      v-else
-                      src="img/no_foto.jpg"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                      alt="Sin cover"
-                    />
-                  </a>
-                  <span class="text-gray-400 text-xs bg-white rounded-b-md p-2 h-16">{{
-                    actual["title"]
-                  }}</span>
+              <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
+                <div class="flex flex-row">
+                  <div
+                    class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
+                    v-for="actual in animesActuales"
+                    :key="actual"
+                  >
+                    <a
+                      :href="route('AnimeProfile', actual['id'])"
+                      class="hover:opacity-70"
+                    >
+                      <abbr :title="actual['title']">
+                        <img
+                          v-if="actual['cover'] != null"
+                          alt="Cover del anime"
+                          :src="actual['cover']"
+                          class="h-52 w-40 max-w-none rounded-md"
+                        />
+                        <img
+                          v-else
+                          src="img/no_foto.jpg"
+                          class="h-52 w-40 max-w-none rounded-md"
+                          alt="Sin cover"
+                        />
+                        <span
+                          class="block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all"
+                          style="color: #d61dc9"
+                        >
+                          {{ actual["title"] }}
+                        </span>
+                      </abbr>
+                    </a>
+                  </div>
                 </div>
+                <div class="h-2 entrada"></div>
               </div>
             </div>
-            <div class="flex flex-col mt-3">
+            <div class="flex flex-col mt-6">
               <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
                 >Recommended animes</span
               >
-              <div class="flex flex-row overflow-hidden overflow-x-auto Flipped">
-                <div
-                  class="flex flex-col mr-3 entrada pt-2"
-                  v-for="actual in randomAnimes"
-                  :key="actual"
-                >
-                  <a :href="route('AnimeProfile', actual['id'])">
-                    <img
-                      v-if="actual['cover'] != null"
-                      alt="Cover del anime"
-                      :src="actual['cover']"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                    />
-                    <img
-                      v-else
-                      src="img/no_foto.jpg"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                      alt="Sin cover"
-                    />
-                  </a>
-                  <span class="text-gray-400 text-xs bg-white rounded-b-md p-2 h-16">{{
-                    actual["title"]
-                  }}</span>
+              <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
+                <div class="flex flex-row">
+                  <div
+                    class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
+                    v-for="actual in randomAnimes"
+                    :key="actual"
+                  >
+                    <a
+                      :href="route('AnimeProfile', actual['id'])"
+                      class="hover:opacity-70"
+                    >
+                      <abbr :title="actual['title']">
+                        <img
+                          v-if="actual['cover'] != null"
+                          alt="Cover del anime"
+                          :src="actual['cover']"
+                          class="h-52 w-40 max-w-none rounded-md"
+                        />
+                        <img
+                          v-else
+                          src="img/no_foto.jpg"
+                          class="h-52 w-40 max-w-none rounded-md"
+                          alt="Sin cover"
+                        />
+                        <span
+                          class="block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all"
+                          style="color: #d61dc9"
+                        >
+                          {{ actual["title"] }}
+                        </span>
+                      </abbr>
+                    </a>
+                  </div>
                 </div>
+                <div class="h-2 entrada"></div>
               </div>
             </div>
-            <div class="flex flex-col mt-3">
+            <div class="flex flex-col mt-6">
               <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
                 >Recommended Mangas</span
               >
-              <div class="flex flex-row overflow-hidden overflow-x-auto Flipped">
-                <div
-                  class="flex flex-col mr-3 entrada pt-2"
-                  v-for="actual in randomMangas"
-                  :key="actual"
-                >
-                  <a :href="route('MangaProfile', actual['id'])">
-                    <img
-                      v-if="actual['cover'] != null"
-                      alt="Cover del anime"
-                      :src="actual['cover']"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                    />
-                    <img
-                      v-else
-                      src="img/no_foto.jpg"
-                      class="h-52 w-40 max-w-none rounded-t-md"
-                      alt="Sin cover"
-                    />
-                  </a>
-                  <span class="text-gray-400 text-xs bg-white rounded-b-md p-2 h-16">{{
-                    actual["title"]
-                  }}</span>
+              <div class="flex flex-col overflow-x-auto overflow-hidden Flipped">
+                <div class="flex flex-row">
+                  <div
+                    class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
+                    v-for="actual in randomMangas"
+                    :key="actual"
+                  >
+                    <a
+                      :href="route('MangaProfile', actual['id'])"
+                      class="hover:opacity-70"
+                    >
+                      <abbr :title="actual['title']">
+                        <img
+                          v-if="actual['cover'] != null"
+                          alt="Cover del manga"
+                          :src="actual['cover']"
+                          class="h-52 w-40 max-w-none rounded-md"
+                        />
+                        <img
+                          v-else
+                          src="img/no_foto.jpg"
+                          class="h-52 w-40 max-w-none rounded-md"
+                          alt="Sin cover"
+                        />
+                        <span
+                          class="block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all"
+                          style="color: #d61dc9"
+                        >
+                          {{ actual["title"] }}
+                        </span>
+                      </abbr>
+                    </a>
+                  </div>
                 </div>
+                <div class="h-2 entrada"></div>
               </div>
             </div>
-            <div class="flex flex-col mt-3">
+            <div class="flex flex-col 6">
               <span class="text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
-                >Most famous Trailers</span
+                >Most seen Trailers</span
               >
               <div class="flex flex-row overflow-x-auto overflow-hidden">
                 <template v-for="actual in trailers" :key="actual">
-                  <iframe
-                    :src="actual"
-                    width="320"
-                    height="180"
-                    title="Trailer"
-                    frameborder="0"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    class="m-2"
-                  />
+                  <div class="flex flex-col">
+                    <iframe
+                      :src="actual['trailer']"
+                      width="320"
+                      height="180"
+                      title="Trailer"
+                      frameborder="0"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                      class="m-2"
+                    />
+                    <span class="text-warmGray-700 align-middle mx-3">
+                      {{ actual["title"] }}</span
+                    >
+                  </div>
                 </template>
               </div>
             </div>
@@ -251,7 +289,7 @@ export default {
 
           for (let posicion = 0; encontrados < 5; posicion++) {
             if (this.animes[posicion]["trailer"] != null) {
-              this.trailers.push(this.animes[posicion]["trailer"]);
+              this.trailers.push(this.animes[posicion]);
               encontrados++;
             }
           }
@@ -378,5 +416,11 @@ export default {
 ::-webkit-scrollbar-track-piece {
   background: white;
   border-radius: 10px;
+}
+
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
 }
 </style>

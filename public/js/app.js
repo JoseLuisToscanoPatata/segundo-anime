@@ -18496,7 +18496,7 @@ __webpack_require__.r(__webpack_exports__);
 
         for (var posicion = 0; encontrados < 5; posicion++) {
           if (_this.animes[posicion]["trailer"] != null) {
-            _this.trailers.push(_this.animes[posicion]["trailer"]);
+            _this.trailers.push(_this.animes[posicion]);
 
             encontrados++;
           }
@@ -24358,107 +24358,149 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_7 = {
-  "class": "flex flex-row overflow-hidden overflow-x-auto Flipped"
+  "class": "flex flex-col overflow-x-auto overflow-hidden Flipped"
 };
 var _hoisted_8 = {
-  key: 1,
-  src: "img/no_foto.jpg",
-  "class": "h-52 w-40 max-w-none rounded-t-md",
-  alt: "Sin cover"
+  "class": "flex flex-row"
 };
 var _hoisted_9 = {
-  "class": "text-gray-400 text-xs bg-white rounded-b-md p-2 h-16"
+  key: 1,
+  src: "img/no_foto.jpg",
+  "class": "h-52 w-40 max-w-none rounded-md",
+  alt: "Sin cover"
 };
 var _hoisted_10 = {
-  "class": "flex flex-col mt-3"
+  "class": "block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all",
+  style: {
+    "color": "#d61dc9"
+  }
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "h-2 entrada"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "flex flex-col mt-6"
+};
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
 }, "Recommended animes", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = {
-  "class": "flex flex-row overflow-hidden overflow-x-auto Flipped"
-};
-var _hoisted_13 = {
-  key: 1,
-  src: "img/no_foto.jpg",
-  "class": "h-52 w-40 max-w-none rounded-t-md",
-  alt: "Sin cover"
-};
 var _hoisted_14 = {
-  "class": "text-gray-400 text-xs bg-white rounded-b-md p-2 h-16"
+  "class": "flex flex-col overflow-x-auto overflow-hidden Flipped"
 };
 var _hoisted_15 = {
-  "class": "flex flex-col mt-3"
+  "class": "flex flex-row"
+};
+var _hoisted_16 = {
+  key: 1,
+  src: "img/no_foto.jpg",
+  "class": "h-52 w-40 max-w-none rounded-md",
+  alt: "Sin cover"
+};
+var _hoisted_17 = {
+  "class": "block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all",
+  style: {
+    "color": "#d61dc9"
+  }
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "h-2 entrada"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  "class": "flex flex-col mt-6"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
 }, "Recommended Mangas", -1
 /* HOISTED */
 );
 
-var _hoisted_17 = {
-  "class": "flex flex-row overflow-hidden overflow-x-auto Flipped"
+var _hoisted_21 = {
+  "class": "flex flex-col overflow-x-auto overflow-hidden Flipped"
 };
-var _hoisted_18 = {
+var _hoisted_22 = {
+  "class": "flex flex-row"
+};
+var _hoisted_23 = {
   key: 1,
   src: "img/no_foto.jpg",
-  "class": "h-52 w-40 max-w-none rounded-t-md",
+  "class": "h-52 w-40 max-w-none rounded-md",
   alt: "Sin cover"
 };
-var _hoisted_19 = {
-  "class": "text-gray-400 text-xs bg-white rounded-b-md p-2 h-16"
-};
-var _hoisted_20 = {
-  "class": "flex flex-col mt-3"
+var _hoisted_24 = {
+  "class": "block text-xs font-extrabold bg-black rounded-md p-2 relative bottom-10 overflow-y-hidden h-10 bg-opacity-0 hover:bg-opacity-80 transition-all",
+  style: {
+    "color": "#d61dc9"
+  }
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
-}, "Most famous Trailers", -1
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "h-2 entrada"
+}, null, -1
 /* HOISTED */
 );
 
-var _hoisted_22 = {
+var _hoisted_26 = {
+  "class": "flex flex-col 6"
+};
+
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
+}, "Most seen Trailers", -1
+/* HOISTED */
+);
+
+var _hoisted_28 = {
   "class": "flex flex-row overflow-x-auto overflow-hidden"
 };
-var _hoisted_23 = {
+var _hoisted_29 = {
+  "class": "text-warmGray-700 align-middle mx-3"
+};
+var _hoisted_30 = {
   "class": "col-span-12 dashboard:col-span-3 flex flex-col"
 };
-var _hoisted_24 = {
+var _hoisted_31 = {
   "class": "flex flex-col"
 };
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
 }, "Best Animes", -1
 /* HOISTED */
 );
 
-var _hoisted_26 = {
+var _hoisted_33 = {
   "class": "flex flex-row dashboard:flex-col overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
 };
-var _hoisted_27 = {
+var _hoisted_34 = {
   key: 1,
   src: "img/no_foto.jpg",
   "class": "h-44 w-32 max-w-none rounded-l-md",
   alt: "Sin cover"
 };
-var _hoisted_28 = {
+var _hoisted_35 = {
   "class": "flex flex-col text-md bg-white rounded-r-md p-2 w-32 h-44"
 };
-var _hoisted_29 = {
+var _hoisted_36 = {
   "class": "text-gray-400 h-24"
 };
-var _hoisted_30 = {
+var _hoisted_37 = {
   "class": "flex flex-row"
 };
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
   src: "img/star.svg",
   alt: "Rating",
   "class": "h-4 w-4"
@@ -24466,39 +24508,39 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_32 = {
+var _hoisted_39 = {
   "class": "text-md text-yellow-400 h-20"
 };
-var _hoisted_33 = {
+var _hoisted_40 = {
   "class": "flex flex-col"
 };
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "text-gray-500 text-lg mb-3 border-b-2 border-gray-500"
 }, "Best Mangas", -1
 /* HOISTED */
 );
 
-var _hoisted_35 = {
+var _hoisted_42 = {
   "class": "flex flex-row dashboard:flex-col overflow-hidden mb-2 overflow-x-auto dashboard:overflow-x-hidden"
 };
-var _hoisted_36 = {
+var _hoisted_43 = {
   key: 1,
   src: "img/no_foto.jpg",
   "class": "h-44 w-32 max-w-none rounded-l-md",
   alt: "Sin cover"
 };
-var _hoisted_37 = {
+var _hoisted_44 = {
   "class": "flex flex-col text-md bg-white rounded-r-md p-2 w-32 h-44"
 };
-var _hoisted_38 = {
+var _hoisted_45 = {
   "class": "text-gray-400 h-24"
 };
-var _hoisted_39 = {
+var _hoisted_46 = {
   "class": "flex flex-row"
 };
 
-var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
   src: "img/star.svg",
   alt: "Rating",
   "class": "h-4 w-4"
@@ -24506,7 +24548,7 @@ var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_41 = {
+var _hoisted_48 = {
   "class": "text-md text-yellow-400 h-20"
 };
 
@@ -24524,70 +24566,87 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "default": _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [!$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.animesActuales, function (actual) {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.animesActuales, function (actual) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-          "class": "flex flex-col mr-3 entrada pt-2",
+          "class": "block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all",
           key: actual
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-          href: _ctx.route('AnimeProfile', actual['id'])
+          href: _ctx.route('AnimeProfile', actual['id']),
+          "class": "hover:opacity-70"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("abbr", {
+          title: actual['title']
         }, [actual['cover'] != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
           key: 0,
           alt: "Cover del anime",
           src: actual['cover'],
-          "class": "h-52 w-40 max-w-none rounded-t-md"
+          "class": "h-52 w-40 max-w-none rounded-md"
         }, null, 8
         /* PROPS */
-        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_8))], 8
-        /* PROPS */
-        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_9)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
         /* TEXT */
-        )]);
+        )], 8
+        /* PROPS */
+        , ["title"])], 8
+        /* PROPS */
+        , ["href"])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.randomAnimes, function (actual) {
+      ))]), _hoisted_11])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.randomAnimes, function (actual) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-          "class": "flex flex-col mr-3 entrada pt-2",
+          "class": "block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all",
           key: actual
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-          href: _ctx.route('AnimeProfile', actual['id'])
+          href: _ctx.route('AnimeProfile', actual['id']),
+          "class": "hover:opacity-70"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("abbr", {
+          title: actual['title']
         }, [actual['cover'] != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
           key: 0,
           alt: "Cover del anime",
           src: actual['cover'],
-          "class": "h-52 w-40 max-w-none rounded-t-md"
+          "class": "h-52 w-40 max-w-none rounded-md"
         }, null, 8
         /* PROPS */
-        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_13))], 8
-        /* PROPS */
-        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_16)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
         /* TEXT */
-        )]);
+        )], 8
+        /* PROPS */
+        , ["title"])], 8
+        /* PROPS */
+        , ["href"])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.randomMangas, function (actual) {
+      ))]), _hoisted_18])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.randomMangas, function (actual) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-          "class": "flex flex-col mr-3 entrada pt-2",
+          "class": "block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all",
           key: actual
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-          href: _ctx.route('MangaProfile', actual['id'])
+          href: _ctx.route('MangaProfile', actual['id']),
+          "class": "hover:opacity-70"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("abbr", {
+          title: actual['title']
         }, [actual['cover'] != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
           key: 0,
-          alt: "Cover del anime",
+          alt: "Cover del manga",
           src: actual['cover'],
-          "class": "h-52 w-40 max-w-none rounded-t-md"
+          "class": "h-52 w-40 max-w-none rounded-md"
         }, null, 8
         /* PROPS */
-        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_18))], 8
-        /* PROPS */
-        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_23)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
         /* TEXT */
-        )]);
+        )], 8
+        /* PROPS */
+        , ["title"])], 8
+        /* PROPS */
+        , ["href"])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.trailers, function (actual) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("iframe", {
+      ))]), _hoisted_25])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.trailers, function (actual) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           key: actual,
-          src: actual,
+          "class": "flex flex-col"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("iframe", {
+          src: actual['trailer'],
           width: "320",
           height: "180",
           title: "Trailer",
@@ -24597,10 +24656,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
           "class": "m-2"
         }, null, 8
         /* PROPS */
-        , ["src"]);
+        , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        /* TEXT */
+        )]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.mejoresAnimes, function (actual) {
+      ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.mejoresAnimes, function (actual) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           "class": "flex flex-row mr-3 pt-2 mb-1 pb-2",
           key: actual
@@ -24613,16 +24674,16 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
           "class": "h-44 w-32 max-w-none rounded-l-md"
         }, null, 8
         /* PROPS */
-        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_27))], 8
+        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_34))], 8
         /* PROPS */
-        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["rating"]), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["rating"]), 1
         /* TEXT */
         )])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.mejoresMangas, function (actual) {
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.mejoresMangas, function (actual) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           "class": "flex flex-row mr-3 pt-2 mb-1 pb-2",
           key: actual
@@ -24635,11 +24696,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
           "class": "h-44 w-32 max-w-none rounded-l-md"
         }, null, 8
         /* PROPS */
-        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_36))], 8
+        , ["src"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_43))], 8
         /* PROPS */
-        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
+        , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["title"]), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["rating"]), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(actual["rating"]), 1
         /* TEXT */
         )])])]);
       }), 128
@@ -27041,7 +27102,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.Flipped[data-v-097ba13b],\r\n.entrada[data-v-097ba13b] {\r\n  transform: rotateX(180deg);\r\n  -ms-transform: rotateX(180deg); /* IE 9 */\r\n  -webkit-transform: rotateX(180deg); /* Safari and Chrome */\n}\n[data-v-097ba13b]::-webkit-scrollbar {\r\n  width: 20px;\n}\r\n\r\n/* Track */\n[data-v-097ba13b]::-webkit-scrollbar-track {\r\n  box-shadow: inset 0 0 5px grey;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle */\n[data-v-097ba13b]::-webkit-scrollbar-thumb {\r\n  background: #d61dc9;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle on hover */\n[data-v-097ba13b]::-webkit-scrollbar-thumb:hover {\r\n  background: #a7189d;\n}\n[data-v-097ba13b]::-webkit-scrollbar-track-piece {\r\n  background: white;\r\n  border-radius: 10px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.Flipped[data-v-097ba13b],\r\n.entrada[data-v-097ba13b] {\r\n  transform: rotateX(180deg);\r\n  -ms-transform: rotateX(180deg); /* IE 9 */\r\n  -webkit-transform: rotateX(180deg); /* Safari and Chrome */\n}\n[data-v-097ba13b]::-webkit-scrollbar {\r\n  width: 20px;\n}\r\n\r\n/* Track */\n[data-v-097ba13b]::-webkit-scrollbar-track {\r\n  box-shadow: inset 0 0 5px grey;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle */\n[data-v-097ba13b]::-webkit-scrollbar-thumb {\r\n  background: #d61dc9;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle on hover */\n[data-v-097ba13b]::-webkit-scrollbar-thumb:hover {\r\n  background: #a7189d;\n}\n[data-v-097ba13b]::-webkit-scrollbar-track-piece {\r\n  background: white;\r\n  border-radius: 10px;\n}\nabbr[title][data-v-097ba13b] {\r\n  border-bottom: none !important;\r\n  cursor: inherit !important;\r\n  text-decoration: none !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
