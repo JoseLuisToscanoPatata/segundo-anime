@@ -319,7 +319,8 @@ export default {
         {
           nombre: "ageRating",
           titulo: "age Rating",
-          opciones: ["G", "PG", "PR", "R18"],
+          opciones: ["G", "PG", "R", "R18"],
+          titulos: ["G", "PG", "R", "R-18"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -327,6 +328,7 @@ export default {
           nombre: "status",
           titulo: "Status",
           opciones: ["current", "finished", "tba"],
+          titulos: ["Current", "Finished", "TBA"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -342,23 +344,23 @@ export default {
 
       botones: [
         {
-          abbr: "Editar manga",
+          abbr: "Edit Manga",
           icono: "img/updateOther.svg",
           emit: "editar-manga",
-          alt: "Botón de edición de manga",
+          alt: "Manga edition button",
         },
         {
-          abbr: "Borrar manga",
+          abbr: "Delete manga",
           icono: "img/deleteOther.svg",
           emit: "borrar-manga",
-          alt: "Botón de borrar manga",
+          alt: "Manga deletion button",
         },
 
         {
-          abbr: "Mostrar manga",
+          abbr: "Manga Page",
           icono: "img/eye.svg",
           emit: "ver-manga",
-          alt: "Botón de ver manga",
+          alt: "Manga Page button",
         },
       ],
 

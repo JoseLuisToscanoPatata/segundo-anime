@@ -38,12 +38,12 @@
         >
           <option value="">{{ filtro["titulo"] }}</option>
           <option
-            v-for="opcion in filtro['opciones']"
-            :value="opcion"
-            :key="opcion"
+            v-for="opcion in filtro['opciones'].length"
+            :value="filtro['opciones'][opcion - 1]"
+            :key="filtro['opciones'][opcion - 1]"
             class="shadow-sm"
           >
-            {{ opcion }}
+            {{ filtro["titulos"][opcion - 1] }}
           </option>
         </select>
       </template>
@@ -110,22 +110,31 @@
                   </template>
 
                   <template v-else>
-                    <template v-if="nomProp == 'name'">
+                    <template v-if="nomProp == columnaIcono">
                       <div class="flex justify start">
                         <span class="text-gray-500">{{ valorProp }}</span>
-                        <template v-if="compararRol(valorProp)">
-                          <img
-                            src="img/adminLogo.svg"
-                            alt="icono admin"
-                            class="h-5 ml-2 w-auto"
-                          />
+
+                        <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
+                          <abbr :title="iconos[0]['abbr']">
+                            <button @click="$emit(iconos[0]['emit'], dato.id)">
+                              <img
+                                :src="iconos[0]['icono']"
+                                :alt="iconos[0]['alt']"
+                                class="h-5 ml-2 w-auto focus:outline-none outline-none"
+                              />
+                            </button>
+                          </abbr>
                         </template>
                         <template v-else>
-                          <img
-                            src="img/sapato.svg"
-                            alt="icono usuario"
-                            class="h-5 ml-2 w-auto"
-                          />
+                          <abbr :title="iconos[1]['abbr']">
+                            <button @click="$emit(iconos[1]['emit'], dato.id)">
+                              <img
+                                :src="iconos[1]['icono']"
+                                :alt="iconos[1]['alt']"
+                                class="h-5 ml-2 w-auto focus:outline-none outline-none"
+                              />
+                            </button>
+                          </abbr>
                         </template>
                       </div>
                     </template>
@@ -133,24 +142,24 @@
                     <span v-else class="text-gray-500 break-all">{{ valorProp }}</span>
                   </template>
                 </td>
-
-                <template v-if="nomProp == 'id'">
-                  <td v-if="columna.tipo == 'botones'">
-                    <div class="flex justify-start">
-                      <button
-                        v-for="boton in botones"
-                        :key="boton"
-                        :alt="boton.alt"
-                        @click="$emit(boton.emit, valorProp)"
-                        class="mr-4 focus:outline-none outline-none"
-                      >
-                        <img :src="boton.icono" class="h-6 w-auto" />
-                      </button>
-                    </div>
-                  </td>
-                </template>
               </template>
             </template>
+
+            <td>
+              <div class="flex justify-start">
+                <template v-for="boton in botones" :key="boton">
+                  <abbr :title="boton.abbr">
+                    <button
+                      :alt="boton.alt"
+                      @click="$emit(boton.emit, dato.id)"
+                      class="mr-4 focus:outline-none outline-none"
+                    >
+                      <img :src="boton.icono" class="h-6 w-auto" />
+                    </button>
+                  </abbr>
+                </template>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -224,6 +233,9 @@ export default {
     botonesExtras: {},
     filtros: {},
     color: "",
+    columnaIcono: "",
+    nombreValorIcono: "",
+    iconos: "",
   },
 
   emits: {},
@@ -319,16 +331,6 @@ export default {
           return x > y ? -1 : x < y ? 1 : 0;
         }
       });
-    },
-
-    compararRol(nombre) {
-      for (let elemento = 0; elemento < this.datosOrdenados.length; elemento++) {
-        if (this.datosOrdenados[elemento].name == nombre) {
-          if (this.datosOrdenados[elemento].role == "admin") {
-            return true;
-          }
-        }
-      }
     },
 
     alinear(valor) {

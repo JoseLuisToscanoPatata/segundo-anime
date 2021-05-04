@@ -58,6 +58,9 @@
           @borrar-usu="pulsadoBorrar"
           @cambiar-rol="cambiarRolUsu"
           color="indigo"
+          :iconos="iconos"
+          columnaIcono="name"
+          nombreValorIcono="role"
         >
         </data-table-area>
       </template>
@@ -105,18 +108,30 @@ export default {
       imagenes: "h-10 w-10 rounded-full m-1",
       botones: [
         {
-          abbr: "Cambiar rol usuario",
-          icono: "img/turnAdminUser.svg",
-          emit: "cambiar-rol",
-          alt: "Botón de cambiar rol al usuario",
-        },
-        {
-          abbr: "Borrar usuario",
+          abbr: "Delete user",
           icono: "img/deleteUser.svg",
           emit: "borrar-usu",
-          alt: "Botón de borrar usuario",
+          alt: "Delete user button",
         },
       ],
+
+      iconos: [
+        {
+          icono: "img/adminLogo.svg",
+          abbr: "This user is admin",
+          alt: "Admin logo",
+          valor: "admin",
+          emit: "cambiar-rol",
+        },
+        {
+          icono: "img/sapato.svg",
+          abbr: "This user is not an admin",
+          alt: "Normal user logo",
+          valor: "user",
+          emit: "cambiar-rol",
+        },
+      ],
+
       campos: [
         {
           nombre: "id",
@@ -178,6 +193,7 @@ export default {
           filtrable: false,
           color: "text-green-500",
           width: "min-width: 125px",
+          alineacion: "centrado",
         },
       ],
       cargando: true,

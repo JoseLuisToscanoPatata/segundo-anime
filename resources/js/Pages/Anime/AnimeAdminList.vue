@@ -340,7 +340,8 @@ export default {
         {
           nombre: "ageRating",
           titulo: "age Rating",
-          opciones: ["G", "PG", "PR", "R18"],
+          opciones: ["G", "PG", "R", "R18"],
+          titulos: ["G", "PG", "R", "R-18"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -348,6 +349,7 @@ export default {
           nombre: "status",
           titulo: "Status",
           opciones: ["current", "finished", "tba"],
+          titulos: ["Current", "Finished", "TBA"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -363,23 +365,23 @@ export default {
 
       botones: [
         {
-          abbr: "Editar anime",
+          abbr: "Edit anime",
           icono: "img/updateOther.svg",
           emit: "editar-anime",
-          alt: "Botón de edición de anime",
+          alt: "Anime edition button",
         },
         {
-          abbr: "Borrar anime",
+          abbr: "Delete anime",
           icono: "img/deleteOther.svg",
           emit: "borrar-anime",
-          alt: "Botón de borrar anime",
+          alt: "Delete anime button",
         },
 
         {
-          abbr: "Mostrar anime",
+          abbr: "Anime Page",
           icono: "img/eye.svg",
           emit: "ver-anime",
-          alt: "Botón de ver anime",
+          alt: "Anime page button",
         },
       ],
 
