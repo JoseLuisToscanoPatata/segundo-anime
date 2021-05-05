@@ -34,7 +34,7 @@ export default {
     Loading,
   },
 
-  props: ["clave", "usuario"],
+  props: ["clave", "usuario", "userList"],
 
   data() {
     return {
@@ -46,8 +46,11 @@ export default {
         { texto: "100", numero: 100 },
       ],
 
-      datos: {},
-      emisiones: ["borrar-manga", "editar-manga", "ver-manga"],
+      datosTabla: {},
+      mangas: {},
+      reads: {},
+
+      emisiones: ["borrar-manga", "editar-manga", "ver-manga", "cambiar-fav"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
 
       filtros: [
@@ -75,12 +78,14 @@ export default {
           icono: "img/notes.svg",
           emit: "editar-read",
           alt: "Read status edition button",
+          ocultar: true,
         },
         {
           abbr: "Delete from my list",
           icono: "img/deleteOther.svg",
           emit: "borrar-read",
           alt: "Read deletion button",
+          ocultar: true,
         },
 
         {
@@ -88,6 +93,24 @@ export default {
           icono: "img/eye.svg",
           emit: "ver-manga",
           alt: "See Manga button",
+          ocultar: false,
+        },
+      ],
+
+      iconos: [
+        {
+          icono: "img/favlist.svg",
+          abbr: "Make this manga not favourite",
+          alt: "Fav logo",
+          valor: "favourite",
+          emit: "cambiar-fav",
+        },
+        {
+          icono: "img/nofavlist.svg",
+          abbr: "Make this manga your favourite",
+          alt: "no Fav logo",
+          valor: "normal",
+          emit: "cambiar-fav",
         },
       ],
 
@@ -114,7 +137,7 @@ export default {
         },
         {
           nombre: "rating",
-          titulo: "User Score",
+          titulo: "Avg Score",
           tipo: "numero",
           sorteable: true,
           filtrable: false,
@@ -131,17 +154,6 @@ export default {
           filtrable: false,
           color: "text-red-500",
           width: "min-width: 115px",
-          alineacion: "centrado",
-        },
-
-        {
-          nombre: "readStatus",
-          titulo: "Your Status",
-          tipo: "texto",
-          sorteable: false,
-          filtrable: false,
-          color: "text-purple-500",
-          width: "min-width: 150px",
           alineacion: "centrado",
         },
 
@@ -168,6 +180,17 @@ export default {
         },
 
         {
+          nombre: "readStatus",
+          titulo: "Your Status",
+          tipo: "texto",
+          sorteable: false,
+          filtrable: false,
+          color: "text-purple-500",
+          width: "min-width: 150px",
+          alineacion: "centrado",
+        },
+
+        {
           nombre: "buttons",
           titulo: "Options",
           tipo: "botones",
@@ -185,33 +208,20 @@ export default {
         mensaje: "",
         color: "black",
       },
-      idActual: 10,
-      operacion: "",
+      idActual: 1,
       saltarModal: false,
-      modoManga: "",
-      photoPreview: null,
       datosActual: {
+        watchStatus: "",
+        score: "",
+        favourite: 0,
         title: "",
-        synopsis: "",
-        chapters: 0,
-        ageRating: "",
-        subType: "",
-        status: "",
         cover: "",
-        startDate: "",
-        endDate: "",
       },
 
       errores: {
-        title: null,
-        synopsis: null,
-        chapters: null,
-        ageRating: null,
-        subType: null,
-        status: null,
-        cover: null,
-        startDate: null,
-        endDate: null,
+        watchStatus: null,
+        score: null,
+        favourite: null,
       },
     };
   },
@@ -220,35 +230,7 @@ export default {
     this.obtenerDatos();
   },
 
-  computed: {
-    //METODO PARA MOSTRAR / NO MOSTRAR IMÁGENES EN EL MODAL DEL FORMULARIO
-    mostrarImagen() {
-      if (this.photoPreview == null && this.modoManga == "editar") {
-        return "original";
-      } else if (this.photoPreview) {
-        return "preview";
-      } else {
-        return "nada";
-      }
-    },
-  },
-
   methods: {
-    selectNewPhoto() {
-      this.$refs.photo.click();
-    },
-
-    //CARGAR LA PREVIEW DE LA IMAGEN NUEVA
-    updatePhotoPreview() {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.photoPreview = e.target.result;
-      };
-
-      reader.readAsDataURL(this.$refs.photo.files[0]);
-    },
-
     //OBTENER LOS DATOS DE MANGAS
     obtenerDatos() {
       axios
@@ -258,22 +240,18 @@ export default {
           },
         })
         .then((res) => {
-          this.datos = res.data.data;
-          this.cargando = false;
+          this.mangas = res.data.data;
         });
-    },
 
-    //METODOS DE BOTONES PULSADOS
-    pulsadoCrear() {
-      for (const key in this.datosActual) {
-        if (Object.hasOwnProperty.call(this.datosActual, key)) {
-          this.datosActual[key] = null;
-        }
-      }
-
-      this.modoManga = "nuevo";
-      this.operacion = "crearEditar";
-      this.photoPreview = null;
+      axios
+        .get(route("reads.index", this.usuario.id), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          this.mangas = res.data.data;
+        });
     },
 
     pulsadoVer($id) {
@@ -281,8 +259,6 @@ export default {
     },
 
     pulsadoEditar(id) {
-      this.modoManga = "editar";
-      this.operacion = "crearEditar";
       this.idActual = id;
 
       for (let actual = 0; actual < this.datos.length; actual++) {

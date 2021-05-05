@@ -18312,7 +18312,8 @@ __webpack_require__.r(__webpack_exports__);
     color: "",
     columnaIcono: "",
     nombreValorIcono: "",
-    iconos: ""
+    iconos: "",
+    listaPropia: ""
   },
   emits: {},
   created: function created() {
@@ -19123,7 +19124,7 @@ __webpack_require__.r(__webpack_exports__);
     JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_7__.default,
     Loading: _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_10__.default
   },
-  props: ["clave", "usuario"],
+  props: ["clave", "usuario", "userList"],
   data: function data() {
     return {
       paginacion: [{
@@ -19142,8 +19143,10 @@ __webpack_require__.r(__webpack_exports__);
         texto: "100",
         numero: 100
       }],
-      datos: {},
-      emisiones: ["borrar-manga", "editar-manga", "ver-manga"],
+      datosTabla: {},
+      mangas: {},
+      reads: {},
+      emisiones: ["borrar-manga", "editar-manga", "ver-manga", "cambiar-fav"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
       filtros: [{
         nombre: "readStatus",
@@ -19164,17 +19167,33 @@ __webpack_require__.r(__webpack_exports__);
         abbr: "Edit on my list",
         icono: "img/notes.svg",
         emit: "editar-read",
-        alt: "Read status edition button"
+        alt: "Read status edition button",
+        ocultar: true
       }, {
         abbr: "Delete from my list",
         icono: "img/deleteOther.svg",
         emit: "borrar-read",
-        alt: "Read deletion button"
+        alt: "Read deletion button",
+        ocultar: true
       }, {
         abbr: "See Manga",
         icono: "img/eye.svg",
         emit: "ver-manga",
-        alt: "See Manga button"
+        alt: "See Manga button",
+        ocultar: false
+      }],
+      iconos: [{
+        icono: "img/favlist.svg",
+        abbr: "Make this manga not favourite",
+        alt: "Fav logo",
+        valor: "favourite",
+        emit: "cambiar-fav"
+      }, {
+        icono: "img/nofavlist.svg",
+        abbr: "Make this manga your favourite",
+        alt: "no Fav logo",
+        valor: "normal",
+        emit: "cambiar-fav"
       }],
       campos: [{
         nombre: "cover",
@@ -19196,7 +19215,7 @@ __webpack_require__.r(__webpack_exports__);
         alineacion: "izquierda"
       }, {
         nombre: "rating",
-        titulo: "User Score",
+        titulo: "Avg Score",
         tipo: "numero",
         sorteable: true,
         filtrable: false,
@@ -19211,15 +19230,6 @@ __webpack_require__.r(__webpack_exports__);
         filtrable: false,
         color: "text-red-500",
         width: "min-width: 115px",
-        alineacion: "centrado"
-      }, {
-        nombre: "readStatus",
-        titulo: "Your Status",
-        tipo: "texto",
-        sorteable: false,
-        filtrable: false,
-        color: "text-purple-500",
-        width: "min-width: 150px",
         alineacion: "centrado"
       }, {
         nombre: "ageRating",
@@ -19240,6 +19250,15 @@ __webpack_require__.r(__webpack_exports__);
         width: "min-width: 125px",
         alineacion: "izquierda"
       }, {
+        nombre: "readStatus",
+        titulo: "Your Status",
+        tipo: "texto",
+        sorteable: false,
+        filtrable: false,
+        color: "text-purple-500",
+        width: "min-width: 150px",
+        alineacion: "centrado"
+      }, {
         nombre: "buttons",
         titulo: "Options",
         tipo: "botones",
@@ -19256,97 +19275,49 @@ __webpack_require__.r(__webpack_exports__);
         mensaje: "",
         color: "black"
       },
-      idActual: 10,
-      operacion: "",
+      idActual: 1,
       saltarModal: false,
-      modoManga: "",
-      photoPreview: null,
       datosActual: {
+        watchStatus: "",
+        score: "",
+        favourite: 0,
         title: "",
-        synopsis: "",
-        chapters: 0,
-        ageRating: "",
-        subType: "",
-        status: "",
-        cover: "",
-        startDate: "",
-        endDate: ""
+        cover: ""
       },
       errores: {
-        title: null,
-        synopsis: null,
-        chapters: null,
-        ageRating: null,
-        subType: null,
-        status: null,
-        cover: null,
-        startDate: null,
-        endDate: null
+        watchStatus: null,
+        score: null,
+        favourite: null
       }
     };
   },
   created: function created() {
     this.obtenerDatos();
   },
-  computed: {
-    //METODO PARA MOSTRAR / NO MOSTRAR IMÁGENES EN EL MODAL DEL FORMULARIO
-    mostrarImagen: function mostrarImagen() {
-      if (this.photoPreview == null && this.modoManga == "editar") {
-        return "original";
-      } else if (this.photoPreview) {
-        return "preview";
-      } else {
-        return "nada";
-      }
-    }
-  },
   methods: {
-    selectNewPhoto: function selectNewPhoto() {
-      this.$refs.photo.click();
-    },
-    //CARGAR LA PREVIEW DE LA IMAGEN NUEVA
-    updatePhotoPreview: function updatePhotoPreview() {
-      var _this = this;
-
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        _this.photoPreview = e.target.result;
-      };
-
-      reader.readAsDataURL(this.$refs.photo.files[0]);
-    },
     //OBTENER LOS DATOS DE MANGAS
     obtenerDatos: function obtenerDatos() {
-      var _this2 = this;
+      var _this = this;
 
       axios.get(route("mangas.index"), {
         headers: {
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
-        _this2.datos = res.data.data;
-        _this2.cargando = false;
+        _this.mangas = res.data.data;
       });
-    },
-    //METODOS DE BOTONES PULSADOS
-    pulsadoCrear: function pulsadoCrear() {
-      for (var key in this.datosActual) {
-        if (Object.hasOwnProperty.call(this.datosActual, key)) {
-          this.datosActual[key] = null;
+      axios.get(route("reads.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
         }
-      }
-
-      this.modoManga = "nuevo";
-      this.operacion = "crearEditar";
-      this.photoPreview = null;
+      }).then(function (res) {
+        _this.mangas = res.data.data;
+      });
     },
     pulsadoVer: function pulsadoVer($id) {
       window.location.href = route("MangaProfile", $id);
     },
     pulsadoEditar: function pulsadoEditar(id) {
-      this.modoManga = "editar";
-      this.operacion = "crearEditar";
       this.idActual = id;
 
       for (var actual = 0; actual < this.datos.length; actual++) {
@@ -19370,7 +19341,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     //METODO DE CREACIÓN O EDICIÓN DE MANGA
     crearOEditar: function crearOEditar() {
-      var _this3 = this;
+      var _this2 = this;
 
       var datos = new FormData();
       datos.append("title", this.datosActual["title"]);
@@ -19395,34 +19366,34 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (res) {
           //EXITO
-          _this3.operacion = "";
-          _this3.datosInfo["color"] = "green";
-          _this3.datosInfo["titulo"] = "Operation success";
-          _this3.datosInfo["mensaje"] = res.data.message;
-          _this3.datosInfo["mostrar"] = true;
+          _this2.operacion = "";
+          _this2.datosInfo["color"] = "green";
+          _this2.datosInfo["titulo"] = "Operation success";
+          _this2.datosInfo["mensaje"] = res.data.message;
+          _this2.datosInfo["mostrar"] = true;
 
-          _this3.obtenerDatos();
+          _this2.obtenerDatos();
         })["catch"](function (err) {
           //FALLO
           if (err.response.data.message != null) {
             //FALLO EXTERNO
-            _this3.operacion = "";
-            _this3.datosInfo["color"] = "red";
-            _this3.datosInfo["titulo"] = "There was an error :(";
-            _this3.datosInfo["mensaje"] = err.response.data.message;
-            _this3.datosInfo["mostrar"] = true;
-            _this3.photoPreview = null;
+            _this2.operacion = "";
+            _this2.datosInfo["color"] = "red";
+            _this2.datosInfo["titulo"] = "There was an error :(";
+            _this2.datosInfo["mensaje"] = err.response.data.message;
+            _this2.datosInfo["mostrar"] = true;
+            _this2.photoPreview = null;
           } else if (err.response.data.validation_errors != null) {
             //FALLO DE VALIDACIÓN
-            _this3.errores["title"] = err.response.data.validation_errors["title"];
-            _this3.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
-            _this3.errores["chapters"] = err.response.data.validation_errors["chapters"];
-            _this3.errores["ageRating"] = err.response.data.validation_errors["ageRating"];
-            _this3.errores["subType"] = err.response.data.validation_errors["subType"];
-            _this3.errores["status"] = err.response.data.validation_errors["status"];
-            _this3.errores["cover"] = err.response.data.validation_errors["cover"];
-            _this3.errores["startDate"] = err.response.data.validation_errors["startDate"];
-            _this3.errores["endDate"] = err.response.data.validation_errors["endDate"];
+            _this2.errores["title"] = err.response.data.validation_errors["title"];
+            _this2.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
+            _this2.errores["chapters"] = err.response.data.validation_errors["chapters"];
+            _this2.errores["ageRating"] = err.response.data.validation_errors["ageRating"];
+            _this2.errores["subType"] = err.response.data.validation_errors["subType"];
+            _this2.errores["status"] = err.response.data.validation_errors["status"];
+            _this2.errores["cover"] = err.response.data.validation_errors["cover"];
+            _this2.errores["startDate"] = err.response.data.validation_errors["startDate"];
+            _this2.errores["endDate"] = err.response.data.validation_errors["endDate"];
           }
         }); //EDICIÓN DE MANGA
       } else if (this.modoManga == "editar") {
@@ -19433,53 +19404,53 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (res) {
           //EXITO
-          for (var actual = 0; actual < _this3.datos.length; actual++) {
-            if (_this3.datos[actual].id == _this3.idActual) {
-              _this3.datos[actual].title = _this3.datosActual["title"];
-              _this3.datos[actual].synopsis = _this3.datosActual["synopsis"];
-              _this3.datos[actual].chapters = _this3.datosActual["chapters"];
-              _this3.datos[actual].status = _this3.datosActual["status"];
-              _this3.datos[actual].ageRating = _this3.datosActual["ageRating"];
-              _this3.datos[actual].subType = _this3.datosActual["subType"];
-              _this3.datos[actual].startDate = _this3.datosActual["startDate"];
-              _this3.datos[actual].endDate = _this3.datosActual["endDate"];
-              _this3.datos[actual].cover = res.data.data.cover;
+          for (var actual = 0; actual < _this2.datos.length; actual++) {
+            if (_this2.datos[actual].id == _this2.idActual) {
+              _this2.datos[actual].title = _this2.datosActual["title"];
+              _this2.datos[actual].synopsis = _this2.datosActual["synopsis"];
+              _this2.datos[actual].chapters = _this2.datosActual["chapters"];
+              _this2.datos[actual].status = _this2.datosActual["status"];
+              _this2.datos[actual].ageRating = _this2.datosActual["ageRating"];
+              _this2.datos[actual].subType = _this2.datosActual["subType"];
+              _this2.datos[actual].startDate = _this2.datosActual["startDate"];
+              _this2.datos[actual].endDate = _this2.datosActual["endDate"];
+              _this2.datos[actual].cover = res.data.data.cover;
             }
           }
 
-          _this3.operacion = "";
-          _this3.datosInfo["color"] = "green";
-          _this3.datosInfo["titulo"] = "Operation success";
-          _this3.datosInfo["mensaje"] = res.data.message;
-          _this3.datosInfo["mostrar"] = true;
+          _this2.operacion = "";
+          _this2.datosInfo["color"] = "green";
+          _this2.datosInfo["titulo"] = "Operation success";
+          _this2.datosInfo["mensaje"] = res.data.message;
+          _this2.datosInfo["mostrar"] = true;
         })["catch"](function (err) {
           //FALLOS
           if (err.response.data.message) {
             //FALLO EXTERNO
-            _this3.operacion = "";
-            _this3.datosInfo["color"] = "red";
-            _this3.datosInfo["titulo"] = "There was an error :(";
-            _this3.datosInfo["mensaje"] = err.response.data.message;
-            _this3.datosInfo["mostrar"] = true;
-            _this3.photoPreview = null;
+            _this2.operacion = "";
+            _this2.datosInfo["color"] = "red";
+            _this2.datosInfo["titulo"] = "There was an error :(";
+            _this2.datosInfo["mensaje"] = err.response.data.message;
+            _this2.datosInfo["mostrar"] = true;
+            _this2.photoPreview = null;
           } else if (err.response.data.validation_errors) {
             //FALLO DE VALIDACIÓN
-            _this3.errores["title"] = err.response.data.validation_errors["title"];
-            _this3.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
-            _this3.errores["chapters"] = err.response.data.validation_errors["chapters"];
-            _this3.errores["ageRating"] = err.response.data.validation_errors["ageRating"];
-            _this3.errores["subType"] = err.response.data.validation_errors["subType"];
-            _this3.errores["status"] = err.response.data.validation_errors["status"];
-            _this3.errores["cover"] = err.response.data.validation_errors["cover"];
-            _this3.errores["startDate"] = err.response.data.validation_errors["startDate"];
-            _this3.errores["endDate"] = err.response.data.validation_errors["endDate"];
+            _this2.errores["title"] = err.response.data.validation_errors["title"];
+            _this2.errores["synopsis"] = err.response.data.validation_errors["synopsis"];
+            _this2.errores["chapters"] = err.response.data.validation_errors["chapters"];
+            _this2.errores["ageRating"] = err.response.data.validation_errors["ageRating"];
+            _this2.errores["subType"] = err.response.data.validation_errors["subType"];
+            _this2.errores["status"] = err.response.data.validation_errors["status"];
+            _this2.errores["cover"] = err.response.data.validation_errors["cover"];
+            _this2.errores["startDate"] = err.response.data.validation_errors["startDate"];
+            _this2.errores["endDate"] = err.response.data.validation_errors["endDate"];
           }
         });
       }
     },
     //BORRAR MANGA EXISTENTE
     borrarManga: function borrarManga() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.operacion = "";
       axios["delete"](route("mangas.destroy", this.idActual), {
@@ -19487,19 +19458,19 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
-        for (var actual = 0; actual < _this4.datos.length; actual++) {
-          if (_this4.datos[actual].id == _this4.idActual) {
-            _this4.datos.splice(actual, 1);
+        for (var actual = 0; actual < _this3.datos.length; actual++) {
+          if (_this3.datos[actual].id == _this3.idActual) {
+            _this3.datos.splice(actual, 1);
           }
         }
 
-        _this4.datosInfo["color"] = "green";
-        _this4.datosInfo["titulo"] = "Operation success :(";
-        _this4.datosInfo["mensaje"] = res.data.message;
+        _this3.datosInfo["color"] = "green";
+        _this3.datosInfo["titulo"] = "Operation success :(";
+        _this3.datosInfo["mensaje"] = res.data.message;
       })["catch"](function (err) {
-        _this4.datosInfo["color"] = "red";
-        _this4.datosInfo["titulo"] = "There was an error :(";
-        _this4.datosInfo["mensaje"] = err.data.message;
+        _this3.datosInfo["color"] = "red";
+        _this3.datosInfo["titulo"] = "There was an error :(";
+        _this3.datosInfo["mensaje"] = err.data.message;
       });
       this.datosInfo["mostrar"] = true;
     }
@@ -20109,13 +20080,20 @@ __webpack_require__.r(__webpack_exports__);
         numero: 100
       }],
       datos: {},
-      emisiones: ["cambiar-rol", "borrar-usu"],
+      emisiones: ["cambiar-rol", "borrar-usu", "ver-usu"],
       imagenes: "h-10 w-10 rounded-full m-1",
       botones: [{
         abbr: "Delete user",
         icono: "img/deleteUser.svg",
         emit: "borrar-usu",
-        alt: "Delete user button"
+        alt: "Delete user button",
+        ocultar: false
+      }, {
+        abbr: "Check user",
+        icono: "img/eye.svg",
+        emit: "ver-usu",
+        alt: "Check user button",
+        ocultar: false
       }],
       iconos: [{
         icono: "img/adminLogo.svg",
@@ -20230,6 +20208,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    pulsadoVer: function pulsadoVer($id) {
+      window.location.href = route("UserShow", $id);
     },
     pulsadoBorrar: function pulsadoBorrar(id) {
       if (id == this.usuario.id) {
@@ -21506,7 +21487,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "w-8 h-8"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "ml-4 text-lg text-pink-600 leading-7 font-semibold"
-}, " Search ")], -1
+}, "Search")], -1
 /* HOISTED */
 );
 
@@ -21522,7 +21503,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-3 flex items-center text-sm font-semibold text-pink-700"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Start searching"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Search animes"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "ml-1 text-pink-500"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   viewBox: "0 0 20 20",
@@ -21564,7 +21545,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-3 flex items-center text-sm font-semibold text-red-700"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Check your list"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Search mangas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "ml-1 text-red-500"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   viewBox: "0 0 20 20",
@@ -21590,7 +21571,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [_hoisted_10], 8
   /* PROPS */
   , ["href"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-    href: _ctx.route('AnimeUserList')
+    href: _ctx.route('MangaList')
   }, [_hoisted_15], 8
   /* PROPS */
   , ["href"])])]), _hoisted_16])]);
@@ -21929,9 +21910,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Account Management "), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
-        href: _ctx.route('AnimeUserList'),
+        href: _ctx.route('AnimeUserList', _ctx.$page.props.user.id),
         color: ['text-purple-400', 'bg-white', 'hover:text-white', 'hover:bg-purple-400', 'border-purple-400'],
-        active: _ctx.route().current('AnimeUserList')
+        active: _ctx.route().current('AnimeUserList', _ctx.$page.props.user.id)
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_14];
@@ -21942,9 +21923,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, 8
       /* PROPS */
       , ["href", "active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
-        href: _ctx.route('MangaUserList'),
+        href: _ctx.route('MangaUserList', _ctx.$page.props.user.id),
         color: ['text-yellow-400', 'bg-white', 'hover:text-white', 'hover:bg-yellow-400', 'border-yellow-400'],
-        active: _ctx.route().current('MangaUserList')
+        active: _ctx.route().current('MangaUserList', _ctx.$page.props.user.id)
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_15];
@@ -22027,7 +22008,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Account Management "), _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
-        href: _ctx.route('UserShow')
+        href: _ctx.route('UserShow', _ctx.$page.props.user.id)
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_27];
@@ -22153,10 +22134,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href", "active", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Responsive Settings Options "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
-    href: _ctx.route('AnimeUserList'),
-    active: _ctx.route().current('AnimeUserList'),
+    href: _ctx.route('AnimeUserList', _ctx.$page.props.user.id),
+    active: _ctx.route().current('AnimeUserList', _ctx.$page.props.user.id),
     "class": ["text-purple-500 hover:text-purple-700 focus:text-purple-800 hover:border-purple-700 focus:border-purple-800", {
-      'border-white': _ctx.route().current('AnimeUserList')
+      'border-white': _ctx.route().current('AnimeUserList', _ctx.$page.props.user.id)
     }]
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22168,10 +22149,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, 8
   /* PROPS */
   , ["href", "active", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
-    href: _ctx.route('MangaUserList'),
-    active: _ctx.route().current('MangaUserList'),
+    href: _ctx.route('MangaUserList', _ctx.$page.props.user.id),
+    active: _ctx.route().current('MangaUserList', _ctx.$page.props.user.id),
     "class": ["text-yellow-500 hover:text-yellow-700 focus:text-yellow-800 hover:border-yellow-700 focus:border-yellow-800", {
-      'border-white': _ctx.route().current('MangaUserList')
+      'border-white': _ctx.route().current('MangaUserList', _ctx.$page.props.user.id)
     }]
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22238,10 +22219,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.user.email), 1
   /* TEXT */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
-    href: _ctx.route('UserShow'),
-    active: _ctx.route().current('UserShow'),
+    href: _ctx.route('UserShow', _ctx.$page.props.user.id),
+    active: _ctx.route().current('UserShow', _ctx.$page.props.user.id),
     "class": ["text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100", {
-      'border-white': _ctx.route().current('UserShow')
+      'border-white': _ctx.route().current('UserShow', _ctx.$page.props.user.id)
     }]
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -24625,8 +24606,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         /* PROPS */
         , ["onClick"])], 8
         /* PROPS */
-        , ["title"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
-          key: 1,
+        , ["title"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+          key: 1
+        }, [$props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
+          key: 0,
           title: $props.iconos[1]['abbr']
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           onClick: function onClick($event) {
@@ -24642,7 +24625,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         /* PROPS */
         , ["onClick"])], 8
         /* PROPS */
-        , ["title"]))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
+        , ["title"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+        /* STABLE_FRAGMENT */
+        ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
         /* TEXT */
         ))], 64
         /* STABLE_FRAGMENT */
@@ -24659,8 +24644,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }), 128
     /* KEYED_FRAGMENT */
     )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.botones, function (boton) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
-        key: boton,
+      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: boton
+      }, [!boton.ocultar || $props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
+        key: 0,
         title: boton.abbr
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         alt: boton.alt,
@@ -24677,7 +24664,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       /* PROPS */
       , ["alt", "onClick"])], 8
       /* PROPS */
-      , ["title"]);
+      , ["title"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
+      /* STABLE_FRAGMENT */
+      );
     }), 128
     /* KEYED_FRAGMENT */
     ))])])], 2
@@ -27262,13 +27251,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         imagenes: $data.imagenes,
         onBorrarUsu: $options.pulsadoBorrar,
         onCambiarRol: $options.cambiarRolUsu,
+        onVerUsu: $options.pulsadoVer,
         color: "indigo",
         iconos: $data.iconos,
         columnaIcono: "name",
-        nombreValorIcono: "role"
+        nombreValorIcono: "role",
+        listaPropia: "propia"
       }, null, 8
       /* PROPS */
-      , ["datos", "columnas", "cantidadPaginas", "botones", "emisiones", "imagenes", "onBorrarUsu", "onCambiarRol", "iconos"])], 64
+      , ["datos", "columnas", "cantidadPaginas", "botones", "emisiones", "imagenes", "onBorrarUsu", "onCambiarRol", "onVerUsu", "iconos"])], 64
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
@@ -27371,12 +27362,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.register && $options.register.apply($options, arguments);
     }),
-    "class": "mx-5 px-5 text-purple-600 text-xl font-bold bg-purple-400 hover:bg-purple-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out"
+    "class": "mx-5 px-5 text-purple-600 text-xl font-bold bg-purple-400 hover:bg-purple-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out cursor-pointer"
   }, " REGISTER "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.login && $options.login.apply($options, arguments);
     }),
-    "class": "mx-5 px-5 text-pink-600 text-xl font-bold bg-pink-400 hover:bg-pink-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out"
+    "class": "mx-5 px-5 text-pink-600 text-xl font-bold bg-pink-400 hover:bg-pink-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out cursor-pointer"
   }, " LOGIN ")], 64
   /* STABLE_FRAGMENT */
   )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
@@ -27384,7 +27375,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.dashboard && $options.dashboard.apply($options, arguments);
     }),
-    "class": "mx-5 px-5 text-red-600 text-xl font-bold bg-red-400 hover:bg-red-700 hover:text-white rounded-full rounded-t-none transition-all ease-in-out"
+    "class": "mx-5 px-5 text-red-600 text-xl font-bold bg-red-400 hover:bg-red-700 hover:text-white rounded-full rounded-t-none transition-all ease-in-out cursor-pointer"
   }, " DASHBOARD "))]), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_welcome2)])])], 4
   /* STYLE */
   );
@@ -27611,7 +27602,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-gray-100[data-v-317d1a6e] {\r\n    background-color: #f7fafc;\r\n    background-color: rgba(247, 250, 252, var(--tw-bg-opacity));\n}\n.border-gray-200[data-v-317d1a6e] {\r\n    border-color: #edf2f7;\r\n    border-color: rgba(237, 242, 247, var(--tw-border-opacity));\n}\n.text-gray-400[data-v-317d1a6e] {\r\n    color: #cbd5e0;\r\n    color: rgba(203, 213, 224, var(--tw-text-opacity));\n}\n.text-gray-500[data-v-317d1a6e] {\r\n    color: #a0aec0;\r\n    color: rgba(160, 174, 192, var(--tw-text-opacity));\n}\n.text-gray-600[data-v-317d1a6e] {\r\n    color: #718096;\r\n    color: rgba(113, 128, 150, var(--tw-text-opacity));\n}\n.text-gray-700[data-v-317d1a6e] {\r\n    color: #4a5568;\r\n    color: rgba(74, 85, 104, var(--tw-text-opacity));\n}\n.text-gray-900[data-v-317d1a6e] {\r\n    color: #1a202c;\r\n    color: rgba(26, 32, 44, var(--tw-text-opacity));\n}\n@media (prefers-color-scheme: dark) {\n.dark\\:bg-gray-800[data-v-317d1a6e] {\r\n        background-color: #2d3748;\r\n        background-color: rgba(45, 55, 72, var(--tw-bg-opacity));\n}\n.dark\\:bg-gray-900[data-v-317d1a6e] {\r\n        background-color: #1a202c;\r\n        background-color: rgba(26, 32, 44, var(--tw-bg-opacity));\n}\n.dark\\:border-gray-700[data-v-317d1a6e] {\r\n        border-color: #4a5568;\r\n        border-color: rgba(74, 85, 104, var(--tw-border-opacity));\n}\n.dark\\:text-white[data-v-317d1a6e] {\r\n        color: #fff;\r\n        color: rgba(255, 255, 255, var(--tw-text-opacity));\n}\n.dark\\:text-gray-400[data-v-317d1a6e] {\r\n        color: #cbd5e0;\r\n        color: rgba(203, 213, 224, var(--tw-text-opacity));\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bg-gray-100[data-v-317d1a6e] {\r\n  background-color: #f7fafc;\r\n  background-color: rgba(247, 250, 252, var(--tw-bg-opacity));\n}\n.border-gray-200[data-v-317d1a6e] {\r\n  border-color: #edf2f7;\r\n  border-color: rgba(237, 242, 247, var(--tw-border-opacity));\n}\n.text-gray-400[data-v-317d1a6e] {\r\n  color: #cbd5e0;\r\n  color: rgba(203, 213, 224, var(--tw-text-opacity));\n}\n.text-gray-500[data-v-317d1a6e] {\r\n  color: #a0aec0;\r\n  color: rgba(160, 174, 192, var(--tw-text-opacity));\n}\n.text-gray-600[data-v-317d1a6e] {\r\n  color: #718096;\r\n  color: rgba(113, 128, 150, var(--tw-text-opacity));\n}\n.text-gray-700[data-v-317d1a6e] {\r\n  color: #4a5568;\r\n  color: rgba(74, 85, 104, var(--tw-text-opacity));\n}\n.text-gray-900[data-v-317d1a6e] {\r\n  color: #1a202c;\r\n  color: rgba(26, 32, 44, var(--tw-text-opacity));\n}\n@media (prefers-color-scheme: dark) {\n.dark\\:bg-gray-800[data-v-317d1a6e] {\r\n    background-color: #2d3748;\r\n    background-color: rgba(45, 55, 72, var(--tw-bg-opacity));\n}\n.dark\\:bg-gray-900[data-v-317d1a6e] {\r\n    background-color: #1a202c;\r\n    background-color: rgba(26, 32, 44, var(--tw-bg-opacity));\n}\n.dark\\:border-gray-700[data-v-317d1a6e] {\r\n    border-color: #4a5568;\r\n    border-color: rgba(74, 85, 104, var(--tw-border-opacity));\n}\n.dark\\:text-white[data-v-317d1a6e] {\r\n    color: #fff;\r\n    color: rgba(255, 255, 255, var(--tw-text-opacity));\n}\n.dark\\:text-gray-400[data-v-317d1a6e] {\r\n    color: #cbd5e0;\r\n    color: rgba(203, 213, 224, var(--tw-text-opacity));\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

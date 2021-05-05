@@ -126,15 +126,17 @@
                           </abbr>
                         </template>
                         <template v-else>
-                          <abbr :title="iconos[1]['abbr']">
-                            <button @click="$emit(iconos[1]['emit'], dato.id)">
-                              <img
-                                :src="iconos[1]['icono']"
-                                :alt="iconos[1]['alt']"
-                                class="h-5 ml-2 w-auto focus:outline-none outline-none"
-                              />
-                            </button>
-                          </abbr>
+                          <template v-if="listaPropia == 'propia'">
+                            <abbr :title="iconos[1]['abbr']">
+                              <button @click="$emit(iconos[1]['emit'], dato.id)">
+                                <img
+                                  :src="iconos[1]['icono']"
+                                  :alt="iconos[1]['alt']"
+                                  class="h-5 ml-2 w-auto focus:outline-none outline-none"
+                                />
+                              </button>
+                            </abbr>
+                          </template>
                         </template>
                       </div>
                     </template>
@@ -148,15 +150,17 @@
             <td>
               <div class="flex justify-start">
                 <template v-for="boton in botones" :key="boton">
-                  <abbr :title="boton.abbr">
-                    <button
-                      :alt="boton.alt"
-                      @click="$emit(boton.emit, dato.id)"
-                      class="mr-4 focus:outline-none outline-none"
-                    >
-                      <img :src="boton.icono" class="h-6 w-auto" />
-                    </button>
-                  </abbr>
+                  <template v-if="!boton.ocultar || listaPropia == 'propia'">
+                    <abbr :title="boton.abbr">
+                      <button
+                        :alt="boton.alt"
+                        @click="$emit(boton.emit, dato.id)"
+                        class="mr-4 focus:outline-none outline-none"
+                      >
+                        <img :src="boton.icono" class="h-6 w-auto" />
+                      </button>
+                    </abbr>
+                  </template>
                 </template>
               </div>
             </td>
@@ -236,6 +240,7 @@ export default {
     columnaIcono: "",
     nombreValorIcono: "",
     iconos: "",
+    listaPropia: "",
   },
 
   emits: {},

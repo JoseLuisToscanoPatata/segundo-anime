@@ -33,8 +33,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('Anime/AnimeList');
     })->name('AnimeList');
 
-    route::get('/AnimeUserList', function () {
-        return Inertia::render('Anime/AnimeUserList');
+    route::get('/AnimeUserList/{id}', function ($id) {
+        return Inertia::render('Anime/AnimeUserList',['userList'=>$id]);
     })->name('AnimeUserList');
 
     route::get('/AnimeProfile/{id}', function ($id) {
@@ -45,8 +45,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('Manga/MangaList');
     })->name('MangaList');
 
-    route::get('/MangaUserList', function () {
-        return Inertia::render('Manga/MangaUserList');
+    route::get('/MangaUserList/{id}', function ($id) {
+        return Inertia::render('Manga/MangaUserList',['userList'=>$id]);
     })->name('MangaUserList');
 
      route::get('/MangaProfile/{id}', function ($id) {
@@ -61,8 +61,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('User/Messages');
     })->name('MessagesList');
 
-    route::get('/UserShow', function () {
-        return Inertia::render('User/UserShow');
+    route::get('/UserShow/{id}', function ($id) {
+        return Inertia::render('User/UserShow',['perfil'=>$id]);
     })->name('UserShow');
 });
 

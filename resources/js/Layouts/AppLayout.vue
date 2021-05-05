@@ -69,7 +69,7 @@
                       </div>
 
                       <jet-dropdown-link
-                        :href="route('AnimeUserList')"
+                        :href="route('AnimeUserList', $page.props.user.id)"
                         :color="[
                           'text-purple-400',
                           'bg-white',
@@ -77,13 +77,13 @@
                           'hover:bg-purple-400',
                           'border-purple-400',
                         ]"
-                        :active="route().current('AnimeUserList')"
+                        :active="route().current('AnimeUserList', $page.props.user.id)"
                       >
                         Anime List
                       </jet-dropdown-link>
 
                       <jet-dropdown-link
-                        :href="route('MangaUserList')"
+                        :href="route('MangaUserList', $page.props.user.id)"
                         :color="[
                           'text-yellow-400',
                           'bg-white',
@@ -91,7 +91,7 @@
                           'hover:bg-yellow-400',
                           'border-yellow-400',
                         ]"
-                        :active="route().current('MangaUserList')"
+                        :active="route().current('MangaUserList', $page.props.user.id)"
                       >
                         Manga List
                       </jet-dropdown-link>
@@ -198,7 +198,7 @@
                       My Account
                     </div>
 
-                    <jet-dropdown-link :href="route('UserShow')">
+                    <jet-dropdown-link :href="route('UserShow', $page.props.user.id)">
                       Profile
                     </jet-dropdown-link>
 
@@ -314,11 +314,11 @@
             <div class="mt-3 space-y-1">
               <div class="pt-2 pb-3 space-y-1">
                 <jet-responsive-nav-link
-                  :href="route('AnimeUserList')"
-                  :active="route().current('AnimeUserList')"
+                  :href="route('AnimeUserList', $page.props.user.id)"
+                  :active="route().current('AnimeUserList', $page.props.user.id)"
                   class="text-purple-500 hover:text-purple-700 focus:text-purple-800 hover:border-purple-700 focus:border-purple-800"
                   :class="{
-                    'border-white': route().current('AnimeUserList'),
+                    'border-white': route().current('AnimeUserList', $page.props.user.id),
                   }"
                 >
                   ANIME LIST
@@ -327,11 +327,11 @@
 
               <div class="pt-2 pb-3 space-y-1">
                 <jet-responsive-nav-link
-                  :href="route('MangaUserList')"
-                  :active="route().current('MangaUserList')"
+                  :href="route('MangaUserList', $page.props.user.id)"
+                  :active="route().current('MangaUserList', $page.props.user.id)"
                   class="text-yellow-500 hover:text-yellow-700 focus:text-yellow-800 hover:border-yellow-700 focus:border-yellow-800"
                   :class="{
-                    'border-white': route().current('MangaUserList'),
+                    'border-white': route().current('MangaUserList', $page.props.user.id),
                   }"
                 >
                   MANGA LIST
@@ -423,11 +423,11 @@
 
             <div class="mt-3 space-y-1">
               <jet-responsive-nav-link
-                :href="route('UserShow')"
-                :active="route().current('UserShow')"
+                :href="route('UserShow', $page.props.user.id)"
+                :active="route().current('UserShow', $page.props.user.id)"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
                 :class="{
-                  'border-white': route().current('UserShow'),
+                  'border-white': route().current('UserShow', $page.props.user.id),
                 }"
               >
                 My Profile

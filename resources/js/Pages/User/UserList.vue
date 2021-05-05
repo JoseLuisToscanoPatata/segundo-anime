@@ -57,10 +57,12 @@
           :imagenes="imagenes"
           @borrar-usu="pulsadoBorrar"
           @cambiar-rol="cambiarRolUsu"
+          @ver-usu="pulsadoVer"
           color="indigo"
           :iconos="iconos"
           columnaIcono="name"
           nombreValorIcono="role"
+          listaPropia="propia"
         >
         </data-table-area>
       </template>
@@ -104,7 +106,7 @@ export default {
         { texto: "100", numero: 100 },
       ],
       datos: {},
-      emisiones: ["cambiar-rol", "borrar-usu"],
+      emisiones: ["cambiar-rol", "borrar-usu", "ver-usu"],
       imagenes: "h-10 w-10 rounded-full m-1",
       botones: [
         {
@@ -112,6 +114,14 @@ export default {
           icono: "img/deleteUser.svg",
           emit: "borrar-usu",
           alt: "Delete user button",
+          ocultar: false,
+        },
+        {
+          abbr: "Check user",
+          icono: "img/eye.svg",
+          emit: "ver-usu",
+          alt: "Check user button",
+          ocultar: false,
         },
       ],
 
@@ -245,6 +255,11 @@ export default {
           });
       }
     },
+
+    pulsadoVer($id) {
+      window.location.href = route("UserShow", $id);
+    },
+
     pulsadoBorrar(id) {
       if (id == this.usuario.id) {
         this.hayError = true;
