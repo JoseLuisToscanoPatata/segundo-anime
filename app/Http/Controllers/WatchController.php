@@ -44,9 +44,9 @@ class WatchController extends Controller
     {
             $validator = Validator::make($request->all(), [
                "anime_id"=>"required|integer|numeric",
-               "score"=>"nullable|integer|numeric",
-               "favourite"=>"required","integer","numeric",Rule::in([1, 2]),
-                "watchStatus"=>"nullable","integer","numeric",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
+               "score"=>"sometimes|nullable|integer|numeric",
+               "favourite"=>"required","boolean",
+                "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
             ]);
 
             if($validator->fails()) {
@@ -65,9 +65,7 @@ class WatchController extends Controller
             $watch->user_id = Auth::user()->id;
             $watch->anime_id = $request->anime_id;
             
-            if($request->score) {
-                $watch->score = $request->score;
-            }
+            $watch->score = $request->score;
 
             $watch->favourite = $request->favourite;
             $watch->watchStatus = $request->watchStatus;
@@ -120,19 +118,16 @@ class WatchController extends Controller
             if($user == Auth::user()->id) {
 
                 $validator = Validator::make($request->all(), [
-                "score"=>"nullable|integer|numeric",
-                "favourite"=>"required","integer","numeric",Rule::in([1, 2]),
-                    "watchStatus"=>"nullable","integer","numeric",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
+                "score"=>"sometimes|nullable|integer|numeric",
+                "favourite"=>"required","boolean",
+                    "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
                 ]);
 
                 if($validator->fails()) {
                     return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
                 }
             
-                if($request->score) {
-                    $watch->score = $request->score;
-                }
-
+                $watch->score = $request->score;
                 $watch->favourite = $request->favourite;
                 $watch->watchStatus = $request->watchStatus;
 

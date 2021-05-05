@@ -44,9 +44,9 @@ class ReadController extends Controller
 
             $validator = Validator::make($request->all(), [
                "manga_id"=>"required|integer|numeric",
-               "score"=>"nullable|integer|numeric",
-               "favourite"=>"required","integer","numeric",Rule::in([1, 2]),
-                "readStatus"=>"nullable","integer","numeric",Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
+               "score"=>"sometimes|nullable|integer",
+               "favourite"=>"required","boolean",
+                "readStatus"=>'string',Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
             ]);
 
             if($validator->fails()) {
@@ -68,6 +68,8 @@ class ReadController extends Controller
             
             if($request->score) {
                 $read->score = $request->score;
+            }  else {
+                $read->score = null;
             }
 
             $read->favourite = $request->favourite;
@@ -117,14 +119,14 @@ class ReadController extends Controller
 
         if(!is_null($read)) {
 
-            $user = $watch->user_id;
+            $user = $read->user_id;
 
             if($user == Auth::user()->id) {
 
                 $validator = Validator::make($request->all(), [
-                    "score"=>"nullable|integer|numeric",
-                    "favourite"=>"required","integer","numeric",Rule::in([1, 2]),
-                    "readStatus"=>"nullable","integer","numeric",Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
+                    "score"=>"sometimes|nullable|integer",
+                    "favourite"=>"required",'boolean',
+                    "readStatus"=>'string',Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
                     ]);
 
                     if($validator->fails()) {
@@ -133,6 +135,8 @@ class ReadController extends Controller
                 
                     if($request->score) {
                         $read->score = $request->score;
+                    } else {
+                        $read->score = null;
                     }
 
                     $read->favourite = $request->favourite;

@@ -65,6 +65,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function mangas() {
-        return $this->belongsToMany(Manga::class,'reads')->withPivot('readStatus','score','favourite');
+        return $this->belongsToMany(Manga::class,'reades')->withPivot('readStatus','score','favourite');
     }
 }

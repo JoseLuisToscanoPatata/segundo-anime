@@ -12,6 +12,6 @@ class Manga extends Model
     protected $table = 'mangas';
 
     public function users() {
-        return $this->belongsToMany(User::class,'reads')->withPivot('readStatus','score','favourite');
+        return $this->belongsToMany(User::class,'reades')->withPivot('readStatus','score','favourite');
     }
 }

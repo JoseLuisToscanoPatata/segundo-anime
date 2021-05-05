@@ -282,6 +282,7 @@
           :botonesExtras="botonesExtras"
           :key="datos"
           color="green"
+          listaPropia="propia"
         >
         </data-table-area>
       </template>
@@ -369,12 +370,14 @@ export default {
           icono: "img/updateOther.svg",
           emit: "editar-anime",
           alt: "Anime edition button",
+          ocultar: false,
         },
         {
           abbr: "Delete anime",
           icono: "img/deleteOther.svg",
           emit: "borrar-anime",
           alt: "Delete anime button",
+          ocultar: false,
         },
 
         {
@@ -382,6 +385,7 @@ export default {
           icono: "img/eye.svg",
           emit: "ver-anime",
           alt: "Anime page button",
+          ocultar: false,
         },
       ],
 

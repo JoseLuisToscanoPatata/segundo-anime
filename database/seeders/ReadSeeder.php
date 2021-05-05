@@ -44,12 +44,12 @@ class ReadSeeder extends Seeder
 
                 
             
-            DB::table('reads')->insert([
+            DB::table('reades')->insert([
                 'user_id'=>1,
                 'manga_id'=>$i,
                 'readStatus'=>$estadoLeer,
                 'score'=>$votado ? $nota :null,
-                'favourite'=>rand(0,10)>8?1:0,
+                'favourite'=>rand(0,10)>8?true:false,
                 'created_at'=>now(),
             ]);
         }
@@ -83,12 +83,12 @@ class ReadSeeder extends Seeder
                         
                     }
                 
-                    DB::table('reads')->insert([
+                    DB::table('reades')->insert([
                         'user_id'=>$i,
                         'manga_id'=>$j,
                         'readStatus'=>$estadoLeer,
                         'score'=>$votado? $nota :null,
-                        'favourite'=>rand(0,10)>8?1:0,
+                        'favourite'=>rand(0,10)>8?true:false,
                         'created_at'=>now(),
                     ]);
 

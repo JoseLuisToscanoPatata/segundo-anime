@@ -76,7 +76,7 @@
                   class="focus:outline-none outline-none"
                 >
                   <img
-                    src="img/sort.svg"
+                    src="/img/sort.svg"
                     alt="sortear por columna"
                     class="h-3 ml-2 w-auto"
                     :class="campo.color"
@@ -111,8 +111,10 @@
 
                   <template v-else>
                     <template v-if="nomProp == columnaIcono">
-                      <div class="flex justify start">
-                        <span class="text-gray-500">{{ valorProp }}</span>
+                      <div class="flex justify-start">
+                        <span class="text-gray-500" style="width: 80%">{{
+                          valorProp
+                        }}</span>
 
                         <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
                           <abbr :title="iconos[0]['abbr']">
@@ -170,7 +172,7 @@
     </div>
 
     <div class="grid grid-cols-6 mt-6 justify-start">
-      <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 225px"
+      <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 270px"
         >Showing results {{ primero }} to {{ ultimo }} of
         {{ datosOrdenados.length }}
       </span>

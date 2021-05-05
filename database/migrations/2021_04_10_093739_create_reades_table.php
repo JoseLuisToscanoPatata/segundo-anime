@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReadsTable extends Migration
+class CreateReadesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateReadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reads', function (Blueprint $table) {
+        Schema::create('reades', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('manga_id');
             $table->enum('readStatus',['Reading','PlanToRead','Completed','Dropped','OnHold']);
             $table->integer('score')->nullable();
-            $table->tinyInteger('favourite')->default(0);
+            $table->boolean('favourite')->default(false);
             $table->foreign('manga_id')->references('id')->on('mangas')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -33,6 +33,6 @@ class CreateReadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reads');
+        Schema::dropIfExists('reades');
     }
 }

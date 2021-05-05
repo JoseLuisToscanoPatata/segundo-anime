@@ -10,5 +10,5 @@ class Read extends Model
 {
     use HasFactory;
 
-    protected $table = 'reads';
+    protected $table = 'reades';
 }

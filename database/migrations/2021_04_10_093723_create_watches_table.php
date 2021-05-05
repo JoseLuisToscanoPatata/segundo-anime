@@ -19,7 +19,7 @@ class CreateWatchesTable extends Migration
             $table->unsignedBigInteger('anime_id');
             $table->enum('watchStatus',['Watching','PlanToWatch','Completed','Dropped','OnHold']);
             $table->integer('score')->nullable();
-            $table->tinyInteger('favourite')->default(0);
+            $table->boolean('favourite')->default(false);
             $table->foreign('anime_id')->references('id')->on('animes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
