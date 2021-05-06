@@ -281,7 +281,7 @@
           @ver-anime="pulsadoVer"
           :botonesExtras="botonesExtras"
           :key="datos"
-          color="green"
+          :color="colores"
           listaPropia="propia"
         >
         </data-table-area>
@@ -336,6 +336,11 @@ export default {
       datos: {},
       emisiones: ["borrar-anime", "editar-anime", "crear-anime", "ver-anime"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+
+      colores: {
+        color: "green",
+        hexa: "border:  #c6f6d5;",
+      },
 
       filtros: [
         {

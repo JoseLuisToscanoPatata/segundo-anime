@@ -16539,7 +16539,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  emits: ['update:checked'],
+  emits: ["update:checked"],
   props: {
     checked: {
       type: [Array, Boolean],
@@ -17406,6 +17406,10 @@ __webpack_require__.r(__webpack_exports__);
       datos: {},
       emisiones: ["borrar-anime", "editar-anime", "crear-anime", "ver-anime"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+      colores: {
+        color: "green",
+        hexa: "border:  #c6f6d5;"
+      },
       filtros: [{
         nombre: "ageRating",
         titulo: "age Rating",
@@ -17852,12 +17856,415 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Pages_Componentes_DataTableArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Pages/Componentes/DataTableArea */ "./resources/js/Pages/Componentes/DataTableArea.vue");
+/* harmony import */ var _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/DialogModal */ "./resources/js/Jetstream/DialogModal.vue");
+/* harmony import */ var _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/DangerButton */ "./resources/js/Jetstream/DangerButton.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/Checkbox */ "./resources/js/Jetstream/Checkbox.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+/* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+/* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Pages/Componentes/Loading */ "./resources/js/Pages/Componentes/Loading.vue");
+
+
+
+
+
+
+
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    DataTableArea: _Pages_Componentes_DataTableArea__WEBPACK_IMPORTED_MODULE_1__.default,
+    JetDialogModal: _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_2__.default,
+    JetDangerButton: _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_3__.default,
+    JetCheckbox: _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_5__.default,
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_6__.default,
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_4__.default,
+    JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_8__.default,
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_9__.default,
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_7__.default,
+    Loading: _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_10__.default
   },
-  props: ["clave"]
+  props: ["clave", "usuario", "userList"],
+  data: function data() {
+    return {
+      paginacion: [{
+        texto: "10",
+        numero: 10
+      }, {
+        texto: "20",
+        numero: 20
+      }, {
+        texto: "40",
+        numero: 40
+      }, {
+        texto: "70",
+        numero: 70
+      }, {
+        texto: "100",
+        numero: 100
+      }],
+      datos: [],
+      emisiones: ["borrar-watch", "editar-watch", "ver-anime", "cambiar-fav"],
+      imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+      colores: {
+        color: "purple",
+        hexa: "border:  #e9d8fd;"
+      },
+      operacion: "",
+      filtros: [{
+        nombre: "watchStatus",
+        titulo: "Watch Status",
+        opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
+        titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
+        actual: "",
+        ancho: "col-span-2"
+      }, {
+        nombre: "status",
+        titulo: "Status",
+        opciones: ["current", "finished", "tba"],
+        titulos: ["Current", "Finished", "TBA"],
+        actual: "",
+        ancho: "col-span-2"
+      }],
+      botones: [{
+        abbr: "Edit on my list",
+        icono: "/img/notes.svg",
+        emit: "editar-watch",
+        alt: "Watch status edition button",
+        ocultar: true
+      }, {
+        abbr: "Delete from my list",
+        icono: "/img/deleteOther.svg",
+        emit: "borrar-watch",
+        alt: "Watch deletion button",
+        ocultar: true
+      }, {
+        abbr: "See Anime",
+        icono: "/img/eye.svg",
+        emit: "ver-anime",
+        alt: "See Anime button",
+        ocultar: false
+      }],
+      iconos: [{
+        icono: "/img/favlist.svg",
+        abbr: "Make this anime not favourite",
+        alt: "Fav logo",
+        valor: true,
+        emit: "cambiar-fav"
+      }, {
+        icono: "/img/nofavlist.svg",
+        abbr: "Make this anime your favourite",
+        alt: "no Fav logo",
+        valor: false,
+        emit: "cambiar-fav"
+      }],
+      campos: [{
+        nombre: "cover",
+        titulo: "Cover",
+        tipo: "imagen",
+        sorteable: false,
+        filtrable: false,
+        color: "text-green-500",
+        width: "min-width: 80px",
+        alineacion: "justificado"
+      }, {
+        nombre: "title",
+        titulo: "Title",
+        tipo: "texto",
+        sorteable: true,
+        filtrable: true,
+        color: "text-pink-500",
+        width: "min-width: 250px; max-width: 250px;",
+        alineacion: "izquierda"
+      }, {
+        nombre: "rating",
+        titulo: "Avg Score",
+        tipo: "numero",
+        sorteable: true,
+        filtrable: false,
+        color: "text-yellow-500",
+        width: "min-width: 115px",
+        alineacion: "centrado"
+      }, {
+        nombre: "score",
+        titulo: "Your Score",
+        tipo: "numero",
+        sorteable: true,
+        filtrable: false,
+        color: "text-red-500",
+        width: "min-width: 115px",
+        alineacion: "centrado"
+      }, {
+        nombre: "episodes",
+        titulo: "Episodes",
+        tipo: "numero",
+        sorteable: true,
+        filtrable: false,
+        color: "text-blue-500",
+        width: "min-width: 115px",
+        alineacion: "centrado"
+      }, {
+        nombre: "status",
+        titulo: "Status",
+        tipo: "texto",
+        sorteable: false,
+        filtrable: false,
+        color: "text-indigo-500",
+        width: "min-width: 100px; max-width: 100px",
+        alineacion: "izquierda"
+      }, {
+        nombre: "watchStatus",
+        titulo: "Your Status",
+        tipo: "texto",
+        sorteable: false,
+        filtrable: false,
+        color: "text-purple-500",
+        width: "min-width: 150px",
+        alineacion: "izquierda"
+      }, {
+        nombre: "buttons",
+        titulo: "Options",
+        tipo: "botones",
+        sorteable: false,
+        filtrable: false,
+        color: "text-gray-500",
+        width: "min-width: 125px",
+        alineacion: "centrado"
+      }],
+      cargando: true,
+      datosInfo: {
+        mostrar: false,
+        titulo: "",
+        mensaje: "",
+        color: "black"
+      },
+      idActual: 1,
+      saltarModal: false,
+      datosActual: {
+        watchStatus: "",
+        score: "",
+        favourite: 0,
+        title: "",
+        cover: "",
+        status: ""
+      },
+      errores: {
+        watchStatus: null,
+        score: null,
+        favourite: null
+      }
+    };
+  },
+  created: function created() {
+    this.obtenerDatos();
+  },
+  computed: {
+    comprobarUsuario: function comprobarUsuario() {
+      if (this.userList == this.usuario.id) {
+        return "propia";
+      } else {
+        return "otra";
+      }
+    }
+  },
+  methods: {
+    //OBTENER LOS DATOS DE MANGAS
+    obtenerDatos: function obtenerDatos() {
+      var _this = this;
+
+      axios.get(route("watches.index", this.userList), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          _this.datos.push({
+            id: res.data.data[actual].id,
+            title: res.data.data[actual].title,
+            cover: res.data.data[actual].cover,
+            rating: res.data.data[actual].rating,
+            episodes: res.data.data[actual].episodes,
+            watchStatus: res.data.data[actual].pivot.watchStatus,
+            status: res.data.data[actual].status,
+            favourite: res.data.data[actual].pivot.favourite,
+            score: res.data.data[actual].pivot.score
+          });
+        }
+      });
+      this.cargando = false;
+    },
+    pulsadoVer: function pulsadoVer($id) {
+      window.location.href = route("AnimeProfile", $id);
+    },
+    pulsadoEditar: function pulsadoEditar(id) {
+      this.idActual = id;
+      this.errores.watchStatus = null;
+      this.errores.score = null;
+      this.errores.favourite = null;
+
+      for (var actual = 0; actual < this.datos.length; actual++) {
+        if (this.datos[actual].id == this.idActual) {
+          this.datosActual["watchStatus"] = this.datos[actual].watchStatus;
+          this.datosActual["favourite"] = this.datos[actual].favourite;
+          this.datosActual["score"] = this.datos[actual].score;
+          this.datosActual["cover"] = this.datos[actual].cover;
+          this.datosActual["title"] = this.datos[actual].title;
+          this.datosActual["status"] = this.datos[actual].status;
+        }
+      }
+
+      this.operacion = "editar";
+    },
+    pulsadoBorrar: function pulsadoBorrar(id) {
+      this.idActual = id;
+
+      if (this.saltarModal) {
+        this.borrarWatch(this.idActual);
+      } else {
+        this.operacion = "borrar";
+      }
+    },
+    cambiarFav: function cambiarFav(id) {
+      var _this2 = this;
+
+      this.idActual = id;
+
+      for (var actual = 0; actual < this.datos.length; actual++) {
+        if (this.datos[actual].id == id) {
+          if (this.datos[actual].favourite == 0) {
+            this.datosActual.favourite = 1;
+          } else {
+            this.datosActual.favourite = 0;
+          }
+
+          if (this.datos[actual].score != null) {
+            this.datosActual.score = this.datos[actual].score;
+          }
+
+          this.datosActual.watchStatus = this.datos[actual].watchStatus;
+        }
+      }
+
+      var datos = new FormData();
+      datos.append("watchStatus", this.datosActual["watchStatus"]);
+      datos.append("favourite", this.datosActual["favourite"]);
+
+      if (this.datosActual.score != null) {
+        datos.append("score", this.datosActual["score"]);
+      }
+
+      datos.append("_method", "PUT");
+      axios.post(route("watches.update", id), datos, {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        //EXITO
+        for (var _actual = 0; _actual < _this2.datos.length; _actual++) {
+          if (_this2.datos[_actual].id == _this2.idActual) {
+            _this2.datos[_actual].favourite = _this2.datosActual["favourite"];
+          }
+        }
+      })["catch"](function (err) {
+        //FALLOS
+        if (err.response.data.message) {
+          //FALLO EXTERNO
+          _this2.operacion = "";
+          _this2.datosInfo["color"] = "red";
+          _this2.datosInfo["titulo"] = "There was an error :(";
+          _this2.datosInfo["mensaje"] = err.response.data.message;
+          _this2.datosInfo["mostrar"] = true;
+        } else if (err.response.data.validation_errors) {
+          //FALLO DE VALIDACIÓN
+          _this2.errores["score"] = err.response.data.validation_errors["score"];
+          _this2.errores["watchStatus"] = err.response.data.validation_errors["watchStatus"];
+          _this2.errores["favourite"] = err.response.data.validation_errors["favourite"];
+        }
+      });
+    },
+    //METODO DE CREACIÓN O EDICIÓN DE MANGA
+    editar: function editar() {
+      var _this3 = this;
+
+      var datos = new FormData();
+      datos.append("watchStatus", this.datosActual["watchStatus"]);
+      datos.append("favourite", this.datosActual["favourite"]);
+
+      if (this.datosActual["score"] != null) {
+        datos.append("score", this.datosActual["score"]);
+      }
+
+      datos.append("_method", "PUT");
+      axios.post(route("watches.update", this.idActual), datos, {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        //EXITO
+        for (var actual = 0; actual < _this3.datos.length; actual++) {
+          if (_this3.datos[actual].id == _this3.idActual) {
+            _this3.datos[actual].score = _this3.datosActual["score"];
+            _this3.datos[actual].favourite = _this3.datosActual["favourite"];
+            _this3.datos[actual].watchStatus = _this3.datosActual["watchStatus"];
+          }
+        }
+
+        _this3.operacion = "";
+        _this3.datosInfo["color"] = "green";
+        _this3.datosInfo["titulo"] = "Operation success";
+        _this3.datosInfo["mensaje"] = res.data.message;
+        _this3.datosInfo["mostrar"] = true;
+      })["catch"](function (err) {
+        //FALLOS
+        if (err.response.data.message) {
+          //FALLO EXTERNO
+          _this3.operacion = "";
+          _this3.datosInfo["color"] = "red";
+          _this3.datosInfo["titulo"] = "There was an error :(";
+          _this3.datosInfo["mensaje"] = err.response.data.message;
+          _this3.datosInfo["mostrar"] = true;
+        } else if (err.response.data.validation_errors) {
+          //FALLO DE VALIDACIÓN
+          _this3.errores["score"] = err.response.data.validation_errors["score"];
+          _this3.errores["watchStatus"] = err.response.data.validation_errors["watchStatus"];
+          _this3.errores["favourite"] = err.response.data.validation_errors["favourite"];
+        }
+      });
+    },
+    //BORRAR MANGA EXISTENTE DE LA LISTA DE LEIDOS
+    borrarWatch: function borrarWatch() {
+      var _this4 = this;
+
+      this.operacion = "";
+      axios["delete"](route("watches.destroy", this.idActual), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < _this4.datos.length; actual++) {
+          if (_this4.datos[actual].id == _this4.idActual) {
+            _this4.datos.splice(actual, 1);
+          }
+        }
+
+        _this4.datosInfo["color"] = "green";
+        _this4.datosInfo["titulo"] = "Operation success :(";
+        _this4.datosInfo["mensaje"] = res.data.message;
+      })["catch"](function (err) {
+        _this4.datosInfo["color"] = "red";
+        _this4.datosInfo["titulo"] = "There was an error :(";
+        _this4.datosInfo["mensaje"] = err.data.message;
+      });
+      this.datosInfo["mostrar"] = true;
+    }
+  }
 });
 
 /***/ }),
@@ -18300,7 +18707,8 @@ __webpack_require__.r(__webpack_exports__);
       sorteado: "id",
       filtrado: "",
       paginacion: 0,
-      datosOrdenados: {}
+      datosOrdenados: {},
+      seleccionada: false
     };
   },
   props: {
@@ -18312,7 +18720,7 @@ __webpack_require__.r(__webpack_exports__);
     imagenes: "",
     botonesExtras: {},
     filtros: {},
-    color: "",
+    color: {},
     columnaIcono: "",
     nombreValorIcono: "",
     iconos: "",
@@ -18413,7 +18821,7 @@ __webpack_require__.r(__webpack_exports__);
       } else if (valor == "derecha") {
         return "text-right";
       } else if (valor == "justificado") {
-        return "text-justiciado";
+        return "text-justify";
       }
     }
   }
@@ -18647,6 +19055,10 @@ __webpack_require__.r(__webpack_exports__);
       datos: {},
       emisiones: ["borrar-manga", "editar-manga", "crear-manga", "ver-manga"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+      colores: {
+        color: "blue",
+        hexa: "border:  #bee3f8;"
+      },
       filtros: [{
         nombre: "ageRating",
         titulo: "age Rating",
@@ -19152,6 +19564,10 @@ __webpack_require__.r(__webpack_exports__);
       datos: [],
       emisiones: ["borrar-read", "editar-read", "ver-manga", "cambiar-fav"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+      colores: {
+        color: "yellow",
+        hexa: "border:  #fefcbf;"
+      },
       operacion: "",
       filtros: [{
         nombre: "readStatus",
@@ -19208,7 +19624,7 @@ __webpack_require__.r(__webpack_exports__);
         filtrable: false,
         color: "text-green-500",
         width: "min-width: 80px",
-        alineacion: "izquierda"
+        alineacion: "justificado"
       }, {
         nombre: "title",
         titulo: "Title",
@@ -19340,6 +19756,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     pulsadoEditar: function pulsadoEditar(id) {
       this.idActual = id;
+      this.errores.readStatus = null;
+      this.errores.score = null;
+      this.errores.favourite = null;
 
       for (var actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
@@ -19378,8 +19797,6 @@ __webpack_require__.r(__webpack_exports__);
 
           if (this.datos[actual].score != null) {
             this.datosActual.score = this.datos[actual].score;
-          } else {
-            this.datosActual.score = null;
           }
 
           this.datosActual.readStatus = this.datos[actual].readStatus;
@@ -19389,7 +19806,11 @@ __webpack_require__.r(__webpack_exports__);
       var datos = new FormData();
       datos.append("readStatus", this.datosActual["readStatus"]);
       datos.append("favourite", this.datosActual["favourite"]);
-      datos.append("score", this.datosActual["score"]);
+
+      if (this.datosActual.score != null) {
+        datos.append("score", this.datosActual["score"]);
+      }
+
       datos.append("_method", "PUT");
       axios.post(route("reads.update", id), datos, {
         headers: {
@@ -20099,9 +20520,13 @@ __webpack_require__.r(__webpack_exports__);
         texto: "100",
         numero: 100
       }],
-      datos: {},
+      datos: [],
       emisiones: ["cambiar-rol", "borrar-usu", "ver-usu"],
       imagenes: "h-10 w-10 rounded-full m-1",
+      colores: {
+        color: "indigo",
+        hexa: "border:  #c3dafe;"
+      },
       botones: [{
         abbr: "Delete user",
         icono: "img/deleteUser.svg",
@@ -20117,13 +20542,13 @@ __webpack_require__.r(__webpack_exports__);
       }],
       iconos: [{
         icono: "img/adminLogo.svg",
-        abbr: "This user is admin",
+        abbr: "This user is admin, click no remove admin",
         alt: "Admin logo",
         valor: "admin",
         emit: "cambiar-rol"
       }, {
         icono: "img/sapato.svg",
-        abbr: "This user is not an admin",
+        abbr: "This user is not an admin, click to make him admin",
         alt: "Normal user logo",
         valor: "user",
         emit: "cambiar-rol"
@@ -20688,7 +21113,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $options.proxyChecked = $event;
     }),
-    "class": "rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+    "class": "rounded border-gray-300 text-pink-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
   }, null, 8
   /* PROPS */
   , ["value"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $options.proxyChecked]]);
@@ -21565,7 +21990,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "mt-3 flex items-center text-sm font-semibold text-red-700"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Search mangas"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Check your list"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "ml-1 text-red-500"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   viewBox: "0 0 20 20",
@@ -21579,7 +22004,23 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"p-4 bg-yellow-300 border-4 border-yellow-500\"><div class=\"flex items-center\"><img src=\"img/star.svg\" alt=\"\" class=\"w-8 h-8\"><div class=\"ml-4 text-lg text-yellow-600 leading-7 font-semibold\"> Meet people </div></div><div class=\"ml-12\"><div class=\"mt-2 text-sm text-gray-600 text-justify\"> In our website, you can make friends with tons of people, and do cool things like comparing your lists, chatting with them, recommend stuff you like, and thats actually everything you can do. </div></div></div><div class=\"p-4 bg-green-300 border-4 border-green-500\"><div class=\"flex items-center\"><img src=\"img/friend.svg\" alt=\"\" class=\"w-8 h-8\"><div class=\"ml-4 text-lg text-green-500 leading-7 font-semibold\"> Social media </div></div><div class=\"ml-12\"><div class=\"mt-2 text-sm text-gray-600 text-justify\"> Como en realidad el proyecto no da para tanto, no hay nada más, aunque tenía pensado añadir otras cosas como grupos, más registros en la BD, mejores filtros de búsqueda, y casi todo de lo que pone en los otros bloques :/ </div></div></div>", 2);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "mt-3 flex items-center text-sm font-semibold text-red-700"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, "Check your list"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "ml-1 text-red-500"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
+  viewBox: "0 0 20 20",
+  fill: "currentColor",
+  "class": "w-4 h-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
+  "fill-rule": "evenodd",
+  d: "M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z",
+  "clip-rule": "evenodd"
+})])])], -1
+/* HOISTED */
+);
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"p-4 bg-yellow-300 border-4 border-yellow-500\"><div class=\"flex items-center\"><img src=\"img/star.svg\" alt=\"\" class=\"w-8 h-8\"><div class=\"ml-4 text-lg text-yellow-600 leading-7 font-semibold\"> Meet people </div></div><div class=\"ml-12\"><div class=\"mt-2 text-sm text-gray-600 text-justify\"> In our website, you can make friends with tons of people, and do cool things like comparing your lists, chatting with them, recommend stuff you like, and thats actually everything you can do. </div></div></div><div class=\"p-4 bg-green-300 border-4 border-green-500\"><div class=\"flex items-center\"><img src=\"img/friend.svg\" alt=\"\" class=\"w-8 h-8\"><div class=\"ml-4 text-lg text-green-500 leading-7 font-semibold\"> Social media </div></div><div class=\"ml-12\"><div class=\"mt-2 text-sm text-gray-600 text-justify\"> Como en realidad el proyecto no da para tanto, no hay nada más, aunque tenía pensado añadir otras cosas como grupos, más registros en la BD, mejores filtros de búsqueda, y casi todo de lo que pone en los otros bloques :/ </div></div></div>", 2);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_application_logo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-application-logo");
@@ -21590,11 +22031,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     href: _ctx.route('AnimeList')
   }, [_hoisted_10], 8
   /* PROPS */
-  , ["href"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-    href: _ctx.route('MangaList')
+  , ["href"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [_hoisted_14, _ctx.$page.props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    key: 0,
+    href: _ctx.route('MangaUserList', _ctx.$page.props.user.id)
   }, [_hoisted_15], 8
   /* PROPS */
-  , ["href"])])]), _hoisted_16])]);
+  , ["href"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    key: 1,
+    href: _ctx.route('login')
+  }, [_hoisted_16], 8
+  /* PROPS */
+  , ["href"]))])]), _hoisted_17])]);
 }
 
 /***/ }),
@@ -23363,11 +23810,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onVerAnime: $options.pulsadoVer,
         botonesExtras: $data.botonesExtras,
         key: $data.datos,
-        color: "green",
+        color: $data.colores,
         listaPropia: "propia"
       }, null, 8
       /* PROPS */
-      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarAnime", "onEditarAnime", "onCrearAnime", "onVerAnime", "botonesExtras"])], 64
+      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarAnime", "onEditarAnime", "onCrearAnime", "onVerAnime", "botonesExtras", "color"])], 64
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
@@ -23474,7 +23921,118 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
+var _hoisted_2 = {
+  "class": "max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Close ");
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete From your list ");
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Are you sure you want to delete the specified anime from your list? ");
+
+var _hoisted_6 = {
+  "class": "block mt-4"
+};
+var _hoisted_7 = {
+  "class": "flex items-start"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "ml-2 text-sm text-gray-600"
+}, "Dont ask me again lol", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel ");
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ");
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "text-blue-500 font-bold"
+}, "MANGA LIST FORM ", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "flex flex-col sm:flex-row m-5 justify-evenly"
+};
+var _hoisted_13 = {
+  "class": "text-center sm:max-w-sm"
+};
+var _hoisted_14 = {
+  "class": "font-semibold text-lg text-blue-400 text-center"
+};
+var _hoisted_15 = {
+  "class": "flex flex-col"
+};
+var _hoisted_16 = {
+  "class": "m-auto mt-3"
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "PlanToWatch"
+}, "Plan To Watch", -1
+/* HOISTED */
+);
+
+var _hoisted_18 = {
+  key: 0,
+  value: "Watching"
+};
+var _hoisted_19 = {
+  key: 1,
+  value: "Completed"
+};
+var _hoisted_20 = {
+  key: 2,
+  value: "Dropped"
+};
+var _hoisted_21 = {
+  key: 3,
+  value: "OnHold"
+};
+var _hoisted_22 = {
+  "class": "m-auto mt-3"
+};
+var _hoisted_23 = {
+  "class": "m-auto mt-7"
+};
+var _hoisted_24 = {
+  "class": "flex items-start"
+};
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "ml-2 text-sm text-gray-600"
+}, "Favourite", -1
+/* HOISTED */
+);
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel ");
+
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Upload ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
+
+  var _component_jet_dialog_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-dialog-modal");
+
+  var _component_jet_checkbox = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-checkbox");
+
+  var _component_jet_secondary_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-secondary-button");
+
+  var _component_jet_danger_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-danger-button");
+
+  var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
+
+  var _component_jet_input_error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input-error");
+
+  var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
+
+  var _component_data_table_area = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("data-table-area");
+
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
@@ -23482,6 +24040,241 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [!$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" MODAL DE MENSAJES"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.datosInfo['mostrar'],
+        onClose: _cache[2] || (_cache[2] = function ($event) {
+          return $data.datosInfo['mostrar'] = false;
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+            "class": ["font-bold", 'text-' + $data.datosInfo['color'] + '-500']
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosInfo["titulo"]), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+            "class": 'text-' + $data.datosInfo['color'] + '-500'
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosInfo["mensaje"]), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+            "class": ["ml-2 text-white", 'bg-' + $data.datosInfo['color'] + '-300 hover:bg-' + $data.datosInfo['color'] + '-600'],
+            onClick: _cache[1] || (_cache[1] = function ($event) {
+              return $data.datosInfo['mostrar'] = false;
+            })
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_3];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["class"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.operacion == 'borrar',
+        onClose: _cache[6] || (_cache[6] = function ($event) {
+          return $data.operacion = '';
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_4];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_checkbox, {
+            modelValue: $data.saltarModal,
+            "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+              return $data.saltarModal = $event;
+            }),
+            "class": "text-pink-400"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), _hoisted_8])])];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            onClick: _cache[4] || (_cache[4] = function ($event) {
+              return $data.operacion = '';
+            }),
+            "class": "ml-2"
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_9];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_danger_button, {
+            "class": "ml-2",
+            onClick: _cache[5] || (_cache[5] = function ($event) {
+              return $options.borrarWatch($data.idActual);
+            })
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_10];
+            }),
+            _: 1
+            /* STABLE */
+
+          })];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" MODAL DE ACTUALIZACIÓN"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.operacion == 'editar',
+        onClose: _cache[12] || (_cache[12] = function ($event) {
+          return $data.operacion = '';
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_11];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+            onSubmit: _cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+              return $options.editar && $options.editar.apply($options, arguments);
+            }, ["prevent"]))
+          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosActual["title"]), 1
+          /* TEXT */
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+            src: $data.datosActual['cover'],
+            alt: $data.datosActual['title'],
+            "class": "rounded-full h-36 w-36 object-cover text-center m-auto mt-5"
+          }, null, 8
+          /* PROPS */
+          , ["src", "alt"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+            "for": "watchStatus",
+            value: "Watch Status"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+            id: "watchStatus",
+            "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+              return $data.datosActual['watchStatus'] = $event;
+            }),
+            "class": "mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+          }, [_hoisted_17, $data.datosActual['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_18, " Watching ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.datosActual['status'] == 'finished' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_19, " Completed ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.datosActual['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_20, " Dropped ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.datosActual['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_21, " On Hold ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.datosActual['watchStatus']]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['watchStatus'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+            "for": "score",
+            value: "Your Score"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+            id: "score",
+            type: "number",
+            "class": "mt-1 block w-full",
+            modelValue: $data.datosActual['score'],
+            "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+              return $data.datosActual['score'] = $event;
+            }),
+            min: "0",
+            max: "10"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['score'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+            type: "checkbox",
+            "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+              return $data.datosActual['favourite'] = $event;
+            }),
+            "true-value": "1",
+            "false-value": "0",
+            "class": "rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          }, null, 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.datosActual['favourite']]]), _hoisted_25]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['favourite'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])])])])], 32
+          /* HYDRATE_EVENTS */
+          )];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            type: "button",
+            onClick: _cache[11] || (_cache[11] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+              return $data.operacion = '';
+            }, ["prevent"])),
+            "class": "mr-2"
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_26];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            "class": "mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600",
+            type: "button",
+            onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.editar, ["prevent"])
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_27];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["onClick"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_data_table_area, {
+        datos: $data.datos,
+        columnas: $data.campos,
+        cantidadPaginas: $data.paginacion,
+        botones: $data.botones,
+        filtros: $data.filtros,
+        emisiones: $data.emisiones,
+        imagenes: $data.imagenes,
+        onBorrarWatch: $options.pulsadoBorrar,
+        onEditarWatch: $options.pulsadoEditar,
+        onCambiarFav: $options.cambiarFav,
+        onVerAnime: $options.pulsadoVer,
+        key: $data.datos,
+        color: $data.colores,
+        listaPropia: $options.comprobarUsuario,
+        nombreValorIcono: "favourite",
+        columnaIcono: "title",
+        iconos: $data.iconos
+      }, null, 8
+      /* PROPS */
+      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarWatch", "onEditarWatch", "onCambiarFav", "onVerAnime", "color", "listaPropia", "iconos"])], 64
+      /* STABLE_FRAGMENT */
+      )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
+        key: 1,
+        color: "yellow"
+      }))])];
     }),
     _: 1
     /* STABLE */
@@ -24408,7 +25201,7 @@ var _hoisted_3 = {
   "class": "w-full overflow-x-auto overflow-y-auto"
 };
 var _hoisted_4 = {
-  "class": "border-separate min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
+  "class": "min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
 };
 var _hoisted_5 = {
   "class": "flex flex-row"
@@ -24418,7 +25211,7 @@ var _hoisted_6 = {
   "class": "flex justify-start"
 };
 var _hoisted_7 = {
-  "class": "text-gray-500",
+  "class": "text-gray-500 break-all",
   style: {
     "width": "80%"
   }
@@ -24459,7 +25252,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-    "class": ["p-6 flex flex-col justify-start items-start rounded-lg", 'bg-' + $props.color + '-100']
+    "class": ["p-6 flex flex-col justify-start items-start rounded-lg", 'bg-' + $props.color.color + '-100']
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
     type: "text",
     "class": "max-w-xs mr-6 col-span-2",
@@ -24548,7 +25341,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.columnas, function (campo, indice) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("th", {
       key: indice,
-      style: campo.width
+      style: campo.width,
+      "class": 'border-b border-' + $props.color.color + '-200 border-solid'
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
       "class": campo.color
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(campo.titulo), 3
@@ -24567,15 +25361,23 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* CLASS */
     )], 8
     /* PROPS */
-    , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 4
-    /* STYLE */
+    , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 6
+    /* CLASS, STYLE */
     );
   }), 128
   /* KEYED_FRAGMENT */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.datosOrdenados.slice($options.primero - 1, $options.ultimo), function (dato, indice) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
+      onMouseover: _cache[5] || (_cache[5] = function ($event) {
+        return _ctx.seleccionado = true;
+      }),
+      onMouseleave: _cache[6] || (_cache[6] = function ($event) {
+        return _ctx.seleccionado = false;
+      }),
       key: indice,
-      "class": ["mb-10", 'hover:bg-' + $props.color + '-200']
+      "class": ["mb-10", ['hover:bg-' + $props.color.color + '-200', {
+        seleccionadas: $data.seleccionada
+      }]]
     }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.columnas, function (columna, idColumna) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: idColumna
@@ -24585,7 +25387,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         }, [nomProp == columna.nombre ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", {
           key: 0,
           "class": $options.alinear(columna.alineacion),
-          style: columna.width
+          style: [columna.width, $props.color.color]
         }, [columna.tipo == 'imagen' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           key: 0
         }, [valorProp != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
@@ -24619,11 +25421,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           onClick: function onClick($event) {
             return _ctx.$emit($props.iconos[0]['emit'], dato.id);
-          }
+          },
+          "class": "focus:outline-none outline-none"
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
           src: $props.iconos[0]['icono'],
           alt: $props.iconos[0]['alt'],
-          "class": "h-5 ml-2 w-auto focus:outline-none outline-none"
+          "class": "h-5 ml-2 w-auto transform active:scale-110"
         }, null, 8
         /* PROPS */
         , ["src", "alt"])], 8
@@ -24638,11 +25441,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           onClick: function onClick($event) {
             return _ctx.$emit($props.iconos[1]['emit'], dato.id);
-          }
+          },
+          "class": "focus:outline-none outline-none"
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
           src: $props.iconos[1]['icono'],
           alt: $props.iconos[1]['alt'],
-          "class": "h-5 ml-2 w-auto focus:outline-none outline-none"
+          "class": "h-5 ml-2 w-auto transform active:scale-110"
         }, null, 8
         /* PROPS */
         , ["src", "alt"])], 8
@@ -24667,7 +25471,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       );
     }), 128
     /* KEYED_FRAGMENT */
-    )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.botones, function (boton) {
+    )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
+      style: $props.color.color
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.botones, function (boton) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: boton
       }, [!boton.ocultar || $props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
@@ -24681,7 +25487,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         "class": "mr-4 focus:outline-none outline-none"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
         src: boton.icono,
-        "class": "h-6 w-auto"
+        "class": "h-6 w-auto transform active:scale-110"
       }, null, 8
       /* PROPS */
       , ["src"])], 8
@@ -24693,8 +25499,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       );
     }), 128
     /* KEYED_FRAGMENT */
-    ))])])], 2
-    /* CLASS */
+    ))])], 4
+    /* STYLE */
+    )], 34
+    /* CLASS, HYDRATE_EVENTS */
     );
   }), 128
   /* KEYED_FRAGMENT */
@@ -24704,8 +25512,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     style: {
       "min-width": "110px"
     },
-    "class": ["ml-2 disabled:opacity-40", 'bg-' + $props.color + '-400 hover:bg-' + $props.color + '-500 active:bg-' + $props.color + '-700'],
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+    "class": ["ml-2 disabled:opacity-40", 'bg-' + $props.color.color + '-400 hover:bg-' + $props.color.color + '-500 active:bg-' + $props.color.color + '-700'],
+    onClick: _cache[7] || (_cache[7] = function ($event) {
       return $data.paginacion = $data.paginacion - 1;
     }),
     disabled: $data.paginacion == 0
@@ -24722,8 +25530,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     style: {
       "min-width": "70px"
     },
-    "class": ["ml-2 disabled:opacity-40", 'bg-' + $props.color + '-400 hover:bg-' + $props.color + '-500 active:bg-' + $props.color + '-700'],
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+    "class": ["ml-2 disabled:opacity-40", 'bg-' + $props.color.color + '-400 hover:bg-' + $props.color.color + '-500 active:bg-' + $props.color.color + '-700'],
+    onClick: _cache[8] || (_cache[8] = function ($event) {
       return $data.paginacion = $data.paginacion + 1;
     }),
     disabled: $options.ultimo >= $data.datosOrdenados.length
@@ -25740,11 +26548,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onVerManga: $options.pulsadoVer,
         botonesExtras: $data.botonesExtras,
         key: $data.datos,
-        color: "blue",
+        color: $data.colores,
         listaPropia: "propia"
       }, null, 8
       /* PROPS */
-      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarManga", "onEditarManga", "onCrearManga", "onVerManga", "botonesExtras"])], 64
+      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarManga", "onEditarManga", "onCrearManga", "onVerManga", "botonesExtras", "color"])], 64
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
@@ -26191,14 +26999,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onCambiarFav: $options.cambiarFav,
         onVerManga: $options.pulsadoVer,
         key: $data.datos,
-        color: "yellow",
+        color: $data.colores,
         listaPropia: $options.comprobarUsuario,
         nombreValorIcono: "favourite",
         columnaIcono: "title",
         iconos: $data.iconos
       }, null, 8
       /* PROPS */
-      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarRead", "onEditarRead", "onCambiarFav", "onVerManga", "listaPropia", "iconos"])], 64
+      , ["datos", "columnas", "cantidadPaginas", "botones", "filtros", "emisiones", "imagenes", "onBorrarRead", "onEditarRead", "onCambiarFav", "onVerManga", "color", "listaPropia", "iconos"])], 64
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
@@ -27622,14 +28430,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onBorrarUsu: $options.pulsadoBorrar,
         onCambiarRol: $options.cambiarRolUsu,
         onVerUsu: $options.pulsadoVer,
-        color: "indigo",
+        color: $data.colores,
         iconos: $data.iconos,
         columnaIcono: "name",
         nombreValorIcono: "role",
         listaPropia: "propia"
       }, null, 8
       /* PROPS */
-      , ["datos", "columnas", "cantidadPaginas", "botones", "emisiones", "imagenes", "onBorrarUsu", "onCambiarRol", "onVerUsu", "iconos"])], 64
+      , ["datos", "columnas", "cantidadPaginas", "botones", "emisiones", "imagenes", "onBorrarUsu", "onCambiarRol", "onVerUsu", "color", "iconos"])], 64
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
@@ -27924,7 +28732,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-800b4f58]::-webkit-scrollbar {\r\n  width: 20px;\n}\r\n\r\n/* Track */\n[data-v-800b4f58]::-webkit-scrollbar-track {\r\n  box-shadow: inset 0 0 5px grey;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle */\n[data-v-800b4f58]::-webkit-scrollbar-thumb {\r\n  background: #555455;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle on hover */\n[data-v-800b4f58]::-webkit-scrollbar-thumb:hover {\r\n  background: #242424;\n}\n[data-v-800b4f58]::-webkit-scrollbar-track-piece {\r\n  background: white;\r\n  border-radius: 10px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-800b4f58]::-webkit-scrollbar {\r\n  width: 20px;\n}\r\n\r\n/* Track */\n[data-v-800b4f58]::-webkit-scrollbar-track {\r\n  box-shadow: inset 0 0 5px grey;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle */\n[data-v-800b4f58]::-webkit-scrollbar-thumb {\r\n  background: #555455;\r\n  border-radius: 10px;\n}\r\n\r\n/* Handle on hover */\n[data-v-800b4f58]::-webkit-scrollbar-thumb:hover {\r\n  background: #242424;\n}\n[data-v-800b4f58]::-webkit-scrollbar-track-piece {\r\n  background: white;\r\n  border-radius: 10px;\n}\n#seleccionadas td[data-v-800b4f58] {\r\n  border: 1px solid !important;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

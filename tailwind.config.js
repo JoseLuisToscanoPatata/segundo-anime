@@ -42,6 +42,8 @@ module.exports = {
     variants: {
         extend: {
             opacity: ["disabled"],
+            scale: ["active"],
+            height: ["active"],
         },
     },
 

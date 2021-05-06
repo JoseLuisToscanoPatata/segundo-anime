@@ -1,7 +1,7 @@
 <template>
   <div
     class="p-6 flex flex-col justify-start items-start rounded-lg"
-    :class="'bg-' + color + '-100'"
+    :class="'bg-' + color.color + '-100'"
   >
     <div
       class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5"
@@ -61,12 +61,15 @@
     </div>
 
     <div class="w-full overflow-x-auto overflow-y-auto">
-      <table
-        class="border-separate min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
-      >
+      <table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
         <thead>
           <tr>
-            <th v-for="(campo, indice) in columnas" :key="indice" :style="campo.width">
+            <th
+              v-for="(campo, indice) in columnas"
+              :key="indice"
+              :style="campo.width"
+              :class="'border-b border-' + color.color + '-200 border-solid'"
+            >
               <div class="flex flex-row">
                 <span :class="campo.color">{{ campo.titulo }}</span>
 
@@ -89,17 +92,19 @@
 
         <tbody>
           <tr
+            @mouseover="seleccionado = true"
+            @mouseleave="seleccionado = false"
             v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
             :key="indice"
             class="mb-10"
-            :class="'hover:bg-' + color + '-200'"
+            :class="['hover:bg-' + color.color + '-200', { seleccionadas: seleccionada }]"
           >
             <template v-for="(columna, idColumna) in columnas" :key="idColumna">
               <template v-for="(valorProp, nomProp) in dato" :key="nomProp">
                 <td
                   v-if="nomProp == columna.nombre"
                   :class="alinear(columna.alineacion)"
-                  :style="columna.width"
+                  :style="[columna.width, color.color]"
                 >
                   <template v-if="columna.tipo == 'imagen'">
                     <a :href="valorProp" target="_blank" v-if="valorProp != null">
@@ -112,17 +117,20 @@
                   <template v-else>
                     <template v-if="nomProp == columnaIcono">
                       <div class="flex justify-start">
-                        <span class="text-gray-500" style="width: 80%">{{
+                        <span class="text-gray-500 break-all" style="width: 80%">{{
                           valorProp
                         }}</span>
 
                         <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
                           <abbr :title="iconos[0]['abbr']">
-                            <button @click="$emit(iconos[0]['emit'], dato.id)">
+                            <button
+                              @click="$emit(iconos[0]['emit'], dato.id)"
+                              class="focus:outline-none outline-none"
+                            >
                               <img
                                 :src="iconos[0]['icono']"
                                 :alt="iconos[0]['alt']"
-                                class="h-5 ml-2 w-auto focus:outline-none outline-none"
+                                class="h-5 ml-2 w-auto transform active:scale-110"
                               />
                             </button>
                           </abbr>
@@ -130,11 +138,14 @@
                         <template v-else>
                           <template v-if="listaPropia == 'propia'">
                             <abbr :title="iconos[1]['abbr']">
-                              <button @click="$emit(iconos[1]['emit'], dato.id)">
+                              <button
+                                @click="$emit(iconos[1]['emit'], dato.id)"
+                                class="focus:outline-none outline-none"
+                              >
                                 <img
                                   :src="iconos[1]['icono']"
                                   :alt="iconos[1]['alt']"
-                                  class="h-5 ml-2 w-auto focus:outline-none outline-none"
+                                  class="h-5 ml-2 w-auto transform active:scale-110"
                                 />
                               </button>
                             </abbr>
@@ -149,7 +160,7 @@
               </template>
             </template>
 
-            <td>
+            <td :style="color.color">
               <div class="flex justify-start">
                 <template v-for="boton in botones" :key="boton">
                   <template v-if="!boton.ocultar || listaPropia == 'propia'">
@@ -159,7 +170,10 @@
                         @click="$emit(boton.emit, dato.id)"
                         class="mr-4 focus:outline-none outline-none"
                       >
-                        <img :src="boton.icono" class="h-6 w-auto" />
+                        <img
+                          :src="boton.icono"
+                          class="h-6 w-auto transform active:scale-110"
+                        />
                       </button>
                     </abbr>
                   </template>
@@ -182,7 +196,13 @@
           style="min-width: 110px"
           class="ml-2 disabled:opacity-40"
           :class="
-            'bg-' + color + '-400 hover:bg-' + color + '-500 active:bg-' + color + '-700'
+            'bg-' +
+            color.color +
+            '-400 hover:bg-' +
+            color.color +
+            '-500 active:bg-' +
+            color.color +
+            '-700'
           "
           @click="paginacion = paginacion - 1"
           :disabled="paginacion == 0"
@@ -196,7 +216,13 @@
           style="min-width: 70px"
           class="ml-2 disabled:opacity-40"
           :class="
-            'bg-' + color + '-400 hover:bg-' + color + '-500 active:bg-' + color + '-700'
+            'bg-' +
+            color.color +
+            '-400 hover:bg-' +
+            color.color +
+            '-500 active:bg-' +
+            color.color +
+            '-700'
           "
           @click="paginacion = paginacion + 1"
           :disabled="ultimo >= datosOrdenados.length"
@@ -226,6 +252,7 @@ export default {
       filtrado: "",
       paginacion: 0,
       datosOrdenados: {},
+      seleccionada: false,
     };
   },
 
@@ -238,7 +265,7 @@ export default {
     imagenes: "",
     botonesExtras: {},
     filtros: {},
-    color: "",
+    color: {},
     columnaIcono: "",
     nombreValorIcono: "",
     iconos: "",
@@ -348,7 +375,7 @@ export default {
       } else if (valor == "derecha") {
         return "text-right";
       } else if (valor == "justificado") {
-        return "text-justiciado";
+        return "text-justify";
       }
     },
   },
@@ -380,5 +407,9 @@ export default {
 ::-webkit-scrollbar-track-piece {
   background: white;
   border-radius: 10px;
+}
+
+#seleccionadas td {
+  border: 1px solid !important;
 }
 </style>

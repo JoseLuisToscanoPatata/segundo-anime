@@ -179,7 +179,7 @@
           @cambiar-fav="cambiarFav"
           @ver-manga="pulsadoVer"
           :key="datos"
-          color="yellow"
+          :color="colores"
           :listaPropia="comprobarUsuario"
           nombreValorIcono="favourite"
           columnaIcono="title"
@@ -239,6 +239,12 @@ export default {
 
       emisiones: ["borrar-read", "editar-read", "ver-manga", "cambiar-fav"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+
+      colores: {
+        color: "yellow",
+        hexa: "border:  #fefcbf;",
+      },
+
       operacion: "",
 
       filtros: [
@@ -311,7 +317,7 @@ export default {
           filtrable: false,
           color: "text-green-500",
           width: "min-width: 80px",
-          alineacion: "izquierda",
+          alineacion: "justificado",
         },
         {
           nombre: "title",
@@ -464,6 +470,10 @@ export default {
     pulsadoEditar(id) {
       this.idActual = id;
 
+      this.errores.readStatus = null;
+      this.errores.score = null;
+      this.errores.favourite = null;
+
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
           this.datosActual["readStatus"] = this.datos[actual].readStatus;
@@ -499,8 +509,6 @@ export default {
           }
           if (this.datos[actual].score != null) {
             this.datosActual.score = this.datos[actual].score;
-          } else {
-            this.datosActual.score = null;
           }
 
           this.datosActual.readStatus = this.datos[actual].readStatus;
@@ -511,7 +519,11 @@ export default {
 
       datos.append("readStatus", this.datosActual["readStatus"]);
       datos.append("favourite", this.datosActual["favourite"]);
-      datos.append("score", this.datosActual["score"]);
+
+      if (this.datosActual.score != null) {
+        datos.append("score", this.datosActual["score"]);
+      }
+
       datos.append("_method", "PUT");
 
       axios

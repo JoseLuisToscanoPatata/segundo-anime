@@ -58,7 +58,7 @@
           @borrar-usu="pulsadoBorrar"
           @cambiar-rol="cambiarRolUsu"
           @ver-usu="pulsadoVer"
-          color="indigo"
+          :color="colores"
           :iconos="iconos"
           columnaIcono="name"
           nombreValorIcono="role"
@@ -105,9 +105,15 @@ export default {
         { texto: "50", numero: 50 },
         { texto: "100", numero: 100 },
       ],
-      datos: {},
+      datos: [],
       emisiones: ["cambiar-rol", "borrar-usu", "ver-usu"],
       imagenes: "h-10 w-10 rounded-full m-1",
+
+      colores: {
+        color: "indigo",
+        hexa: "border:  #c3dafe;",
+      },
+
       botones: [
         {
           abbr: "Delete user",
@@ -128,14 +134,14 @@ export default {
       iconos: [
         {
           icono: "img/adminLogo.svg",
-          abbr: "This user is admin",
+          abbr: "This user is admin, click no remove admin",
           alt: "Admin logo",
           valor: "admin",
           emit: "cambiar-rol",
         },
         {
           icono: "img/sapato.svg",
-          abbr: "This user is not an admin",
+          abbr: "This user is not an admin, click to make him admin",
           alt: "Normal user logo",
           valor: "user",
           emit: "cambiar-rol",

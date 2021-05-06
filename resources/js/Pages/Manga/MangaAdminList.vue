@@ -260,7 +260,7 @@
           @ver-manga="pulsadoVer"
           :botonesExtras="botonesExtras"
           :key="datos"
-          color="blue"
+          :color="colores"
           listaPropia="propia"
         >
         </data-table-area>
@@ -315,6 +315,11 @@ export default {
       datos: {},
       emisiones: ["borrar-manga", "editar-manga", "crear-manga", "ver-manga"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
+
+      colores: {
+        color: "blue",
+        hexa: "border:  #bee3f8;",
+      },
 
       filtros: [
         {
