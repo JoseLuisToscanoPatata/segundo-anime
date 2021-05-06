@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#34D399">
+  <app-layout color="#A3E635">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN ANIME LIST</h2>
     </template>
@@ -70,7 +70,7 @@
 
         <jet-dialog-modal :show="operacion == 'crearEditar'" @close="operacion = ''">
           <template #title>
-            <span class="text-green-500 font-bold">ANIME FORM </span>
+            <span class="text-lime-500 font-bold">ANIME FORM </span>
           </template>
 
           <template #content>
@@ -108,7 +108,7 @@
                   </div>
 
                   <jet-secondary-button
-                    class="mt-2 mr-2 text-white bg-green-400 hover:bg-green-600"
+                    class="mt-2 mr-2 text-white bg-lime-400 hover:bg-lime-600"
                     type="button"
                     @click.prevent="selectNewPhoto"
                   >
@@ -258,7 +258,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-green-400 hover:bg-green-600"
+              class="mt-2 ml-2 text-white bg-lime-400 hover:bg-lime-600"
               type="button"
               @click.prevent="crearOEditar"
             >
@@ -288,7 +288,7 @@
       </template>
 
       <template v-else>
-        <loading color="green"></loading>
+        <loading color="lime"></loading>
       </template>
     </div>
   </app-layout>
@@ -338,7 +338,7 @@ export default {
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
 
       colores: {
-        color: "green",
+        color: "lime",
         hexa: "border:  #c6f6d5;",
       },
 
@@ -365,7 +365,7 @@ export default {
         {
           texto: "New Anime",
           emit: "crear-anime",
-          clases: "text-white bg-green-400 hover:bg-green-600",
+          clases: "text-white bg-lime-400 hover:bg-lime-600",
         },
       ],
 
@@ -401,7 +401,7 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-green-500",
+          color: "text-emerald-500",
           width: "min-width: 60px",
           alineacion: "izquierda",
         },
@@ -412,7 +412,7 @@ export default {
           tipo: "imagen",
           sorteable: false,
           filtrable: false,
-          color: "text-yellow-500",
+          color: "text-green-500",
           width: "min-width: 80px",
           alineacion: "izquierda",
         },
@@ -422,7 +422,7 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-purple-500",
+          color: "text-lime-400",
           width: "min-width: 250px; max-width: 250px;",
           alineacion: "izquierda",
         },
@@ -432,7 +432,7 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-pink-500",
+          color: "text-lime-700",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -442,7 +442,7 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-red-500",
+          color: "text-emerald-600",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -453,7 +453,7 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-blue-500",
+          color: "text-green-400",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -464,7 +464,7 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-indigo-500",
+          color: "text-lime-500",
           width: "min-width: 125px",
           alineacion: "izquierda",
         },
@@ -475,7 +475,7 @@ export default {
           tipo: "botones",
           sorteable: false,
           filtrable: false,
-          color: "text-gray-500",
+          color: "text-emerald-400",
           width: "min-width: 125px",
         },
       ],

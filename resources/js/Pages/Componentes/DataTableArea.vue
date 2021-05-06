@@ -68,24 +68,25 @@
               v-for="(campo, indice) in columnas"
               :key="indice"
               :style="campo.width"
-              :class="'border-b border-' + color.color + '-200 border-solid'"
+              :class="[
+                'border-b border-' + color.color + '-200 border-solid',
+                alinear(campo.alineacion),
+              ]"
             >
-              <div class="flex flex-row">
-                <span :class="campo.color">{{ campo.titulo }}</span>
+              <span :class="campo.color">{{ campo.titulo }}</span>
 
-                <button
-                  @click="(paginacion = 0), ordenar(campo.nombre)"
-                  v-if="campo.sorteable"
-                  class="focus:outline-none outline-none"
-                >
-                  <img
-                    src="/img/sort.svg"
-                    alt="sortear por columna"
-                    class="h-3 ml-2 w-auto"
-                    :class="campo.color"
-                  />
-                </button>
-              </div>
+              <button
+                @click="(paginacion = 0), ordenar(campo.nombre)"
+                v-if="campo.sorteable"
+                class="focus:outline-none outline-none"
+              >
+                <img
+                  src="/img/sort.svg"
+                  alt="sortear por columna"
+                  class="h-3 ml-2 w-auto"
+                  :class="campo.color"
+                />
+              </button>
             </th>
           </tr>
         </thead>
@@ -122,18 +123,30 @@
                         }}</span>
 
                         <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
-                          <abbr :title="iconos[0]['abbr']">
-                            <button
-                              @click="$emit(iconos[0]['emit'], dato.id)"
-                              class="focus:outline-none outline-none"
-                            >
+                          <template v-if="listaPropia == 'propia'">
+                            <abbr :title="iconos[0]['abbr']">
+                              <button
+                                @click="$emit(iconos[0]['emit'], dato.id)"
+                                class="focus:outline-none outline-none"
+                              >
+                                <img
+                                  :src="iconos[0]['icono']"
+                                  :alt="iconos[0]['alt']"
+                                  class="h-5 ml-2 w-auto transform active:scale-110"
+                                />
+                              </button>
+                            </abbr>
+                          </template>
+
+                          <template v-else>
+                            <abbr :title="iconos[0]['abbr']">
                               <img
                                 :src="iconos[0]['icono']"
                                 :alt="iconos[0]['alt']"
                                 class="h-5 ml-2 w-auto transform active:scale-110"
                               />
-                            </button>
-                          </abbr>
+                            </abbr>
+                          </template>
                         </template>
                         <template v-else>
                           <template v-if="listaPropia == 'propia'">
@@ -161,7 +174,7 @@
             </template>
 
             <td :style="color.color">
-              <div class="flex justify-start">
+              <div class="flex justify-evenly">
                 <template v-for="boton in botones" :key="boton">
                   <template v-if="!boton.ocultar || listaPropia == 'propia'">
                     <abbr :title="boton.abbr">

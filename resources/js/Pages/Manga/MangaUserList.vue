@@ -69,14 +69,14 @@
 
         <jet-dialog-modal :show="operacion == 'editar'" @close="operacion = ''">
           <template #title>
-            <span class="text-blue-500 font-bold">MANGA LIST FORM </span>
+            <span class="text-purple-500 font-bold">MANGA LIST FORM </span>
           </template>
 
           <template #content>
             <form @submit.prevent="editar">
               <div class="flex flex-col sm:flex-row m-5 justify-evenly">
                 <div class="text-center sm:max-w-sm">
-                  <span class="font-semibold text-lg text-blue-400 text-center">{{
+                  <span class="font-semibold text-lg text-purple-400 text-center">{{
                     datosActual["title"]
                   }}</span>
 
@@ -157,7 +157,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600"
+              class="mt-2 ml-2 text-white bg-purple-400 hover:bg-purple-600"
               type="button"
               @click.prevent="editar"
             >
@@ -307,7 +307,6 @@ export default {
           emit: "cambiar-fav",
         },
       ],
-
       campos: [
         {
           nombre: "cover",
@@ -315,7 +314,7 @@ export default {
           tipo: "imagen",
           sorteable: false,
           filtrable: false,
-          color: "text-green-500",
+          color: "text-amber-600",
           width: "min-width: 80px",
           alineacion: "justificado",
         },
@@ -325,7 +324,7 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-pink-500",
+          color: "text-yellow-400",
           width: "min-width: 250px; max-width: 250px;",
           alineacion: "izquierda",
         },
@@ -346,7 +345,7 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-red-500",
+          color: "text-amber-400",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -357,7 +356,7 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-blue-500",
+          color: "text-yellow-300",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -368,7 +367,7 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-indigo-500",
+          color: "text-amber-300",
           width: "min-width: 100px; max-width: 100px",
           alineacion: "izquierda",
         },
@@ -379,7 +378,7 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-purple-500",
+          color: "text-amber-700",
           width: "min-width: 150px",
           alineacion: "izquierda",
         },
@@ -390,7 +389,7 @@ export default {
           tipo: "botones",
           sorteable: false,
           filtrable: false,
-          color: "text-gray-500",
+          color: "text-yellow-600",
           width: "min-width: 125px",
           alineacion: "centrado",
         },

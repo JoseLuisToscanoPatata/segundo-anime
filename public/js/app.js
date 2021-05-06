@@ -17407,7 +17407,7 @@ __webpack_require__.r(__webpack_exports__);
       emisiones: ["borrar-anime", "editar-anime", "crear-anime", "ver-anime"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
       colores: {
-        color: "green",
+        color: "lime",
         hexa: "border:  #c6f6d5;"
       },
       filtros: [{
@@ -17428,7 +17428,7 @@ __webpack_require__.r(__webpack_exports__);
       botonesExtras: [{
         texto: "New Anime",
         emit: "crear-anime",
-        clases: "text-white bg-green-400 hover:bg-green-600"
+        clases: "text-white bg-lime-400 hover:bg-lime-600"
       }],
       botones: [{
         abbr: "Edit anime",
@@ -17455,7 +17455,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-green-500",
+        color: "text-emerald-500",
         width: "min-width: 60px",
         alineacion: "izquierda"
       }, {
@@ -17464,7 +17464,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "imagen",
         sorteable: false,
         filtrable: false,
-        color: "text-yellow-500",
+        color: "text-green-500",
         width: "min-width: 80px",
         alineacion: "izquierda"
       }, {
@@ -17473,7 +17473,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-purple-500",
+        color: "text-lime-400",
         width: "min-width: 250px; max-width: 250px;",
         alineacion: "izquierda"
       }, {
@@ -17482,7 +17482,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-pink-500",
+        color: "text-lime-700",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -17491,7 +17491,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-red-500",
+        color: "text-emerald-600",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -17500,7 +17500,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-blue-500",
+        color: "text-green-400",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -17509,7 +17509,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-indigo-500",
+        color: "text-lime-500",
         width: "min-width: 125px",
         alineacion: "izquierda"
       }, {
@@ -17518,7 +17518,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "botones",
         sorteable: false,
         filtrable: false,
-        color: "text-gray-500",
+        color: "text-emerald-400",
         width: "min-width: 125px"
       }],
       cargando: true,
@@ -17971,7 +17971,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "imagen",
         sorteable: false,
         filtrable: false,
-        color: "text-green-500",
+        color: "text-violet-500",
         width: "min-width: 80px",
         alineacion: "justificado"
       }, {
@@ -17980,7 +17980,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-pink-500",
+        color: "text-purple-500",
         width: "min-width: 250px; max-width: 250px;",
         alineacion: "izquierda"
       }, {
@@ -17989,7 +17989,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-yellow-500",
+        color: "text-violet-600",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -17998,7 +17998,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-red-500",
+        color: "text-purple-400",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -18007,7 +18007,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-blue-500",
+        color: "text-purple-700",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -18016,7 +18016,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-indigo-500",
+        color: "text-violet-400",
         width: "min-width: 100px; max-width: 100px",
         alineacion: "izquierda"
       }, {
@@ -18025,7 +18025,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-purple-500",
+        color: "text-purple-600",
         width: "min-width: 150px",
         alineacion: "izquierda"
       }, {
@@ -18034,7 +18034,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "botones",
         sorteable: false,
         filtrable: false,
-        color: "text-gray-500",
+        color: "text-violet-800",
         width: "min-width: 125px",
         alineacion: "centrado"
       }],
@@ -19056,7 +19056,7 @@ __webpack_require__.r(__webpack_exports__);
       emisiones: ["borrar-manga", "editar-manga", "crear-manga", "ver-manga"],
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
       colores: {
-        color: "blue",
+        color: "cyan",
         hexa: "border:  #bee3f8;"
       },
       filtros: [{
@@ -19077,7 +19077,7 @@ __webpack_require__.r(__webpack_exports__);
       botonesExtras: [{
         texto: "New Manga",
         emit: "crear-manga",
-        clases: "text-white bg-blue-400 hover:bg-blue-600"
+        clases: "text-white bg-cyan-400 hover:bg-cyan-600"
       }],
       botones: [{
         abbr: "Edit Manga",
@@ -19104,7 +19104,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-green-500",
+        color: "text-cyan-500",
         width: "min-width: 60px",
         alineacion: "izquierda"
       }, {
@@ -19113,7 +19113,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "imagen",
         sorteable: false,
         filtrable: false,
-        color: "text-yellow-500",
+        color: "text-lightBlue-500",
         width: "min-width: 80px",
         alineacion: "izquierda"
       }, {
@@ -19122,7 +19122,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-purple-500",
+        color: "text-teal-400",
         width: "min-width: 250px; max-width: 250px;",
         alineacion: "izquierda"
       }, {
@@ -19131,7 +19131,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-pink-500",
+        color: "text-teal-600",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -19140,7 +19140,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-red-500",
+        color: "text-lightBlue-600",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -19149,7 +19149,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-blue-500",
+        color: "text-indigo-600",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -19158,7 +19158,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-indigo-500",
+        color: "text-cyan-600",
         width: "min-width: 125px",
         alineacion: "izquierda"
       }, {
@@ -19167,7 +19167,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "botones",
         sorteable: false,
         filtrable: false,
-        color: "text-gray-500",
+        color: "text-indigo-400",
         width: "min-width: 125px"
       }],
       cargando: true,
@@ -19622,7 +19622,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "imagen",
         sorteable: false,
         filtrable: false,
-        color: "text-green-500",
+        color: "text-amber-600",
         width: "min-width: 80px",
         alineacion: "justificado"
       }, {
@@ -19631,7 +19631,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-pink-500",
+        color: "text-yellow-400",
         width: "min-width: 250px; max-width: 250px;",
         alineacion: "izquierda"
       }, {
@@ -19649,7 +19649,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-red-500",
+        color: "text-amber-400",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -19658,7 +19658,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-blue-500",
+        color: "text-yellow-300",
         width: "min-width: 115px",
         alineacion: "centrado"
       }, {
@@ -19667,7 +19667,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-indigo-500",
+        color: "text-amber-300",
         width: "min-width: 100px; max-width: 100px",
         alineacion: "izquierda"
       }, {
@@ -19676,7 +19676,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: false,
         filtrable: false,
-        color: "text-purple-500",
+        color: "text-amber-700",
         width: "min-width: 150px",
         alineacion: "izquierda"
       }, {
@@ -19685,7 +19685,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "botones",
         sorteable: false,
         filtrable: false,
-        color: "text-gray-500",
+        color: "text-yellow-600",
         width: "min-width: 125px",
         alineacion: "centrado"
       }],
@@ -20524,8 +20524,8 @@ __webpack_require__.r(__webpack_exports__);
       emisiones: ["cambiar-rol", "borrar-usu", "ver-usu"],
       imagenes: "h-10 w-10 rounded-full m-1",
       colores: {
-        color: "indigo",
-        hexa: "border:  #c3dafe;"
+        color: "orange",
+        hexa: "border:  #FED7AA;"
       },
       botones: [{
         abbr: "Delete user",
@@ -20559,7 +20559,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "numero",
         sorteable: true,
         filtrable: false,
-        color: "text-purple-500",
+        color: "text-orange-500",
         width: "min-width: 60px",
         alineacion: "izquierda"
       }, {
@@ -20568,7 +20568,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "imagen",
         sorteable: false,
         filtrable: false,
-        color: "text-blue-500",
+        color: "text-orange-700",
         width: "min-width: 65px",
         alineacion: "izquierda"
       }, {
@@ -20577,7 +20577,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-red-500",
+        color: "text-orange-400",
         width: "min-width: 215px",
         alineacion: "izquierda"
       }, {
@@ -20586,7 +20586,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "texto",
         sorteable: true,
         filtrable: true,
-        color: "text-pink-500",
+        color: "text-orange-800",
         width: "min-width: 325px",
         alineacion: "izquierda"
       }, {
@@ -20595,7 +20595,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "date",
         sorteable: true,
         filtrable: false,
-        color: "text-yellow-500",
+        color: "text-orange-600",
         width: "min-width: 315px",
         alineacion: "izquierda"
       }, {
@@ -20604,7 +20604,7 @@ __webpack_require__.r(__webpack_exports__);
         tipo: "botones",
         sorteable: false,
         filtrable: false,
-        color: "text-green-500",
+        color: "text-orange-300",
         width: "min-width: 125px",
         alineacion: "centrado"
       }],
@@ -22418,7 +22418,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Account Management "), _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
         href: _ctx.route('AnimeAdminList'),
-        color: ['text-green-400', 'bg-white', 'hover:text-white', 'hover:bg-green-400', 'border-green-400'],
+        color: ['text-lime-400', 'bg-white', 'hover:text-white', 'hover:bg-lime-400', 'border-lime-400'],
         active: _ctx.route().current('AnimeAdminList')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22431,7 +22431,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href", "active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
         href: _ctx.route('MangaAdminList'),
-        color: ['text-blue-400', 'bg-white', 'hover:text-white', 'hover:bg-blue-400', 'border-blue-400'],
+        color: ['text-cyan-400', 'bg-white', 'hover:text-white', 'hover:bg-cyan-400', 'border-cyan-400'],
         active: _ctx.route().current('MangaAdminList')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22444,7 +22444,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href", "active"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dropdown_link, {
         href: _ctx.route('UserAdminList'),
-        color: ['text-indigo-400', 'bg-white', 'hover:text-white', 'hover:bg-indigo-400', 'border-indigo-400'],
+        color: ['text-orange-400', 'bg-white', 'hover:text-white', 'hover:bg-orange-400', 'border-orange-400'],
         active: _ctx.route().current('UserAdminList')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -22633,7 +22633,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["href", "active", "class"])])])]), _ctx.$page.props.user.role == 'admin' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
     href: _ctx.route('AnimeAdminList'),
     active: _ctx.route().current('AnimeAdminList'),
-    "class": ["text-green-500 hover:text-green-700 focus:text-green-800 hover:border-green-700 focus:border-green-800", {
+    "class": ["text-lime-500 hover:text-lime-700 focus:text-lime-800 hover:border-lime-700 focus:border-lime-800", {
       'border-white': _ctx.route().current('AnimeAdminList')
     }]
   }, {
@@ -22648,7 +22648,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["href", "active", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
     href: _ctx.route('MangaAdminList'),
     active: _ctx.route().current('MangaAdminList'),
-    "class": ["text-blue-500 hover:text-blue-700 focus:text-blue-800 hover:border-blue-700 focus:border-blue-800", {
+    "class": ["text-cyan-500 hover:text-cyan-700 focus:text-cyan-800 hover:border-cyan-700 focus:border-cyan-800", {
       'border-white': _ctx.route().current('MangaAdminList')
     }]
   }, {
@@ -22663,7 +22663,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["href", "active", "class"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
     href: _ctx.route('UserAdminList'),
     active: _ctx.route().current('UserAdminList'),
-    "class": ["text-indigo-500 hover:text-indigo-700 focus:text-indigo-800 hover:border-indigo-700 focus:border-indigo-800", {
+    "class": ["text-orange-500 hover:text-orange-700 focus:text-orange-800 hover:border-orange-700 focus:border-orange-800", {
       'border-white': _ctx.route().current('UserAdminList')
     }]
   }, {
@@ -23268,7 +23268,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ");
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-green-500 font-bold"
+  "class": "text-lime-500 font-bold"
 }, "ANIME FORM ", -1
 /* HOISTED */
 );
@@ -23423,7 +23423,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
-    color: "#34D399"
+    color: "#A3E635"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
@@ -23566,7 +23566,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           )], 512
           /* NEED_PATCH */
           ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $options.mostrarImagen == 'preview']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 mr-2 text-white bg-green-400 hover:bg-green-600",
+            "class": "mt-2 mr-2 text-white bg-lime-400 hover:bg-lime-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.selectNewPhoto, ["prevent"])
           }, {
@@ -23777,7 +23777,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 ml-2 text-white bg-green-400 hover:bg-green-600",
+            "class": "mt-2 ml-2 text-white bg-lime-400 hover:bg-lime-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.crearOEditar, ["prevent"])
           }, {
@@ -23818,7 +23818,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
-        color: "green"
+        color: "lime"
       }))])];
     }),
     _: 1
@@ -25204,45 +25204,42 @@ var _hoisted_4 = {
   "class": "min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
 };
 var _hoisted_5 = {
-  "class": "flex flex-row"
-};
-var _hoisted_6 = {
   key: 0,
   "class": "flex justify-start"
 };
-var _hoisted_7 = {
+var _hoisted_6 = {
   "class": "text-gray-500 break-all",
   style: {
     "width": "80%"
   }
 };
-var _hoisted_8 = {
+var _hoisted_7 = {
   key: 1,
   "class": "text-gray-500 break-all"
 };
-var _hoisted_9 = {
-  "class": "flex justify-start"
+var _hoisted_8 = {
+  "class": "flex justify-evenly"
 };
-var _hoisted_10 = {
+var _hoisted_9 = {
   "class": "grid grid-cols-6 mt-6 justify-start"
 };
-var _hoisted_11 = {
+var _hoisted_10 = {
   "class": "col-span-6 sm:col-span-3 mt-1 text-gray-500",
   style: {
     "min-width": "270px"
   }
 };
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "col-span-4 sm:col-span-2 mt-1 sm:mt-0"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Previous ");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Previous ");
 
-var _hoisted_14 = {
+var _hoisted_13 = {
   "class": "col-span-2 sm:col-span-1 mt-1 sm:mt-0"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Next ");
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Next ");
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -25342,8 +25339,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("th", {
       key: indice,
       style: campo.width,
-      "class": 'border-b border-' + $props.color.color + '-200 border-solid'
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+      "class": ['border-b border-' + $props.color.color + '-200 border-solid', $options.alinear(campo.alineacion)]
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
       "class": campo.color
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(campo.titulo), 3
     /* TEXT, CLASS */
@@ -25361,7 +25358,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* CLASS */
     )], 8
     /* PROPS */
-    , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 6
+    , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 6
     /* CLASS, STYLE */
     );
   }), 128
@@ -25413,9 +25410,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         /* STABLE_FRAGMENT */
         )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           key: 1
-        }, [nomProp == $props.columnaIcono ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
+        }, [nomProp == $props.columnaIcono ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
         /* TEXT */
-        ), dato[$props.nombreValorIcono] == $props.iconos[0]['valor'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
+        ), dato[$props.nombreValorIcono] == $props.iconos[0]['valor'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+          key: 0
+        }, [$props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
           key: 0,
           title: $props.iconos[0]['abbr']
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
@@ -25433,7 +25432,20 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         /* PROPS */
         , ["onClick"])], 8
         /* PROPS */
-        , ["title"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        , ["title"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
+          key: 1,
+          title: $props.iconos[0]['abbr']
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          src: $props.iconos[0]['icono'],
+          alt: $props.iconos[0]['alt'],
+          "class": "h-5 ml-2 w-auto transform active:scale-110"
+        }, null, 8
+        /* PROPS */
+        , ["src", "alt"])], 8
+        /* PROPS */
+        , ["title"]))], 64
+        /* STABLE_FRAGMENT */
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           key: 1
         }, [$props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
           key: 0,
@@ -25455,7 +25467,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         /* PROPS */
         , ["title"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
         /* STABLE_FRAGMENT */
-        ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
+        ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(valorProp), 1
         /* TEXT */
         ))], 64
         /* STABLE_FRAGMENT */
@@ -25473,7 +25485,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* KEYED_FRAGMENT */
     )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
       style: $props.color.color
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.botones, function (boton) {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.botones, function (boton) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: boton
       }, [!boton.ocultar || $props.listaPropia == 'propia' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("abbr", {
@@ -25506,9 +25518,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     );
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_11, "Showing results " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.primero) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.ultimo) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosOrdenados.length), 1
+  ))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_10, "Showing results " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.primero) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.ultimo) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosOrdenados.length), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
     style: {
       "min-width": "110px"
     },
@@ -25519,14 +25531,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     disabled: $data.paginacion == 0
   }, {
     "default": _withId(function () {
-      return [_hoisted_13];
+      return [_hoisted_12];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["class", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+  , ["class", "disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
     style: {
       "min-width": "70px"
     },
@@ -25537,7 +25549,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     disabled: $options.ultimo >= $data.datosOrdenados.length
   }, {
     "default": _withId(function () {
-      return [_hoisted_15];
+      return [_hoisted_14];
     }),
     _: 1
     /* STABLE */
@@ -26044,7 +26056,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ");
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-blue-500 font-bold"
+  "class": "text-cyan-500 font-bold"
 }, "MANGA FORM ", -1
 /* HOISTED */
 );
@@ -26197,7 +26209,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
-    color: "#60A5FA"
+    color: "#22D3EE"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
@@ -26340,7 +26352,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           )], 512
           /* NEED_PATCH */
           ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $options.mostrarImagen == 'preview']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 mr-2 text-white bg-blue-400 hover:bg-blue-600",
+            "class": "mt-2 mr-2 text-white bg-cyan-400 hover:bg-cyan-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.selectNewPhoto, ["prevent"])
           }, {
@@ -26515,7 +26527,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600",
+            "class": "mt-2 ml-2 text-white bg-cyan-400 hover:bg-cyan-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.crearOEditar, ["prevent"])
           }, {
@@ -26556,7 +26568,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
-        color: "blue"
+        color: "cyan"
       }))])];
     }),
     _: 1
@@ -26687,7 +26699,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete ");
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-blue-500 font-bold"
+  "class": "text-purple-500 font-bold"
 }, "MANGA LIST FORM ", -1
 /* HOISTED */
 );
@@ -26699,7 +26711,7 @@ var _hoisted_13 = {
   "class": "text-center sm:max-w-sm"
 };
 var _hoisted_14 = {
-  "class": "font-semibold text-lg text-blue-400 text-center"
+  "class": "font-semibold text-lg text-purple-400 text-center"
 };
 var _hoisted_15 = {
   "class": "flex flex-col"
@@ -26967,7 +26979,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600",
+            "class": "mt-2 ml-2 text-white bg-purple-400 hover:bg-purple-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.editar, ["prevent"])
           }, {
@@ -28329,7 +28341,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
-    color: "#6366F1"
+    color: "#FB923C"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
@@ -28441,7 +28453,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* STABLE_FRAGMENT */
       )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 1,
-        color: "indigo"
+        color: "orange"
       }))])];
     }),
     _: 1

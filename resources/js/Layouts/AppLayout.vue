@@ -131,11 +131,11 @@
                       <jet-dropdown-link
                         :href="route('AnimeAdminList')"
                         :color="[
-                          'text-green-400',
+                          'text-lime-400',
                           'bg-white',
                           'hover:text-white',
-                          'hover:bg-green-400',
-                          'border-green-400',
+                          'hover:bg-lime-400',
+                          'border-lime-400',
                         ]"
                         :active="route().current('AnimeAdminList')"
                       >
@@ -145,11 +145,11 @@
                       <jet-dropdown-link
                         :href="route('MangaAdminList')"
                         :color="[
-                          'text-blue-400',
+                          'text-cyan-400',
                           'bg-white',
                           'hover:text-white',
-                          'hover:bg-blue-400',
-                          'border-blue-400',
+                          'hover:bg-cyan-400',
+                          'border-cyan-400',
                         ]"
                         :active="route().current('MangaAdminList')"
                       >
@@ -159,11 +159,11 @@
                       <jet-dropdown-link
                         :href="route('UserAdminList')"
                         :color="[
-                          'text-indigo-400',
+                          'text-orange-400',
                           'bg-white',
                           'hover:text-white',
-                          'hover:bg-indigo-400',
-                          'border-indigo-400',
+                          'hover:bg-orange-400',
+                          'border-orange-400',
                         ]"
                         :active="route().current('UserAdminList')"
                       >
@@ -361,7 +361,7 @@
                 <jet-responsive-nav-link
                   :href="route('AnimeAdminList')"
                   :active="route().current('AnimeAdminList')"
-                  class="text-green-500 hover:text-green-700 focus:text-green-800 hover:border-green-700 focus:border-green-800"
+                  class="text-lime-500 hover:text-lime-700 focus:text-lime-800 hover:border-lime-700 focus:border-lime-800"
                   :class="{
                     'border-white': route().current('AnimeAdminList'),
                   }"
@@ -374,7 +374,7 @@
                 <jet-responsive-nav-link
                   :href="route('MangaAdminList')"
                   :active="route().current('MangaAdminList')"
-                  class="text-blue-500 hover:text-blue-700 focus:text-blue-800 hover:border-blue-700 focus:border-blue-800"
+                  class="text-cyan-500 hover:text-cyan-700 focus:text-cyan-800 hover:border-cyan-700 focus:border-cyan-800"
                   :class="{
                     'border-white': route().current('MangaAdminList'),
                   }"
@@ -387,7 +387,7 @@
                 <jet-responsive-nav-link
                   :href="route('UserAdminList')"
                   :active="route().current('UserAdminList')"
-                  class="text-indigo-500 hover:text-indigo-700 focus:text-indigo-800 hover:border-indigo-700 focus:border-indigo-800"
+                  class="text-orange-500 hover:text-orange-700 focus:text-orange-800 hover:border-orange-700 focus:border-orange-800"
                   :class="{
                     'border-white': route().current('UserAdminList'),
                   }"
