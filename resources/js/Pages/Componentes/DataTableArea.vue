@@ -93,12 +93,10 @@
 
         <tbody>
           <tr
-            @mouseover="seleccionado = true"
-            @mouseleave="seleccionado = false"
             v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
             :key="indice"
             class="mb-10"
-            :class="['hover:bg-' + color.color + '-200', { seleccionadas: seleccionada }]"
+            :class="'hover:bg-' + color.color + '-200'"
           >
             <template v-for="(columna, idColumna) in columnas" :key="idColumna">
               <template v-for="(valorProp, nomProp) in dato" :key="nomProp">
@@ -265,7 +263,6 @@ export default {
       filtrado: "",
       paginacion: 0,
       datosOrdenados: {},
-      seleccionada: false,
     };
   },
 
@@ -420,9 +417,5 @@ export default {
 ::-webkit-scrollbar-track-piece {
   background: white;
   border-radius: 10px;
-}
-
-#seleccionadas td {
-  border: 1px solid !important;
 }
 </style>
