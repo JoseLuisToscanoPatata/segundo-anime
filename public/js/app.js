@@ -17861,6 +17861,13 @@ __webpack_require__.r(__webpack_exports__);
         titulos: ["ONA", "OVA", "TV", "Movie", "Music", "Special"],
         actual: "",
         ancho: "col-span-2"
+      }, {
+        nombre: "yourStatus",
+        titulo: "Your Status",
+        opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
+        titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
+        actual: "",
+        ancho: "col-span-2"
       }],
       cargando: true
     };

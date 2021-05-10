@@ -61,6 +61,15 @@ export default {
           actual: "",
           ancho: "col-span-2",
         },
+
+        {
+          nombre: "yourStatus",
+          titulo: "Your Status",
+          opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
+          titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
+          actual: "",
+          ancho: "col-span-2",
+        },
       ],
 
       cargando: true,
