@@ -4,7 +4,7 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN USERS LIST</h2>
     </template>
 
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
         <jet-dialog-modal :show="hayError" @close="hayError = false">
           <template #title> No permissions </template>

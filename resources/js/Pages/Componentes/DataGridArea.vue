@@ -4,7 +4,7 @@
     :class="'bg-' + color.color + '-100'"
   >
     <div
-      class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5"
+      class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0"
     >
       <jet-input
         type="text"
@@ -51,155 +51,122 @@
 
     <div
       class="w-full overflow-x-auto overflow-y-auto grid grid-cols-4 doble:grid-cols-8 triple:grid-cols-12 my-3 justify-items-center"
+      v-show="datosOrdenados.length > 0"
     >
       <template
         v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
         :key="indice"
       >
-        <div class="rounded-lg mx-4 my-5 flex flex-col items-center">
-          <div class="h-10 p-2 text-xs font-semibold text-center">
-            {{ dato["titulo"] }}
+        <div class="rounded-lg mx-4 my-5 flex grid-span-4 flex-col items-center">
+          <div class="h-10 p-2 text-sm font-semibold text-center">
+            <a :href="route('AnimeProfile', dato['id'])" v-if="tipo == 'anime'">
+              {{ dato["title"] }}</a
+            >
+            <a :href="route('MangaProfile', dato['id'])" v-if="tipo == 'manga'">
+              {{ dato["title"] }}</a
+            >
+          </div>
+          <div class="h-5 p-2 text-xs flex flex-row items-center justify-items-center">
+            <span>{{ dato["subType"] }}</span>
+            <div v-if="tipo == 'anime'">
+              <div v-if="dato['episodes'] > 0">
+                <span>{{ dato["episodes"] }} eps</span>
+              </div>
+              <div v-else>
+                <span>? eps</span>
+              </div>
+            </div>
+
+            <div v-if="tipo == 'manga'">
+              <div v-if="dato['chapters'] > 0">
+                <span>{{ dato["chapters"] }} chaps</span>
+              </div>
+              <div v-else>
+                <span>? chaps</span>
+              </div>
+            </div>
+
+            <div>
+              <div v-if="dato['yourStatus'] == null">
+                <img src="/img/eye.svg" class="w-6 h-auto" alt="añadir" />
+              </div>
+              <div
+                v-else-if="dato['yourStatus'] == 'Completed'"
+                class="bg-green-300 w-6 h-auto"
+              >
+                CMP
+              </div>
+              <div
+                v-else-if="dato['yourStatus'] == 'Dropped'"
+                class="bg-red-300 w-6 h-auto"
+              >
+                DRP
+              </div>
+              <div
+                v-else-if="dato['yourStatus'] == 'Current'"
+                class="bg-blue-300 w-6 h-auto"
+              >
+                CUR
+              </div>
+              <div
+                v-else-if="dato['yourStatus'] == 'Plan'"
+                class="bg-gray-300 w-6 h-auto"
+              >
+                PLN
+              </div>
+              <div
+                v-else-if="dato['yourStatus'] == 'Hold'"
+                class="bg-yellow-300 w-6 h-auto"
+              >
+                HLD
+              </div>
+            </div>
           </div>
 
-          <div></div>
+          <div class="h-5 p-2 text-xs flex flex-row items-center justify-items-center">
+            <div>
+              <div v-if="dato['startDate'] != null">
+                <span>{{ dato["startDate"] }}</span>
+              </div>
+              <div v-else>
+                <span>???</span>
+              </div>
+            </div>
+
+            <div>
+              <div v-if="dato['score'] > 0">
+                <span>{{ dato["score"] }} </span>
+              </div>
+              <div v-else>
+                <span> N/A</span>
+              </div>
+              <img src="/img/star.svg" alt="Star" class="h-5 w-auto" />
+            </div>
+
+            <div>
+              <img src="/img/userIcon.svg" alt="Star" class="h-5 w-auto" />
+              <span>{{ dato["users"] }} </span>
+            </div>
+          </div>
+
+          <div class="flex flex-row">
+            <div>
+              <a :href="dato['cover']" target="_blank" v-if="dato['cover'] != null">
+                <img :src="valorProp" alt="image" class="rounded-lg" />
+              </a>
+
+              <img v-else src="/img/no_foto.jpg" alt="image" class="rounded-lg" />
+            </div>
+            <div class="overflow-y-auto">{{ dato["synopsis"] }}</div>
+          </div>
         </div>
       </template>
-      <!--<table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
-        <thead>
-          <tr>
-            <th
-              v-for="(campo, indice) in columnas"
-              :key="indice"
-              :style="campo.width"
-              :class="[
-                'border-b border-' + color.color + '-200 border-solid',
-                alinear(campo.alineacion),
-              ]"
-            >
-              <span :class="campo.color">{{ campo.titulo }}</span>
-
-              <button
-                @click="(paginacion = 0), ordenar(campo.nombre)"
-                v-if="campo.sorteable"
-                class="focus:outline-none outline-none"
-              >
-                <img
-                  src="/img/sort.svg"
-                  alt="sortear por columna"
-                  class="h-3 ml-2 w-auto"
-                  :class="campo.color"
-                />
-              </button>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr
-            v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
-            :key="indice"
-            class="mb-10"
-            :class="'hover:bg-' + color.color + '-200'"
-          >
-            <template v-for="(columna, idColumna) in columnas" :key="idColumna">
-              <template v-for="(valorProp, nomProp) in dato" :key="nomProp">
-                <td
-                  v-if="nomProp == columna.nombre"
-                  :class="alinear(columna.alineacion)"
-                  :style="[columna.width, color.color]"
-                >
-                  <template v-if="columna.tipo == 'imagen'">
-                    <a :href="valorProp" target="_blank" v-if="valorProp != null">
-                      <img :src="valorProp" alt="image" :class="imagenes" />
-                    </a>
-
-                    <img v-else src="/img/no_foto.jpg" alt="image" :class="imagenes" />
-                  </template>
-
-                  <template v-else>
-                    <template v-if="nomProp == columnaIcono">
-                      <div class="flex justify-start">
-                        <span class="text-gray-500 break-all" style="width: 80%">{{
-                          valorProp
-                        }}</span>
-
-                        <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
-                          <template v-if="listaPropia == 'propia'">
-                            <abbr :title="iconos[0]['abbr']">
-                              <button
-                                @click="$emit(iconos[0]['emit'], dato.id)"
-                                class="focus:outline-none outline-none"
-                              >
-                                <img
-                                  :src="iconos[0]['icono']"
-                                  :alt="iconos[0]['alt']"
-                                  class="h-5 ml-2 w-auto transform active:scale-110"
-                                />
-                              </button>
-                            </abbr>
-                          </template>
-
-                          <template v-else>
-                            <abbr :title="iconos[0]['abbr']">
-                              <img
-                                :src="iconos[0]['icono']"
-                                :alt="iconos[0]['alt']"
-                                class="h-5 ml-2 w-auto transform active:scale-110"
-                              />
-                            </abbr>
-                          </template>
-                        </template>
-                        <template v-else>
-                          <template v-if="listaPropia == 'propia'">
-                            <abbr :title="iconos[1]['abbr']">
-                              <button
-                                @click="$emit(iconos[1]['emit'], dato.id)"
-                                class="focus:outline-none outline-none"
-                              >
-                                <img
-                                  :src="iconos[1]['icono']"
-                                  :alt="iconos[1]['alt']"
-                                  class="h-5 ml-2 w-auto transform active:scale-110"
-                                />
-                              </button>
-                            </abbr>
-                          </template>
-                        </template>
-                      </div>
-                    </template>
-
-                    <span v-else class="text-gray-500 break-all">{{ valorProp }}</span>
-                  </template>
-                </td>
-              </template>
-            </template>
-
-            <td :style="color.color">
-              <div class="flex justify-evenly">
-                <template v-for="boton in botones" :key="boton">
-                  <template v-if="!boton.ocultar || listaPropia == 'propia'">
-                    <abbr :title="boton.abbr">
-                      <button
-                        :alt="boton.alt"
-                        @click="$emit(boton.emit, dato.id)"
-                        class="mr-4 focus:outline-none outline-none"
-                      >
-                        <img
-                          :src="boton.icono"
-                          class="h-6 w-auto transform active:scale-110"
-                        />
-                      </button>
-                    </abbr>
-                  </template>
-                </template>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
 
-    <div class="grid grid-cols-6 mt-6 justify-start">
+    <div
+      class="grid grid-cols-6 mt-6 justify-start sticky bottom-0"
+      v-show="datosOrdenados.length > 0"
+    >
       <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 270px"
         >Showing results {{ primero }} to {{ ultimo }} of
         {{ datosOrdenados.length }}
@@ -245,6 +212,12 @@
         </jet-button>
       </div>
     </div>
+
+    <div v-show="datosOrdenados.length == 0" class="self-center mt-5 my-8">
+      <span class="font-extrabold text-2xl" :class="'text-' + color.color + '-400'"
+        >There is no data to show :(</span
+      >
+    </div>
   </div>
 </template>
 
@@ -265,7 +238,7 @@ export default {
       sorteado: "id",
       filtrado: "",
       paginacion: 0,
-      datosOrdenados: {},
+      datosOrdenados: [],
     };
   },
 
@@ -273,17 +246,15 @@ export default {
     datos: {},
     cantidadPaginas: [],
     columnas: [],
-    emisiones: [],
-    botones: [],
     filtros: [],
     color: {},
+    tipo: "",
   },
 
   emits: {},
 
   created() {
     this.datosOrdenados = this.datos;
-    this.$page.emits = this.$page.props.emisiones;
   },
 
   computed: {
@@ -304,7 +275,6 @@ export default {
     filtrar() {
       this.paginacion = 0;
       var valor = this.filtrado;
-      var columnas = this.columnas;
       var misFiltros = this.filtros;
 
       this.datosOrdenados = this.datos.filter(function (dato) {
@@ -322,85 +292,28 @@ export default {
           }
         }
 
-        for (const nombreCampo in dato) {
-          for (var i = 0; i < columnas.length; i++) {
-            if (columnas[i].filtrable && columnas[i].nombre == nombreCampo) {
-              if (dato[nombreCampo].includes(valor)) {
-                return true;
-              }
-            }
-          }
+        if (dato["title"].includes(valor)) {
+          return true;
         }
       });
 
       this.ordenar(this.sorteado, 0);
     },
 
-    ordenar(key, nuevo = 1) {
-      if (this.sorteado == key && nuevo == 1) {
-        if (this.orden == "desc") {
-          this.orden = "asc";
-        } else {
-          this.orden = "desc";
-        }
-      } else if (key == this.sorteado && nuevo == 0) {
-        this.orden = "asc";
-      } else if (key != this.sorteado) {
-        this.orden = "asc";
-        this.sorteado = key;
-      }
-
-      var orden = this.orden;
-      var tipoColumnas = this.columnas;
+    ordenar() {
+      var campo = this.sorteo;
 
       this.datosOrdenados = this.datosOrdenados.sort(function (a, b) {
-        var x = a[key];
-        var y = b[key];
+        var x = a[campo];
+        var y = b[campo];
 
-        tipoColumnas.forEach((columna) => {
-          if (key == columna.nombre) {
-            if (columna.tipo == "texto") {
-              x = x.toLowerCase();
-              y = y.toLowerCase();
-            }
-          }
-        });
-
-        if (orden == "asc") {
-          return x < y ? -1 : x > y ? 1 : 0;
-        } else {
-          return x > y ? -1 : x < y ? 1 : 0;
+        if (campo == "title") {
+          x = x.toLowerCase();
+          y = y.toLowerCase();
         }
+        return x < y ? -1 : x > y ? 1 : 0;
       });
     },
   },
 };
 </script>
-
-<style scoped>
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #555455;
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #242424;
-}
-
-::-webkit-scrollbar-track-piece {
-  background: white;
-  border-radius: 10px;
-}
-</style>

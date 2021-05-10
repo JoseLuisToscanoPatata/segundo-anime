@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN MANGA LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
         <!-- MODAL DE MENSAJES-->
 
@@ -147,6 +147,7 @@
                   <jet-input
                     id="chapters"
                     type="number"
+                    min="0"
                     class="mt-1 block w-full"
                     v-model="datosActual['chapters']"
                   />
@@ -551,6 +552,12 @@ export default {
         }
       }
 
+      for (const error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
+
       this.modoManga = "nuevo";
       this.operacion = "crearEditar";
       this.photoPreview = null;
@@ -561,6 +568,11 @@ export default {
     },
 
     pulsadoEditar(id) {
+      for (const error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
       this.modoManga = "editar";
       this.operacion = "crearEditar";
       this.idActual = id;

@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">MANGA LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
         <!-- MODAL DE MENSAJES-->
 
@@ -122,7 +122,7 @@
                       type="number"
                       class="mt-1 block w-full"
                       v-model="datosActual['score']"
-                      min="0"
+                      min="1"
                       max="10"
                     />
                     <jet-input-error :message="errores['score']" class="mt-2" />

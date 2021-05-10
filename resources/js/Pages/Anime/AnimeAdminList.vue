@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN ANIME LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
+    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
         <!-- MODAL DE MENSAJES-->
 
@@ -147,6 +147,7 @@
                   <jet-input
                     id="episodes"
                     type="number"
+                    min="0"
                     class="mt-1 block w-full"
                     v-model="datosActual['episodes']"
                   />
@@ -158,6 +159,7 @@
                   <jet-input
                     id="episodeLength"
                     type="number"
+                    min="0"
                     class="mt-1 block w-full"
                     v-model="datosActual['episodeLength']"
                   />
@@ -579,6 +581,12 @@ export default {
       this.modoAnime = "nuevo";
       this.operacion = "crearEditar";
       this.photoPreview = null;
+
+      for (const error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
     },
 
     pulsadoVer($id) {
@@ -586,6 +594,12 @@ export default {
     },
 
     pulsadoEditar(id) {
+      for (const error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
+
       this.idActual = id;
 
       for (let actual = 0; actual < this.datos.length; actual++) {

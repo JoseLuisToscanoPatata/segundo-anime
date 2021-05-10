@@ -1,7 +1,8 @@
 <template>
   <div
-    class="flex flex-col justify-start items-start rounded-lg"
+    class="flex flex-col justify-start items-start rounded-lg overflow-hidden"
     :class="'bg-' + color.color + '-100'"
+    style="max-height: 75vh"
   >
     <div
       class="p-6 grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0"
@@ -61,10 +62,8 @@
       </template>
     </div>
 
-    <div class="px-6 w-full overflow-x-auto overflow-y-auto sicky top-0">
-      <table
-        class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed sticky top-0"
-      >
+    <div class="px-6 w-full overflow-auto" v-show="datosOrdenados.length > 0">
+      <table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
         <thead>
           <tr>
             <th
@@ -72,7 +71,11 @@
               :key="indice"
               :style="campo.width"
               :class="[
-                'border-b border-' + color.color + '-200 border-solid',
+                'border-b border-' +
+                  color.color +
+                  '-200 border-solid bg-' +
+                  color.color +
+                  '-100',
                 alinear(campo.alineacion),
               ]"
               class="z-10 top-0 sticky"
@@ -200,7 +203,10 @@
       </table>
     </div>
 
-    <div class="grid grid-cols-6 mt-6 px-6 pb-6 justify-start">
+    <div
+      class="grid grid-cols-6 mt-6 px-6 pb-6 justify-start sticky bottom-0"
+      v-show="datosOrdenados.length > 0"
+    >
       <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 270px"
         >Showing results {{ primero }} to {{ ultimo }} of
         {{ datosOrdenados.length }}
@@ -245,6 +251,12 @@
           Next
         </jet-button>
       </div>
+    </div>
+
+    <div v-show="datosOrdenados.length == 0" class="self-center mt-5 my-8">
+      <span class="font-extrabold text-2xl" :class="'text-' + color.color + '-400'"
+        >There is no data to show :(</span
+      >
     </div>
   </div>
 </template>
@@ -295,7 +307,11 @@ export default {
 
   computed: {
     primero() {
-      return 1 + this.paginacion * this.paginas;
+      if (this.datosOrdenados.length == 0) {
+        return 0;
+      } else {
+        return 1 + this.paginacion * this.paginas;
+      }
     },
 
     ultimo() {
