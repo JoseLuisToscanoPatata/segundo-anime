@@ -3,194 +3,198 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ANIME LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
-      <template v-if="!cargando">
-        <!-- MODAL DE MENSAJES-->
+    <div
+      class="max-w-7xl max-h-screen mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden"
+    >
+      <div class="max-h-screen overflow-y-auto rounded-lg">
+        <template v-if="!cargando">
+          <!-- MODAL DE MENSAJES-->
 
-        <jet-dialog-modal
-          :show="datosInfo['mostrar']"
-          @close="datosInfo['mostrar'] = false"
-        >
-          <template #title>
-            <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["titulo"]
-            }}</span></template
+          <jet-dialog-modal
+            :show="datosInfo['mostrar']"
+            @close="datosInfo['mostrar'] = false"
           >
-
-          <template #content>
-            <span :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["mensaje"]
-            }}</span>
-          </template>
-
-          <template #footer>
-            <jet-button
-              class="ml-2 text-white"
-              :class="
-                'bg-' +
-                datosInfo['color'] +
-                '-300 hover:bg-' +
-                datosInfo['color'] +
-                '-600'
-              "
-              @click="datosInfo['mostrar'] = false"
+            <template #title>
+              <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
+                datosInfo["titulo"]
+              }}</span></template
             >
-              Close
-            </jet-button>
-          </template>
-        </jet-dialog-modal>
 
-        <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
-          <template #title> Delete From your list </template>
+            <template #content>
+              <span :class="'text-' + datosInfo['color'] + '-500'">{{
+                datosInfo["mensaje"]
+              }}</span>
+            </template>
 
-          <template #content>
-            Are you sure you want to delete the specified anime from your list?
+            <template #footer>
+              <jet-button
+                class="ml-2 text-white"
+                :class="
+                  'bg-' +
+                  datosInfo['color'] +
+                  '-300 hover:bg-' +
+                  datosInfo['color'] +
+                  '-600'
+                "
+                @click="datosInfo['mostrar'] = false"
+              >
+                Close
+              </jet-button>
+            </template>
+          </jet-dialog-modal>
 
-            <div class="block mt-4">
-              <label class="flex items-start">
-                <jet-checkbox v-model="saltarModal" class="text-pink-400" />
-                <span class="ml-2 text-sm text-gray-600">Dont ask me again lol</span>
-              </label>
-            </div>
-          </template>
+          <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
+            <template #title> Delete From your list </template>
 
-          <template #footer>
-            <jet-secondary-button @click="operacion = ''" class="ml-2">
-              Cancel
-            </jet-secondary-button>
+            <template #content>
+              Are you sure you want to delete the specified anime from your list?
 
-            <jet-danger-button class="ml-2" @click="borrarWatch(idActual)">
-              Delete
-            </jet-danger-button>
-          </template>
-        </jet-dialog-modal>
+              <div class="block mt-4">
+                <label class="flex items-start">
+                  <jet-checkbox v-model="saltarModal" class="text-pink-400" />
+                  <span class="ml-2 text-sm text-gray-600">Dont ask me again lol</span>
+                </label>
+              </div>
+            </template>
 
-        <!-- MODAL DE ACTUALIZACIÓN-->
+            <template #footer>
+              <jet-secondary-button @click="operacion = ''" class="ml-2">
+                Cancel
+              </jet-secondary-button>
 
-        <jet-dialog-modal :show="operacion == 'editar'" @close="operacion = ''">
-          <template #title>
-            <span class="text-blue-500 font-bold">MANGA LIST FORM </span>
-          </template>
+              <jet-danger-button class="ml-2" @click="borrarWatch(idActual)">
+                Delete
+              </jet-danger-button>
+            </template>
+          </jet-dialog-modal>
 
-          <template #content>
-            <form @submit.prevent="editar">
-              <div class="flex flex-col sm:flex-row m-5 justify-evenly">
-                <div class="text-center sm:max-w-sm">
-                  <span class="font-semibold text-lg text-blue-400 text-center">{{
-                    datosActual["title"]
-                  }}</span>
+          <!-- MODAL DE ACTUALIZACIÓN-->
 
-                  <img
-                    :src="datosActual['cover']"
-                    :alt="datosActual['title']"
-                    class="rounded-full h-36 w-36 object-cover text-center m-auto mt-5"
-                  />
-                </div>
-                <div class="flex flex-col">
-                  <div class="m-auto mt-3">
-                    <jet-label for="watchStatus" value="Watch Status" />
-                    <select
-                      id="watchStatus"
-                      v-model="datosActual['watchStatus']"
-                      class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    >
-                      <option value="PlanToWatch">Plan To Watch</option>
-                      <option value="Watching" v-if="datosActual['status'] != 'tba'">
-                        Watching
-                      </option>
+          <jet-dialog-modal :show="operacion == 'editar'" @close="operacion = ''">
+            <template #title>
+              <span class="text-blue-500 font-bold">MANGA LIST FORM </span>
+            </template>
 
-                      <option
-                        value="Completed"
-                        v-if="datosActual['status'] == 'finished'"
-                      >
-                        Completed
-                      </option>
-                      <option value="Dropped" v-if="datosActual['status'] != 'tba'">
-                        Dropped
-                      </option>
-                      <option value="OnHold" v-if="datosActual['status'] != 'tba'">
-                        On Hold
-                      </option>
-                    </select>
-                    <jet-input-error :message="errores['watchStatus']" class="mt-2" />
-                  </div>
+            <template #content>
+              <form @submit.prevent="editar">
+                <div class="flex flex-col sm:flex-row m-5 justify-evenly">
+                  <div class="text-center sm:max-w-sm">
+                    <span class="font-semibold text-lg text-blue-400 text-center">{{
+                      datosActual["title"]
+                    }}</span>
 
-                  <div class="m-auto mt-3">
-                    <jet-label for="score" value="Your Score" />
-                    <jet-input
-                      id="score"
-                      type="number"
-                      class="mt-1 block w-full"
-                      v-model="datosActual['score']"
-                      min="0"
-                      max="10"
+                    <img
+                      :src="datosActual['cover']"
+                      :alt="datosActual['title']"
+                      class="rounded-full h-36 w-36 object-cover text-center m-auto mt-5"
                     />
-                    <jet-input-error :message="errores['score']" class="mt-2" />
                   </div>
+                  <div class="flex flex-col">
+                    <div class="m-auto mt-3">
+                      <jet-label for="watchStatus" value="Watch Status" />
+                      <select
+                        id="watchStatus"
+                        v-model="datosActual['watchStatus']"
+                        class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                      >
+                        <option value="PlanToWatch">Plan To Watch</option>
+                        <option value="Watching" v-if="datosActual['status'] != 'tba'">
+                          Watching
+                        </option>
 
-                  <div class="m-auto mt-7">
-                    <div class="flex items-start">
-                      <input
-                        type="checkbox"
-                        v-model="datosActual['favourite']"
-                        true-value="1"
-                        false-value="0"
-                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                      />
-                      <span class="ml-2 text-sm text-gray-600">Favourite</span>
+                        <option
+                          value="Completed"
+                          v-if="datosActual['status'] == 'finished'"
+                        >
+                          Completed
+                        </option>
+                        <option value="Dropped" v-if="datosActual['status'] != 'tba'">
+                          Dropped
+                        </option>
+                        <option value="OnHold" v-if="datosActual['status'] != 'tba'">
+                          On Hold
+                        </option>
+                      </select>
+                      <jet-input-error :message="errores['watchStatus']" class="mt-2" />
                     </div>
 
-                    <jet-input-error :message="errores['favourite']" class="mt-2" />
+                    <div class="m-auto mt-3">
+                      <jet-label for="score" value="Your Score" />
+                      <jet-input
+                        id="score"
+                        type="number"
+                        class="mt-1 block w-full"
+                        v-model="datosActual['score']"
+                        min="0"
+                        max="10"
+                      />
+                      <jet-input-error :message="errores['score']" class="mt-2" />
+                    </div>
+
+                    <div class="m-auto mt-7">
+                      <div class="flex items-start">
+                        <input
+                          type="checkbox"
+                          v-model="datosActual['favourite']"
+                          true-value="1"
+                          false-value="0"
+                          class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        />
+                        <span class="ml-2 text-sm text-gray-600">Favourite</span>
+                      </div>
+
+                      <jet-input-error :message="errores['favourite']" class="mt-2" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </form>
-          </template>
+              </form>
+            </template>
 
-          <template #footer>
-            <jet-secondary-button
-              type="button"
-              @click.prevent="operacion = ''"
-              class="mr-2"
-            >
-              Cancel
-            </jet-secondary-button>
+            <template #footer>
+              <jet-secondary-button
+                type="button"
+                @click.prevent="operacion = ''"
+                class="mr-2"
+              >
+                Cancel
+              </jet-secondary-button>
 
-            <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600"
-              type="button"
-              @click.prevent="editar"
-            >
-              Upload
-            </jet-secondary-button>
-          </template>
-        </jet-dialog-modal>
+              <jet-secondary-button
+                class="mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600"
+                type="button"
+                @click.prevent="editar"
+              >
+                Upload
+              </jet-secondary-button>
+            </template>
+          </jet-dialog-modal>
 
-        <data-table-area
-          :datos="datos"
-          :columnas="campos"
-          :cantidadPaginas="paginacion"
-          :botones="botones"
-          :filtros="filtros"
-          :emisiones="emisiones"
-          :imagenes="imagenes"
-          @borrar-watch="pulsadoBorrar"
-          @editar-watch="pulsadoEditar"
-          @cambiar-fav="cambiarFav"
-          @ver-anime="pulsadoVer"
-          :key="datos"
-          :color="colores"
-          :listaPropia="comprobarUsuario"
-          nombreValorIcono="favourite"
-          columnaIcono="title"
-          :iconos="iconos"
-        >
-        </data-table-area>
-      </template>
+          <data-table-area
+            :datos="datos"
+            :columnas="campos"
+            :cantidadPaginas="paginacion"
+            :botones="botones"
+            :filtros="filtros"
+            :emisiones="emisiones"
+            :imagenes="imagenes"
+            @borrar-watch="pulsadoBorrar"
+            @editar-watch="pulsadoEditar"
+            @cambiar-fav="cambiarFav"
+            @ver-anime="pulsadoVer"
+            :key="datos"
+            :color="colores"
+            :listaPropia="comprobarUsuario"
+            nombreValorIcono="favourite"
+            columnaIcono="title"
+            :iconos="iconos"
+          >
+          </data-table-area>
+        </template>
 
-      <template v-else>
-        <loading color="yellow"></loading>
-      </template>
+        <template v-else>
+          <loading color="yellow"></loading>
+        </template>
+      </div>
     </div>
   </app-layout>
 </template>

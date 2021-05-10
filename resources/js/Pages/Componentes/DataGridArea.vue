@@ -1,11 +1,10 @@
 <template>
   <div
-    class="flex flex-col justify-start items-start rounded-lg"
+    class="p-6 flex flex-col justify-start items-start rounded-lg"
     :class="'bg-' + color.color + '-100'"
   >
     <div
-      class="p-6 grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0"
-      :class="'bg-' + color.color + '-100'"
+      class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5"
     >
       <jet-input
         type="text"
@@ -48,23 +47,24 @@
           </option>
         </select>
       </template>
-
-      <template v-for="extra in botonesExtras" :key="extra">
-        <jet-button
-          style="width: 140px"
-          @click="$emit(extra.emit)"
-          :class="extra.clases"
-          class="col-span-2"
-        >
-          {{ extra.texto }}
-        </jet-button>
-      </template>
     </div>
 
-    <div class="px-6 w-full overflow-x-auto overflow-y-auto sicky top-0">
-      <table
-        class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed sticky top-0"
+    <div
+      class="w-full overflow-x-auto overflow-y-auto grid grid-cols-4 doble:grid-cols-8 triple:grid-cols-12 my-3 justify-items-center"
+    >
+      <template
+        v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
+        :key="indice"
       >
+        <div class="rounded-lg mx-4 my-5 flex flex-col items-center">
+          <div class="h-10 p-2 text-xs font-semibold text-center">
+            {{ dato["titulo"] }}
+          </div>
+
+          <div></div>
+        </div>
+      </template>
+      <!--<table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
         <thead>
           <tr>
             <th
@@ -75,7 +75,6 @@
                 'border-b border-' + color.color + '-200 border-solid',
                 alinear(campo.alineacion),
               ]"
-              class="z-10 top-0 sticky"
             >
               <span :class="campo.color">{{ campo.titulo }}</span>
 
@@ -95,7 +94,7 @@
           </tr>
         </thead>
 
-        <tbody class="overflow-y-auto">
+        <tbody>
           <tr
             v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
             :key="indice"
@@ -197,10 +196,10 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
 
-    <div class="grid grid-cols-6 mt-6 px-6 pb-6 justify-start">
+    <div class="grid grid-cols-6 mt-6 justify-start">
       <span class="col-span-6 sm:col-span-3 mt-1 text-gray-500" style="min-width: 270px"
         >Showing results {{ primero }} to {{ ultimo }} of
         {{ datosOrdenados.length }}
@@ -261,7 +260,7 @@ export default {
 
   data() {
     return {
-      paginas: 10,
+      paginas: 30,
       orden: "desc",
       sorteado: "id",
       filtrado: "",
@@ -272,18 +271,12 @@ export default {
 
   props: {
     datos: {},
-    columnas: {},
-    cantidadPaginas: {},
-    botones: {},
-    emisiones: {},
-    imagenes: "",
-    botonesExtras: {},
-    filtros: {},
+    cantidadPaginas: [],
+    columnas: [],
+    emisiones: [],
+    botones: [],
+    filtros: [],
     color: {},
-    columnaIcono: "",
-    nombreValorIcono: "",
-    iconos: "",
-    listaPropia: "",
   },
 
   emits: {},
@@ -379,18 +372,6 @@ export default {
           return x > y ? -1 : x < y ? 1 : 0;
         }
       });
-    },
-
-    alinear(valor) {
-      if (valor == "centrado") {
-        return "text-center";
-      } else if (valor == "izquierda") {
-        return "text-left";
-      } else if (valor == "derecha") {
-        return "text-right";
-      } else if (valor == "justificado") {
-        return "text-justify";
-      }
     },
   },
 };

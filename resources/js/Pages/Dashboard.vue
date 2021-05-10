@@ -23,6 +23,9 @@
                     class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
                     v-for="actual in animesActuales"
                     :key="actual"
+                    @mouseover="dentro1 = true"
+                    @mouseout="dentro1 = false"
+                    :class="{ seleccionado: dentro1 }"
                   >
                     <a
                       :href="route('AnimeProfile', actual['id'])"
@@ -65,6 +68,9 @@
                     class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
                     v-for="actual in randomAnimes"
                     :key="actual"
+                    @mouseover="dentro2 = true"
+                    @mouseout="dentro2 = false"
+                    :class="{ seleccionado: dentro2 }"
                   >
                     <a
                       :href="route('AnimeProfile', actual['id'])"
@@ -107,6 +113,9 @@
                     class="block mr-3 h-52 entrada hover:opacity-80 hover:bg-white transition-all"
                     v-for="actual in randomMangas"
                     :key="actual"
+                    @mouseover="dentro3 = true"
+                    @mouseout="dentro3 = false"
+                    :class="{ seleccionado: dentro3 }"
                   >
                     <a
                       :href="route('MangaProfile', actual['id'])"
@@ -178,6 +187,9 @@
                   class="block h-48 mt-2 mr-4 dashboard:mr-0 hover:opacity-80"
                   v-for="actual in mejoresAnimes"
                   :key="actual"
+                  @mouseover="dentro4 = true"
+                  @mouseout="dentro4 = false"
+                  :class="{ seleccionado: dentro4 }"
                 >
                   <div class="flex flex-row h-5 justify-center">
                     <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
@@ -227,6 +239,9 @@
                   class="block h-48 mt-2 mr-4 dashboard:mr-0 hover:opacity-80"
                   v-for="actual in mejoresMangas"
                   :key="actual"
+                  @mouseover="dentro5 = true"
+                  @mouseout="dentro5 = false"
+                  :class="{ seleccionado: dentro5 }"
                 >
                   <div class="flex flex-row h-5 justify-center">
                     <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
@@ -290,6 +305,12 @@ export default {
       trailers: [],
       animesActuales: [],
       cargando: true,
+      dentro1: false,
+      dentro2: false,
+      dentro3: false,
+      dentro4: false,
+      dentro5: false,
+      seleccionado: "seleccionado",
     };
   },
   methods: {
@@ -447,5 +468,9 @@ abbr[title] {
   border-bottom: none !important;
   cursor: inherit !important;
   text-decoration: none !important;
+}
+
+.seleccionado a abbr span {
+  background: rgba(0, 0, 0, 0.8);
 }
 </style>
