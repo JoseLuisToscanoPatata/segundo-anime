@@ -5,6 +5,132 @@
     </template>
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <!-- MODAL DE MENSAJES-->
+
+      <!-- <jet-dialog-modal
+        :show="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+      >
+        <template #title>
+          <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
+            datosInfo["titulo"]
+          }}</span></template
+        >
+
+        <template #content>
+          <span :class="'text-' + datosInfo['color'] + '-500'">{{
+            datosInfo["mensaje"]
+          }}</span>
+        </template>
+
+        <template #footer>
+          <jet-button
+            class="ml-2 text-white"
+            :class="
+              'bg-' + datosInfo['color'] + '-300 hover:bg-' + datosInfo['color'] + '-600'
+            "
+            @click="datosInfo['mostrar'] = false"
+          >
+            Close
+          </jet-button>
+        </template>
+      </jet-dialog-modal>
+
+      <jet-dialog-modal :show="añadiendo" @close="añadiendo = false">
+        <template #title>
+          <span class="text-red-500 font-bold">ANIME ADD FORM </span>
+        </template>
+
+        <template #content>
+          <form @submit.prevent="añadir;">
+            <div class="flex flex-col sm:flex-row m-5 justify-evenly">
+              <div class="text-center sm:max-w-sm">
+                <span class="font-semibold text-lg text-red-400 text-center">{{
+                  nuevo["title"]
+                }}</span>
+
+                <img
+                  :src="nuevo['cover']"
+                  :alt="nuevo['title']"
+                  class="rounded-full h-36 w-36 object-cover text-center m-auto mt-5"
+                />
+              </div>
+              <div class="flex flex-col">
+                <div class="m-auto mt-3">
+                  <jet-label for="watchStatus" value="Watch Status" />
+                  <select
+                    id="watchStatus"
+                    v-model="nuevo['watchStatus']"
+                    class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                  >
+                    <option value="PlanToWatch">Plan To Watch</option>
+                    <option value="Watching" v-if="nuevo['status'] != 'tba'">
+                      Watching
+                    </option>
+
+                    <option value="Completed" v-if="nuevo['status'] == 'finished'">
+                      Completed
+                    </option>
+                    <option value="Dropped" v-if="nuevo['status'] != 'tba'">
+                      Dropped
+                    </option>
+                    <option value="OnHold" v-if="nuevo['status'] != 'tba'">
+                      On Hold
+                    </option>
+                  </select>
+                  <jet-input-error :message="errores['watchStatus']" class="mt-2" />
+                </div>
+
+                <div class="m-auto mt-3">
+                  <jet-label for="score" value="Your Score" />
+                  <jet-input
+                    id="score"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="nuevo['score']"
+                    min="1"
+                    max="10"
+                  />
+                  <jet-input-error :message="errores['score']" class="mt-2" />
+                </div>
+
+                <div class="m-auto mt-7">
+                  <div class="flex items-start">
+                    <input
+                      type="checkbox"
+                      v-model="nuevo['favourite']"
+                      true-value="1"
+                      false-value="0"
+                      class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    />
+                    <span class="ml-2 text-sm text-gray-600">Favourite</span>
+                  </div>
+
+                  <jet-input-error :message="errores['favourite']" class="mt-2" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </template>
+
+        <template #footer>
+          <jet-secondary-button
+            type="button"
+            @click.prevent="añadiendo = false"
+            class="mr-2"
+          >
+            Cancel
+          </jet-secondary-button>
+
+          <jet-secondary-button
+            class="mt-2 ml-2 text-white bg-red-400 hover:bg-red-600"
+            type="button"
+            @click.prevent="añadir;"
+          >
+            Add
+          </jet-secondary-button>
+        </template>
+      </jet-dialog-modal> -->
+
       <data-grid-area
         v-if="!cargando"
         :datos="datos"
@@ -13,12 +139,11 @@
         :key="datos"
         :color="colores"
         tipo="anime"
-        :year="año"
-        :season="season"
+        @nuevo="pulsadoNuevo"
       >
       </data-grid-area>
 
-      <loading v-else color="yellow"></loading>
+      <loading v-else color="red"></loading>
     </div>
   </app-layout>
 </template>
@@ -26,6 +151,13 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import DataGridArea from "@/Pages/Componentes/DataGridArea";
+/**import JetDialogModal from "@/Jetstream/DialogModal";
+import JetButton from "@/Jetstream/Button";
+import JetCheckbox from "@/Jetstream/Checkbox";
+import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import JetInputError from "@/Jetstream/InputError";
+import JetLabel from "@/Jetstream/Label";
+import JetInput from "@/Jetstream/Input";*/
 import Loading from "@/Pages/Componentes/Loading";
 
 export default {
@@ -33,6 +165,13 @@ export default {
     AppLayout,
     DataGridArea,
     Loading,
+    /**JetDialogModal,
+    JetCheckbox,
+    JetSecondaryButton,
+    JetButton,
+    JetLabel,
+    JetInput,
+    JetInputError,*/
   },
 
   props: ["clave", "usuario"],
@@ -44,19 +183,20 @@ export default {
         { texto: "24", numero: 24 },
         { texto: "48", numero: 48 },
         { texto: "72", numero: 72 },
-        { texto: "120", numero: 120 },
+        { texto: "96", numero: 96 },
       ],
 
       datos: [],
+      //vistos: [],
 
       colores: {
         color: "red",
-        hexa: "border:  #fc8181;",
+        hexa: " rgb(254, 202, 202)",
       },
 
       filtros: [
         {
-          nombre: "subtype",
+          nombre: "subType",
           titulo: "Subtype",
           opciones: ["ONA", "OVA", "TV", "movie", "music", "special"],
           titulos: ["ONA", "OVA", "TV", "Movie", "Music", "Special"],
@@ -64,29 +204,66 @@ export default {
           ancho: "col-span-2",
         },
 
-        {
+        /*{
           nombre: "yourStatus",
           titulo: "Your Status",
           opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
           titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
           actual: "",
-          ancho: "col-span-3",
+          ancho: "col-span-2",
         },
+        */
       ],
 
       cargando: true,
-      año: 0,
-      season: "",
+      //añadiendo: false,
+      //idActual: 1,
+
+      /**datosInfo: {
+        mostrar: false,
+        titulo: "",
+        mensaje: "",
+        color: "black",
+      },
+
+      nuevo: {
+        watchStatus: "",
+        score: "",
+        favourite: 0,
+        title: "",
+        cover: "",
+        status: "",
+      },
+
+      errores: {
+        watchStatus: null,
+        score: null,
+        favourite: null,
+      },
+      */
     };
   },
 
   created() {
+    this.obtenerVistos();
     this.obtenerDatos();
-    this.obtenerFecha();
   },
 
   methods: {
     //OBTENER LOS DATOS DE MANGAS
+
+    obtenerVistos() {
+      axios
+        .get(route("watches.index", this.usuario.id), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          this.vistos = res.data.data;
+        });
+    },
+
     obtenerDatos() {
       axios
         .get(route("animes.index"), {
@@ -96,20 +273,149 @@ export default {
         })
         .then((res) => {
           for (let actual = 0; actual < res.data.data.length; actual++) {
+            var season = "";
+            var año = "";
+            //var viendo = null;
+            //var encontrado = false;
+
+            if (res.data.data[actual].startDate != null) {
+              var fechaActual = res.data.data[actual].startDate;
+
+              if (parseInt(fechaActual.split("-")[1]) < 4) {
+                season = "winter";
+              } else if (parseInt(fechaActual.split("-")[1]) < 7) {
+                season = "spring";
+              } else if (parseInt(fechaActual.split("-")[1]) < 10) {
+                season = "summer";
+              } else {
+                season = "fall";
+              }
+
+              año = fechaActual.split("-")[0];
+            }
+            /**
+
+            for (let visto = 0; visto < this.vistos.length && !encontrado; visto++) {
+              if (this.vistos[visto].id == res.data.data[actual].id) {
+                encontrado = true;
+
+                if (this.vistos[visto].pivot.watchStatus == "Dropped") {
+                  viendo = "Dropped";
+                } else if (this.vistos[visto].pivot.watchStatus == "Completed") {
+                  viendo = "Completed";
+                } else if (this.vistos[visto].pivot.watchStatus == "OnHold") {
+                  viendo = "Hold";
+                } else if (this.vistos[visto].pivot.watchStatus == "Watching") {
+                  viendo = "Current";
+                } else if (this.vistos[visto].pivot.watchStatus == "PlanToWatch") {
+                  viendo = "Plan";
+                }
+              }
+            }
+            */
+
             this.datos.push({
               id: res.data.data[actual].id,
               title: res.data.data[actual].title,
+              synopsis: res.data.data[actual].synopsis,
               cover: res.data.data[actual].cover,
               score: res.data.data[actual].rating,
-              episodes: res.data.data[actual].chapters,
+              episodes: res.data.data[actual].episodes,
+              startDate: res.data.data[actual].startDate,
+              subType: res.data.data[actual].subType,
+              users: res.data.data[actual].userCount,
+              //yourStatus: viendo,
+              year: año,
+              season: season,
             });
+
+            this.cargando = false;
           }
         });
-
-      this.cargando = false;
     },
 
-    obtenerFecha() {
+    /*
+    pulsadoNuevo(id) {
+      this.idActual = id;
+
+      for (const key in this.nuevo) {
+        if (Object.hasOwnProperty.call(this.nuevo, key)) {
+          this.nuevo[key] = null;
+        }
+      }
+
+      for (let actual = 0; actual < this.datos.length; actual++) {
+        if (this.datos[actual].id == this.idActual) {
+          nuevo.title = this.datos[actual].title;
+          nuevo.cover = this.datos[actual].cover;
+        }
+      }
+
+      for (const error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
+
+      this.añadiendo = true;
+    },
+
+    añadir() {
+      var datos = new FormData();
+
+      datos.append("watchStatus", this.datosActual["watchStatus"]);
+      datos.append("favourite", this.datosActual["favourite"]);
+      if (this.datosActual["score"] != null) {
+        datos.append("score", this.datosActual["score"]);
+      }
+
+      datos.append("_method", "PUT");
+
+      axios
+        .post(route("watches.store"), datos, {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          //EXITO
+          
+          for (let actual = 0; actual < this.datos.length; actual++) {
+            if (this.datos[actual].id == this.idActual) {
+              this.datos[actual].score = this.datosActual["score"];
+              this.datos[actual].favourite = this.datosActual["favourite"];
+              this.datos[actual].readStatus = this.datosActual["watchStatus"];
+            }
+          }
+          
+
+          this.añadiendo = false;
+          this.datosInfo["color"] = "green";
+          this.datosInfo["titulo"] = "Operation success";
+          this.datosInfo["mensaje"] = res.data.message;
+          this.datosInfo["mostrar"] = true;
+        })
+        .catch((err) => {
+          //FALLOS
+          if (err.response.data.message) {
+            //FALLO EXTERNO
+            this.añadiendo = false;
+            this.datosInfo["color"] = "red";
+            this.datosInfo["titulo"] = "There was an error :(";
+            this.datosInfo["mensaje"] = err.response.data.message;
+            this.datosInfo["mostrar"] = true;
+          } else if (err.response.data.validation_errors) {
+            //FALLO DE VALIDACIÓN
+            this.errores["score"] = err.response.data.validation_errors["score"];
+            this.errores["watchStatus"] =
+              err.response.data.validation_errors["watchStatus"];
+            this.errores["favourite"] = err.response.data.validation_errors["favourite"];
+          }
+        });
+    },
+    */
+
+    /**obtenerFecha() {
       var fecha = new Date();
       var mes = fecha.getMonth();
 
@@ -124,7 +430,7 @@ export default {
       }
 
       this.año = fecha.getFullYear().toString();
-    },
+    },*/
   },
 };
 </script>
