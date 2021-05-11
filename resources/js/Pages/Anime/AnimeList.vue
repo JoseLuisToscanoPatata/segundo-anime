@@ -13,6 +13,8 @@
         :key="datos"
         :color="colores"
         tipo="anime"
+        :year="año"
+        :season="season"
       >
       </data-grid-area>
 
@@ -68,23 +70,26 @@ export default {
           opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
           titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
           actual: "",
-          ancho: "col-span-2",
+          ancho: "col-span-3",
         },
       ],
 
       cargando: true,
+      año: 0,
+      season: "",
     };
   },
 
   created() {
     this.obtenerDatos();
+    this.obtenerFecha();
   },
 
   methods: {
     //OBTENER LOS DATOS DE MANGAS
     obtenerDatos() {
       axios
-        .get(route("reads.index", this.userList), {
+        .get(route("animes.index"), {
           headers: {
             Authorization: "Bearer " + this.clave,
           },
@@ -95,17 +100,30 @@ export default {
               id: res.data.data[actual].id,
               title: res.data.data[actual].title,
               cover: res.data.data[actual].cover,
-              rating: res.data.data[actual].rating,
-              chapters: res.data.data[actual].chapters,
-              readStatus: res.data.data[actual].pivot.readStatus,
-              status: res.data.data[actual].status,
-              favourite: res.data.data[actual].pivot.favourite,
-              score: res.data.data[actual].pivot.score,
+              score: res.data.data[actual].rating,
+              episodes: res.data.data[actual].chapters,
             });
           }
         });
 
       this.cargando = false;
+    },
+
+    obtenerFecha() {
+      var fecha = new Date();
+      var mes = fecha.getMonth();
+
+      if (mes < 4) {
+        this.season = "winter";
+      } else if (mes < 7) {
+        this.season = "spring";
+      } else if (mes < 10) {
+        this.season = "summer";
+      } else {
+        this.season = "fall";
+      }
+
+      this.año = fecha.getFullYear().toString();
     },
   },
 };

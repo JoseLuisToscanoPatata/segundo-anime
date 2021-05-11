@@ -47,6 +47,36 @@
           </option>
         </select>
       </template>
+
+      <select
+        v-model="ordenacion"
+        @change="ordenar"
+        class="col-span-2 rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
+      >
+        <option value="score -">Score (Asc)</option>
+        <option value="score -">Score (Desc)</option>
+        <option value="startDate +">Start Date (Asc)</option>
+        <option value="startDate +">Start Date (Desc)</option>
+        <option value="startDate -">Start Date</option>
+        <option value="title +">Title (a-z)</option>
+        <option value="title -">Title (z-a)</option>
+        <option value="users +">Most members</option>
+      </select>
+
+      <template v-if="tipo == 'anime'">
+        <select
+          v-model="season"
+          class="col-span-2 rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
+        >
+          <option value="">Select Season</option>
+          <option value="winter">Winter</option>
+          <option value="spring">Spring (Desc)</option>
+          <option value="summer">Summer</option>
+          <option value="fall">Fall</option>
+        </select>
+
+        <jet-input type="number" min="1926" class="mt-1 block w-full" v-model="year" />
+      </template>
     </div>
 
     <div
@@ -233,12 +263,13 @@ export default {
 
   data() {
     return {
-      paginas: 30,
-      orden: "desc",
-      sorteado: "id",
+      paginas: 24,
+      ordenacion: "id",
       filtrado: "",
       paginacion: 0,
       datosOrdenados: [],
+      año: 0,
+      season: "",
     };
   },
 
@@ -249,6 +280,8 @@ export default {
     filtros: [],
     color: {},
     tipo: "",
+    año: 0,
+    season: "",
   },
 
   emits: {},
@@ -301,7 +334,8 @@ export default {
     },
 
     ordenar() {
-      var campo = this.sorteo;
+      var campo = this.ordenacion.split(" ")[0];
+      var orden = this.ordenacion.split(" ")[1];
 
       this.datosOrdenados = this.datosOrdenados.sort(function (a, b) {
         var x = a[campo];
@@ -311,7 +345,12 @@ export default {
           x = x.toLowerCase();
           y = y.toLowerCase();
         }
-        return x < y ? -1 : x > y ? 1 : 0;
+
+        if (orden == "+") {
+          return x < y ? -1 : x > y ? 1 : 0;
+        } else {
+          return x > y ? -1 : x < y ? 1 : 0;
+        }
       });
     },
   },
