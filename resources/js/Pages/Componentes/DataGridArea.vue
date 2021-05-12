@@ -10,7 +10,7 @@
     >
       <jet-input
         type="text"
-        class="max-w-xs mr-6 col-span-1"
+        class="max-w-xs mr-6 col-span-2"
         placeholder="Title"
         v-model="filtrado"
         @keyup="filtrar"
@@ -74,6 +74,7 @@
           <option value="spring">Spring</option>
           <option value="summer">Summer</option>
           <option value="fall">Fall</option>
+          <option value="undefined">Not known</option>
         </select>
 
         <jet-input
@@ -135,7 +136,6 @@
                 <span>? chaps</span>
               </div>
             </div>
-            <!--
             <div class="justify-self-end">
               <div v-if="dato['yourStatus'] == null">
                 <abbr title="Add to your list">
@@ -177,7 +177,8 @@
               >
                 HLD
               </div>
-            </div> -->
+            </div>
+            <!---->
           </div>
 
           <div
@@ -345,17 +346,31 @@ export default {
       this.paginacion = 0;
       var valor = this.filtrado;
       var misFiltros = this.filtros;
-      var yearElegido = this.year;
+      var yearElegido;
       var seasonElegida = this.season;
 
-      console.log(this.datos);
+      if (this.year == null) {
+        yearElegido = "undefined";
+      } else {
+        yearElegido = this.year;
+      }
+
+      if (seasonElegida == "undefined") {
+        yearElegido = "undefined";
+        this.year = null;
+      }
 
       this.datosOrdenados = this.datos.filter(function (dato) {
-        if (
-          dato.year != yearElegido ||
-          (!dato.season.includes(seasonElegida) && seasonElegida != "any")
-        ) {
-          return false;
+        if (dato.year != yearElegido) {
+          if (yearElegido != "undefined") {
+            return false;
+          }
+        }
+
+        if (dato.season != seasonElegida) {
+          if (seasonElegida != "any") {
+            return false;
+          }
         }
 
         if (misFiltros.length > 0) {

@@ -6,7 +6,7 @@
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <!-- MODAL DE MENSAJES-->
 
-      <!-- <jet-dialog-modal
+      <jet-dialog-modal
         :show="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"
       >
@@ -129,7 +129,7 @@
             Add
           </jet-secondary-button>
         </template>
-      </jet-dialog-modal> -->
+      </jet-dialog-modal>
 
       <data-grid-area
         v-if="!cargando"
@@ -151,13 +151,13 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import DataGridArea from "@/Pages/Componentes/DataGridArea";
-/**import JetDialogModal from "@/Jetstream/DialogModal";
+import JetDialogModal from "@/Jetstream/DialogModal";
 import JetButton from "@/Jetstream/Button";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
-import JetInput from "@/Jetstream/Input";*/
+import JetInput from "@/Jetstream/Input";
 import Loading from "@/Pages/Componentes/Loading";
 
 export default {
@@ -165,13 +165,13 @@ export default {
     AppLayout,
     DataGridArea,
     Loading,
-    /**JetDialogModal,
+    JetDialogModal,
     JetCheckbox,
     JetSecondaryButton,
     JetButton,
     JetLabel,
     JetInput,
-    JetInputError,*/
+    JetInputError,
   },
 
   props: ["clave", "usuario"],
@@ -187,7 +187,7 @@ export default {
       ],
 
       datos: [],
-      //vistos: [],
+      vistos: [],
 
       colores: {
         color: "red",
@@ -204,22 +204,21 @@ export default {
           ancho: "col-span-2",
         },
 
-        /*{
+        {
           nombre: "yourStatus",
           titulo: "Your Status",
-          opciones: ["PlanToWatch", "Watching", "OnHold", "Completed", "Dropped"],
+          opciones: ["Plan", "Current", "Hold", "Completed", "Dropped"],
           titulos: ["Plan to Watch", "Watching", "On Hold", "Completed", "Dropped"],
           actual: "",
           ancho: "col-span-2",
         },
-        */
       ],
 
       cargando: true,
-      //añadiendo: false,
-      //idActual: 1,
+      añadiendo: false,
+      idActual: 1,
 
-      /**datosInfo: {
+      datosInfo: {
         mostrar: false,
         titulo: "",
         mensaje: "",
@@ -240,7 +239,6 @@ export default {
         score: null,
         favourite: null,
       },
-      */
     };
   },
 
@@ -275,8 +273,8 @@ export default {
           for (let actual = 0; actual < res.data.data.length; actual++) {
             var season = "";
             var año = "";
-            //var viendo = null;
-            //var encontrado = false;
+            var viendo = null;
+            var encontrado = false;
 
             if (res.data.data[actual].startDate != null) {
               var fechaActual = res.data.data[actual].startDate;
@@ -292,8 +290,10 @@ export default {
               }
 
               año = fechaActual.split("-")[0];
+            } else {
+              season = "undefined";
+              año = "undefined";
             }
-            /**
 
             for (let visto = 0; visto < this.vistos.length && !encontrado; visto++) {
               if (this.vistos[visto].id == res.data.data[actual].id) {
@@ -310,9 +310,10 @@ export default {
                 } else if (this.vistos[visto].pivot.watchStatus == "PlanToWatch") {
                   viendo = "Plan";
                 }
+
+                this.vistos.splice(visto, 1);
               }
             }
-            */
 
             this.datos.push({
               id: res.data.data[actual].id,
@@ -324,7 +325,7 @@ export default {
               startDate: res.data.data[actual].startDate,
               subType: res.data.data[actual].subType,
               users: res.data.data[actual].userCount,
-              //yourStatus: viendo,
+              yourStatus: viendo,
               year: año,
               season: season,
             });
@@ -334,7 +335,6 @@ export default {
         });
     },
 
-    /*
     pulsadoNuevo(id) {
       this.idActual = id;
 
@@ -379,7 +379,7 @@ export default {
         })
         .then((res) => {
           //EXITO
-          
+
           for (let actual = 0; actual < this.datos.length; actual++) {
             if (this.datos[actual].id == this.idActual) {
               this.datos[actual].score = this.datosActual["score"];
@@ -387,7 +387,6 @@ export default {
               this.datos[actual].readStatus = this.datosActual["watchStatus"];
             }
           }
-          
 
           this.añadiendo = false;
           this.datosInfo["color"] = "green";
@@ -413,7 +412,6 @@ export default {
           }
         });
     },
-    */
 
     /**obtenerFecha() {
       var fecha = new Date();
