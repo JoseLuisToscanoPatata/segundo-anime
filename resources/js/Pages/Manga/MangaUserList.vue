@@ -122,6 +122,7 @@
                       type="number"
                       class="mt-1 block w-full"
                       v-model="datosActual['score']"
+                      onkeydown="return false"
                       min="1"
                       max="10"
                     />

@@ -41,7 +41,7 @@
         </template>
 
         <template #content>
-          <form @submit.prevent="añadir;">
+          <form @submit.prevent="crear">
             <div class="flex flex-col sm:flex-row m-5 justify-evenly">
               <div class="text-center sm:max-w-sm">
                 <span class="font-semibold text-lg text-red-400 text-center">{{
@@ -89,6 +89,7 @@
                     v-model="nuevo['score']"
                     min="1"
                     max="10"
+                    onkeydown="return false"
                   />
                   <jet-input-error :message="errores['score']" class="mt-2" />
                 </div>
@@ -124,7 +125,7 @@
           <jet-secondary-button
             class="mt-2 ml-2 text-white bg-red-400 hover:bg-red-600"
             type="button"
-            @click.prevent="añadir;"
+            @click.prevent="crear"
           >
             Add
           </jet-secondary-button>
@@ -140,6 +141,8 @@
         :color="colores"
         tipo="anime"
         @nuevo="pulsadoNuevo"
+        :seasonActual="season"
+        :yearActual="year"
       >
       </data-grid-area>
 
@@ -188,6 +191,8 @@ export default {
 
       datos: [],
       vistos: [],
+      season: "",
+      year: "",
 
       colores: {
         color: "red",
@@ -243,6 +248,7 @@ export default {
   },
 
   created() {
+    this.obtenerFecha();
     this.obtenerVistos();
     this.obtenerDatos();
   },
@@ -270,11 +276,15 @@ export default {
           },
         })
         .then((res) => {
+          var fallidos = 0;
+
+          console.log(res.data.data);
+
           for (let actual = 0; actual < res.data.data.length; actual++) {
             var season = "";
             var año = "";
             var viendo = null;
-            var encontrado = false;
+            //var encontrado = false;
 
             if (res.data.data[actual].startDate != null) {
               var fechaActual = res.data.data[actual].startDate;
@@ -294,6 +304,8 @@ export default {
               season = "undefined";
               año = "undefined";
             }
+
+            /**
 
             for (let visto = 0; visto < this.vistos.length && !encontrado; visto++) {
               if (this.vistos[visto].id == res.data.data[actual].id) {
@@ -315,6 +327,31 @@ export default {
               }
             }
 
+            */
+
+            if (
+              actual - fallidos < this.vistos.length &&
+              this.vistos[actual - fallidos].id == res.data.data[actual].id
+            ) {
+              if (this.vistos[actual - fallidos].pivot.watchStatus == "Dropped") {
+                viendo = "Dropped";
+              } else if (
+                this.vistos[actual - fallidos].pivot.watchStatus == "Completed"
+              ) {
+                viendo = "Completed";
+              } else if (this.vistos[actual - fallidos].pivot.watchStatus == "OnHold") {
+                viendo = "Hold";
+              } else if (this.vistos[actual - fallidos].pivot.watchStatus == "Watching") {
+                viendo = "Current";
+              } else if (
+                this.vistos[actual - fallidos].pivot.watchStatus == "PlanToWatch"
+              ) {
+                viendo = "Plan";
+              }
+            } else {
+              fallidos++;
+            }
+
             this.datos.push({
               id: res.data.data[actual].id,
               title: res.data.data[actual].title,
@@ -325,14 +362,32 @@ export default {
               startDate: res.data.data[actual].startDate,
               subType: res.data.data[actual].subType,
               users: res.data.data[actual].userCount,
+              status: res.data.data[actual].status,
               yourStatus: viendo,
               year: año,
               season: season,
             });
-
-            this.cargando = false;
           }
+
+          this.cargando = false;
         });
+    },
+
+    obtenerFecha() {
+      var fecha = new Date();
+      var mes = fecha.getMonth();
+
+      if (mes < 4) {
+        this.season = "winter";
+      } else if (mes < 7) {
+        this.season = "spring";
+      } else if (mes < 10) {
+        this.season = "summer";
+      } else {
+        this.season = "fall";
+      }
+
+      this.year = fecha.getFullYear().toString();
     },
 
     pulsadoNuevo(id) {
@@ -346,8 +401,9 @@ export default {
 
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
-          nuevo.title = this.datos[actual].title;
-          nuevo.cover = this.datos[actual].cover;
+          this.nuevo.title = this.datos[actual].title;
+          this.nuevo.cover = this.datos[actual].cover;
+          this.nuevo.status = this.datos[actual].status;
         }
       }
 
@@ -360,16 +416,16 @@ export default {
       this.añadiendo = true;
     },
 
-    añadir() {
+    crear() {
       var datos = new FormData();
 
-      datos.append("watchStatus", this.datosActual["watchStatus"]);
-      datos.append("favourite", this.datosActual["favourite"]);
-      if (this.datosActual["score"] != null) {
-        datos.append("score", this.datosActual["score"]);
+      datos.append("anime_id", this.idActual);
+      datos.append("user_id", this.usuario.id);
+      datos.append("watchStatus", this.nuevo["watchStatus"]);
+      datos.append("favourite", this.nuevo["favourite"]);
+      if (this.nuevo["score"] != null) {
+        datos.append("score", this.nuevo["score"]);
       }
-
-      datos.append("_method", "PUT");
 
       axios
         .post(route("watches.store"), datos, {
@@ -379,12 +435,23 @@ export default {
         })
         .then((res) => {
           //EXITO
+          var encontrado = false;
 
-          for (let actual = 0; actual < this.datos.length; actual++) {
+          for (let actual = 0; actual < this.datos.length && !encontrado; actual++) {
             if (this.datos[actual].id == this.idActual) {
-              this.datos[actual].score = this.datosActual["score"];
-              this.datos[actual].favourite = this.datosActual["favourite"];
-              this.datos[actual].readStatus = this.datosActual["watchStatus"];
+              encontrado = true;
+
+              if (this.nuevo["watchStatus"] == "Dropped") {
+                this.datos[actual].yourStatus = "Dropped";
+              } else if (this.nuevo["watchStatus"] == "Completed") {
+                this.datos[actual].yourStatus = "Completed";
+              } else if (this.nuevo["watchStatus"] == "OnHold") {
+                this.datos[actual].yourStatus = "Hold";
+              } else if (this.nuevo["watchStatus"] == "Watching") {
+                this.datos[actual].yourStatus = "Current";
+              } else if (this.nuevo["watchStatus"] == "PlanToWatch") {
+                this.datos[actual].yourStatus = "Plan";
+              }
             }
           }
 
@@ -412,23 +479,6 @@ export default {
           }
         });
     },
-
-    /**obtenerFecha() {
-      var fecha = new Date();
-      var mes = fecha.getMonth();
-
-      if (mes < 4) {
-        this.season = "winter";
-      } else if (mes < 7) {
-        this.season = "spring";
-      } else if (mes < 10) {
-        this.season = "summer";
-      } else {
-        this.season = "fall";
-      }
-
-      this.año = fecha.getFullYear().toString();
-    },*/
   },
 };
 </script>

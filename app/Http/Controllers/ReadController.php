@@ -43,8 +43,8 @@ class ReadController extends Controller
     {
 
             $validator = Validator::make($request->all(), [
-               "manga_id"=>"required|integer|numeric",
-               "score"=>"sometimes|nullable|integer",
+               "manga_id"=>"required|integer",
+               "score"=>"sometimes|nullable|integer|between:1,10",
                "favourite"=>"required","boolean",
                 "readStatus"=>'string',Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
             ]);
@@ -124,7 +124,7 @@ class ReadController extends Controller
             if($user == Auth::user()->id) {
 
                 $validator = Validator::make($request->all(), [
-                    "score"=>"sometimes|nullable|integer",
+                    "score"=>"sometimes|nullable|integer|between:1,10",
                     "favourite"=>"required",'boolean',
                     "readStatus"=>'string',Rule::in(['Reading','PlanToRead','Completed','Dropped','OnHold']),
                     ]);

@@ -41,7 +41,7 @@ class MangaController extends Controller
             $validator = Validator::make($request->all(), [
                 "title" =>  "required|string|filled",
                 "synopsis" =>  "required|string|filled",
-                "chapters" =>"numeric|integer|required",
+                "chapters" =>"integer|required|min:0",
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
@@ -148,7 +148,7 @@ class MangaController extends Controller
                 $validator = Validator::make($request->all(), [
                 "title" =>  "required|string|filled",
                 "synopsis" =>  "required|string|filled",
-                "chapters" =>"numeric|integer|required",
+                "chapters" =>"integer|required|min:0",
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['doujin','manga','manhwa','manhua','novel','oel','oneshot'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],

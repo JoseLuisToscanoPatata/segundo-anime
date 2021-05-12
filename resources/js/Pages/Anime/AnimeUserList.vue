@@ -124,6 +124,7 @@
                       v-model="datosActual['score']"
                       min="1"
                       max="10"
+                      onkeydown="return false"
                     />
                     <jet-input-error :message="errores['score']" class="mt-2" />
                   </div>

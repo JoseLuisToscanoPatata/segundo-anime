@@ -42,8 +42,8 @@ class AnimeController extends Controller
             $validator = Validator::make($request->all(), [
                 "title" =>  "required|string|filled",
                 "synopsis" =>  "string|required|filled",
-                "episodes" =>"numeric|integer|required",
-                "episodeLength"=>"numeric|integer|nullable",
+                "episodes" =>"integer|required|min:0",
+                "episodeLength"=>"integer|nullable|min:1",
                 "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                 "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
@@ -160,14 +160,14 @@ class AnimeController extends Controller
                 $validator = Validator::make($request->all(), [
                     "title" =>  "required|string|filled",
                     "synopsis" =>  "required|string|filled",
-                    "episodes" =>"numeric|integer|required",
-                    "episodeLength"=>"numeric|integer|nullable",
+                    "episodes" =>"integer|required|min:0",
+                    "episodeLength"=>"integer|nullable|min:1",
                     "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
                     "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                     "status"=>["required",Rule::in(['current','finished','tba'])],
                     "startDate" =>  "nullable|string",
                      "endDate" =>  "nullable|string|gte:startDate",
-                     "trailer" => "nullable|string",
+                     "trailer" => ["nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
                     "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
                 ]);
 

@@ -65,34 +65,28 @@
         <option value="users -">Most members</option>
       </select>
 
-      <template v-if="tipo == 'anime'">
-        <select
-          class="col-span-2 rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
-        >
-          <option value="any">any Season</option>
-          <option value="winter">Winter</option>
-          <option value="spring">Spring</option>
-          <option value="summer">Summer</option>
-          <option value="fall">Fall</option>
-          <option value="undefined">Not known</option>
-        </select>
+      <select
+        class="col-span-2 rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
+        v-model="season"
+        @change="filtrar"
+        v-if="tipo == 'anime'"
+      >
+        <option value="any">any Season</option>
+        <option value="winter">Winter</option>
+        <option value="spring">Spring</option>
+        <option value="summer">Summer</option>
+        <option value="fall">Fall</option>
+        <option value="undefined">Not known</option>
+      </select>
 
-        <jet-input
-          type="number"
-          min="1926"
-          class="mt-1 block w-full col-span-1"
-          v-model="year"
-          placeholder="Year"
-        />
-
-        <jet-button
-          class="ml-2 text-white col-span-1"
-          :class="'bg-' + color.color + '-400 hover:bg-' + color.color + '-600'"
-          @click="filtrar"
-        >
-          Check season
-        </jet-button>
-      </template>
+      <jet-input
+        type="number"
+        min="1926"
+        class="mt-1 block w-full col-span-1"
+        v-model="year"
+        placeholder="Year"
+        @change="filtrar"
+      />
     </div>
 
     <div
@@ -110,12 +104,17 @@
             class="h-16 p-2 font-bold text-center"
             :class="'text-' + color.color + '-300 hover:text-' + color.color + '-500'"
           >
-            <a :href="route('AnimeProfile', dato['id'])" v-if="tipo == 'anime'">
-              {{ dato["title"] }}</a
-            >
-            <a :href="route('MangaProfile', dato['id'])" v-if="tipo == 'manga'">
-              {{ dato["title"] }}</a
-            >
+            <abbr :title="dato['title']">
+              <a :href="route('AnimeProfile', dato['id'])" v-if="tipo == 'anime'">
+                <span class="titulos">
+                  {{ dato["title"] }}
+                </span>
+              </a>
+
+              <a :href="route('MangaProfile', dato['id'])" v-if="tipo == 'manga'">
+                <span class="titulos"> {{ dato["title"] }}</span>
+              </a>
+            </abbr>
           </div>
           <div class="h-5 p-2 w-full text-xs flex flex-row items-center justify-evenly">
             <span class="">{{ dato["subType"] }}</span>
@@ -155,7 +154,7 @@
               </div>
               <div
                 v-else-if="dato['yourStatus'] == 'Dropped'"
-                class="bg-red-300 px-1 rounded-md text-white"
+                class="bg-red-500 px-1 rounded-md text-white"
               >
                 DRP
               </div>
@@ -317,13 +316,17 @@ export default {
     filtros: [],
     color: {},
     tipo: "",
+    yearActual: "",
+    seasonActual: "",
   },
 
   emits: ["nuevo"],
 
   created() {
     this.datosOrdenados = this.datos;
-    this.ordenar();
+    this.year = this.yearActual;
+    this.season = this.seasonActual;
+    this.filtrar();
     this.cargado = true;
   },
 
@@ -346,18 +349,28 @@ export default {
       this.paginacion = 0;
       var valor = this.filtrado;
       var misFiltros = this.filtros;
-      var yearElegido;
-      var seasonElegida = this.season;
+      var tipo = this.tipo;
 
-      if (this.year == null) {
+      var yearElegido;
+      console.log(this.year);
+
+      if (this.year == null || this.year == "") {
         yearElegido = "undefined";
       } else {
         yearElegido = this.year;
       }
 
-      if (seasonElegida == "undefined") {
+      if (parseInt(this.year) < 1900 || parseInt(this.year) > 2050) {
         yearElegido = "undefined";
         this.year = null;
+      }
+
+      if (tipo == "anime") {
+        var seasonElegida = this.season;
+        if (seasonElegida == "undefined") {
+          yearElegido = "undefined";
+          this.year = null;
+        }
       }
 
       this.datosOrdenados = this.datos.filter(function (dato) {
@@ -367,7 +380,7 @@ export default {
           }
         }
 
-        if (dato.season != seasonElegida) {
+        if (dato.season != seasonElegida && tipo == "anime") {
           if (seasonElegida != "any") {
             return false;
           }
@@ -420,6 +433,20 @@ export default {
 </script>
 
 <style scoped>
+.titulos {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+abbr[title] {
+  border-bottom: none !important;
+  cursor: inherit !important;
+  text-decoration: none !important;
+}
+
 ::-webkit-scrollbar {
   width: 20px;
 }

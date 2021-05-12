@@ -43,8 +43,8 @@ class WatchController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-               "anime_id"=>"required|integer|numeric",
-               "score"=>"sometimes|nullable|integer|numeric",
+               "anime_id"=>"required|integer ",
+               "score"=>"sometimes|nullable|integer|between:1,10",
                "favourite"=>"required","boolean",
                 "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
             ]);
@@ -118,7 +118,7 @@ class WatchController extends Controller
             if($user == Auth::user()->id) {
 
                 $validator = Validator::make($request->all(), [
-                "score"=>"sometimes|nullable|integer|numeric",
+                "score"=>"sometimes|nullable|integer|between:1,10",
                 "favourite"=>"required","boolean",
                     "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
                 ]);
