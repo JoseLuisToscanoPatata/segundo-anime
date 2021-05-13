@@ -278,8 +278,6 @@ export default {
         .then((res) => {
           var fallidos = 0;
 
-          console.log(res.data.data);
-
           for (let actual = 0; actual < res.data.data.length; actual++) {
             var season = "";
             var año = "";
@@ -304,30 +302,6 @@ export default {
               season = "undefined";
               año = "undefined";
             }
-
-            /**
-
-            for (let visto = 0; visto < this.vistos.length && !encontrado; visto++) {
-              if (this.vistos[visto].id == res.data.data[actual].id) {
-                encontrado = true;
-
-                if (this.vistos[visto].pivot.watchStatus == "Dropped") {
-                  viendo = "Dropped";
-                } else if (this.vistos[visto].pivot.watchStatus == "Completed") {
-                  viendo = "Completed";
-                } else if (this.vistos[visto].pivot.watchStatus == "OnHold") {
-                  viendo = "Hold";
-                } else if (this.vistos[visto].pivot.watchStatus == "Watching") {
-                  viendo = "Current";
-                } else if (this.vistos[visto].pivot.watchStatus == "PlanToWatch") {
-                  viendo = "Plan";
-                }
-
-                this.vistos.splice(visto, 1);
-              }
-            }
-
-            */
 
             if (
               actual - fallidos < this.vistos.length &&

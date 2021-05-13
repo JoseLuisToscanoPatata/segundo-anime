@@ -325,7 +325,9 @@ export default {
   created() {
     this.datosOrdenados = this.datos;
     this.year = this.yearActual;
-    this.season = this.seasonActual;
+    if (this.tipo == "anime") {
+      this.season = this.seasonActual;
+    }
     this.filtrar();
     this.cargado = true;
   },
@@ -352,17 +354,15 @@ export default {
       var tipo = this.tipo;
 
       var yearElegido;
-      console.log(this.year);
+
+      if (parseInt(this.year) < 1900 || parseInt(this.year) > 2050) {
+        this.year = null;
+      }
 
       if (this.year == null || this.year == "") {
         yearElegido = "undefined";
       } else {
         yearElegido = this.year;
-      }
-
-      if (parseInt(this.year) < 1900 || parseInt(this.year) > 2050) {
-        yearElegido = "undefined";
-        this.year = null;
       }
 
       if (tipo == "anime") {
@@ -380,8 +380,8 @@ export default {
           }
         }
 
-        if (dato.season != seasonElegida && tipo == "anime") {
-          if (seasonElegida != "any") {
+        if (tipo == "anime") {
+          if (dato.season != seasonElegida && seasonElegida != "any") {
             return false;
           }
         }

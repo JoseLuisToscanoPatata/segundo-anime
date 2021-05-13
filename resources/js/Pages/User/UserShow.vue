@@ -14,11 +14,11 @@ export default {
     AppLayout,
   },
 
-  props: ["clave"],
+  props: ["clave", "perfil"],
 
   data() {
     return {
-      titulo: "PARTICULAR",
+      titulo: "",
     };
   },
 };

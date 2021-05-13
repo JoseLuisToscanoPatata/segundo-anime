@@ -17944,7 +17944,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         var fallidos = 0;
-        console.log(res.data.data);
 
         for (var actual = 0; actual < res.data.data.length; actual++) {
           var season = "";
@@ -17969,26 +17968,6 @@ __webpack_require__.r(__webpack_exports__);
             season = "undefined";
             año = "undefined";
           }
-          /**
-            for (let visto = 0; visto < this.vistos.length && !encontrado; visto++) {
-            if (this.vistos[visto].id == res.data.data[actual].id) {
-              encontrado = true;
-                if (this.vistos[visto].pivot.watchStatus == "Dropped") {
-                viendo = "Dropped";
-              } else if (this.vistos[visto].pivot.watchStatus == "Completed") {
-                viendo = "Completed";
-              } else if (this.vistos[visto].pivot.watchStatus == "OnHold") {
-                viendo = "Hold";
-              } else if (this.vistos[visto].pivot.watchStatus == "Watching") {
-                viendo = "Current";
-              } else if (this.vistos[visto].pivot.watchStatus == "PlanToWatch") {
-                viendo = "Plan";
-              }
-                this.vistos.splice(visto, 1);
-            }
-          }
-            */
-
 
           if (actual - fallidos < _this2.vistos.length && _this2.vistos[actual - fallidos].id == res.data.data[actual].id) {
             if (_this2.vistos[actual - fallidos].pivot.watchStatus == "Dropped") {
@@ -18150,11 +18129,28 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ["clave"],
+  props: ["clave", "anime"],
   data: function data() {
     return {
-      titulo: "PARTICULAR"
+      actual: {}
     };
+  },
+  created: function created() {
+    this.obtenerDatos();
+  },
+  methods: {
+    obtenerDatos: function obtenerDatos() {
+      var _this = this;
+
+      axios.get(route("animes.show", this.anime), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this.actual = res.data.data;
+        _this.cargando = false;
+      });
+    }
   }
 });
 
@@ -19042,7 +19038,11 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.datosOrdenados = this.datos;
     this.year = this.yearActual;
-    this.season = this.seasonActual;
+
+    if (this.tipo == "anime") {
+      this.season = this.seasonActual;
+    }
+
     this.filtrar();
     this.cargado = true;
   },
@@ -19065,17 +19065,15 @@ __webpack_require__.r(__webpack_exports__);
       var misFiltros = this.filtros;
       var tipo = this.tipo;
       var yearElegido;
-      console.log(this.year);
+
+      if (parseInt(this.year) < 1900 || parseInt(this.year) > 2050) {
+        this.year = null;
+      }
 
       if (this.year == null || this.year == "") {
         yearElegido = "undefined";
       } else {
         yearElegido = this.year;
-      }
-
-      if (parseInt(this.year) < 1900 || parseInt(this.year) > 2050) {
-        yearElegido = "undefined";
-        this.year = null;
       }
 
       if (tipo == "anime") {
@@ -19094,8 +19092,8 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        if (dato.season != seasonElegida && tipo == "anime") {
-          if (seasonElegida != "any") {
+        if (tipo == "anime") {
+          if (dato.season != seasonElegida && seasonElegida != "any") {
             return false;
           }
         }
@@ -19928,12 +19926,262 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Pages_Componentes_DataGridArea__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Pages/Componentes/DataGridArea */ "./resources/js/Pages/Componentes/DataGridArea.vue");
+/* harmony import */ var _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/DialogModal */ "./resources/js/Jetstream/DialogModal.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Checkbox */ "./resources/js/Jetstream/Checkbox.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+/* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+/* harmony import */ var _Jetstream_Label__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/Label */ "./resources/js/Jetstream/Label.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Pages/Componentes/Loading */ "./resources/js/Pages/Componentes/Loading.vue");
+
+
+
+
+
+
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    DataGridArea: _Pages_Componentes_DataGridArea__WEBPACK_IMPORTED_MODULE_1__.default,
+    Loading: _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_9__.default,
+    JetDialogModal: _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_2__.default,
+    JetCheckbox: _Jetstream_Checkbox__WEBPACK_IMPORTED_MODULE_4__.default,
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_5__.default,
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_3__.default,
+    JetLabel: _Jetstream_Label__WEBPACK_IMPORTED_MODULE_7__.default,
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_8__.default,
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_6__.default
   },
-  props: ["clave"]
+  props: ["clave", "usuario"],
+  data: function data() {
+    return {
+      paginacion: [{
+        texto: "12",
+        numero: 12
+      }, {
+        texto: "24",
+        numero: 24
+      }, {
+        texto: "48",
+        numero: 48
+      }, {
+        texto: "72",
+        numero: 72
+      }, {
+        texto: "96",
+        numero: 96
+      }],
+      datos: [],
+      vistos: [],
+      colores: {
+        color: "pink",
+        hexa: " rgb(251, 207, 232)"
+      },
+      filtros: [{
+        nombre: "subType",
+        titulo: "Subtype",
+        opciones: ["doujin", "manga", "manhwa", "manhua", "novel", "oel", "oneshot"],
+        titulos: ["Doujin", "Manga", "Manhwa", "Manhua", "Novel", "Oel", "OneShot"],
+        actual: "",
+        ancho: "col-span-2"
+      }, {
+        nombre: "yourStatus",
+        titulo: "Your Status",
+        opciones: ["Plan", "Current", "Hold", "Completed", "Dropped"],
+        titulos: ["Plan to Read", "Reading", "On Hold", "Completed", "Dropped"],
+        actual: "",
+        ancho: "col-span-2"
+      }],
+      cargando: true,
+      añadiendo: false,
+      idActual: 1,
+      datosInfo: {
+        mostrar: false,
+        titulo: "",
+        mensaje: "",
+        color: "black"
+      },
+      nuevo: {
+        readStatus: "",
+        score: "",
+        favourite: 0,
+        title: "",
+        cover: "",
+        status: ""
+      },
+      errores: {
+        readStatus: null,
+        score: null,
+        favourite: null
+      }
+    };
+  },
+  created: function created() {
+    this.obtenerVistos();
+    this.obtenerDatos();
+  },
+  methods: {
+    //OBTENER LOS DATOS DE MANGAS
+    obtenerVistos: function obtenerVistos() {
+      var _this = this;
+
+      axios.get(route("reads.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this.vistos = res.data.data;
+      });
+    },
+    obtenerDatos: function obtenerDatos() {
+      var _this2 = this;
+
+      axios.get(route("mangas.index"), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        var fallidos = 0;
+
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          var año = "";
+          var viendo = null;
+
+          if (res.data.data[actual].startDate != null) {
+            var fechaActual = res.data.data[actual].startDate;
+            año = fechaActual.split("-")[0];
+          } else {
+            año = "undefined";
+          }
+
+          if (actual - fallidos < _this2.vistos.length && _this2.vistos[actual - fallidos].id == res.data.data[actual].id) {
+            if (_this2.vistos[actual - fallidos].pivot.readStatus == "Dropped") {
+              viendo = "Dropped";
+            } else if (_this2.vistos[actual - fallidos].pivot.readStatus == "Completed") {
+              viendo = "Completed";
+            } else if (_this2.vistos[actual - fallidos].pivot.readStatus == "OnHold") {
+              viendo = "Hold";
+            } else if (_this2.vistos[actual - fallidos].pivot.readStatus == "Reading") {
+              viendo = "Current";
+            } else if (_this2.vistos[actual - fallidos].pivot.readStatus == "PlanToRead") {
+              viendo = "Plan";
+            }
+          } else {
+            fallidos++;
+          }
+
+          _this2.datos.push({
+            id: res.data.data[actual].id,
+            title: res.data.data[actual].title,
+            synopsis: res.data.data[actual].synopsis,
+            cover: res.data.data[actual].cover,
+            score: res.data.data[actual].rating,
+            chapters: res.data.data[actual].chapters,
+            startDate: res.data.data[actual].startDate,
+            subType: res.data.data[actual].subType,
+            users: res.data.data[actual].userCount,
+            status: res.data.data[actual].status,
+            yourStatus: viendo,
+            year: año
+          });
+        }
+
+        _this2.cargando = false;
+      });
+    },
+    pulsadoNuevo: function pulsadoNuevo(id) {
+      this.idActual = id;
+
+      for (var key in this.nuevo) {
+        if (Object.hasOwnProperty.call(this.nuevo, key)) {
+          this.nuevo[key] = null;
+        }
+      }
+
+      for (var actual = 0; actual < this.datos.length; actual++) {
+        if (this.datos[actual].id == this.idActual) {
+          this.nuevo.title = this.datos[actual].title;
+          this.nuevo.cover = this.datos[actual].cover;
+          this.nuevo.status = this.datos[actual].status;
+        }
+      }
+
+      for (var error in this.errores) {
+        if (Object.hasOwnProperty.call(this.errores, error)) {
+          this.errores[error] = null;
+        }
+      }
+
+      this.añadiendo = true;
+    },
+    crear: function crear() {
+      var _this3 = this;
+
+      var datos = new FormData();
+      datos.append("manga_id", this.idActual);
+      datos.append("user_id", this.usuario.id);
+      datos.append("readStatus", this.nuevo["readStatus"]);
+      datos.append("favourite", this.nuevo["favourite"]);
+
+      if (this.nuevo["score"] != null) {
+        datos.append("score", this.nuevo["score"]);
+      }
+
+      axios.post(route("reads.store"), datos, {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        //EXITO
+        var encontrado = false;
+
+        for (var actual = 0; actual < _this3.datos.length && !encontrado; actual++) {
+          if (_this3.datos[actual].id == _this3.idActual) {
+            encontrado = true;
+
+            if (_this3.nuevo["readStatus"] == "Dropped") {
+              _this3.datos[actual].yourStatus = "Dropped";
+            } else if (_this3.nuevo["readStatus"] == "Completed") {
+              _this3.datos[actual].yourStatus = "Completed";
+            } else if (_this3.nuevo["readStatus"] == "OnHold") {
+              _this3.datos[actual].yourStatus = "Hold";
+            } else if (_this3.nuevo["readStatus"] == "Reading") {
+              _this3.datos[actual].yourStatus = "Current";
+            } else if (_this3.nuevo["readStatus"] == "PlanToRead") {
+              _this3.datos[actual].yourStatus = "Plan";
+            }
+          }
+        }
+
+        _this3.añadiendo = false;
+        _this3.datosInfo["color"] = "green";
+        _this3.datosInfo["titulo"] = "Operation success";
+        _this3.datosInfo["mensaje"] = res.data.message;
+        _this3.datosInfo["mostrar"] = true;
+      })["catch"](function (err) {
+        //FALLOS
+        if (err.response.data.message) {
+          //FALLO EXTERNO
+          _this3.añadiendo = false;
+          _this3.datosInfo["color"] = "red";
+          _this3.datosInfo["titulo"] = "There was an error :(";
+          _this3.datosInfo["mensaje"] = err.response.data.message;
+          _this3.datosInfo["mostrar"] = true;
+        } else if (err.response.data.validation_errors) {
+          //FALLO DE VALIDACIÓN
+          _this3.errores["score"] = err.response.data.validation_errors["score"];
+          _this3.errores["readStatus"] = err.response.data.validation_errors["readStatus"];
+          _this3.errores["favourite"] = err.response.data.validation_errors["favourite"];
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -19958,7 +20206,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["clave", "manga"],
   data: function data() {
     return {
-      titulo: "PARTICULAR"
+      actual: {}
     };
   },
   created: function created() {
@@ -19973,7 +20221,7 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
-        _this.titulo = res.data.data.title;
+        _this.actual = res.data.data;
         _this.cargando = false;
       });
     }
@@ -21197,10 +21445,10 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ["clave"],
+  props: ["clave", "perfil"],
   data: function data() {
     return {
-      titulo: "PARTICULAR"
+      titulo: ""
     };
   }
 });
@@ -24644,7 +24892,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     color: "#EF4444"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.titulo), 1
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.actual.title), 1
       /* TEXT */
       )];
     }),
@@ -27835,7 +28083,93 @@ var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
+var _hoisted_2 = {
+  "class": "max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Close ");
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "text-pink-500 font-bold"
+}, "MANGA ADD FORM ", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = {
+  "class": "flex flex-col sm:flex-row m-5 justify-evenly"
+};
+var _hoisted_6 = {
+  "class": "text-center sm:max-w-sm"
+};
+var _hoisted_7 = {
+  "class": "font-semibold text-lg text-pink-400 text-center"
+};
+var _hoisted_8 = {
+  "class": "flex flex-col"
+};
+var _hoisted_9 = {
+  "class": "m-auto mt-3"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "PlanToRead"
+}, "Plan To Read", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
+  key: 0,
+  value: "Reading"
+};
+var _hoisted_12 = {
+  key: 1,
+  value: "Completed"
+};
+var _hoisted_13 = {
+  key: 2,
+  value: "Dropped"
+};
+var _hoisted_14 = {
+  key: 3,
+  value: "OnHold"
+};
+var _hoisted_15 = {
+  "class": "m-auto mt-3"
+};
+var _hoisted_16 = {
+  "class": "m-auto mt-7"
+};
+var _hoisted_17 = {
+  "class": "flex items-start"
+};
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "ml-2 text-sm text-gray-600"
+}, "Favourite", -1
+/* HOISTED */
+);
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel ");
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Add ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
+
+  var _component_jet_dialog_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-dialog-modal");
+
+  var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
+
+  var _component_jet_input_error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input-error");
+
+  var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
+
+  var _component_jet_secondary_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-secondary-button");
+
+  var _component_data_grid_area = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("data-grid-area");
+
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
@@ -27843,6 +28177,177 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" MODAL DE MENSAJES"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.datosInfo['mostrar'],
+        onClose: _cache[2] || (_cache[2] = function ($event) {
+          return $data.datosInfo['mostrar'] = false;
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+            "class": ["font-bold", 'text-' + $data.datosInfo['color'] + '-500']
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosInfo["titulo"]), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+            "class": 'text-' + $data.datosInfo['color'] + '-500'
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosInfo["mensaje"]), 3
+          /* TEXT, CLASS */
+          )];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+            "class": ["ml-2 text-white", 'bg-' + $data.datosInfo['color'] + '-300 hover:bg-' + $data.datosInfo['color'] + '-600'],
+            onClick: _cache[1] || (_cache[1] = function ($event) {
+              return $data.datosInfo['mostrar'] = false;
+            })
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_3];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["class"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.añadiendo,
+        onClose: _cache[8] || (_cache[8] = function ($event) {
+          return $data.añadiendo = false;
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_4];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+            onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+              return $options.crear && $options.crear.apply($options, arguments);
+            }, ["prevent"]))
+          }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.nuevo["title"]), 1
+          /* TEXT */
+          ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+            src: $data.nuevo['cover'],
+            alt: $data.nuevo['title'],
+            "class": "rounded-full h-36 w-36 object-cover text-center m-auto mt-5"
+          }, null, 8
+          /* PROPS */
+          , ["src", "alt"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+            "for": "readStatus",
+            value: "Read Status"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+            id: "readStatus",
+            "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+              return $data.nuevo['readStatus'] = $event;
+            }),
+            "class": "mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+          }, [_hoisted_10, $data.nuevo['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_11, " Reading ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.nuevo['status'] == 'finished' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_12, " Completed ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.nuevo['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_13, " Dropped ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.nuevo['status'] != 'tba' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", _hoisted_14, " On Hold ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.nuevo['readStatus']]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['readStatus'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+            "for": "score",
+            value: "Your Score"
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+            id: "score",
+            type: "number",
+            "class": "mt-1 block w-full",
+            modelValue: $data.nuevo['score'],
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+              return $data.nuevo['score'] = $event;
+            }),
+            min: "1",
+            max: "10",
+            onkeydown: "return false"
+          }, null, 8
+          /* PROPS */
+          , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['score'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+            type: "checkbox",
+            "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+              return $data.nuevo['favourite'] = $event;
+            }),
+            "true-value": "1",
+            "false-value": "0",
+            "class": "rounded border-gray-300 text-pink-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          }, null, 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.nuevo['favourite']]]), _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errores['favourite'],
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])])])])], 32
+          /* HYDRATE_EVENTS */
+          )];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            type: "button",
+            onClick: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+              return $data.añadiendo = false;
+            }, ["prevent"])),
+            "class": "mr-2"
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_19];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            "class": "mt-2 ml-2 text-white bg-pink-400 hover:bg-pink-600",
+            type: "button",
+            onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.crear, ["prevent"])
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_20];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["onClick"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), !$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_data_grid_area, {
+        datos: $data.datos,
+        cantidadPaginas: $data.paginacion,
+        filtros: $data.filtros,
+        key: $data.datos,
+        color: $data.colores,
+        tipo: "manga",
+        onNuevo: $options.pulsadoNuevo,
+        yearActual: "undefined"
+      }, null, 8
+      /* PROPS */
+      , ["datos", "cantidadPaginas", "filtros", "color", "onNuevo"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
+        key: 1,
+        color: "pink"
+      }))])];
     }),
     _: 1
     /* STABLE */
@@ -27875,7 +28380,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     color: "#F472B6"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.titulo), 1
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.actual.title), 1
       /* TEXT */
       )];
     }),

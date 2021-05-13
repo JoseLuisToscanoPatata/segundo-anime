@@ -1,7 +1,9 @@
 <template>
   <app-layout color="#F472B6">
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ titulo }}</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{ actual.title }}
+      </h2>
     </template>
   </app-layout>
 </template>
@@ -18,7 +20,7 @@ export default {
 
   data() {
     return {
-      titulo: "PARTICULAR",
+      actual: {},
     };
   },
 
@@ -35,7 +37,7 @@ export default {
           },
         })
         .then((res) => {
-          this.titulo = res.data.data.title;
+          this.actual = res.data.data;
           this.cargando = false;
         });
     },

@@ -45,6 +45,8 @@ class HandleInertiaRequests extends Middleware
                 Auth::user()->tokens()->delete();
                 $token =  Auth::user()->createToken('token')->plainTextToken;
                 setcookie('apiToken',$token,time() + (86400*30),"/");
+            } else {
+                $token = $_COOKIE['apiToken'];
             }
             
             } else {
@@ -56,7 +58,7 @@ class HandleInertiaRequests extends Middleware
             }
 
         return array_merge(parent::share($request), [
-            'clave' => isset($_COOKIE['apiToken'])? $_COOKIE['apiToken'] : "",
+            'clave' => !is_null(Auth::user())? $token : "",
             'usuario' => !is_null(Auth::user()) ? Auth::user() : "", 
            
         ]);
