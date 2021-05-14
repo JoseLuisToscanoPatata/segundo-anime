@@ -18129,14 +18129,40 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ["clave", "anime"],
+  props: ["clave", "anime", "usuario"],
   data: function data() {
     return {
-      actual: {}
+      actual: {
+        title: "",
+        userCount: null,
+        synopsis: null,
+        score: null,
+        startDate: null,
+        endDate: null,
+        episodes: null,
+        cover: null,
+        episodeLength: null,
+        ageRating: null,
+        subType: null,
+        trailer: null,
+        status: null,
+        startDatePretty: null,
+        topUsers: null,
+        topRating: null
+      },
+      estado: {
+        favourite: null,
+        score: null,
+        watchStatus: null,
+        watchId: null
+      }
     };
   },
   created: function created() {
     this.obtenerDatos();
+    this.obtenerPosiciones();
+    this.obtenerVistos();
+    this.cargando = false;
   },
   methods: {
     obtenerDatos: function obtenerDatos() {
@@ -18147,9 +18173,178 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
-        _this.actual = res.data.data;
-        _this.cargando = false;
+        _this.actual.title = res.data.data.title;
+        _this.actual.userCount = res.data.data.userCount;
+        _this.actual.synopsis = res.data.data.synopsis;
+        _this.actual.score = res.data.data.rating;
+
+        if (res.data.data.startDate != null) {
+          _this.actual.startDate = res.data.data.startDate;
+          var fechaActual = res.data.data.startDate;
+          var season = "";
+
+          if (parseInt(fechaActual.split("-")[1]) < 4) {
+            season = "winter";
+          } else if (parseInt(fechaActual.split("-")[1]) < 7) {
+            season = "spring";
+          } else if (parseInt(fechaActual.split("-")[1]) < 10) {
+            season = "summer";
+          } else {
+            season = "fall";
+          }
+
+          var año = fechaActual.split("-")[0];
+          _this.actual.startDatePretty = season + " " + año;
+        } else {
+          _this.actual.startDate = "?";
+          _this.actual.startDatePretty = "undefined";
+        }
+
+        if (res.data.data.endDate != null) {
+          _this.actual.endDate = res.data.data.endDate;
+        } else {
+          _this.actual.endDate = "?";
+        }
+
+        _this.actual.cover = res.data.data.cover;
+
+        if (res.data.data.episodes == null) {
+          _this.actual.episodes = "?";
+        } else {
+          _this.actual.episodes = res.data.data.episodes;
+        }
+
+        if (res.data.data.episodeLength == 0) {
+          _this.actual.episodeLength = "?";
+        } else {
+          _this.actual.episodeLength = res.data.data.episodeLength;
+        }
+
+        if (res.data.data.ageRating = "PG") {
+          _this.actual.ageRating = "PG - Teens 13 or older";
+        } else if (res.data.data.ageRating = "G") {
+          _this.actual.ageRating = "G - All audiences";
+        } else if (res.data.data.ageRating = "R") {
+          _this.actual.ageRating = "R - People 17 or older";
+        }
+
+        _this.actual.subType = res.data.data.subType;
+
+        if (res.data.data.trailer == null) {
+          _this.actual.trailer = "undefined";
+        } else {
+          _this.actual.trailer = res.data.data.trailer;
+        }
+
+        _this.actual.status = res.data.data.status;
+        console.log(_this.actual);
       });
+    },
+    obtenerPosiciones: function obtenerPosiciones() {
+      var _this2 = this;
+
+      axios.get(route("animes.index"), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        var datos = _this2.sortear(res.data.data, "rating");
+
+        for (var actual = 0; actual < datos.length; actual++) {
+          if (datos[actual].id == _this2.anime) {
+            _this2.actual.topRating = actual + 1;
+          }
+        }
+
+        datos = _this2.sortear(datos, "userCount");
+
+        for (var _actual = 0; _actual < datos.length; _actual++) {
+          if (datos[_actual].id == _this2.anime) {
+            _this2.actual.topUsers = _actual + 1;
+          }
+        }
+      });
+    },
+    obtenerVistos: function obtenerVistos() {
+      var _this3 = this;
+
+      axios.get(route("watches.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        var datos = _this3.sortear(res.data.data, "anime_id");
+
+        for (var actual = 0; actual < datos.length; actual++) {
+          if (datos[actual].anime_id == _this3.anime) {
+            _this3.estado.favourite = datos[actual].favourite;
+            _this3.estado.watchStatus = datos[actual].watchStatus;
+            _this3.estado.score = datos[actual].score;
+            _this3.estado.watchId = datos[actual].id;
+          }
+        }
+      });
+    },
+    ver: function ver() {
+      var _this4 = this;
+
+      var datos = new FormData();
+      datos.append("anime_id", this.actual.id);
+      datos.append("user_id", this.usuario.id);
+
+      if (this.estado.watchStatus == null) {
+        this.estado.watchStatus = "planToWatch";
+      }
+
+      datos.append("watchStatus", this.estado.watchStatus);
+      datos.append("favourite", this.estado.favourite);
+
+      if (this.estado.score != null) {
+        datos.append("score", this.estado.score);
+      }
+
+      if (this.estado.watchId == null) {
+        axios.post(route("watches.store"), datos, {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          _this4.estado.watchId = res.data.data.id;
+          alert("nuevo");
+        });
+      } else {
+        datos.append("_method", "PUT");
+        axios.post(route("watches.update"), datos, {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          alert("actualizado");
+        });
+      }
+    },
+    eliminar: function eliminar() {
+      var _this5 = this;
+
+      axios["delete"](route("watches.destroy", this.estado.watchId), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        alert("eliminado");
+        _this5.estado.watchStatus = null;
+        _this5.estado.score = null;
+        _this5.estado.watchId = null;
+        _this5.estado.favourite = 0;
+      });
+    },
+    sortear: function sortear(datos, campo) {
+      datos = datos.sort(function (a, b) {
+        var x = a[campo];
+        var y = b[campo];
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      return datos;
     }
   }
 });
@@ -24885,7 +25080,22 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
 };
+var _hoisted_2 = {
+  "class": "max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12"
+};
+var _hoisted_3 = {
+  key: 0,
+  "class": "bg-red-200 p-6 flex grid grid-cols-12 justify-start items-start rounded-lg"
+};
+var _hoisted_4 = {
+  key: 1,
+  src: "/img/no_foto.jpg",
+  alt: "No foto",
+  "class": "col-span-5 h-72 rounded-lg"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
@@ -24895,6 +25105,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.actual.title), 1
       /* TEXT */
       )];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" MODAL DE MENSAJES"), !_ctx.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, [$data.actual.cover != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+        key: 0,
+        href: $data.actual.cover,
+        target: "blank",
+        "class": "col-span-5"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+        src: $data.actual.cover,
+        alt: "Cover",
+        "class": "h-72 rounded-lg"
+      }, null, 8
+      /* PROPS */
+      , ["src"])], 8
+      /* PROPS */
+      , ["href"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_4))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
+        key: 1,
+        color: "red"
+      }))])];
     }),
     _: 1
     /* STABLE */
