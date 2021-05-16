@@ -88,9 +88,10 @@ class WatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $user)
     {
-        $watch = Watch::find($id);
+
+        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
              return response()->json(["status"=>"success","data"=>$watch],200);
@@ -106,14 +107,12 @@ class WatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id,$user)
     {
         
-        $watch = Watch::find($id);
+        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
-
-            $user = $watch->user_id;
 
             if($user == Auth::user()->id) {
 
@@ -150,13 +149,13 @@ class WatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$user)
     {
-        $watch = Watch::find($id);
+        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
             
-            if(Auth::user()->id == $watch->user_id) {
+            if(Auth::user()->id == $user) {
 
                 $anime = Anime::find($watch->anime_id);
                 $anime->userCount = $anime->userCount - 1;

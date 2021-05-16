@@ -6,7 +6,7 @@
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
       <div
-        class="p-6 bg-fuchsia-200 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
+        class="p-6 bg-fuchsia-100 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
       >
         <template v-if="!cargando">
           <div
@@ -191,7 +191,7 @@
                   @mouseout="dentro4 = false"
                   :class="{ seleccionado: dentro4 }"
                 >
-                  <div class="flex flex-row h-5 justify-center">
+                  <div class="flex flex-row h-5 justify-center mb-1">
                     <img src="img/star.svg" alt="Rating" class="h-4 w-4" />
                     <span class="text-md text-yellow-400 h-20">{{
                       actual["rating"]

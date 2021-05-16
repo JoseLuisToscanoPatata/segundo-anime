@@ -53,11 +53,11 @@ class WatchSeeder extends Seeder
             ]);
         }
 
-        for ($i=2; $i <= 50; $i++) { 
+        for ($i=2; $i <= 1000; $i++) { 
             
             for ($j=1; $j < 3000; $j++) {
 
-                if(mt_rand(0,9) > 7) {
+                if(mt_rand(0,9) > 8) {
 
                     $animeActual = Anime::find($j);
                     $animeActual->userCount = $animeActual->userCount + 1;

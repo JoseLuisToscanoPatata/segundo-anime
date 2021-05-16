@@ -69,14 +69,14 @@
 
         <jet-dialog-modal :show="operacion == 'editar'" @close="operacion = ''">
           <template #title>
-            <span class="text-purple-500 font-bold">MANGA LIST FORM </span>
+            <span class="text-yellow-500 font-bold">MANGA LIST FORM </span>
           </template>
 
           <template #content>
             <form @submit.prevent="editar">
               <div class="flex flex-col sm:flex-row m-5 justify-evenly">
                 <div class="text-center sm:max-w-sm">
-                  <span class="font-semibold text-lg text-purple-400 text-center">{{
+                  <span class="font-semibold text-lg text-yellow-400 text-center">{{
                     datosActual["title"]
                   }}</span>
 
@@ -158,7 +158,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-purple-400 hover:bg-purple-600"
+              class="mt-2 ml-2 text-white bg-yellow-400 hover:bg-yellow-600"
               type="button"
               @click.prevent="editar"
             >
@@ -458,9 +458,9 @@ export default {
               score: res.data.data[actual].pivot.score,
             });
           }
-        });
 
-      this.cargando = false;
+          this.cargando = false;
+        });
     },
 
     pulsadoVer($id) {
@@ -527,11 +527,15 @@ export default {
       datos.append("_method", "PUT");
 
       axios
-        .post(route("reads.update", id), datos, {
-          headers: {
-            Authorization: "Bearer " + this.clave,
-          },
-        })
+        .post(
+          route("reads.update", { manga: this.idActual, user: this.userList }),
+          datos,
+          {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          }
+        )
         .then((res) => {
           //EXITO
           for (let actual = 0; actual < this.datos.length; actual++) {
@@ -572,11 +576,15 @@ export default {
       datos.append("_method", "PUT");
 
       axios
-        .post(route("reads.update", this.idActual), datos, {
-          headers: {
-            Authorization: "Bearer " + this.clave,
-          },
-        })
+        .post(
+          route("reads.update", { manga: this.idActual, user: this.userList }),
+          datos,
+          {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          }
+        )
         .then((res) => {
           //EXITO
           for (let actual = 0; actual < this.datos.length; actual++) {
@@ -617,7 +625,7 @@ export default {
       this.operacion = "";
 
       axios
-        .delete(route("reads.destroy", this.idActual), {
+        .delete(route("reads.destroy", { manga: this.idActual, user: this.userList }), {
           headers: {
             Authorization: "Bearer " + this.clave,
           },

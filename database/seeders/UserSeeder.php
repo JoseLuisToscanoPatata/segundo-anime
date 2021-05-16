@@ -25,6 +25,6 @@ class UserSeeder extends Seeder
             'profile_photo_path' => 'profile-photos/BigChungus.png',
         ]);
 
-        \App\Models\User::factory(50)->create();
+        \App\Models\User::factory(1000)->create();
     }
 }

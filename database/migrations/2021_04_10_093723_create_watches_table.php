@@ -14,7 +14,6 @@ class CreateWatchesTable extends Migration
     public function up()
     {
         Schema::create('watches', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('anime_id');
             $table->enum('watchStatus',['Watching','PlanToWatch','Completed','Dropped','OnHold']);

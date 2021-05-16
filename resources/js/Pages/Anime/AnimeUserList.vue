@@ -190,7 +190,7 @@
       </template>
 
       <template v-else>
-        <loading color="yellow"></loading>
+        <loading color="purple"></loading>
       </template>
     </div>
   </app-layout>
@@ -459,9 +459,9 @@ export default {
               score: res.data.data[actual].pivot.score,
             });
           }
-        });
 
-      this.cargando = false;
+          this.cargando = false;
+        });
     },
 
     pulsadoVer($id) {
@@ -528,11 +528,15 @@ export default {
       datos.append("_method", "PUT");
 
       axios
-        .post(route("watches.update", id), datos, {
-          headers: {
-            Authorization: "Bearer " + this.clave,
-          },
-        })
+        .post(
+          route("watches.update", { anime: this.idActual, user: this.userList }),
+          datos,
+          {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          }
+        )
         .then((res) => {
           //EXITO
           for (let actual = 0; actual < this.datos.length; actual++) {
@@ -573,11 +577,15 @@ export default {
       datos.append("_method", "PUT");
 
       axios
-        .post(route("watches.update", this.idActual), datos, {
-          headers: {
-            Authorization: "Bearer " + this.clave,
-          },
-        })
+        .post(
+          route("watches.update", { anime: this.idActual, user: this.userList }),
+          datos,
+          {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          }
+        )
         .then((res) => {
           //EXITO
           for (let actual = 0; actual < this.datos.length; actual++) {
@@ -618,7 +626,7 @@ export default {
       this.operacion = "";
 
       axios
-        .delete(route("watches.destroy", this.idActual), {
+        .delete(route("watches.destroy", { anime: this.idActual, user: this.userList }), {
           headers: {
             Authorization: "Bearer " + this.clave,
           },

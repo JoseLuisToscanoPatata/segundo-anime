@@ -41,12 +41,20 @@ Route::apiResource('animes',AnimeController::class)->middleware('auth:sanctum');
 Route::apiResource('mangas',MangaController::class)->middleware('auth:sanctum');
 
 //Read Controller
-Route::apiResource('reads',ReadController::class)->middleware('auth:sanctum')->except(['index']);
-Route::middleware('auth:sanctum')->get("/readsIndex/{user}", [readController::class, "index"])->name('reads.index');
+Route::middleware('auth:sanctum')->get("/reads/{user}", [readController::class, "index"])->name('reads.index');
+Route::middleware('auth:sanctum')->get("/reads/{manga}/{user}", [readController::class, "show"])->name('reads.show');
+Route::middleware('auth:sanctum')->post("/reads", [readController::class, "store"])->name('reads.store');
+Route::middleware('auth:sanctum')->put("/reads/{manga}/{user}", [readController::class, "update"])->name('reads.update');
+Route::middleware('auth:sanctum')->patch("/reads/{manga}/{user}", [readController::class, "update"])->name('reads.update');
+Route::middleware('auth:sanctum')->delete("/reads/{manga}/{user}", [readController::class, "destroy"])->name('reads.destroy');
 
 //Watch Controller
-Route::apiResource('watches',WatchController::class)->middleware('auth:sanctum')->except(['index']);
-Route::middleware('auth:sanctum')->get("/watchesIndex/{user}", [watchController::class, "index"])->name('watches.index');
+Route::middleware('auth:sanctum')->get("/watches/{user}", [watchController::class, "index"])->name('watches.index');
+Route::middleware('auth:sanctum')->get("/watches/{anime}/{user}", [watchController::class, "show"])->name('watches.show');
+Route::middleware('auth:sanctum')->post("/watches", [watchController::class, "store"])->name('watches.store');
+Route::middleware('auth:sanctum')->put("/watches/{anime}/{user}", [watchController::class, "update"])->name('watches.update');
+Route::middleware('auth:sanctum')->patch("/watches/{anime}/{user}", [watchController::class, "update"])->name('watches.update');
+Route::middleware('auth:sanctum')->delete("/watches/{anime}/{user}", [watchController::class, "destroy"])->name('watches.destroy');
 
 //Friend Controller
 Route::apiResource('friends',FriendController::class)->middleware('auth:sanctum')->except(['index']);

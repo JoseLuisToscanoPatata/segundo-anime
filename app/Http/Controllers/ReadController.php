@@ -93,9 +93,9 @@ class ReadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$user)
     {
-        $read = Read::find($id);
+        $read = Read::where('manga_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($read)) {
              return response()->json(["status"=>"success","data"=>$read],200);
@@ -112,10 +112,10 @@ class ReadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $user)
     {
 
-        $read = Read::find($id);
+        $read = Read::where('manga_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($read)) {
 
@@ -161,9 +161,9 @@ class ReadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,$user)
     {
-        $read = Read::find($id);
+        $read = Read::where('manga_id',$id)->where('user_id',$user)->get()->first();
 
         if(!is_null($read)) {
 
