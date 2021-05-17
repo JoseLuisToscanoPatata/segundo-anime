@@ -1,19 +1,10 @@
 <template>
   <div>
-    <div
-      :class="{ 'bg-indigo-500': style == 'success', 'bg-red-700': style == 'danger' }"
-      v-if="show && message && top"
-    >
-      <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
+    <div :class="'bg-' + color + '-500'" v-if="show" class="rounded-lg mb-5">
+      <div class="max-w-full mx-auto py-2 px-3 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between flex-wrap">
           <div class="w-0 flex-1 flex items-center min-w-0">
-            <span
-              class="flex p-2 rounded-lg"
-              :class="{
-                'bg-indigo-600': style == 'success',
-                'bg-red-600': style == 'danger',
-              }"
-            >
+            <span class="flex p-2 rounded-lg" :class="'bg-' + color + '-600'">
               <svg
                 class="h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +47,7 @@
             <button
               type="button"
               class="-mr-1 flex p-2 rounded-md focus:outline-none sm:-mr-2 transition ease-in-out duration-150"
-              :class="{
-                'hover:bg-indigo-600 focus:bg-indigo-600': style == 'success',
-                'hover:bg-red-600 focus:bg-red-600': style == 'danger',
-              }"
+              :class="'hover:bg-' + color + '-600 focus:bg-' + color + '-600'"
               aria-label="Dismiss"
               @click.prevent="show = false"
             >
@@ -87,24 +75,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      show: true,
-    };
-  },
-
-  computed: {
-    style() {
-      return this.$page.props.jetstream.flash?.bannerStyle || "success";
-    },
-
-    message() {
-      return this.$page.props.jetstream.flash?.banner || "";
-    },
-
-    top() {
-      return this.$page.props.jetstream.flash?.posicion == "top";
-    },
+  props: {
+    message: "",
+    style: "",
+    color: "",
+    show: false,
   },
 };
 </script>

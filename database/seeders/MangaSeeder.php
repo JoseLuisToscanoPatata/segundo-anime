@@ -36,7 +36,7 @@ class MangaSeeder extends Seeder
                 }
 
                 DB::table('mangas')->insert([
-                    'title' => $manga['attributes']['slug'],
+                   'title' => str_replace('-',' ',$manga['attributes']['slug']),
                     'rating' => 0,
                     'synopsis' =>$manga['attributes']['synopsis'],
                     'chapters' => $manga['attributes']['chapterCount']? $manga['attributes']['chapterCount']: 0,

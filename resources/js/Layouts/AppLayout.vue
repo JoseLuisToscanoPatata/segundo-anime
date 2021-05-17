@@ -2,7 +2,10 @@
   <div>
     <jet-banner />
 
-    <div class="min-h-screen bg-gray-100" :style="image">
+    <div
+      class="min-h-screen bg-gray-100"
+      style="background-image: url('/img/kirby5.jpg')"
+    >
       <nav class="border-b-2 p border-gray-600" style="background-color: #33312f">
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +56,7 @@
                     <template #trigger>
                       <button class="focus:outline-none">
                         <img
-                          class="h-11 w-11 object-cover m-1"
+                          class="h-11 w-11 object-cover m-1 transform hover:scale-110"
                           src="/img/list2.svg"
                           alt="Lista"
                         />
@@ -113,7 +116,7 @@
                     <template #trigger>
                       <button class="focus:outline-none">
                         <img
-                          class="h-11 w-11 object-cover m-1"
+                          class="h-11 w-11 object-cover m-1 transform hover:scale-110"
                           src="/img/config.svg"
                           alt="Lista"
                         />
@@ -303,7 +306,7 @@
               <div class="flex-shrink-0 mr-3">
                 <img
                   class="h-10 w-10 object-cover m-1"
-                  src="/img/list2.svg"
+                  src="/img/list2.svg transform hover:scale-110"
                   alt="lista"
                 />
               </div>
@@ -347,7 +350,7 @@
             <div class="flex items-center px-4">
               <div class="flex-shrink-0 mr-3">
                 <img
-                  class="h-10 w-10 object-cover m-1"
+                  class="h-10 w-10 object-cover m-1 transform hover:scale-110"
                   src="/img/config.svg"
                   alt="lista"
                 />
@@ -516,9 +519,6 @@ export default {
   data() {
     return {
       showingNavigationDropdown: false,
-      image: {
-        backgroundImage: "url(/img/kirby5.jpg)",
-      },
     };
   },
 

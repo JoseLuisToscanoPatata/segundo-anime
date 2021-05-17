@@ -1,4 +1,5 @@
 <template>
+  <banner-propio />
   <div
     class="flex flex-col justify-start items-start rounded-lg overflow-hidden"
     :class="'bg-' + color.color + '-100'"
@@ -264,11 +265,13 @@
 <script>
 import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
     JetButton,
     JetInput,
+    BannerPropio,
   },
 
   data() {

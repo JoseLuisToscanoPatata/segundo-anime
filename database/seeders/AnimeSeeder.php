@@ -36,7 +36,7 @@ class AnimeSeeder extends Seeder
                 }
 
                 DB::table('animes')->insert([
-                    'title' => $anime['attributes']['slug'],
+                    'title' => str_replace('-',' ',$anime['attributes']['slug']),
                     'rating' => 0,
                     'synopsis' =>$anime['attributes']['synopsis'],
                     'episodes' => $anime['attributes']['episodeCount']? $anime['attributes']['episodeCount']: 0,

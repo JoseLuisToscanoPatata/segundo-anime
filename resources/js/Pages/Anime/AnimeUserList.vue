@@ -69,14 +69,14 @@
 
         <jet-dialog-modal :show="operacion == 'editar'" @close="operacion = ''">
           <template #title>
-            <span class="text-blue-500 font-bold">MANGA LIST FORM </span>
+            <span class="text-purple-500 font-bold">MANGA LIST FORM </span>
           </template>
 
           <template #content>
             <form @submit.prevent="editar">
               <div class="flex flex-col sm:flex-row m-5 justify-evenly">
                 <div class="text-center sm:max-w-sm">
-                  <span class="font-semibold text-lg text-blue-400 text-center">{{
+                  <span class="font-semibold text-lg text-purple-400 text-center">{{
                     datosActual["title"]
                   }}</span>
 
@@ -158,7 +158,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-blue-400 hover:bg-blue-600"
+              class="mt-2 ml-2 text-white bg-purple-400 hover:bg-purple-600"
               type="button"
               @click.prevent="editar"
             >
@@ -601,6 +601,14 @@ export default {
           this.datosInfo["titulo"] = "Operation success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;
+
+          this.$page.props.jetstream.flash = {
+            bannerStyle: "success",
+            banner: res.data.message,
+            posicion: "bottom",
+            color: this.colores.color,
+            show: true,
+          };
         })
         .catch((err) => {
           //FALLOS
