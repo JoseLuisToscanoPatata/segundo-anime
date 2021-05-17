@@ -18,9 +18,9 @@ class CreateAnimesTable extends Migration
             $table->string('title');
             $table->double('rating')->default(0);
             $table->text('synopsis')->nullable();
-            $table->integer('episodes')->nullable()->default(0);
-            $table->integer('episodeLength')->nullable()->default(0);
-            $table->enum('ageRating',['G','PG','R','R18'])->nullable()->default('G');
+            $table->integer('episodes')->default(0);
+            $table->integer('episodeLength')->default(0);
+            $table->enum('ageRating',['G','PG','R','R18'])->nullable();
             $table->enum('subType',['ONA','OVA','TV','movie','music','special'])->nullable();
             $table->string("trailer")->nullable();
             $table->enum('status',['current','finished','tba']);

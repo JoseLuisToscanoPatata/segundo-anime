@@ -43,13 +43,13 @@ class AnimeController extends Controller
                 "title" =>  "required|string|filled",
                 "synopsis" =>  "string|required|filled",
                 "episodes" =>"integer|required|min:0",
-                "episodeLength"=>"integer|nullable|min:1",
-                "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
-                "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
+                "episodeLength"=>"integer|required|min:0",
+                "ageRating"=>["sometimes","nullable",Rule::in(['G','PG','R','R18'])],
+                "subType"=>["sometimes","nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                 "status"=>["required",Rule::in(['current','finished','tba'])],
-                "startDate" =>  "nullable|string",
-                "endDate" =>  "nullable|string|gte:startDate",
-                "trailer" => "nullable|string",
+                "startDate" =>  "sometimes|nullable|string",
+                "endDate" =>  "sometimes|nullable|string|after_or_equal:startDate",
+               "trailer" => ["sometimes","nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
                 "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:1000'],
             ]);
 
@@ -65,34 +65,39 @@ class AnimeController extends Controller
                 $anime->synopsis = $request->synopsis;
             }
 
-            if($request->episodes) {
-                $anime->episodes = $request->episodes;
-            }
+            $anime->episodes = $request->episodes;                
 
-            if($request->episodeLength) {
-                $anime->episodeLength = $request->episodeLength;
-            }
+            $anime->episodeLength = $request->episodeLength;
 
             if($request->ageRating) {
                 $anime->ageRating = $request->ageRating;
+            } else {
+                $anime->ageRating = null;
             }
 
             if($request->subType) {
                 $anime->subType = $request->subType;
-            }
-
-            
-            if($request->trailer) {
-                $anime->trailer = $request->trailer;
+            } else {
+                $anime->subType = null;
             }
 
             if($request->startDate) {
                 $anime->startDate = $request->startDate;
+            } else {
+                $anime->startDate = null;
             }
 
             if($request->endDate) {
                 $anime->endDate = $request->endDate;
+            } else {
+                $anime->endDate = null;
             }
+            
+            if($request->trailer) {
+                 $anime->trailer = $request->trailer;
+            } else {
+                $anime->trailer = null;
+             }
      
             $anime->status = $request->status;
             $anime->ratingCount = 0;
@@ -161,13 +166,13 @@ class AnimeController extends Controller
                     "title" =>  "required|string|filled",
                     "synopsis" =>  "required|string|filled",
                     "episodes" =>"integer|required|min:0",
-                    "episodeLength"=>"integer|nullable|min:1",
-                    "ageRating"=>["nullable",Rule::in(['G','PG','R','R18'])],
-                    "subType"=>["nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
+                    "episodeLength"=>"integer|required|min:0",
+                    "ageRating"=>["sometimes","nullable",Rule::in(['G','PG','R','R18'])],
+                    "subType"=>["sometimes","nullable",Rule::in(['ONA','OVA','TV','movie','music','special'])],
                     "status"=>["required",Rule::in(['current','finished','tba'])],
-                    "startDate" =>  "nullable|string",
-                     "endDate" =>  "nullable|string|gte:startDate",
-                     "trailer" => ["nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
+                    "startDate" =>  "sometimes|nullable|string",
+                     "endDate" =>  "sometimes|nullable|string|after_or_equal:startDate",
+                     "trailer" => ["sometimes","nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
                     "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
                 ]);
 
@@ -181,32 +186,38 @@ class AnimeController extends Controller
                     $anime->synopsis = $request->synopsis;
                 }
 
-                if($request->episodes) {
-                    $anime->episodes = $request->episodes;
-                }
+                $anime->episodes = $request->episodes;
 
-                if($request->episodeLength) {
-                    $anime->episodeLength = $request->episodeLength;
-                }
+                $anime->episodeLength = $request->episodeLength;
 
                 if($request->ageRating) {
                     $anime->ageRating = $request->ageRating;
+                } else {
+                    $anime->ageRating = null;
                 }
 
                 if($request->subType) {
                     $anime->subType = $request->subType;
+                } else {
+                    $anime->subType = null;
                 }
-
+                
                 if($request->trailer) {
                     $anime->trailer = $request->trailer;
+                } else {
+                    $anime->trailer = null;
                 }
 
                 if($request->startDate) {
                     $anime->startDate = $request->startDate;
+                } else {
+                    $anime->startDate = null;
                 }
 
                 if($request->endDate) {
                     $anime->endDate = $request->endDate;
+                } else {
+                    $anime->endDate = null;
                 }
 
                 $anime->status = $request->status;

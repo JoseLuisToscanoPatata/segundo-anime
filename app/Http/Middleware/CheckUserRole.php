@@ -22,7 +22,6 @@ class checkUserRole
             return redirect()->route('dashboard')->with('flash', [
                 'bannerStyle' => 'danger',
                 'banner' => "You cant access that page !!",
-                'posicion' => "top",
             ]);
         }
 

@@ -7,38 +7,13 @@
       <template v-if="!cargando">
         <!-- MODAL DE MENSAJES-->
 
-        <jet-dialog-modal
-          :show="datosInfo['mostrar']"
+        <banner-propio
+          v-if="datosInfo['mostrar']"
           @close="datosInfo['mostrar'] = false"
-        >
-          <template #title>
-            <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["titulo"]
-            }}</span></template
-          >
-
-          <template #content>
-            <span :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["mensaje"]
-            }}</span>
-          </template>
-
-          <template #footer>
-            <jet-button
-              class="ml-2 text-white"
-              :class="
-                'bg-' +
-                datosInfo['color'] +
-                '-300 hover:bg-' +
-                datosInfo['color'] +
-                '-600'
-              "
-              @click="datosInfo['mostrar'] = false"
-            >
-              Close
-            </jet-button>
-          </template>
-        </jet-dialog-modal>
+          :color="datosInfo['color']"
+          :style="datosInfo['style']"
+          :message="datosInfo['mensaje']"
+        />
 
         <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
           <template #title> Delete Manga </template>
@@ -119,7 +94,7 @@
                 </div>
 
                 <div class="col-span-6">
-                  <jet-label for="synopsis" value="Synopsis" />
+                  <jet-label for="synopsis" value="Synopsis (*)" />
                   <textarea
                     id="synopsis"
                     type="text"
@@ -127,12 +102,13 @@
                     style="resize: none"
                     v-model="datosActual['synopsis']"
                     rows="4"
+                    placeholder="If unkown: type 'No synopsis yet'"
                   />
                   <jet-input-error :message="errores['synopsis']" class="mt-2" />
                 </div>
 
                 <div class="col-span-6">
-                  <jet-label for="title" value="Title" />
+                  <jet-label for="title" value="Title (*)" />
                   <jet-input
                     id="title"
                     type="text"
@@ -143,13 +119,14 @@
                 </div>
 
                 <div class="col-span-6">
-                  <jet-label for="chapters" value="Chapters" />
+                  <jet-label for="chapters" value="Chapters (*)" />
                   <jet-input
                     id="chapters"
                     type="number"
                     min="0"
                     class="mt-1 block w-full"
                     v-model="datosActual['chapters']"
+                    placeholder="if unkown: 0"
                   />
                   <jet-input-error :message="errores['chapters']" class="mt-2" />
                 </div>
@@ -161,7 +138,7 @@
                     v-model="datosActual['ageRating']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="">Please select one</option>
+                    <option disabled value="null">Not needed</option>
                     <option>G</option>
                     <option>PG</option>
                     <option>R</option>
@@ -177,7 +154,7 @@
                     v-model="datosActual['status']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="">Please select one</option>
+                    <option disabled value="null">Please select one</option>
                     <option>current</option>
                     <option>finished</option>
                     <option>tba</option>
@@ -192,7 +169,7 @@
                     v-model="datosActual['subType']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="">Please select one</option>
+                    <option disabled value="null">Not needed</option>
                     <option>manga</option>
                     <option>manhua</option>
                     <option>manhwa</option>
@@ -286,6 +263,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetInput from "@/Jetstream/Input";
 import Loading from "@/Pages/Componentes/Loading";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -300,6 +278,7 @@ export default {
     JetInput,
     JetInputError,
     Loading,
+    BannerPropio,
   },
 
   props: ["clave", "usuario"],
@@ -326,8 +305,8 @@ export default {
         {
           nombre: "ageRating",
           titulo: "age Rating",
-          opciones: ["G", "PG", "R", "R18"],
-          titulos: ["G", "PG", "R", "R-18"],
+          opciones: ["G", "PG", "R", "R18", null],
+          titulos: ["G", "PG", "R", "R-18", "N/A"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -335,7 +314,7 @@ export default {
           nombre: "status",
           titulo: "Status",
           opciones: ["current", "finished", "tba"],
-          titulos: ["Current", "Finished", "TBA"],
+          titulos: ["Current", "Finished", "To be Aired"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -462,9 +441,9 @@ export default {
       cargando: true,
       datosInfo: {
         mostrar: false,
-        titulo: "",
+        style: "",
         mensaje: "",
-        color: "black",
+        color: "",
       },
       idActual: 10,
       operacion: "",
@@ -603,11 +582,37 @@ export default {
 
       datos.append("title", this.datosActual["title"]);
       datos.append("synopsis", this.datosActual["synopsis"]);
+
+      if (this.datosActual["chapters"] == "") {
+        alert("paco");
+        this.datosActual["chapters"] = null;
+      }
+
       datos.append("chapters", this.datosActual["chapters"]);
-      datos.append("ageRating", this.datosActual["ageRating"]);
-      datos.append("subType", this.datosActual["subType"]);
-      datos.append("startDate", this.datosActual["startDate"]);
-      datos.append("endDate", this.datosActual["endDate"]);
+
+      if (this.datosActual["subType"] != null) {
+        datos.append("subType", this.datosActual["subType"]);
+      }
+
+      if (this.datosActual["ageRating"] != null) {
+        datos.append("ageRating", this.datosActual["ageRating"]);
+      }
+
+      if (this.datosActual["startDate"] == "") {
+        this.datosActual["startDate"] = null;
+      }
+
+      if (this.datosActual["startDate"] != null) {
+        datos.append("startDate", this.datosActual["startDate"]);
+      }
+
+      if (this.datosActual["endDate"] == "") {
+        this.datosActual["endDate"] = null;
+      }
+
+      if (this.datosActual["endDate"] != null) {
+        datos.append("endDate", this.datosActual["endDate"]);
+      }
       if (this.photoPreview) {
         this.datosActual["cover"] = this.$refs.photo.files[0];
         datos.append("cover", this.$refs.photo.files[0]);
@@ -626,8 +631,8 @@ export default {
           .then((res) => {
             //EXITO
             this.operacion = "";
-            this.datosInfo["color"] = "green";
-            this.datosInfo["titulo"] = "Operation success";
+            this.datosInfo["color"] = this.colores.color;
+            this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
 
@@ -639,7 +644,7 @@ export default {
               //FALLO EXTERNO
               this.operacion = "";
               this.datosInfo["color"] = "red";
-              this.datosInfo["titulo"] = "There was an error :(";
+              this.datosInfo["style"] = "danger";
               this.datosInfo["mensaje"] = err.response.data.message;
               this.datosInfo["mostrar"] = true;
               this.photoPreview = null;
@@ -686,8 +691,8 @@ export default {
             }
 
             this.operacion = "";
-            this.datosInfo["color"] = "green";
-            this.datosInfo["titulo"] = "Operation success";
+            this.datosInfo["color"] = this.colores.color;
+            this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
           })
@@ -697,7 +702,7 @@ export default {
               //FALLO EXTERNO
               this.operacion = "";
               this.datosInfo["color"] = "red";
-              this.datosInfo["titulo"] = "There was an error :(";
+              this.datosInfo["style"] = "success";
               this.datosInfo["mensaje"] = err.response.data.message;
               this.datosInfo["mostrar"] = true;
               this.photoPreview = null;
@@ -736,17 +741,17 @@ export default {
             }
           }
 
-          this.datosInfo["color"] = "green";
-          this.datosInfo["titulo"] = "Operation success :(";
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
+          this.datosInfo["mostrar"] = true;
         })
         .catch((err) => {
           this.datosInfo["color"] = "red";
-          this.datosInfo["titulo"] = "There was an error :(";
+          this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = err.data.message;
+          this.datosInfo["mostrar"] = true;
         });
-
-      this.datosInfo["mostrar"] = true;
     },
   },
 };

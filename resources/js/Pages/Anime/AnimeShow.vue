@@ -7,6 +7,14 @@
     </template>
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+      <banner-propio
+        v-if="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
+
       <div
         class="flex flex-col p-6 bg-red-200 rounded-lg justify-start items-start"
         v-if="cargado"
@@ -287,6 +295,7 @@ import AppLayout from "@/Layouts/AppLayout";
 import JetButton from "@/Jetstream/Button";
 import JetModal from "@/Jetstream/Modal";
 import JetInput from "@/Jetstream/Input";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -294,6 +303,7 @@ export default {
     JetButton,
     JetModal,
     JetInput,
+    BannerPropio,
   },
 
   props: ["clave", "anime", "usuario"],
@@ -325,6 +335,13 @@ export default {
 
       cargando: { datos: 0, vistos: 0, posiciones: 0 },
       mostrarTrailer: false,
+
+      datosInfo: {
+        mostrar: false,
+        style: "",
+        mensaje: "",
+        color: "",
+      },
 
       estado: {
         favourite: 0,
@@ -513,22 +530,29 @@ export default {
             },
           })
           .then((res) => {
-            this.visto = true;
+            this.datosInfo["color"] = this.colores.color;
+            this.datosInfo["style"] = "success";
+            this.datosInfo["mensaje"] = res.data.message;
+            this.datosInfo["mostrar"] = true;
+          })
+          .catch((err) => {
+            this.datosInfo["color"] = "red";
+            this.datosInfo["style"] = "danger";
+            this.datosInfo["mensaje"] = err.data.message;
+            this.datosInfo["mostrar"] = true;
           });
       } else {
         datos.append("_method", "PUT");
 
-        axios
-          .post(
-            route("watches.update", { anime: this.anime, user: this.usuario.id }),
-            datos,
-            {
-              headers: {
-                Authorization: "Bearer " + this.clave,
-              },
-            }
-          )
-          .then((res) => {});
+        axios.post(
+          route("watches.update", { anime: this.anime, user: this.usuario.id }),
+          datos,
+          {
+            headers: {
+              Authorization: "Bearer " + this.clave,
+            },
+          }
+        );
       }
     },
 
@@ -544,6 +568,17 @@ export default {
           this.estado.score = 0;
           this.visto = false;
           this.estado.favourite = 0;
+
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
+          this.datosInfo["mensaje"] = res.data.message;
+          this.datosInfo["mostrar"] = true;
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.data.message;
+          this.datosInfo["mostrar"] = true;
         });
     },
 

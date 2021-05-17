@@ -14,6 +14,7 @@ class CreateReadesTable extends Migration
     public function up()
     {
         Schema::create('reades', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('manga_id');
             $table->enum('readStatus',['Reading','PlanToRead','Completed','Dropped','OnHold']);

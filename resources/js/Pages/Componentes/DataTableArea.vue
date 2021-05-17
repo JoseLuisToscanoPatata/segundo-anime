@@ -1,5 +1,4 @@
 <template>
-  <banner-propio />
   <div
     class="flex flex-col justify-start items-start rounded-lg overflow-hidden"
     :class="'bg-' + color.color + '-100'"
@@ -265,13 +264,11 @@
 <script>
 import JetButton from "@/Jetstream/Button";
 import JetInput from "@/Jetstream/Input";
-import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
     JetButton,
     JetInput,
-    BannerPropio,
   },
 
   data() {
@@ -282,7 +279,6 @@ export default {
       filtrado: "",
       paginacion: 0,
       datosOrdenados: {},
-      cargado: false,
     };
   },
 
@@ -291,7 +287,7 @@ export default {
     columnas: {},
     cantidadPaginas: {},
     botones: {},
-    emisiones: {},
+    emisiones: [],
     imagenes: "",
     botonesExtras: {},
     filtros: {},
@@ -302,7 +298,7 @@ export default {
     listaPropia: "",
   },
 
-  emits: {},
+  emits: [],
 
   created() {
     this.datosOrdenados = this.datos;

@@ -18,8 +18,8 @@ class CreateMangasTable extends Migration
             $table->string('title');
             $table->double('rating')->default(0);
             $table->text('synopsis')->nullable();
-            $table->integer('chapters')->nullable()->default(0);
-             $table->enum('ageRating',['G','PG','R','R18'])->nullable()->default('G');
+            $table->integer('chapters')->default(0);
+             $table->enum('ageRating',['G','PG','R','R18'])->nullable();
             $table->enum('subType',['doujin','manga','manhwa','manhua','novel','oel','oneshot'])->nullable();
             $table->enum('status',['current','finished','tba']);
             $table->integer('ratingCount')->default(0);

@@ -117,7 +117,8 @@
             </abbr>
           </div>
           <div class="h-5 p-2 w-full text-xs flex flex-row items-center justify-evenly">
-            <span class="">{{ dato["subType"] }}</span>
+            <span v-if="dato['subType'] != null" class="">{{ dato["subType"] }}</span>
+            <span v-else class="">?</span>
             <div v-if="tipo == 'anime'">
               <div v-if="dato['episodes'] > 0">
                 <span>{{ dato["episodes"] }} eps</span>

@@ -6,34 +6,13 @@
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <!-- MODAL DE MENSAJES-->
 
-      <jet-dialog-modal
-        :show="datosInfo['mostrar']"
+      <banner-propio
+        v-if="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"
-      >
-        <template #title>
-          <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
-            datosInfo["titulo"]
-          }}</span></template
-        >
-
-        <template #content>
-          <span :class="'text-' + datosInfo['color'] + '-500'">{{
-            datosInfo["mensaje"]
-          }}</span>
-        </template>
-
-        <template #footer>
-          <jet-button
-            class="ml-2 text-white"
-            :class="
-              'bg-' + datosInfo['color'] + '-300 hover:bg-' + datosInfo['color'] + '-600'
-            "
-            @click="datosInfo['mostrar'] = false"
-          >
-            Close
-          </jet-button>
-        </template>
-      </jet-dialog-modal>
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
 
       <jet-dialog-modal :show="añadiendo" @close="añadiendo = false">
         <template #title>
@@ -162,6 +141,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetInput from "@/Jetstream/Input";
 import Loading from "@/Pages/Componentes/Loading";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -175,6 +155,7 @@ export default {
     JetLabel,
     JetInput,
     JetInputError,
+    BannerPropio,
   },
 
   props: ["clave", "usuario"],
@@ -203,8 +184,8 @@ export default {
         {
           nombre: "subType",
           titulo: "Subtype",
-          opciones: ["ONA", "OVA", "TV", "movie", "music", "special"],
-          titulos: ["ONA", "OVA", "TV", "Movie", "Music", "Special"],
+          opciones: ["ONA", "OVA", "TV", "movie", "music", "special", null],
+          titulos: ["ONA", "OVA", "TV", "Movie", "Music", "Special", "N/A"],
           actual: "",
           ancho: "col-span-2",
         },
@@ -225,9 +206,9 @@ export default {
 
       datosInfo: {
         mostrar: false,
-        titulo: "",
+        style: "",
         mensaje: "",
-        color: "black",
+        color: "",
       },
 
       nuevo: {
@@ -430,8 +411,8 @@ export default {
           }
 
           this.añadiendo = false;
-          this.datosInfo["color"] = "green";
-          this.datosInfo["titulo"] = "Operation success";
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;
         })
@@ -441,7 +422,7 @@ export default {
             //FALLO EXTERNO
             this.añadiendo = false;
             this.datosInfo["color"] = "red";
-            this.datosInfo["titulo"] = "There was an error :(";
+            this.datosInfo["titulo"] = "danger";
             this.datosInfo["mensaje"] = err.response.data.message;
             this.datosInfo["mostrar"] = true;
           } else if (err.response.data.validation_errors) {

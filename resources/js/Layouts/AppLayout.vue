@@ -305,8 +305,8 @@
             <div class="flex items-center px-4">
               <div class="flex-shrink-0 mr-3">
                 <img
-                  class="h-10 w-10 object-cover m-1"
-                  src="/img/list2.svg transform hover:scale-110"
+                  class="h-10 w-10 object-cover m-1 transform hover:scale-110"
+                  src="/img/list2.svg"
                   alt="lista"
                 />
               </div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="'bg-' + color + '-500'" v-if="show" class="rounded-lg mb-5">
+    <div :class="'bg-' + color + '-500'" class="rounded-lg mb-5">
       <div class="max-w-full mx-auto py-2 px-3 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between flex-wrap">
           <div class="w-0 flex-1 flex items-center min-w-0">
@@ -49,7 +49,7 @@
               class="-mr-1 flex p-2 rounded-md focus:outline-none sm:-mr-2 transition ease-in-out duration-150"
               :class="'hover:bg-' + color + '-600 focus:bg-' + color + '-600'"
               aria-label="Dismiss"
-              @click.prevent="show = false"
+              @click.prevent="$emit('close')"
             >
               <svg
                 class="h-5 w-5 text-white"
@@ -75,11 +75,19 @@
 
 <script>
 export default {
+  emits: ["close"],
+
   props: {
-    message: "",
-    style: "",
-    color: "",
-    show: false,
+    message: {
+      default: "",
+    },
+    style: {
+      default: "",
+    },
+
+    color: {
+      default: "",
+    },
   },
 };
 </script>

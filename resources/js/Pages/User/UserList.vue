@@ -6,21 +6,13 @@
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
-        <jet-dialog-modal :show="hayError" @close="hayError = false">
-          <template #title> No permissions </template>
-
-          <template #content>
-            You can neither delete nor change role of your own user, you can delete it
-            form your account settings page, and your role can only be changed by another
-            user.
-          </template>
-
-          <template #footer>
-            <jet-danger-button class="ml-2" @click="hayError = false">
-              Close
-            </jet-danger-button>
-          </template>
-        </jet-dialog-modal>
+        <banner-propio
+          v-if="datosInfo['mostrar']"
+          @close="datosInfo['mostrar'] = false"
+          :color="datosInfo['color']"
+          :style="datosInfo['style']"
+          :message="datosInfo['mensaje']"
+        />
 
         <jet-dialog-modal :show="borrandoUsu" @close="borrandoUsu = false">
           <template #title> Delete User </template>
@@ -82,6 +74,7 @@ import JetDangerButton from "@/Jetstream/DangerButton";
 import JetCheckbox from "@/Jetstream/Checkbox";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
 import Loading from "@/Pages/Componentes/Loading";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -92,6 +85,7 @@ export default {
     JetCheckbox,
     JetSecondaryButton,
     Loading,
+    BannerPropio,
   },
 
   props: ["clave", "usuario"],
@@ -213,7 +207,12 @@ export default {
         },
       ],
       cargando: true,
-      hayError: false,
+      datosInfo: {
+        mostrar: false,
+        style: "",
+        mensaje: "",
+        color: "",
+      },
       idActual: 10,
       borrandoUsu: false,
       saltarModal: false,
@@ -258,6 +257,17 @@ export default {
                 }
               }
             }
+
+            this.datosInfo["color"] = this.colores.color;
+            this.datosInfo["style"] = "success";
+            this.datosInfo["mensaje"] = res.data.message;
+            this.datosInfo["mostrar"] = true;
+          })
+          .catch((err) => {
+            this.datosInfo["color"] = "red";
+            this.datosInfo["style"] = "danger";
+            this.datosInfo["mensaje"] = err.response.data.message;
+            this.datosInfo["mostrar"] = true;
           });
       }
     },
@@ -295,9 +305,16 @@ export default {
               this.datos.splice(actual, 1);
             }
           }
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
+          this.datosInfo["mensaje"] = res.data.message;
+          this.datosInfo["mostrar"] = true;
         })
         .catch((err) => {
-          alert("An error ocurred: " + err);
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
         });
     },
   },

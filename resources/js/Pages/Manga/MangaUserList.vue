@@ -5,40 +5,13 @@
     </template>
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <template v-if="!cargando">
-        <!-- MODAL DE MENSAJES-->
-
-        <jet-dialog-modal
-          :show="datosInfo['mostrar']"
+        <banner-propio
+          v-if="datosInfo['mostrar']"
           @close="datosInfo['mostrar'] = false"
-        >
-          <template #title>
-            <span class="font-bold" :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["titulo"]
-            }}</span></template
-          >
-
-          <template #content>
-            <span :class="'text-' + datosInfo['color'] + '-500'">{{
-              datosInfo["mensaje"]
-            }}</span>
-          </template>
-
-          <template #footer>
-            <jet-button
-              class="ml-2 text-white"
-              :class="
-                'bg-' +
-                datosInfo['color'] +
-                '-300 hover:bg-' +
-                datosInfo['color'] +
-                '-600'
-              "
-              @click="datosInfo['mostrar'] = false"
-            >
-              Close
-            </jet-button>
-          </template>
-        </jet-dialog-modal>
+          :color="datosInfo['color']"
+          :style="datosInfo['style']"
+          :message="datosInfo['mensaje']"
+        />
 
         <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
           <template #title> Delete From your list </template>
@@ -208,6 +181,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetInput from "@/Jetstream/Input";
 import Loading from "@/Pages/Componentes/Loading";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -222,6 +196,7 @@ export default {
     JetInput,
     JetInputError,
     Loading,
+    BannerPropio,
   },
 
   props: ["clave", "usuario", "userList"],
@@ -398,9 +373,9 @@ export default {
       cargando: true,
       datosInfo: {
         mostrar: false,
-        titulo: "",
+        style: "",
         mensaje: "",
-        color: "black",
+        color: "",
       },
       idActual: 1,
       saltarModal: false,
@@ -550,7 +525,7 @@ export default {
             //FALLO EXTERNO
             this.operacion = "";
             this.datosInfo["color"] = "red";
-            this.datosInfo["titulo"] = "There was an error :(";
+            this.datosInfo["style"] = "danger";
             this.datosInfo["mensaje"] = err.response.data.message;
             this.datosInfo["mostrar"] = true;
           } else if (err.response.data.validation_errors) {
@@ -596,8 +571,8 @@ export default {
           }
 
           this.operacion = "";
-          this.datosInfo["color"] = "green";
-          this.datosInfo["titulo"] = "Operation success";
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;
         })
@@ -607,7 +582,7 @@ export default {
             //FALLO EXTERNO
             this.operacion = "";
             this.datosInfo["color"] = "red";
-            this.datosInfo["titulo"] = "There was an error :(";
+            this.datosInfo["style"] = "danger";
             this.datosInfo["mensaje"] = err.response.data.message;
             this.datosInfo["mostrar"] = true;
           } else if (err.response.data.validation_errors) {
@@ -637,17 +612,17 @@ export default {
             }
           }
 
-          this.datosInfo["color"] = "green";
-          this.datosInfo["titulo"] = "Operation success :(";
+          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
+          this.datosInfo["mostrar"] = true;
         })
         .catch((err) => {
           this.datosInfo["color"] = "red";
-          this.datosInfo["titulo"] = "There was an error :(";
-          this.datosInfo["mensaje"] = err.data.message;
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
         });
-
-      this.datosInfo["mostrar"] = true;
     },
   },
 };
