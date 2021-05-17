@@ -749,7 +749,7 @@ export default {
         .catch((err) => {
           this.datosInfo["color"] = "red";
           this.datosInfo["style"] = "success";
-          this.datosInfo["mensaje"] = err.data.message;
+          this.datosInfo["mensaje"] = err.response.data.message;
           this.datosInfo["mostrar"] = true;
         });
     },

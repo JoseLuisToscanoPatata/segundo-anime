@@ -17833,7 +17833,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this4.datosInfo["color"] = "red";
         _this4.datosInfo["style"] = "danger";
-        _this4.datosInfo["mensaje"] = err.data.message;
+        _this4.datosInfo["mensaje"] = err.response.data.message;
         _this4.datosInfo["mostrar"] = true;
       });
     }
@@ -17913,8 +17913,8 @@ __webpack_require__.r(__webpack_exports__);
       season: "",
       year: "",
       colores: {
-        color: "red",
-        hexa: " rgb(254, 202, 202)"
+        color: "rose",
+        hexa: " rgb(254, 205, 211)"
       },
       filtros: [{
         nombre: "subType",
@@ -18390,14 +18390,14 @@ __webpack_require__.r(__webpack_exports__);
             Authorization: "Bearer " + this.clave
           }
         }).then(function (res) {
-          _this4.datosInfo["color"] = _this4.colores.color;
+          _this4.datosInfo["color"] = "rose";
           _this4.datosInfo["style"] = "success";
           _this4.datosInfo["mensaje"] = res.data.message;
           _this4.datosInfo["mostrar"] = true;
         })["catch"](function (err) {
           _this4.datosInfo["color"] = "red";
           _this4.datosInfo["style"] = "danger";
-          _this4.datosInfo["mensaje"] = err.data.message;
+          _this4.datosInfo["mensaje"] = err.response.data.message;
           _this4.datosInfo["mostrar"] = true;
         });
       } else {
@@ -18427,14 +18427,14 @@ __webpack_require__.r(__webpack_exports__);
         _this5.estado.score = 0;
         _this5.visto = false;
         _this5.estado.favourite = 0;
-        _this5.datosInfo["color"] = _this5.colores.color;
+        _this5.datosInfo["color"] = "rose";
         _this5.datosInfo["style"] = "success";
         _this5.datosInfo["mensaje"] = res.data.message;
         _this5.datosInfo["mostrar"] = true;
       })["catch"](function (err) {
         _this5.datosInfo["color"] = "red";
         _this5.datosInfo["style"] = "danger";
-        _this5.datosInfo["mensaje"] = err.data.message;
+        _this5.datosInfo["mensaje"] = err.response.data.message;
         _this5.datosInfo["mostrar"] = true;
       });
     },
@@ -20288,7 +20288,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         _this4.datosInfo["color"] = "red";
         _this4.datosInfo["style"] = "success";
-        _this4.datosInfo["mensaje"] = err.data.message;
+        _this4.datosInfo["mensaje"] = err.response.data.message;
         _this4.datosInfo["mostrar"] = true;
       });
     }
@@ -20795,14 +20795,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (res) {
           _this4.visto = true;
-          _this4.datosInfo["color"] = _this4.colores.color;
+          _this4.datosInfo["color"] = "pink";
           _this4.datosInfo["style"] = "success";
           _this4.datosInfo["mensaje"] = res.data.message;
           _this4.datosInfo["mostrar"] = true;
         })["catch"](function (err) {
           _this4.datosInfo["color"] = "red";
           _this4.datosInfo["style"] = "danger";
-          _this4.datosInfo["mensaje"] = err.data.message;
+          _this4.datosInfo["mensaje"] = err.response.data.message;
           _this4.datosInfo["mostrar"] = true;
         });
       } else {
@@ -20832,14 +20832,9 @@ __webpack_require__.r(__webpack_exports__);
         _this5.estado.score = 0;
         _this5.visto = false;
         _this5.estado.favourite = 0;
-        _this5.datosInfo["color"] = _this5.colores.color;
+        _this5.datosInfo["color"] = "pink";
         _this5.datosInfo["style"] = "success";
         _this5.datosInfo["mensaje"] = res.data.message;
-        _this5.datosInfo["mostrar"] = true;
-      })["catch"](function (err) {
-        _this5.datosInfo["color"] = "red";
-        _this5.datosInfo["style"] = "danger";
-        _this5.datosInfo["mensaje"] = err.data.message;
         _this5.datosInfo["mostrar"] = true;
       });
     },
@@ -22060,16 +22055,12 @@ __webpack_require__.r(__webpack_exports__);
       window.location.href = route("UserShow", $id);
     },
     pulsadoBorrar: function pulsadoBorrar(id) {
-      if (id == this.usuario.id) {
-        this.hayError = true;
+      if (this.saltarModal) {
+        this.idActual = id;
+        this.borrarUsuario(this.idActual);
       } else {
-        if (this.saltarModal) {
-          this.idActual = id;
-          this.borrarUsuario(this.idActual);
-        } else {
-          this.idActual = id;
-          this.borrandoUsu = true;
-        }
+        this.idActual = id;
+        this.borrandoUsu = true;
       }
     },
     borrarUsuario: function borrarUsuario(id) {
@@ -23844,8 +23835,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Navigation Links "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_nav_link, {
     href: _ctx.route('AnimeList'),
     active: _ctx.route().current('AnimeList'),
-    "class": ["text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800", {
-      'border-red-700': _ctx.route().current('AnimeList')
+    "class": ["text-rose-500 hover:text-rose-700 focus:text-rose-800 hover:border-rose-700 focus:border-rose-800", {
+      'border-rose-700': _ctx.route().current('AnimeList')
     }]
   }, {
     "default": _withId(function () {
@@ -24077,8 +24068,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_responsive_nav_link, {
     href: _ctx.route('AnimeList'),
     active: _ctx.route().current('AnimeList'),
-    "class": ["text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800", {
-      'border-red-700': _ctx.route().current('AnimeList')
+    "class": ["text-rose-500 hover:text-rose-700 focus:text-rose-800 hover:border-rose-700 focus:border-rose-800", {
+      'border-rose-700': _ctx.route().current('AnimeList')
     }]
   }, {
     "default": _withId(function () {
@@ -25328,7 +25319,7 @@ var _hoisted_2 = {
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-red-500 font-bold"
+  "class": "text-rose-500 font-bold"
 }, "ANIME ADD FORM ", -1
 /* HOISTED */
 );
@@ -25340,7 +25331,7 @@ var _hoisted_5 = {
   "class": "text-center sm:max-w-sm"
 };
 var _hoisted_6 = {
-  "class": "font-semibold text-lg text-red-400 text-center"
+  "class": "font-semibold text-lg text-rose-400 text-center"
 };
 var _hoisted_7 = {
   "class": "flex flex-col"
@@ -25411,7 +25402,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
-    color: "#EF4444"
+    color: "#F43F5E"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_1];
@@ -25520,7 +25511,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             /* STABLE */
 
           }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
-            "class": "mt-2 ml-2 text-white bg-red-400 hover:bg-red-600",
+            "class": "mt-2 ml-2 text-white bg-rose-400 hover:bg-rose-600",
             type: "button",
             onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.crear, ["prevent"])
           }, {
@@ -25553,7 +25544,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["datos", "cantidadPaginas", "filtros", "color", "onNuevo", "seasonActual", "yearActual"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 2,
-        color: "red"
+        color: "rose"
       }))])];
     }),
     _: 1
@@ -25585,7 +25576,7 @@ var _hoisted_2 = {
 };
 var _hoisted_3 = {
   key: 1,
-  "class": "flex flex-col p-6 bg-red-200 rounded-lg justify-start items-start"
+  "class": "flex flex-col p-6 bg-rose-200 rounded-lg justify-start items-start"
 };
 var _hoisted_4 = {
   "class": "flex flex-col xs2:flex-row w-full"
@@ -25679,7 +25670,7 @@ var _hoisted_37 = {
 };
 
 var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "bg-red-400 text-white font-semibold rounded-sm px-2"
+  "class": "bg-rose-400 text-white font-semibold rounded-sm px-2"
 }, " SCORE ", -1
 /* HOISTED */
 );
@@ -25734,7 +25725,7 @@ var _hoisted_50 = {
 };
 
 var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "font-bold text-lg mb-2 w-full text-center text-red-500"
+  "class": "font-bold text-lg mb-2 w-full text-center text-rose-500"
 }, "INFORMATION", -1
 /* HOISTED */
 );
@@ -25750,7 +25741,7 @@ var _hoisted_54 = {
 };
 
 var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Type:", -1
 /* HOISTED */
 );
@@ -25760,7 +25751,7 @@ var _hoisted_56 = {
 };
 
 var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Status:", -1
 /* HOISTED */
 );
@@ -25770,7 +25761,7 @@ var _hoisted_58 = {
 };
 
 var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Start Date:", -1
 /* HOISTED */
 );
@@ -25780,7 +25771,7 @@ var _hoisted_60 = {
 };
 
 var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "End Date:", -1
 /* HOISTED */
 );
@@ -25793,8 +25784,8 @@ var _hoisted_63 = {
 };
 
 var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
-}, "Premiered:", -1
+  "class": "text-base text-rose-400"
+}, "Premierose:", -1
 /* HOISTED */
 );
 
@@ -25803,7 +25794,7 @@ var _hoisted_65 = {
 };
 
 var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Episodes:", -1
 /* HOISTED */
 );
@@ -25814,7 +25805,7 @@ var _hoisted_67 = {
 };
 
 var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Duration:", -1
 /* HOISTED */
 );
@@ -25825,7 +25816,7 @@ var _hoisted_69 = {
 };
 
 var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Duration:", -1
 /* HOISTED */
 );
@@ -25835,7 +25826,7 @@ var _hoisted_71 = {
 };
 
 var _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
-  "class": "text-base text-red-400"
+  "class": "text-base text-rose-400"
 }, "Rating:", -1
 /* HOISTED */
 );
@@ -25845,7 +25836,7 @@ var _hoisted_73 = {
 };
 
 var _hoisted_74 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-xl font-bold text-red-500 mb-5 w-full text-center"
+  "class": "text-xl font-bold text-rose-500 mb-5 w-full text-center"
 }, "SYNOPSIS", -1
 /* HOISTED */
 );
@@ -25858,7 +25849,7 @@ var _hoisted_76 = {
 };
 
 var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-  "class": "text-xl font-bold text-red-500 mb-5 w-full text-center"
+  "class": "text-xl font-bold text-rose-500 mb-5 w-full text-center"
 }, "SYNOPSIS", -1
 /* HOISTED */
 );
@@ -25878,7 +25869,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
-    color: "#EF4444"
+    color: "#F43F5E"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.actual.title), 1
@@ -25934,7 +25925,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_6)), $data.actual.trailer != 'undefined' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
         key: 2,
-        "class": "text-white bg-red-500 hover:bg-red-600 text-white",
+        "class": "text-white bg-rose-500 hover:bg-rose-600 text-white",
         onClick: $options.abrirTrailer
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -26057,7 +26048,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 2,
-        color: "red"
+        color: "rose"
       }))])];
     }),
     _: 1

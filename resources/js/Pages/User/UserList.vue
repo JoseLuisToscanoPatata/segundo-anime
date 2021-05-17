@@ -277,16 +277,12 @@ export default {
     },
 
     pulsadoBorrar(id) {
-      if (id == this.usuario.id) {
-        this.hayError = true;
+      if (this.saltarModal) {
+        this.idActual = id;
+        this.borrarUsuario(this.idActual);
       } else {
-        if (this.saltarModal) {
-          this.idActual = id;
-          this.borrarUsuario(this.idActual);
-        } else {
-          this.idActual = id;
-          this.borrandoUsu = true;
-        }
+        this.idActual = id;
+        this.borrandoUsu = true;
       }
     },
 

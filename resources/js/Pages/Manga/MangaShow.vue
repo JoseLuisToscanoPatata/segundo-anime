@@ -474,7 +474,7 @@ export default {
           })
           .then((res) => {
             this.visto = true;
-            this.datosInfo["color"] = this.colores.color;
+            this.datosInfo["color"] = "pink";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
@@ -482,7 +482,7 @@ export default {
           .catch((err) => {
             this.datosInfo["color"] = "red";
             this.datosInfo["style"] = "danger";
-            this.datosInfo["mensaje"] = err.data.message;
+            this.datosInfo["mensaje"] = err.response.data.message;
             this.datosInfo["mostrar"] = true;
           });
       } else {
@@ -512,15 +512,9 @@ export default {
           this.estado.score = 0;
           this.visto = false;
           this.estado.favourite = 0;
-          this.datosInfo["color"] = this.colores.color;
+          this.datosInfo["color"] = "pink";
           this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
-          this.datosInfo["mostrar"] = true;
-        })
-        .catch((err) => {
-          this.datosInfo["color"] = "red";
-          this.datosInfo["style"] = "danger";
-          this.datosInfo["mensaje"] = err.data.message;
           this.datosInfo["mostrar"] = true;
         });
     },

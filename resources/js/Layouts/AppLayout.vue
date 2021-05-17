@@ -24,9 +24,9 @@
                 <jet-nav-link
                   :href="route('AnimeList')"
                   :active="route().current('AnimeList')"
-                  class="text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800"
+                  class="text-rose-500 hover:text-rose-700 focus:text-rose-800 hover:border-rose-700 focus:border-rose-800"
                   :class="{
-                    'border-red-700': route().current('AnimeList'),
+                    'border-rose-700': route().current('AnimeList'),
                   }"
                 >
                   ANIME
@@ -278,9 +278,9 @@
             <jet-responsive-nav-link
               :href="route('AnimeList')"
               :active="route().current('AnimeList')"
-              class="text-red-500 hover:text-red-700 focus:text-red-800 hover:border-red-700 focus:border-red-800"
+              class="text-rose-500 hover:text-rose-700 focus:text-rose-800 hover:border-rose-700 focus:border-rose-800"
               :class="{
-                'border-red-700': route().current('AnimeList'),
+                'border-rose-700': route().current('AnimeList'),
               }"
             >
               ANIME
