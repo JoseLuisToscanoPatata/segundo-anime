@@ -6,7 +6,19 @@
       </h2>
     </template>
 
-    <div class="max-w-7xl w-full mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12"></div>
+    <div class="max-w-7xl w-full mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+      <banner-propio
+        v-if="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
+
+      <template v-if="!cargando"> </template>
+
+      <loading v-else color="gray" />
+    </div>
   </app-layout>
 </template>
 
@@ -17,6 +29,8 @@ import JetDangerButton from "@/Jetstream/DangerButton";
 import JetDialogModal from "@/Jetstream/DialogModal";
 import JetInput from "@/Jetstream/Input";
 import JetInputError from "@/Jetstream/InputError";
+import Loading from "../Componentes/Loading.vue";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
@@ -26,6 +40,8 @@ export default {
     JetInputError,
     JetButton,
     JetDangerButton,
+    Loading,
+    BannerPropio,
   },
 
   props: ["clave", "perfil", "usuario"],
@@ -87,28 +103,122 @@ export default {
 
       cargando: true,
       mensajeVacio: false,
+      obtenido: false,
 
       datosInfo: {
         mostrar: false,
-        titulo: "",
+        style: "",
         mensaje: "",
-        color: "black",
+        color: "",
       },
     };
   },
 
   created() {
     this.obtenerUsuario();
-    this.obtenerAnimes();
-    this.obtenerMangas();
-    this.obtenerAmigos();
   },
 
   methods: {
-    obtenerUsuario() {},
-    obtenerAnimes() {},
-    obtenerMangas() {},
-    obtenerAmigos() {},
+    obtenerUsuario() {
+      axios
+        .get(route("users.show", { user: this.perfil }), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          this.perfilUsu.name = res.data.data.name;
+          this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
+          this.obtenido = true;
+
+          this.obtenerAnimes();
+          this.obtenerMangas();
+          this.obtenerAmigos();
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+        });
+    },
+    obtenerAnimes() {
+      axios
+        .get(route("watches.index", this.perfil), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < res.data.data.length; actual++) {
+            this.userAnimes.push({
+              id: res.data.data[actual].id,
+              title: res.data.data[actual].title,
+              cover: res.data.data[actual].cover,
+              watchStatus: res.data.data[actual].pivot.watchStatus,
+              favourite: res.data.data[actual].pivot.favourite,
+              score: res.data.data[actual].pivot.score,
+            });
+          }
+        });
+
+      axios
+        .get(route("watches.index", this.usuario.id), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < res.data.data.length; actual++) {
+            this.myAnimes.push(res.data.data[actual].id);
+          }
+        });
+    },
+    obtenerMangas() {
+      axios
+        .get(route("reads.index", this.perfil), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < res.data.data.length; actual++) {
+            this.userMangas.push({
+              id: res.data.data[actual].id,
+              title: res.data.data[actual].title,
+              cover: res.data.data[actual].cover,
+              readStatus: res.data.data[actual].pivot.readStatus,
+              favourite: res.data.data[actual].pivot.favourite,
+              score: res.data.data[actual].pivot.score,
+            });
+          }
+        });
+
+      axios
+        .get(route("reads.index", this.usuario.id), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          for (let actual = 0; actual < res.data.data.length; actual++) {
+            this.myMangas.push(res.data.data[actual].id);
+          }
+        });
+    },
+
+    obtenerAmigos() {
+      axios
+        .get(route("friends.index", this.perfil), {
+          headers: {
+            Authorization: "Bearer " + this.clave,
+          },
+        })
+        .then((res) => {
+          this.amigos = res.data.data;
+          console.log(this.amigos);
+        });
+    },
     calcularPorcentajes() {},
     cambiarAmigo() {},
     enviarMensaje() {},

@@ -530,6 +530,7 @@ export default {
             },
           })
           .then((res) => {
+            this.visto = true;
             this.datosInfo["color"] = "rose";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;

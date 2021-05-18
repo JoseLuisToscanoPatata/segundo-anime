@@ -18390,6 +18390,7 @@ __webpack_require__.r(__webpack_exports__);
             Authorization: "Bearer " + this.clave
           }
         }).then(function (res) {
+          _this4.visto = true;
           _this4.datosInfo["color"] = "rose";
           _this4.datosInfo["style"] = "success";
           _this4.datosInfo["mensaje"] = res.data.message;
@@ -22111,6 +22112,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/DialogModal */ "./resources/js/Jetstream/DialogModal.vue");
 /* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
 /* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+/* harmony import */ var _Componentes_Loading_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Componentes/Loading.vue */ "./resources/js/Pages/Componentes/Loading.vue");
+/* harmony import */ var _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Pages/Componentes/BannerPropio */ "./resources/js/Pages/Componentes/BannerPropio.vue");
+
+
 
 
 
@@ -22124,7 +22129,9 @@ __webpack_require__.r(__webpack_exports__);
     JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_4__.default,
     JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_5__.default,
     JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__.default,
-    JetDangerButton: _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_2__.default
+    JetDangerButton: _Jetstream_DangerButton__WEBPACK_IMPORTED_MODULE_2__.default,
+    Loading: _Componentes_Loading_vue__WEBPACK_IMPORTED_MODULE_6__.default,
+    BannerPropio: _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_7__.default
   },
   props: ["clave", "perfil", "usuario"],
   data: function data() {
@@ -22175,25 +22182,115 @@ __webpack_require__.r(__webpack_exports__);
       borrandoAmigo: false,
       cargando: true,
       mensajeVacio: false,
+      obtenido: false,
       datosInfo: {
         mostrar: false,
-        titulo: "",
+        style: "",
         mensaje: "",
-        color: "black"
+        color: ""
       }
     };
   },
   created: function created() {
     this.obtenerUsuario();
-    this.obtenerAnimes();
-    this.obtenerMangas();
-    this.obtenerAmigos();
   },
   methods: {
-    obtenerUsuario: function obtenerUsuario() {},
-    obtenerAnimes: function obtenerAnimes() {},
-    obtenerMangas: function obtenerMangas() {},
-    obtenerAmigos: function obtenerAmigos() {},
+    obtenerUsuario: function obtenerUsuario() {
+      var _this = this;
+
+      axios.get(route("users.show", {
+        user: this.perfil
+      }), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this.perfilUsu.name = res.data.data.name;
+        _this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
+        _this.obtenido = true;
+
+        _this.obtenerAnimes();
+
+        _this.obtenerMangas();
+
+        _this.obtenerAmigos();
+      })["catch"](function (err) {
+        _this.datosInfo["color"] = "red";
+        _this.datosInfo["style"] = "danger";
+        _this.datosInfo["mensaje"] = err.response.data.message;
+        _this.datosInfo["mostrar"] = true;
+      });
+    },
+    obtenerAnimes: function obtenerAnimes() {
+      var _this2 = this;
+
+      axios.get(route("watches.index", this.perfil), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          _this2.userAnimes.push({
+            id: res.data.data[actual].id,
+            title: res.data.data[actual].title,
+            cover: res.data.data[actual].cover,
+            watchStatus: res.data.data[actual].pivot.watchStatus,
+            favourite: res.data.data[actual].pivot.favourite,
+            score: res.data.data[actual].pivot.score
+          });
+        }
+      });
+      axios.get(route("watches.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          _this2.myAnimes.push(res.data.data[actual].id);
+        }
+      });
+    },
+    obtenerMangas: function obtenerMangas() {
+      var _this3 = this;
+
+      axios.get(route("reads.index", this.perfil), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          _this3.userMangas.push({
+            id: res.data.data[actual].id,
+            title: res.data.data[actual].title,
+            cover: res.data.data[actual].cover,
+            readStatus: res.data.data[actual].pivot.readStatus,
+            favourite: res.data.data[actual].pivot.favourite,
+            score: res.data.data[actual].pivot.score
+          });
+        }
+      });
+      axios.get(route("reads.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        for (var actual = 0; actual < res.data.data.length; actual++) {
+          _this3.myMangas.push(res.data.data[actual].id);
+        }
+      });
+    },
+    obtenerAmigos: function obtenerAmigos() {
+      var _this4 = this;
+
+      axios.get(route("friends.index", this.perfil), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this4.amigos = res.data.data;
+        console.log(_this4.amigos);
+      });
+    },
     calcularPorcentajes: function calcularPorcentajes() {},
     cambiarAmigo: function cambiarAmigo() {},
     enviarMensaje: function enviarMensaje() {},
@@ -31714,14 +31811,14 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_2 = {
   "class": "max-w-7xl w-full mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12"
-}, null, -1
-/* HOISTED */
-);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_banner_propio = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("banner-propio");
+
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
@@ -31733,7 +31830,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       )];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_2];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [$data.datosInfo['mostrar'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_banner_propio, {
+        key: 0,
+        onClose: _cache[1] || (_cache[1] = function ($event) {
+          return $data.datosInfo['mostrar'] = false;
+        }),
+        color: $data.datosInfo['color'],
+        style: $data.datosInfo['style'],
+        message: $data.datosInfo['mensaje']
+      }, null, 8
+      /* PROPS */
+      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [], 64
+      /* STABLE_FRAGMENT */
+      )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
+        key: 2,
+        color: "gray"
+      }))])];
     }),
     _: 1
     /* STABLE */

@@ -67,4 +67,56 @@ class User extends Authenticatable implements MustVerifyEmail
     public function mangas() {
         return $this->belongsToMany(Manga::class,'reades')->withPivot('readStatus','score','favourite');
     }
+
+
+    function friendsOfMine($confirmado)
+    {
+        if($confirmado == true) {
+                 return $this->belongsToMany(User::class, 'friends', 'user1_id', 'user2_id')
+                 ->wherePivot('confirmation_date','<>',null)
+                ->withPivot('user1_id','confirmation_date'); // or to fetch accepted value
+        } else {
+                return $this->belongsToMany(User::class, 'friends', 'user1_id', 'user2_id')
+                 ->wherePivot('confirmation_date','=',null)
+                ->withPivot('user1_id','confirmation_date'); // or to fetch accepted value
+        }
+
+    }
+
+    // friendship that I was invited to 
+    function friendOf($confirmado)
+    {
+      if($confirmado == true) {
+                 return $this->belongsToMany(User::class, 'friends', 'user2_id', 'user1_id')
+                 ->wherePivot('confirmation_date','<>',null)
+                ->withPivot('user2_id','confirmation_date'); // or to fetch accepted value
+        } else {
+                return $this->belongsToMany(User::class, 'friends', 'user2_id', 'user1_id')
+                 ->wherePivot('confirmation_date','=',null)
+                ->withPivot('user2_id','confirmation_date'); // or to fetch accepted value
+        }
+    }
+
+    // accessor allowing you call $user->friends
+    public function getFriendsAttribute()
+    {
+        if ( ! array_key_exists('friends', $this->relations)) $this->loadFriends();
+
+        return $this->getRelation('friends');
+    }
+
+    protected function loadFriends()
+    {
+        if ( ! array_key_exists('friends', $this->relations))
+        {
+            $friends = $this->mergeFriends();
+
+            $this->setRelation('friends', $friends);
+        }
+    }
+
+    protected function mergeFriends()
+    {
+        return $this->friendsOfMine->merge($this->friendOf);
+    }
 }
