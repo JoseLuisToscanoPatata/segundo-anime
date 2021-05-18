@@ -250,7 +250,8 @@ export default {
                 if (pequeña.length != 0) {
                   for (
                     let anime = 0;
-                    anime < grande.length || anime < pequeña.length;
+                    anime - pararGrande < grande.length &&
+                    anime - pararPequeño < pequeña.length;
                     anime++
                   ) {
                     if (
@@ -266,7 +267,7 @@ export default {
                     }
                   }
 
-                  this.afinidadAnimes100 = this.afinidadAnimes / grande.length;
+                  this.afinidadAnimes100 = (this.afinidadAnimes * 100) / grande.length;
                 }
               });
           }
@@ -370,11 +371,15 @@ export default {
                 var pararGrande = 0;
                 var pararPequeño = 0;
 
+                console.log(pequeña);
+                console.log(grande);
+
                 if (pequeña.length != 0) {
                   for (
                     let manga = 0;
-                    manga < grande.length || manga < pequeña.length;
-                    anime++
+                    manga - pararPequeño < pequeña.length &&
+                    manga - pararGrande < grande.length;
+                    manga++
                   ) {
                     if (
                       grande[manga - pararGrande].id == pequeña[manga - pararPequeño].id
@@ -389,7 +394,14 @@ export default {
                     }
                   }
 
-                  this.afinidadMangas100 = this.afinidadMangas / grande.length;
+                  this.afinidadMangas100 = (this.afinidadMangas * 100) / grande.length;
+                  console.log(
+                    this.afinidadMangas100 +
+                      "=" +
+                      this.afinidadMangas +
+                      "/" +
+                      grande.length
+                  );
                 }
               });
           }

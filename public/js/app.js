@@ -22311,17 +22311,17 @@ __webpack_require__.r(__webpack_exports__);
             var pararPequeño = 0;
 
             if (pequeña.length != 0) {
-              for (var _anime = 0; _anime < grande.length || _anime < pequeña.length; _anime++) {
-                if (grande[_anime - pararGrande].id == pequeña[_anime - pararPequeño].id) {
+              for (var anime = 0; anime - pararGrande < grande.length && anime - pararPequeño < pequeña.length; anime++) {
+                if (grande[anime - pararGrande].id == pequeña[anime - pararPequeño].id) {
                   _this2.afinidadAnimes++;
-                } else if (grande[_anime - pararGrande].id > pequeña[_anime - pararPequeño].id) {
+                } else if (grande[anime - pararGrande].id > pequeña[anime - pararPequeño].id) {
                   pararGrande++;
                 } else {
                   pararPequeño++;
                 }
               }
 
-              _this2.afinidadAnimes100 = _this2.afinidadAnimes / grande.length;
+              _this2.afinidadAnimes100 = _this2.afinidadAnimes * 100 / grande.length;
             }
           });
         }
@@ -22417,9 +22417,11 @@ __webpack_require__.r(__webpack_exports__);
 
             var pararGrande = 0;
             var pararPequeño = 0;
+            console.log(pequeña);
+            console.log(grande);
 
             if (pequeña.length != 0) {
-              for (var manga = 0; manga < grande.length || manga < pequeña.length; anime++) {
+              for (var manga = 0; manga - pararPequeño < pequeña.length && manga - pararGrande < grande.length; manga++) {
                 if (grande[manga - pararGrande].id == pequeña[manga - pararPequeño].id) {
                   _this3.afinidadMangas++;
                 } else if (grande[manga - pararGrande].id > pequeña[manga - pararPequeño].id) {
@@ -22429,7 +22431,8 @@ __webpack_require__.r(__webpack_exports__);
                 }
               }
 
-              _this3.afinidadMangas100 = _this3.afinidadMangas / grande.length;
+              _this3.afinidadMangas100 = _this3.afinidadMangas * 100 / grande.length;
+              console.log(_this3.afinidadMangas100 + "=" + _this3.afinidadMangas + "/" + grande.length);
             }
           });
         }
