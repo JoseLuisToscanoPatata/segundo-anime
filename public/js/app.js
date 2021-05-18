@@ -22167,13 +22167,18 @@ __webpack_require__.r(__webpack_exports__);
         },
         chapters: 0,
         episodes: 0,
-        favourites: 0,
+        favouritesAnimes: 0,
+        favouritesMangas: 0,
         animeMeanScore: 0,
         mangaMeanScore: 0
       },
       amigos: [],
-      afinidad: 0,
-      afinidad100: 0,
+      favAnimesList: [],
+      favMangasList: [],
+      afinidadAnimes: 0,
+      afinidadAnimes100: 0.0,
+      afinidadMangas: 0,
+      afinidadMangas100: 0.0,
       userAnimes: [],
       userMangas: [],
       myAnimes: [],
@@ -22181,8 +22186,8 @@ __webpack_require__.r(__webpack_exports__);
       creandoMensaje: false,
       borrandoAmigo: false,
       cargando: true,
-      mensajeVacio: false,
-      obtenido: false,
+      solicitudAmistad: null,
+      procesosTerminados: 0,
       datosInfo: {
         mostrar: false,
         style: "",
@@ -22207,7 +22212,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this.perfilUsu.name = res.data.data.name;
         _this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
-        _this.obtenido = true;
 
         _this.obtenerAnimes();
 
@@ -22229,6 +22233,10 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
+        _this2.perfilUsu.animes.total = res.data.data.length;
+        var scoreTotal = 0;
+        var animesScored = 0;
+
         for (var actual = 0; actual < res.data.data.length; actual++) {
           _this2.userAnimes.push({
             id: res.data.data[actual].id,
@@ -22238,15 +22246,90 @@ __webpack_require__.r(__webpack_exports__);
             favourite: res.data.data[actual].pivot.favourite,
             score: res.data.data[actual].pivot.score
           });
+
+          if (res.data.data[actual].pivot.score != null) {
+            scoreTotal += res.data.data[actual].pivot.score;
+            animesScored++;
+          }
+
+          if (res.data.data[actual].pivot.favourite == 1) {
+            _this2.favAnimesList.push({
+              id: res.data.data[actual].id,
+              cover: res.data.data[actual].cover,
+              title: res.data.data[actual].title
+            });
+
+            _this2.perfilUsu.favouritesAnimes++;
+          }
+
+          _this2.perfilUsu.episodes += res.data.data[actual].episodes;
+
+          if (res.data.data[actual].pivot.watchStatus == "Watching") {
+            _this2.perfilUsu.animes.watching++;
+          } else if (res.data.data[actual].pivot.watchStatus == "Completed") {
+            _this2.perfilUsu.animes.completed++;
+          } else if (res.data.data[actual].pivot.watchStatus == "PlanToWatch") {
+            _this2.perfilUsu.animes.planToWatch++;
+          } else if (res.data.data[actual].pivot.watchStatus == "Dropped") {
+            _this2.perfilUsu.animes.dropped++;
+          } else if (res.data.data[actual].pivot.watchStatus == "OnHold") {
+            _this2.perfilUsu.animes.onHold++;
+          }
         }
-      });
-      axios.get(route("watches.index", this.usuario.id), {
-        headers: {
-          Authorization: "Bearer " + this.clave
+
+        if (animesScored > 0) {
+          _this2.perfilUsu.animeMeanScore = scoreTotal / animesScored;
         }
-      }).then(function (res) {
-        for (var actual = 0; actual < res.data.data.length; actual++) {
-          _this2.myAnimes.push(res.data.data[actual].id);
+
+        if (_this2.perfilUsu.animes.total > 0) {
+          _this2.perfilUsu.animes.watching100 = _this2.perfilUsu.animes.watching / _this2.perfilUsu.animes.total;
+          _this2.perfilUsu.animes.completed100 = _this2.perfilUsu.animes.completed / _this2.perfilUsu.animes.total;
+          _this2.perfilUsu.animes.planToWatch100 = _this2.perfilUsu.animes.planToWatch / _this2.perfilUsu.animes.total;
+          _this2.perfilUsu.animes.dropped100 = _this2.perfilUsu.animes.dropped / _this2.perfilUsu.animes.total;
+          _this2.perfilUsu.animes.onHold100 = _this2.perfilUsu.animes.onHold / _this2.perfilUsu.animes.total;
+        }
+
+        if (_this2.perfil != _this2.usuario.id) {
+          axios.get(route("watches.index", _this2.usuario.id), {
+            headers: {
+              Authorization: "Bearer " + _this2.clave
+            }
+          }).then(function (res) {
+            for (var _actual = 0; _actual < res.data.data.length; _actual++) {
+              _this2.myAnimes.push(res.data.data[_actual]);
+            }
+
+            if (_this2.myAnimes.length >= _this2.userAnimes.length) {
+              var grande = _this2.myAnimes;
+              var pequeña = _this2.userAnimes;
+            } else {
+              var pequeña = _this2.myAnimes;
+              var grande = _this2.userAnimes;
+            }
+
+            var pararGrande = 0;
+            var pararPequeño = 0;
+
+            if (pequeña.length != 0) {
+              for (var _anime = 0; _anime < grande.length || _anime < pequeña.length; _anime++) {
+                if (grande[_anime - pararGrande].id == pequeña[_anime - pararPequeño].id) {
+                  _this2.afinidadAnimes++;
+                } else if (grande[_anime - pararGrande].id > pequeña[_anime - pararPequeño].id) {
+                  pararGrande++;
+                } else {
+                  pararPequeño++;
+                }
+              }
+
+              _this2.afinidadAnimes100 = _this2.afinidadAnimes / grande.length;
+            }
+          });
+        }
+
+        _this2.procesosTerminados++;
+
+        if (_this2.procesosTerminados == 3) {
+          _this2.cargando = false;
         }
       });
     },
@@ -22258,6 +22341,10 @@ __webpack_require__.r(__webpack_exports__);
           Authorization: "Bearer " + this.clave
         }
       }).then(function (res) {
+        _this3.perfilUsu.mangas.total = res.data.data.length;
+        var scoreTotal = 0;
+        var mangasScored = 0;
+
         for (var actual = 0; actual < res.data.data.length; actual++) {
           _this3.userMangas.push({
             id: res.data.data[actual].id,
@@ -22267,15 +22354,90 @@ __webpack_require__.r(__webpack_exports__);
             favourite: res.data.data[actual].pivot.favourite,
             score: res.data.data[actual].pivot.score
           });
+
+          if (res.data.data[actual].pivot.favourite == 1) {
+            _this3.favMangasList.push({
+              id: res.data.data[actual].id,
+              cover: res.data.data[actual].cover,
+              title: res.data.data[actual].title
+            });
+
+            _this3.perfilUsu.favouritesMangas++;
+          }
+
+          if (res.data.data[actual].pivot.score != null) {
+            scoreTotal += res.data.data[actual].pivot.score;
+            mangasScored++;
+          }
+
+          _this3.perfilUsu.chapters += res.data.data[actual].chapters;
+
+          if (res.data.data[actual].pivot.readStatus == "Reading") {
+            _this3.perfilUsu.mangas.reading++;
+          } else if (res.data.data[actual].pivot.readStatus == "Completed") {
+            _this3.perfilUsu.mangas.completed++;
+          } else if (res.data.data[actual].pivot.readStatus == "PlanToRead") {
+            _this3.perfilUsu.mangas.planToRead++;
+          } else if (res.data.data[actual].pivot.readStatus == "Dropped") {
+            _this3.perfilUsu.mangas.dropped++;
+          } else if (res.data.data[actual].pivot.readStatus == "OnHold") {
+            _this3.perfilUsu.mangas.onHold++;
+          }
         }
-      });
-      axios.get(route("reads.index", this.usuario.id), {
-        headers: {
-          Authorization: "Bearer " + this.clave
+
+        if (mangasScored > 0) {
+          _this3.perfilUsu.mangaMeanScore = scoreTotal / mangasScored;
         }
-      }).then(function (res) {
-        for (var actual = 0; actual < res.data.data.length; actual++) {
-          _this3.myMangas.push(res.data.data[actual].id);
+
+        if (_this3.perfilUsu.mangas.total > 0) {
+          _this3.perfilUsu.mangas.reading100 = _this3.perfilUsu.mangas.reading / _this3.perfilUsu.mangas.total;
+          _this3.perfilUsu.mangas.completed100 = _this3.perfilUsu.mangas.completed / _this3.perfilUsu.mangas.total;
+          _this3.perfilUsu.mangas.planToRead100 = _this3.perfilUsu.mangas.planToRead / _this3.perfilUsu.mangas.total;
+          _this3.perfilUsu.mangas.dropped100 = _this3.perfilUsu.mangas.dropped / _this3.perfilUsu.mangas.total;
+          _this3.perfilUsu.mangas.onHold100 = _this3.perfilUsu.mangas.onHold / _this3.perfilUsu.mangas.total;
+        }
+
+        if (_this3.perfil != _this3.usuario.id) {
+          axios.get(route("reads.index", _this3.usuario.id), {
+            headers: {
+              Authorization: "Bearer " + _this3.clave
+            }
+          }).then(function (res) {
+            for (var _actual2 = 0; _actual2 < res.data.data.length; _actual2++) {
+              _this3.myMangas.push(res.data.data[_actual2]);
+            }
+
+            if (_this3.myMangas.length >= _this3.userMangas.length) {
+              var grande = _this3.myMangas;
+              var pequeña = _this3.userMangas;
+            } else {
+              var pequeña = _this3.myMangas;
+              var grande = _this3.userMangas;
+            }
+
+            var pararGrande = 0;
+            var pararPequeño = 0;
+
+            if (pequeña.length != 0) {
+              for (var manga = 0; manga < grande.length || manga < pequeña.length; anime++) {
+                if (grande[manga - pararGrande].id == pequeña[manga - pararPequeño].id) {
+                  _this3.afinidadMangas++;
+                } else if (grande[manga - pararGrande].id > pequeña[manga - pararPequeño].id) {
+                  pararGrande++;
+                } else {
+                  pararPequeño++;
+                }
+              }
+
+              _this3.afinidadMangas100 = _this3.afinidadMangas / grande.length;
+            }
+          });
+        }
+
+        _this3.procesosTerminados++;
+
+        if (_this3.procesosTerminados == 3) {
+          _this3.cargando = false;
         }
       });
     },
@@ -22288,14 +22450,132 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         _this4.amigos = res.data.data;
-        console.log(_this4.amigos);
+
+        if (_this4.perfil == _this4.usuario.id) {
+          _this4.solicitudAmistad = "soyYo";
+        } else {
+          res.data.data[0].forEach(function (amigo) {
+            if (amigo.pivot.user1_id == _this4.usuario.id || amigo.pivot.user2_id == _this4.usuario.id) {
+              _this4.solicitudAmistad = "amigos";
+            }
+          });
+          res.data.data[1].forEach(function (amigo) {
+            if (amigo.pivot.user2_id == _this4.usuario.id) {
+              _this4.solicitudAmistad = "recibidaYo";
+            }
+          });
+          res.data.data[2].forEach(function (amigo) {
+            if (amigo.pivot.user1_id == _this4.usuario.id) {
+              _this4.solicitudAmistad = "enviadaYo";
+            }
+          });
+        }
+
+        _this4.procesosTerminados++;
+
+        if (_this4.procesosTerminados == 3) {
+          _this4.cargando = false;
+        }
       });
     },
-    calcularPorcentajes: function calcularPorcentajes() {},
-    cambiarAmigo: function cambiarAmigo() {},
-    enviarMensaje: function enviarMensaje() {},
-    pulsadoMensaje: function pulsadoMensaje() {},
-    sortear: function sortear() {}
+    cambiarAmigo: function cambiarAmigo() {
+      var _this5 = this;
+
+      if (this.solicitudAmistad == null) {
+        axios.post(route("friends.store", this.perfil), {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          _this5.solicitudAmistad = "enviadaYo";
+          _this5.datosInfo["color"] = "gray";
+          _this5.datosInfo["style"] = "success";
+          _this5.datosInfo["mensaje"] = res.data.message;
+          _this5.datosInfo["mostrar"] = true;
+        })["catch"](function (err) {
+          _this5.datosInfo["color"] = "red";
+          _this5.datosInfo["style"] = "danger";
+          _this5.datosInfo["mensaje"] = err.response.data.message;
+          _this5.datosInfo["mostrar"] = true;
+        });
+      } else if (this.solicitudAmistad == "amigos") {
+        this.borrandoAmigo = true;
+      } else if (this.solicitudAmistad == "recibidaYo") {
+        axios.put(route("friends.update", this.perfil), {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          _this5.solicitudAmistad = "amigos";
+          _this5.datosInfo["color"] = "gray";
+          _this5.datosInfo["style"] = "success";
+          _this5.datosInfo["mensaje"] = res.data.message;
+          _this5.datosInfo["mostrar"] = true;
+        })["catch"](function (err) {
+          _this5.datosInfo["color"] = "red";
+          _this5.datosInfo["style"] = "danger";
+          _this5.datosInfo["mensaje"] = err.response.data.message;
+          _this5.datosInfo["mostrar"] = true;
+        });
+      } //TODO
+
+    },
+    borrarAmigo: function borrarAmigo() {
+      var _this6 = this;
+
+      axios["delete"](route("friends.destroy", this.perfil), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this6.solicitudAmistad = null;
+        _this6.datosInfo["color"] = "gray";
+        _this6.datosInfo["style"] = "success";
+        _this6.datosInfo["mensaje"] = res.data.message;
+        _this6.datosInfo["mostrar"] = true;
+      })["catch"](function (err) {
+        _this6.datosInfo["color"] = "red";
+        _this6.datosInfo["style"] = "danger";
+        _this6.datosInfo["mensaje"] = err.response.data.message;
+        _this6.datosInfo["mostrar"] = true;
+      });
+    },
+    enviarMensaje: function enviarMensaje() {
+      var _this7 = this;
+
+      var datos = new FormData();
+      datos.append("message", this.mensaje);
+      datos.append("recipient", this.perfil);
+      axios.post(route("messages.store", datos), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this7.datosInfo["color"] = "gray";
+        _this7.datosInfo["style"] = "success";
+        _this7.datosInfo["mensaje"] = res.data.message;
+        _this7.datosInfo["mostrar"] = true;
+      })["catch"](function (err) {
+        _this7.datosInfo["color"] = "red";
+        _this7.datosInfo["style"] = "danger";
+        _this7.datosInfo["mensaje"] = err.response.data.message;
+        _this7.datosInfo["mostrar"] = true;
+      });
+    },
+    pulsadoMensaje: function pulsadoMensaje() {
+      this.mensaje = "";
+      this.creandoMensaje = true;
+    },
+    ponerTodo: function ponerTodo() {
+      console.log(this.perfilUsu);
+      console.log(this.amigos);
+      console.log(this.favAnimesList);
+      console.log(this.favMangasList);
+      console.log(this.afinidadAnimes);
+      console.log(this.afinidadAnimes100);
+      console.log(this.userAnimes);
+      console.log(this.myAnimes);
+    }
   }
 });
 
@@ -31814,6 +32094,10 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "max-w-7xl w-full mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12"
 };
+var _hoisted_3 = {
+  key: 1,
+  "class": "bg-gray-200"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_banner_propio = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("banner-propio");
 
@@ -31840,11 +32124,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         message: $data.datosInfo['mensaje']
       }, null, 8
       /* PROPS */
-      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-        key: 1
-      }, [], 64
-      /* STABLE_FRAGMENT */
-      )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
+      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.cargando ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        onClick: _cache[2] || (_cache[2] = function () {
+          return $options.ponerTodo && $options.ponerTodo.apply($options, arguments);
+        })
+      }, "CONSOLE.LOG")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading, {
         key: 2,
         color: "gray"
       }))])];

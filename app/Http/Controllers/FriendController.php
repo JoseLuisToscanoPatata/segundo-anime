@@ -38,12 +38,10 @@ class FriendController extends Controller
 
                     */
                 
-                    $enviadas = User::find($id)->friendsOfMine(true)->get()->all();
-                    $recibidas = User::find($id)->friendOf(true)->get()->all();
-                    $amigos = array_merge($enviadas,$recibidas);
-
-            if($id == Auth::user()->id) {
-               
+            $enviadas = User::find($id)->friendsOfMine(true)->get()->all();
+            $recibidas = User::find($id)->friendOf(true)->get()->all();
+            $amigos = array_merge($enviadas,$recibidas);
+        
                 /*
                 $recibidos = DB::table('friends')
                     ->join('users','users.id','=','friends.user1_id')
@@ -59,15 +57,10 @@ class FriendController extends Controller
 
                     */
 
-                    $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all();
-                    $recibidasFalse = User::find($id)->friendOf(false)->get()->all();
+            $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all();
+            $recibidasFalse = User::find($id)->friendOf(false)->get()->all();
 
-                    $total = [$amigos,$enviadasFalse,$recibidasFalse];
-
-            } else {
-
-                $total = $amigos;                  
-            }
+            $total = [$amigos,$enviadasFalse,$recibidasFalse];
 
              return response()->json(["status"=>"success","data"=>$total],200);
 
@@ -96,7 +89,7 @@ class FriendController extends Controller
                 $friend->user2_id = $id;
                 $friend->save();
                 
-                 return response()->json(["status"=>"success","message" => "User added as friend :)",""],200);
+                 return response()->json(["status"=>"success","message" => "Friend invitation sent to that user :)",""],200);
 
             } else {
                 return response()->json(["status"=>"failed","message"=>"User not found :("],404);
@@ -142,24 +135,17 @@ class FriendController extends Controller
      */
     public function update($id)
     {
-        $friend = Friend::find($id);
+        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id);
 
         if(!is_null($friend)) {
-            
-            if(Auth::user()->id == $friend->user2_id ) {
-                 
-                if($friend->confirmation_date == NULL) {
-                    $friend->confirmation_date = date();
-                    return response()->json(["status"=>"success","message" => "You have confirmed his friend invitation :)"],200);
 
-                } else {
-                     return response()->json(["status"=>"failed","message"=>"You cant confirm a friendship you have already acepted :("],403);
-                }                
-            
+            if($friend->confirmation_date == NULL) {
+                $friend->confirmation_date = date();
+                return response()->json(["status"=>"success","message" => "You have confirmed his friend invitation :)"],200);
+
             } else {
-                 return response()->json(["status"=>"failed","message"=>"You cant confirm a friendship you havent been invited to :("],403);
-
-            }
+                    return response()->json(["status"=>"failed","message"=>"You cant confirm a friendship you have already acepted :("],403);
+            }                
     
         } else {
             return response()->json(["status"=>"failed","message"=>"Friendship not found :("],404);
@@ -174,7 +160,11 @@ class FriendController extends Controller
      */
     public function destroy($id)
     {
-        $friend = Friend::find($id);
+        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id);
+
+        if(is_null($friend)) {
+            $friendship = Friend::where('user2_id',$id)->where('user1_id',Auth::user()->id);     
+        }
 
         if(!is_null($friend)) {
             
