@@ -21,41 +21,10 @@ class FriendController extends Controller
     {
 
         if(!is_null(User::find($id))) {
-
-            /*
-
-            $amigos1 = DB::table('friends')
-                    ->join('users','users.id','=','friends.user1_id')
-                    ->select('friends.user1_id as id','users.name as name')
-                    ->where('friends.user2_id','=',$id)
-                    ->where('confirmation_date','<>',NULL)->get()->toArray();
-
-            $amigos2 = DB::table('friends')
-                    ->join('users','users.id','=','friends.user2_id')
-                    ->select('friends.user2_id as id','users.name as name')
-                    ->where('friends.user1_id','=',$id)
-                    ->where('confirmation_date','<>',NULL)->get()->toArray();
-
-                    */
                 
             $enviadas = User::find($id)->friendsOfMine(true)->get()->all();
             $recibidas = User::find($id)->friendOf(true)->get()->all();
             $amigos = array_merge($enviadas,$recibidas);
-        
-                /*
-                $recibidos = DB::table('friends')
-                    ->join('users','users.id','=','friends.user1_id')
-                    ->select('friends.user1_id as id','users.name as name')
-                    ->where('friends.user2_id','=',$id)
-                    ->where('confirmation_date','=',NULL)->get()->toArray();
-
-                $enviados = DB::table('friends')
-                    ->join('users','users.id','=','friends.user2_id')
-                    ->select('friends.user2_id as id','users.name as name')
-                    ->where('friends.user1_id','=',$id)
-                    ->where('confirmation_date','=',NULL)->get()->toArray();
-
-                    */
 
             $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all();
             $recibidasFalse = User::find($id)->friendOf(false)->get()->all();

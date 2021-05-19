@@ -138,7 +138,7 @@
                     v-model="datosActual['ageRating']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="null">Not needed</option>
+                    <option value="">Not needed</option>
                     <option>G</option>
                     <option>PG</option>
                     <option>R</option>
@@ -154,7 +154,7 @@
                     v-model="datosActual['status']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="null">Please select one</option>
+                    <option value="" disabled>Please select one</option>
                     <option>current</option>
                     <option>finished</option>
                     <option>tba</option>
@@ -169,7 +169,7 @@
                     v-model="datosActual['subType']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="null">Not needed</option>
+                    <option value="">Not needed</option>
                     <option>manga</option>
                     <option>manhua</option>
                     <option>manhwa</option>
@@ -565,6 +565,14 @@ export default {
           }
         }
       }
+
+      if (this.datosActual["ageRating"] == null) {
+        this.datosActual["ageRating"] = "";
+      }
+
+      if (this.datosActual["subType"] == null) {
+        this.datosActual["subType"] = "";
+      }
     },
     pulsadoBorrar(id) {
       this.idActual = id;
@@ -590,11 +598,11 @@ export default {
 
       datos.append("chapters", this.datosActual["chapters"]);
 
-      if (this.datosActual["subType"] != null) {
+      if (this.datosActual["subType"] != "") {
         datos.append("subType", this.datosActual["subType"]);
       }
 
-      if (this.datosActual["ageRating"] != null) {
+      if (this.datosActual["ageRating"] != "") {
         datos.append("ageRating", this.datosActual["ageRating"]);
       }
 

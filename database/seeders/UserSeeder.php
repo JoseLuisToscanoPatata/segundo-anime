@@ -16,15 +16,19 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        
           DB::table('users')->insert([
            'name' => 'patata',
             'email' => 'jl.toscano@hotmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('patata12'), // password
             'role' => "admin",
+            'biography' => "Me gustan las patatas",
+            "gender" => "female",
             'profile_photo_path' => 'profile-photos/BigChungus.png',
         ]);
+        
 
-        \App\Models\User::factory(1000)->create();
+        \App\Models\User::factory(20)->create();
     }
 }

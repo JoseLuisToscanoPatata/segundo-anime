@@ -26,11 +26,13 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->unique()->userName,
             'email' => $this->faker->unique()->safeEmail,
+            'biography' => $this->faker->realText(100,1),
+            'gender' => $this->faker->randomElement(['male','female','non binary','other']),
             'email_verified_at' => now(),
             'password' => Hash::make('patata12'), // Utilizamos la contraseña patata12 para todos los usuarios
             'remember_token' => Str::random(10),
             'role' => rand(0,4)? 'user' : 'admin', //Role random, con un cuarto de posibilidad de ser admin
-            'profile_photo_path' =>  $this->faker->randomElement(['profile-photos/knucles.png','profile-photos/shrek.png','profile-photos/BigChungus.png']),
+            'profile_photo_path' =>  $this->faker->imageUrl(),
         ];
     }
 

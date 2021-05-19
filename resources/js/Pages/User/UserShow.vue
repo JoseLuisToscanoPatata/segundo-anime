@@ -55,6 +55,9 @@ export default {
       perfilUsu: {
         name: "",
         profilePhoto: "",
+        last_online: "",
+        gender: "",
+        biography: "",
         animes: {
           total: 0,
           watching: 0,
@@ -141,6 +144,9 @@ export default {
         .then((res) => {
           this.perfilUsu.name = res.data.data.name;
           this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
+          this.perfilUsu.gender = res.data.data.gender;
+          this.perfilUsu.biography = res.data.data.biography;
+          this.perfilUsu.last_online = res.data.data.last_online;
 
           this.obtenerAnimes();
           this.obtenerMangas();

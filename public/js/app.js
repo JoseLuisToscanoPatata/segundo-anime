@@ -17645,6 +17645,14 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      if (this.datosActual["ageRating"] == null) {
+        this.datosActual["ageRating"] = "";
+      }
+
+      if (this.datosActual["subType"] == null) {
+        this.datosActual["subType"] = "";
+      }
+
       this.modoAnime = "editar";
       this.operacion = "crearEditar";
     },
@@ -17676,11 +17684,11 @@ __webpack_require__.r(__webpack_exports__);
       datos.append("episodes", this.datosActual["episodes"]);
       datos.append("episodeLength", this.datosActual["episodeLength"]);
 
-      if (this.datosActual["subType"] != null) {
+      if (this.datosActual["subType"] != "") {
         datos.append("subType", this.datosActual["subType"]);
       }
 
-      if (this.datosActual["ageRating"] != null) {
+      if (this.datosActual["ageRating"] != "") {
         datos.append("ageRating", this.datosActual["ageRating"]);
       }
 
@@ -20121,6 +20129,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }
+
+      if (this.datosActual["ageRating"] == null) {
+        this.datosActual["ageRating"] = "";
+      }
+
+      if (this.datosActual["subType"] == null) {
+        this.datosActual["subType"] = "";
+      }
     },
     pulsadoBorrar: function pulsadoBorrar(id) {
       this.idActual = id;
@@ -20146,11 +20162,11 @@ __webpack_require__.r(__webpack_exports__);
 
       datos.append("chapters", this.datosActual["chapters"]);
 
-      if (this.datosActual["subType"] != null) {
+      if (this.datosActual["subType"] != "") {
         datos.append("subType", this.datosActual["subType"]);
       }
 
-      if (this.datosActual["ageRating"] != null) {
+      if (this.datosActual["ageRating"] != "") {
         datos.append("ageRating", this.datosActual["ageRating"]);
       }
 
@@ -21728,7 +21744,9 @@ __webpack_require__.r(__webpack_exports__);
         _method: "PUT",
         name: this.user.name,
         email: this.user.email,
-        photo: null
+        photo: null,
+        bio: this.user.biography,
+        gender: this.user.gender ? this.user.gender : ""
       }),
       photoPreview: null
     };
@@ -21737,6 +21755,10 @@ __webpack_require__.r(__webpack_exports__);
     updateProfileInformation: function updateProfileInformation() {
       if (this.$refs.photo) {
         this.form.photo = this.$refs.photo.files[0];
+      }
+
+      if (this.form.gender == "") {
+        this.form.gender = null;
       }
 
       this.form.post(route("user-profile-information.update"), {
@@ -22139,6 +22161,9 @@ __webpack_require__.r(__webpack_exports__);
       perfilUsu: {
         name: "",
         profilePhoto: "",
+        last_online: "",
+        gender: "",
+        biography: "",
         animes: {
           total: 0,
           watching: 0,
@@ -22212,6 +22237,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this.perfilUsu.name = res.data.data.name;
         _this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
+        _this.perfilUsu.gender = res.data.data.gender;
+        _this.perfilUsu.biography = res.data.data.biography;
+        _this.perfilUsu.last_online = res.data.data.last_online;
 
         _this.obtenerAnimes();
 
@@ -25176,8 +25204,7 @@ var _hoisted_20 = {
 };
 
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "null",
-  disabled: ""
+  value: ""
 }, "Not needed", -1
 /* HOISTED */
 );
@@ -25204,7 +25231,7 @@ var _hoisted_26 = {
 
 var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   disabled: "",
-  value: "null"
+  value: ""
 }, "Please select one", -1
 /* HOISTED */
 );
@@ -25226,8 +25253,7 @@ var _hoisted_31 = {
 };
 
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "null",
-  disabled: ""
+  value: ""
 }, "Not needed", -1
 /* HOISTED */
 );
@@ -29182,8 +29208,7 @@ var _hoisted_19 = {
 };
 
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  disabled: "",
-  value: "null"
+  value: ""
 }, "Not needed", -1
 /* HOISTED */
 );
@@ -29209,8 +29234,8 @@ var _hoisted_25 = {
 };
 
 var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  disabled: "",
-  value: "null"
+  value: "",
+  disabled: ""
 }, "Please select one", -1
 /* HOISTED */
 );
@@ -29232,8 +29257,7 @@ var _hoisted_30 = {
 };
 
 var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  disabled: "",
-  value: "null"
+  value: ""
 }, "Not needed", -1
 /* HOISTED */
 );
@@ -31631,15 +31655,23 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Remove Photo ");
 
 var _hoisted_8 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-5 sm:col-span-3"
 };
 var _hoisted_9 = {
-  "class": "col-span-6 sm:col-span-4"
+  "class": "col-span-5 sm:col-span-3"
+};
+var _hoisted_10 = {
+  "class": "col-span-6 sm:col-span-3"
+};
+var _hoisted_11 = {
+  "class": "col-span-4 sm:col-span-2"
 };
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Saved. ");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"\">Gender</option><option value=\"male\">Male</option><option value=\"female\">Female</option><option value=\"non binary\">Non binary</option><option value=\"other\">Other</option>", 5);
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save ");
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Saved. ");
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_label = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-label");
@@ -31762,6 +31794,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mt-2"
       }, null, 8
       /* PROPS */
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_label, {
+        "for": "bio",
+        value: "Biography"
+      }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+        id: "email",
+        "class": "mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm",
+        style: {
+          "resize": "none"
+        },
+        rows: "3",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.form.bio = $event;
+        })
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.bio]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+        message: $data.form.errors.bio,
+        "class": "mt-2"
+      }, null, 8
+      /* PROPS */
+      , ["message"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        "class": "mt-6 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $data.form.gender = $event;
+        })
+      }, [_hoisted_12], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.gender]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+        message: $data.form.errors.bio,
+        "class": "mt-2"
+      }, null, 8
+      /* PROPS */
       , ["message"])])];
     }),
     actions: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -31770,7 +31834,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "mr-3"
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_10];
+          return [_hoisted_17];
         }),
         _: 1
         /* STABLE */
@@ -31784,7 +31848,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: $data.form.processing
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_11];
+          return [_hoisted_18];
         }),
         _: 1
         /* STABLE */

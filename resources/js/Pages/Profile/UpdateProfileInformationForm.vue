@@ -64,7 +64,7 @@
       </div>
 
       <!-- Name -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-5 sm:col-span-3">
         <jet-label for="name" value="Name" />
         <jet-input
           id="name"
@@ -77,7 +77,7 @@
       </div>
 
       <!-- Email -->
-      <div class="col-span-6 sm:col-span-4">
+      <div class="col-span-5 sm:col-span-3">
         <jet-label for="email" value="Email" />
         <jet-input
           id="email"
@@ -86,6 +86,32 @@
           v-model="form.email"
         />
         <jet-input-error :message="form.errors.email" class="mt-2" />
+      </div>
+
+      <div class="col-span-6 sm:col-span-3">
+        <jet-label for="bio" value="Biography" />
+        <textarea
+          id="email"
+          class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+          style="resize: none"
+          rows="3"
+          v-model="form.bio"
+        />
+        <jet-input-error :message="form.errors.bio" class="mt-2" />
+      </div>
+
+      <div class="col-span-4 sm:col-span-2">
+        <select
+          class="mt-6 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+          v-model="form.gender"
+        >
+          <option value="">Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="non binary">Non binary</option>
+          <option value="other">Other</option>
+        </select>
+        <jet-input-error :message="form.errors.bio" class="mt-2" />
       </div>
     </template>
 
@@ -134,6 +160,8 @@ export default {
         name: this.user.name,
         email: this.user.email,
         photo: null,
+        bio: this.user.biography,
+        gender: this.user.gender ? this.user.gender : "",
       }),
 
       photoPreview: null,
@@ -144,6 +172,10 @@ export default {
     updateProfileInformation() {
       if (this.$refs.photo) {
         this.form.photo = this.$refs.photo.files[0];
+      }
+
+      if (this.form.gender == "") {
+        this.form.gender = null;
       }
 
       this.form.post(route("user-profile-information.update"), {

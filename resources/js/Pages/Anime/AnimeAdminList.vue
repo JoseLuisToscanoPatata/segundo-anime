@@ -149,7 +149,7 @@
                     v-model="datosActual['ageRating']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option value="null" disabled>Not needed</option>
+                    <option value="">Not needed</option>
                     <option>G</option>
                     <option>PG</option>
                     <option>R</option>
@@ -165,7 +165,7 @@
                     v-model="datosActual['status']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option disabled value="null">Please select one</option>
+                    <option disabled value="">Please select one</option>
                     <option>current</option>
                     <option>finished</option>
                     <option>tba</option>
@@ -180,7 +180,7 @@
                     v-model="datosActual['subType']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
-                    <option value="null" disabled>Not needed</option>
+                    <option value="">Not needed</option>
                     <option>ONA</option>
                     <option>OVA</option>
                     <option>TV</option>
@@ -591,6 +591,14 @@ export default {
         }
       }
 
+      if (this.datosActual["ageRating"] == null) {
+        this.datosActual["ageRating"] = "";
+      }
+
+      if (this.datosActual["subType"] == null) {
+        this.datosActual["subType"] = "";
+      }
+
       this.modoAnime = "editar";
       this.operacion = "crearEditar";
     },
@@ -622,11 +630,11 @@ export default {
       datos.append("episodes", this.datosActual["episodes"]);
       datos.append("episodeLength", this.datosActual["episodeLength"]);
 
-      if (this.datosActual["subType"] != null) {
+      if (this.datosActual["subType"] != "") {
         datos.append("subType", this.datosActual["subType"]);
       }
 
-      if (this.datosActual["ageRating"] != null) {
+      if (this.datosActual["ageRating"] != "") {
         datos.append("ageRating", this.datosActual["ageRating"]);
       }
 
@@ -804,7 +812,6 @@ export default {
           this.datosInfo["mensaje"] = err.response.data.message;
           this.datosInfo["mostrar"] = true;
         });
-     
     },
   },
 };
