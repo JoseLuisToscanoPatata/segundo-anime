@@ -209,7 +209,7 @@
                       Account Settings
                     </jet-dropdown-link>
 
-                    <jet-dropdown-link :href="route('FriendsList')">
+                    <jet-dropdown-link :href="route('FriendsList', $page.props.user.id)">
                       Friends
                     </jet-dropdown-link>
 
@@ -448,8 +448,8 @@
               </jet-responsive-nav-link>
 
               <jet-responsive-nav-link
-                :href="route('FriendsList')"
-                :active="route().current('FriendsList')"
+                :href="route('FriendsList', $page.props.user.id)"
+                :active="route().current('FriendsList', $page.props.user.id)"
                 class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
                 :class="{
                   'border-white': route().current('FriendsList'),

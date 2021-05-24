@@ -91,7 +91,7 @@
       <div class="col-span-6 sm:col-span-3">
         <jet-label for="bio" value="Biography" />
         <textarea
-          id="email"
+          id="bio"
           class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
           style="resize: none"
           rows="3"

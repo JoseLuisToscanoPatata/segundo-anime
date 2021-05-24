@@ -32,7 +32,7 @@ class UserFactory extends Factory
             'password' => Hash::make('patata12'), // Utilizamos la contraseña patata12 para todos los usuarios
             'remember_token' => Str::random(10),
             'role' => rand(0,4)? 'user' : 'admin', //Role random, con un cuarto de posibilidad de ser admin
-            'profile_photo_path' =>  $this->faker->imageUrl(),
+            'profile_photo_path' =>  "https://picsum.photos/500/500",
         ];
     }
 

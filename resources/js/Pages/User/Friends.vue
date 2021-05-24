@@ -14,6 +14,6 @@ export default {
     AppLayout,
   },
 
-  props: ["clave"],
+  props: ["clave", "usuLista"],
 };
 </script>

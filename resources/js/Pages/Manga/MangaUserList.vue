@@ -350,7 +350,7 @@ export default {
 
         {
           nombre: "readStatus",
-          titulo: "Your Status",
+          titulo: "User Status",
           tipo: "texto",
           sorteable: false,
           filtrable: false,

@@ -53,8 +53,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('Manga/MangaShow',['manga'=>$id]);
     })->name('MangaProfile');
 
-    route::get('/FriendsList', function () {
-        return Inertia::render('User/Friends');
+    route::get('/FriendsList/{id}', function ($id) {
+        return Inertia::render('User/Friends',['usuLista'=>$id]);
     })->name('FriendsList');
 
     route::get('/MessagesList', function () {
@@ -64,6 +64,14 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     route::get('/UserShow/{id}', function ($id) {
         return Inertia::render('User/UserShow',['perfil'=>$id]);
     })->name('UserShow');
+
+    route::get('/SharedAnimes/{id}', function ($id) {
+        return Inertia::render('Anime/sharedAnimes',['perfil' => $id]);
+    })->name('SharedAnimes');
+
+    route::get('/SharedMangas/{id}', function ($id) {
+        return Inertia::render('Manga/sharedMangas',['perfil'=>$id]);
+    })->name('SharedMangas');
 });
 
 

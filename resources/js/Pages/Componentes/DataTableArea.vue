@@ -255,7 +255,7 @@
 
     <div v-show="datosOrdenados.length == 0 && cargado" class="self-center mt-5 my-8">
       <span class="font-extrabold text-2xl" :class="'text-' + color.color + '-400'"
-        >There is no data to show :(</span
+        >This list is empty :(</span
       >
     </div>
   </div>

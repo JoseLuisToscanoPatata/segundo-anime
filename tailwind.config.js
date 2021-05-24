@@ -16,13 +16,19 @@ module.exports = {
 
             xs2: "450px",
 
+            xs3: "540px",
+
             sm: "640px",
             // => @media (min-width: 640px) { ... }
+
+            sm2:"700px",
 
             doble: "750px",
 
             md: "768px",
             // => @media (min-width: 768px) { ... }
+
+            md2: "850px",
 
             lg: "1024px",
             // => @media (min-width: 1024px) { ... }

@@ -127,14 +127,14 @@ export default {
 
       iconos: [
         {
-          icono: "img/adminLogo.svg",
+          icono: "img/start.svg",
           abbr: "This user is admin, click no remove admin",
           alt: "Admin logo",
           valor: "admin",
           emit: "cambiar-rol",
         },
         {
-          icono: "img/sapato.svg",
+          icono: "img/startNot.svg",
           abbr: "This user is not an admin, click to make him admin",
           alt: "Normal user logo",
           valor: "user",
@@ -234,6 +234,12 @@ export default {
         .then((res) => {
           this.datos = res.data.data;
           this.cargando = false;
+
+          this.datos.forEach((usuario) => {
+            if (usuario.profile_photo_url.includes("https://picsum.photos/500/500")) {
+              usuario.profile_photo_url = usuario.profile_photo_path;
+            }
+          });
         });
     },
 

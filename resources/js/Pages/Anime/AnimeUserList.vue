@@ -353,7 +353,7 @@ export default {
 
         {
           nombre: "watchStatus",
-          titulo: "Your Status",
+          titulo: "User Status",
           tipo: "texto",
           sorteable: false,
           filtrable: false,

@@ -45,17 +45,17 @@ class FriendController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function store(Request $request)
     {
-        if($id != Auth::user()->id) {
+        if($request->id != Auth::user()->id) {
 
-            $user = User::find($id);
+            $user = User::find($request->id);
 
             if(!is_null($user)) {
                 
                 $friend = new Friend;
                 $friend->user1_id = Auth::user()->id;
-                $friend->user2_id = $id;
+                $friend->user2_id = $request->id;
                 $friend->save();
                 
                  return response()->json(["status"=>"success","message" => "Friend invitation sent to that user :)",""],200);
@@ -98,18 +98,18 @@ class FriendController extends Controller
     /**
      * Confirm a friend invitation you recieve (set the confirmation date to now)
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, Request $request)
     {
-        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id);
+        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id)->first();
 
-        if(!is_null($friend)) {
+        if(!is_null($friendship)) {
 
-            if($friend->confirmation_date == NULL) {
-                $friend->confirmation_date = date();
+            if($friendship->confirmation_date == NULL) {
+                $friendship->confirmation_date = now();
+                $friendship->save();
                 return response()->json(["status"=>"success","message" => "You have confirmed his friend invitation :)"],200);
 
             } else {
@@ -129,17 +129,17 @@ class FriendController extends Controller
      */
     public function destroy($id)
     {
-        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id);
+        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id)->first();
 
-        if(is_null($friend)) {
+        if(is_null($friendship)) {
             $friendship = Friend::where('user2_id',$id)->where('user1_id',Auth::user()->id);     
         }
 
-        if(!is_null($friend)) {
+        if(!is_null($friendship)) {
             
-            if(Auth::user()->id == $friend->user1_id  || Auth::user()->id == $friend->user2_id ) {
+            if(Auth::user()->id == $friendship->user1_id  || Auth::user()->id == $friendship->user2_id ) {
 
-                    $friend->delete(); 
+                    $friendship->delete(); 
                     return response()->json(["status"=>"success","message" => "You have deleted this relationship :("],200);
 
                 } else {
