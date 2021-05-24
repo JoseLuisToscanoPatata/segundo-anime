@@ -1,6 +1,6 @@
 <p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mrsaturn3.svg" width="250" height="250"></p>
 
-<p align="center" style="font-size: 22px;">BIG CHUNGUS</p>
+<p align="center" style="font-size: 40px; color: purple; font-weight: 900;">BIG CHUNGUS</p>
 
 ## Sobre Big Chungus
 
