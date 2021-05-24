@@ -47,7 +47,7 @@ Una vez instalado todo lo necesario, habrá que seguir los siguientes pasos:
 
 - Copiar el fichero .env.example, y renombrar la copia a ".env" a secas, dentro de este fichero habrá que establecer la variable APP_URL a "http://localhost:8000", en el caso de querer habiltiar los correos electrónicos, habrá que poner lo siguiente en las siguientes líneas:
 
-<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.jpg" width="200" height="200"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.JPG" width="200" height="200"></p>
 
 Una vez realizado esto, habrá que que poner los siguientes comandos en orden en el directorio inicial del proyecto:
 
