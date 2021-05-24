@@ -11,7 +11,7 @@
 - <p align="justify">Añadir mangas y animes a tus propias listas, pudiendo puntuarlas, añadirlos a favoritos y indicar el estado de la vista.</p>
 - <p align="justify">Posibilidad de tener amigos, enviar mensajes, y comparar tu lista con las de otros usuarios.</p>
 
-<p align="center"> A estas funciones se le incluirán otras nuevas, como pueden ser nueva información sobre los elementos, grupos, análisis, etc. Esto siempre que acabe teniendo ganas de hacerlo :/</p>
+<p align="justify"> A estas funciones se le incluirán otras nuevas, como pueden ser nueva información sobre los elementos, grupos, análisis, etc. Esto siempre que acabe teniendo ganas de hacerlo :/</p>
 
 ## Plataforma
 
@@ -47,7 +47,7 @@ Una vez instalado todo lo necesario, habrá que seguir los siguientes pasos:
 
 - <p align="justify">Copiar el fichero .env.example, y renombrar la copia a ".env" a secas, dentro de este fichero habrá que establecer la variable APP_URL a "http://localhost:8000", en el caso de querer habiltiar los correos electrónicos, habrá que poner lo siguiente en las siguientes líneas:</p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.JPG" width="200" height="350"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.JPG" width="350" height="200"></p>
 
 <p align="justify">Una vez realizado esto, habrá que que poner los siguientes comandos en orden en el directorio inicial del proyecto:</p>
 
