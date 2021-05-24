@@ -1,62 +1,70 @@
 <p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/mrsaturn3.svg" width="250" height="250"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p align="center" style="font-size: 22px;">BIG CHUNGUS</p>
 
-## About Laravel
+## Sobre Big Chungus
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Tal como se explica en nuestra app, Big Chungus es una página web basada en [MyAnimeList] (https://myanimelist.net), la cual toma las principales y más básicas funcionalidades de esta, como pueden ser:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Buscar animes y mangas de entre una gran lista disponible.
+- Obtener información de dichos elementos, como puede ser trailers, nombres, fechas de lanzamiento, nota media, etc..
+- Añadir mangas y animes a tus propias listas, pudiendo puntuarlas, añadirlos a favoritos y indicar el estado de la vista.
+- Posibilidad de tener amigos, enviar mensajes, y comparar tu lista con las de otros usuarios.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<p align="center"> A estas funciones se le incluirán otras nuevas, como pueden ser nueva información sobre los elementos, grupos, análisis, etc. Esto siempre que acabe teniendo ganas de hacerlo :/</p>
 
-## Learning Laravel
+## Plataforma
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Esta aplicación ha sido desarrollada mediante PHP y javascript, utilizando el framework de [Laravel](https://laravel.com) en conjunto con el starter kit de [Jetstream](https://jetstream.laravel.com), el cual nos proporciona multitud de funcionalidades de las que posee nuestra aplicación, como pueden ser:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Proceso completo de Registro y Login de usuarios.
+- Envío de correos electrónicos a los usuarios, tanto para confirmación inicial como para restablecer contraseña.
+- Creación de tokens de autenticación de usuarios, tanto autenticación de usuarios a nuestra API rest como a las vistas de nuestra app.
+- Borrado de sesiones de usuario en los distintos equipos/navegadores.
+- Restablecimiento de contraseña.
+- Autenticación en dos pasos mediante código QR.
 
-## Laravel Sponsors
+Por otro lado, estos frameworks nos proporcionan un fácil sistema de enrutamiento de API y de web, creación de vistas mediante plantillas y componentes [Vue](https://v3.vuejs.org), middlewares, controladores de acceso a nuestra API rest y modelos de acceso a la base de datos, entre otras muchas cosas.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Requisitos
 
-### Premium Partners
+En el caso de que quieras instalar la aplicación en tu equipo (aunque en un principio está pensado utilizar un host gratuito) será necesario disponer de los siguientes componentes en tu equipo:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/)**
-- **[OP.GG](https://op.gg)**
+- [Git](https://git-scm.com), así como una cuenta de [GitHub](https://github.com).
+- PHP 8+ (preferiblemente [XAMPP](https://www.apachefriends.org/es/index.html)).
+- [Composer](https://getcomposer.org)
+- [NPM](https://getcomposer.org)
 
-## Contributing
+También es recomendable tener un editor de texto orientado a programación, como puede ser [Visual Stucio Code](https://code.visualstudio.com), aunque no es estrictamente necesario, pues se pueden ejecutar los comandos desde una consola de comandos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Instalación
 
-## Code of Conduct
+Una vez instalado todo lo necesario, habrá que seguir los siguientes pasos:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Clonar el repositorio actual en un directorio a elegir, en el caso de utilizar XAMPP tendrá que hacerse dentro de una carpeta en el directorio htdocs (en windows) en la carpeta de XAMPP.
 
-## Security Vulnerabilities
+<p align="center">git clone https://github.com/JoseLuisToscanoPatata/segundo-anime.git</p>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Copiar el fichero .env.example, y renombrar la copia a ".env" a secas, dentro de este fichero habrá que establecer la variable APP_URL a "http://localhost:8000", en el caso de querer habiltiar los correos electrónicos, habrá que poner lo siguiente en las siguientes líneas:
 
-## License
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/mail_data.jpg" width="200" height="200"></p>
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Una vez realizado esto, habrá que que poner los siguientes comandos en orden en el directorio inicial del proyecto:
+
+- Composer install
+- npm install
+- php artisan key:generate
+- php artisan config:cache
+- npm run dev
+
+Una vez hecho esto, tendremos que descargar los datos a la base de datos poniendo lo siguiente:
+
+- php artisan migrate:fresh (Para crear la base de datos)
+- php artisan db:seed (Para rellenar las tablas, esto tardará 1-2 horas, pues los datos se obtienen de una API externa, y hay tablas con cientos de miles de datos)
+
+Finalmente, para iniciar la aplicación, tendremos que poner lo siguiente:
+
+- php artisan serve.
+- npm run watch.
+
+Y listo, con esto podremos entrar a nuestra página web poniendo la URL localhost:8000 en nuestro navegador.
