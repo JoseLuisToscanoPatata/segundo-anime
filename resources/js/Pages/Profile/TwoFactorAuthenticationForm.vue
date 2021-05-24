@@ -1,11 +1,11 @@
 <template>
   <jet-action-section>
     <template #title>
-      <div class="text-green-500 font-extrabold">Two Factor Authentication</div>
+      <div class="text-pink-500 font-extrabold">Two Factor Authentication</div>
     </template>
 
     <template #description>
-      <div class="text-green-400 font-bold">
+      <div class="text-pink-400 font-bold">
         Add additional security to your account using two factor authentication.
       </div>
     </template>
@@ -64,7 +64,7 @@
             <jet-button
               type="button"
               :class="{ 'opacity-25': enabling }"
-              class="bg-green-400 hover:bg-green-500 text-white"
+              class="bg-pink-400 hover:bg-pink-500 text-white"
               :disabled="enabling"
             >
               Enable
@@ -81,7 +81,7 @@
 
           <jet-confirms-password @confirmed="showRecoveryCodes">
             <jet-secondary-button
-              class="mr-3 bg-green-400 hover:bg-green-500 text-white"
+              class="mr-3 bg-pink-400 hover:bg-pink-500 text-white"
               v-if="recoveryCodes.length === 0"
             >
               Show Recovery Codes

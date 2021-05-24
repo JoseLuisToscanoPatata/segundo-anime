@@ -11,6 +11,11 @@ class Anime extends Model
 
     protected $table = 'animes';
 
+     /**
+      * Relationship between user and animes
+      *
+      * @return Illuminate\Database\Eloquent\Model Every user who has seen that anime, with that anime info included
+      */
     public function users() {
         return $this->belongsToMany(User::class,'watches')->withPivot('watchStatus','score','favourite');
     }

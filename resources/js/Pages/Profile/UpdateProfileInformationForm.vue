@@ -1,11 +1,11 @@
 <template>
   <jet-form-section @submitted="updateProfileInformation">
     <template #title>
-      <div class="font-extrabold text-red-500">Profile Information</div>
+      <div class="font-extrabold text-lime-500">Profile Information</div>
     </template>
 
     <template #description>
-      <div class="font-bold text-red-400">
+      <div class="font-bold text-lime-400">
         Update your account's profile information and email address.
       </div>
     </template>
@@ -44,7 +44,7 @@
         </div>
 
         <jet-secondary-button
-          class="mt-2 mr-2 text-white bg-red-400 hover:bg-red-600"
+          class="mt-2 mr-2 text-white bg-lime-400 hover:bg-lime-600"
           type="button"
           @click.prevent="selectNewPhoto"
         >
@@ -53,7 +53,7 @@
 
         <jet-secondary-button
           type="button"
-          class="mt-2 text-white bg-red-400 hover:bg-red-600"
+          class="mt-2 text-white bg-lime-400 hover:bg-lime-600"
           @click.prevent="deletePhoto"
           v-if="user.profile_photo_path"
         >
@@ -121,7 +121,7 @@
       </jet-action-message>
 
       <jet-button
-        class="bg-red-400 hover:bg-red-600"
+        class="bg-lime-400 hover:bg-lime-600"
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing"
       >

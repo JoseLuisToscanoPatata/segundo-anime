@@ -80,7 +80,7 @@
               ]"
               class="z-10 top-0 sticky"
             >
-              <span :class="campo.color">{{ campo.titulo }}</span>
+              <span :class="'text-' + color.color + '-600'">{{ campo.titulo }}</span>
 
               <button
                 @click="(paginacion = 0), ordenar(campo.nombre)"

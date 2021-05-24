@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#E5E7EB">
+  <app-layout color="#A3E635">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ perfilUsu.name }} Profile
@@ -16,12 +16,12 @@
       />
 
       <div
-        class="flex flex-col xs3:flex-row p-6 bg-gray-100 rounded-lg justify-start items-start"
+        class="flex flex-col xs3:flex-row p-6 bg-lime-100 rounded-lg justify-start items-start"
         v-if="!cargando"
       >
         <jet-dialog-modal :show="creandoMensaje" @close="creandoMensaje = false">
           <template #title>
-            <span class="text-gray-600 font-bold"
+            <span class="text-lime-600 font-bold"
               >Send Message to {{ perfilUsu.name }}
             </span>
           </template>
@@ -30,7 +30,7 @@
             <form @submit.prevent="enviarMensaje">
               <textarea
                 id="mensaje"
-                class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                class="mt-1 block w-full border-lime-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                 style="resize: none"
                 rows="5"
                 v-model="mensaje"
@@ -49,7 +49,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-gray-700 hover:bg-gray-800"
+              class="mt-2 ml-2 text-white bg-lime-700 hover:bg-lime-800"
               type="button"
               @click.prevent="enviarMensaje"
             >
@@ -96,12 +96,12 @@
           />
 
           <div
-            class="flex flex row justify-evenly items-center w-full mb-2 pb-3 border-b-2 border-gray-500"
+            class="flex flex row justify-evenly items-center w-full mb-2 pb-3 border-b-2 border-lime-500"
             v-if="perfil != usuario.id"
           >
             <div :class="estilosBotones" @click="pulsadoMensaje">
               <img src="/img/sendMessage.svg" class="w-auto h-7" alt="send message" />
-              <span class="text-gray-600 text-sm">Message</span>
+              <span class="text-lime-600 text-sm">Message</span>
             </div>
 
             <div
@@ -110,7 +110,7 @@
               @click="cambiarAmigo"
             >
               <img src="/img/addFriend.svg" class="w-auto h-7" alt="Accept friend" />
-              <span class="text-gray-600 text-sm">Accept</span>
+              <span class="text-lime-600 text-sm">Accept</span>
             </div>
 
             <div
@@ -119,7 +119,7 @@
               @click="cambiarAmigo"
             >
               <img src="/img/remove-friend.svg" class="w-auto h-7" alt="Remove friend" />
-              <span class="text-gray-600 text-sm">Remove</span>
+              <span class="text-lime-600 text-sm">Remove</span>
             </div>
 
             <div
@@ -128,7 +128,7 @@
               @click="cambiarAmigo"
             >
               <img src="/img/addFriend.svg" class="w-auto h-7" alt="Invite user" />
-              <span class="text-gray-600 text-sm">Invite</span>
+              <span class="text-lime-600 text-sm">Invite</span>
             </div>
 
             <div
@@ -137,42 +137,44 @@
               @click="cambiarAmigo"
             >
               <img src="/img/addFriend.svg" class="w-auto h-7" alt="Invited user" />
-              <span class="text-gray-600 text-sm">Invited</span>
+              <span class="text-lime-600 text-sm">Invited</span>
             </div>
           </div>
 
-          <div class="flex flex-row justify-between items-center w-full text-gray-600">
-            <span class="font-semibold">Last Online</span>
-            <span
-              v-if="perfilUsu.last_online == 'now'"
-              class="font-semibold text-lime-500"
-              >{{ perfilUsu.last_online }}</span
-            >
-            <span v-else>{{ perfilUsu.last_online }}</span>
-          </div>
+          <div class="flex flex-col justify-evenly w-44 xs3:w-full text-gray-500">
+            <div class="flex flex-row justify-between items-center w-full text-lime-600">
+              <span class="font-semibold">Last Online</span>
+              <span
+                v-if="perfilUsu.last_online == 'now'"
+                class="font-semibold text-lime-500"
+                >{{ perfilUsu.last_online }}</span
+              >
+              <span v-else>{{ perfilUsu.last_online }}</span>
+            </div>
 
-          <div class="flex flex-row justify-between items-cente w-full text-gray-600">
-            <span class="font-semibold">Gender</span>
-            <span>{{ perfilUsu.gender }}</span>
+            <div class="flex flex-row justify-between items-cente w-full text-lime-600">
+              <span class="font-semibold">Gender</span>
+              <span>{{ perfilUsu.gender }}</span>
+            </div>
+
+            <div class="flex flex-row justify-between items-center w-full text-lime-600">
+              <span class="font-semibold">Joined</span>
+              <span>{{ perfilUsu.joined }}</span>
+            </div>
           </div>
 
           <div
-            class="flex flex-row justify-between items-center w-full pb-2 border-b-2 border-gray-500 text-gray-600"
+            class="flex flex row justify-evenly items-center mt-2 pt-2 border-t-2 border-lime-500 w-full"
           >
-            <span class="font-semibold">Joined</span>
-            <span>{{ perfilUsu.joined }}</span>
-          </div>
-
-          <div class="flex flex row justify-evenly items-center mt-2">
             <jet-button
-              class="text-white bg-rose-500 hover:bg-rose-600 text-white mr-2"
+              class="text-white bg-purple-500 hover:bg-purple-600 text-white mr-2"
               @click="listaAnime"
             >
               Anime List
             </jet-button>
 
             <jet-button
-              class="text-white bg-pink-500 hover:bg-pink-600 text-white"
+              class="text-white bg-yellow-500 hover:bg-yellow-600 text-white"
               @click="listaManga"
             >
               Manga List
@@ -184,34 +186,34 @@
             v-if="perfil != usuario.id"
           >
             <span
-              class="font-bold text-lg w-full border-gray-500 text-gray-500 border-b-2 my-4"
+              class="font-bold text-lg w-full border-lime-500 text-lime-500 border-b-2 my-4"
               >Affinity to you</span
             >
 
-            <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-row justify-between items-center w-full text-gray-500">
               <span>Anime: {{ afinidadAnimes100 }} % </span>
               <span
-                class="text-rose-400 text-xs cursor-pointer hover:underline"
+                class="text-purple-400 text-xs cursor-pointer hover:underline"
                 v-if="afinidadAnimes > 0"
                 ><a :href="route('SharedAnimes', perfil)"
                   >({{ afinidadAnimes }} shared)</a
                 >
               </span>
-              <span class="text-rose-400 text-xs" v-else
+              <span class="text-purple-400 text-xs" v-else
                 >({{ afinidadAnimes }} shared)
               </span>
             </div>
 
-            <div class="flex flex-row justify-between items-center w-full">
+            <div class="flex flex-row justify-between items-center w-full text-gray-500">
               <span>Manga: {{ afinidadMangas100 }} % </span>
               <span
-                class="text-pink-400 text-xs cursor-pointer hover:underline"
+                class="text-yellow-400 text-xs cursor-pointer hover:underline"
                 v-if="afinidadMangas > 0"
                 ><a :href="route('SharedMangas', perfil)"
                   >({{ afinidadMangas }} shared)</a
                 >
               </span>
-              <span class="text-pink-400 text-xs" v-else
+              <span class="text-yellow-400 text-xs" v-else
                 >({{ afinidadMangas }} shared)
               </span>
             </div>
@@ -219,7 +221,7 @@
 
           <div class="flex flex-col justify-evenly items-start w-full">
             <div
-              class="flex flex-row text-gray-500 justify-between border-gray-500 w-full border-b-2 my-4"
+              class="flex flex-row text-lime-500 justify-between border-lime-500 w-full border-b-2 my-4"
             >
               <span class="font-bold text-lg">Friends</span>
               <span
@@ -251,32 +253,32 @@
                 </template>
               </div>
             </div>
-            <span v-else>This user has no friends :(</span>
+            <span v-else class="text-gray-500">This user has no friends :(</span>
           </div>
         </div>
 
         <div class="flex flex-col justfy-start items-start w-full max-w-full xs3:ml-5">
           <span
-            class="font-bold text-lg border-b-2 text-gray-500 border-gray-500 mb-2 w-full xs3:w-max"
+            class="font-bold text-lg border-b-2 text-lime-500 border-lime-500 mb-2 w-full xs3:w-max"
             >{{ perfilUsu.name }} Bio</span
           >
 
-          <div class="max-h-32 xs3:max-h-20 overflox-y-auto mb-3">
+          <div class="max-h-32 xs3:max-h-20 overflox-y-auto mb-3 text-gray-500">
             {{ perfilUsu.biography }}
           </div>
 
           <span
-            class="border-b-2 border-gray-500 text-gray-500 font-bold text-lg mb-2 w-full"
+            class="border-b-2 border-lime-500 text-lime-500 font-bold text-lg mb-2 w-full"
           >
             Stadistics</span
           >
 
           <div class="w-full flex flex-col xs:flex-row" v-if="userAnimes.length > 0">
             <div
-              class="flex flex-col text-rose-400 items-center xs3:items-start justify-evenly w-full xs:w-32 sm:w-40 md2:w-72 flex-shrink-0"
+              class="flex flex-col text-purple-400 items-center xs3:items-start justify-evenly w-full xs:w-32 sm:w-40 md2:w-72 flex-shrink-0"
             >
               <span
-                class="border-b-2 border-rose-400 font-semibold mb-2 w-full text-center xs3:text-left"
+                class="border-b-2 border-purple-400 font-semibold mb-2 w-full text-center xs3:text-left"
               >
                 Anime stats</span
               >
@@ -311,10 +313,10 @@
             </div>
 
             <div
-              class="flex flex-col text-rose-400 items-center xs3:justify-start justify-evenly flex-shrink mt-3 xs:mt-0 w-full"
+              class="flex flex-col text-purple-400 items-center xs3:justify-start justify-evenly flex-shrink mt-3 xs:mt-0 w-full"
             >
               <span
-                class="border-b-2 border-rose-400 font-semibold mb-2 w-full xs3:pl-3 text-center xs3:text-left"
+                class="border-b-2 border-purple-400 font-semibold mb-2 w-full xs3:pl-3 text-center xs3:text-left"
               >
                 Last updates</span
               >
@@ -360,9 +362,9 @@
             </div>
           </div>
 
-          <div v-else class="w-full text-pink-400 flex flex-col items-start">
+          <div v-else class="w-full text-purple-400 flex flex-col items-start">
             <span
-              class="border-b-2 border-pink-400 font-semibold mb-2 w-full mb-2 xs3:mb-5"
+              class="border-b-2 border-purple-400 font-semibold mb-2 w-full mb-2 xs3:mb-5"
             >
               Anime stadistics</span
             >
@@ -372,10 +374,10 @@
           </div>
           <div class="w-full flex flex-col xs:flex-row" v-if="userMangas.length > 0">
             <div
-              class="flex flex-col text-pink-400 items-center xs3:items-start justify-evenly w-full xs:w-32 sm:w-40 md2:w-72 flex-shrink-0"
+              class="flex flex-col text-yellow-400 items-center xs3:items-start justify-evenly w-full xs:w-32 sm:w-40 md2:w-72 flex-shrink-0"
             >
               <span
-                class="border-b-2 border-pink-400 font-semibold mb-2 w-full text-center xs3:text-left"
+                class="border-b-2 border-yellow-400 font-semibold mb-2 w-full text-center xs3:text-left"
               >
                 Manga stats</span
               >
@@ -410,10 +412,10 @@
             </div>
 
             <div
-              class="flex flex-col text-pink-400 items-center xs3:justify-start justify-evenly flex-shrink mt-3 xs:mt-0 w-full"
+              class="flex flex-col text-yellow-400 items-center xs3:justify-start justify-evenly flex-shrink mt-3 xs:mt-0 w-full"
             >
               <span
-                class="border-b-2 border-pink-400 font-semibold mb-2 w-full xs3:pl-3 text-center xs3:text-left"
+                class="border-b-2 border-yellow-400 font-semibold mb-2 w-full xs3:pl-3 text-center xs3:text-left"
               >
                 Last updates</span
               >
@@ -459,9 +461,9 @@
             </div>
           </div>
 
-          <div v-else class="w-full text-pink-400 flex flex-col items-start">
+          <div v-else class="w-full text-yellow-400 flex flex-col items-start">
             <span
-              class="border-b-2 border-pink-400 font-semibold mb-2 w-full mb-2 xs3:mb-5"
+              class="border-b-2 border-yellow-400 font-semibold mb-2 w-full mb-2 xs3:mb-5"
             >
               Manga stadistics</span
             >
@@ -471,7 +473,7 @@
           </div>
 
           <span
-            class="border-b-2 border-gray-500 text-gray-500 font-bold text-lg mt-3 xs3:mt-0 mb-2 w-full"
+            class="border-b-2 border-lime-500 text-lime-500 font-bold text-lg mt-3 xs3:mt-0 mb-2 w-full"
           >
             Favourites</span
           >
@@ -481,7 +483,7 @@
               class="flex flex-col col-span-6 items-center justify-evenly xs3:mr-2 max-w-full"
             >
               <span
-                class="border-b-2 border-rose-400 text-rose-400 font-semibold mb-2 w-full"
+                class="border-b-2 border-purple-400 text-purple-400 font-semibold mb-2 w-full"
               >
                 Anime</span
               >
@@ -508,7 +510,7 @@
                 </div>
               </div>
 
-              <span v-else class="text-rose-400"
+              <span v-else class="text-purple-400"
                 >This user has no favourites animes :(</span
               >
             </div>
@@ -517,7 +519,7 @@
               class="flex flex-col col-span-6 items-center justify-evenly xs3:ml-2 max-w-full"
             >
               <span
-                class="border-b-2 border-pink-400 text-pink-400 mt-3 xs3:mt-0 font-semibold mb-2 w-full"
+                class="border-b-2 border-yellow-400 text-yellow-400 mt-3 xs3:mt-0 font-semibold mb-2 w-full"
               >
                 Manga</span
               >
@@ -544,7 +546,7 @@
                 </div>
               </div>
 
-              <span v-else class="text-pink-400"
+              <span v-else class="text-yellow-400"
                 >This user has no favourites mangas :(</span
               >
             </div>
@@ -552,7 +554,7 @@
         </div>
       </div>
 
-      <loading v-else color="warmGray" />
+      <loading v-else color="lime" />
     </div>
   </app-layout>
 </template>
@@ -640,10 +642,10 @@ export default {
       },
 
       estilosBotones:
-        "border-gray-700 hover:bg-gray-400 bg-gray-300 border-2 rounded-md flex flex-col justify-evenly items-center cursor-pointer px-3 pb-1 pt-2 transition duration-300 ease-in-out",
+        "border-lime-700 hover:bg-lime-400 bg-lime-300 border-2 rounded-md flex flex-col justify-evenly items-center cursor-pointer px-3 pb-1 pt-2 transition duration-300 ease-in-out",
 
       estiloBotonInvitado:
-        "border-gray-700 bg-gray-300 border-2 rounded-md flex flex-col justify-evenly items-center px-3 pb-1 pt-2 opacity-60",
+        "border-lime-700 bg-lime-300 border-2 rounded-md flex flex-col justify-evenly items-center px-3 pb-1 pt-2 opacity-60",
 
       amigos: [],
 
@@ -1120,7 +1122,7 @@ export default {
           })
           .then((res) => {
             this.solicitudAmistad = "enviadaYo";
-            this.datosInfo["color"] = "gray";
+            this.datosInfo["color"] = "lime";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
@@ -1145,7 +1147,7 @@ export default {
           })
           .then((res) => {
             this.solicitudAmistad = "amigos";
-            this.datosInfo["color"] = "gray";
+            this.datosInfo["color"] = "lime";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
@@ -1170,7 +1172,7 @@ export default {
         })
         .then((res) => {
           this.solicitudAmistad = null;
-          this.datosInfo["color"] = "gray";
+          this.datosInfo["color"] = "lime";
           this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;
@@ -1197,7 +1199,7 @@ export default {
           },
         })
         .then((res) => {
-          this.datosInfo["color"] = "gray";
+          this.datosInfo["color"] = "lime";
           this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;

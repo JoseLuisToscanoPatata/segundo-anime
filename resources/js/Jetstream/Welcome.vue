@@ -50,10 +50,10 @@
         </div>
       </div>
 
-      <div class="p-4 bg-red-400 border-4 border-red-600">
+      <div class="p-4 bg-yellow-400 border-4 border-yellow-600">
         <div class="flex items-center">
           <img src="img/list.svg" alt="" class="w-8 h-8" />
-          <div class="ml-4 text-lg text-red-600 leading-7 font-semibold">
+          <div class="ml-4 text-lg text-yellow-600 leading-7 font-semibold">
             Add to your list
           </div>
         </div>
@@ -69,7 +69,7 @@
               <div class="mt-3 flex items-center text-sm font-semibold text-red-700">
                 <div>Check your list</div>
 
-                <div class="ml-1 text-red-500">
+                <div class="ml-1 text-yellow-500">
                   <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
                     <path
                       fill-rule="evenodd"
@@ -87,7 +87,7 @@
               <div class="mt-3 flex items-center text-sm font-semibold text-red-700">
                 <div>Check your list</div>
 
-                <div class="ml-1 text-red-500">
+                <div class="ml-1 text-yellow-500">
                   <svg viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
                     <path
                       fill-rule="evenodd"
@@ -119,10 +119,10 @@
         </div>
       </div>
 
-      <div class="p-4 bg-green-300 border-4 border-green-500">
+      <div class="p-4 bg-pink-300 border-4 border-pink-500">
         <div class="flex items-center">
           <img src="img/friend.svg" alt="" class="w-8 h-8" />
-          <div class="ml-4 text-lg text-green-500 leading-7 font-semibold">
+          <div class="ml-4 text-lg text-pink-500 leading-7 font-semibold">
             Social media
           </div>
         </div>

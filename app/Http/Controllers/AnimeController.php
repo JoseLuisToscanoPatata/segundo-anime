@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\File;
 class AnimeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get every anime on the database
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,9 +30,9 @@ class AnimeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created anime in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request Anime data
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -58,6 +58,8 @@ class AnimeController extends Controller
             }
 
             $anime = new Anime;
+
+            //Los campos que no son obligatorio (con validación sometimes) se establecerán a null en caso de que no se pase ninguno
 
             $anime->title = $request->title;
 
@@ -107,6 +109,8 @@ class AnimeController extends Controller
             $anime->save();
 
             $image = $request->file('cover');
+
+            //Si hemos introducido una imagen, la guardamos en el storage y establecemos como nombre de imagen la url de la imagen
             
                 if($image) {
 
@@ -129,9 +133,9 @@ class AnimeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get the data of the anime.
      *
-     * @param  int  $id
+     * @param  int  $id Database Ip of the given anime to show
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -147,16 +151,15 @@ class AnimeController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified anime in storage, given the id and the request with the new data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request New anime info
+     * @param  int  $id Database Ip of the given anime to update
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
     {
            if(Auth::user()->role=="admin") {
-
 
             $anime = Anime::find($id);
 
@@ -255,9 +258,9 @@ class AnimeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete an anime from the database.
      *
-     * @param  int  $id
+     * @param  int  $id Database Ip of the given anime to delete
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

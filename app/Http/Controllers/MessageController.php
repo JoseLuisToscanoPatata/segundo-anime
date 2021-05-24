@@ -40,7 +40,7 @@ class MessageController extends Controller
     /**
      * Send a new message
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request message and user of the new message
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +72,7 @@ class MessageController extends Controller
     /**
      * Display a message you belong to
      *
-     * @param  int  $id
+     * @param  int  $id Database Id of the message you want to show
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -95,7 +95,7 @@ class MessageController extends Controller
     /**
      * Delete a message you have created
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the message you want to delete
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

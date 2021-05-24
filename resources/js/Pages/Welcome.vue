@@ -14,7 +14,7 @@
 
         <div
           @click="login"
-          class="mx-5 px-5 text-pink-600 text-xl font-bold bg-pink-400 hover:bg-pink-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out cursor-pointer"
+          class="mx-5 px-5 text-yellow-600 text-xl font-bold bg-yellow-400 hover:bg-yellow-700 hover:text-white rounded-3xl rounded-t-none transition-all ease-in-out cursor-pointer"
         >
           LOGIN
         </div>

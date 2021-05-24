@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\File;
 class MangaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get every manga on the database
      *
      * @return \Illuminate\Http\Response
      */
@@ -29,9 +29,9 @@ class MangaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created anime in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request Anime data
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -53,6 +53,8 @@ class MangaController extends Controller
             if($validator->fails()) {
                 return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
             }
+
+            //Los campos que no son obligatorio (con validación sometimes) se establecerán a null en caso de que no se pase ninguno
 
             $manga = new Manga;
 
@@ -97,6 +99,8 @@ class MangaController extends Controller
 
             $image = $request->file('cover');
 
+                //Si hemos introducido una imagen, la guardamos en el storage y establecemos como nombre de imagen la url de la imagen
+
                 if($image) {
 
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
@@ -118,9 +122,9 @@ class MangaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get the data of the manga.
      *
-     * @param  int  $id
+     * @param  int  $id Database Ip of the given manga to show
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -135,11 +139,11 @@ class MangaController extends Controller
             }
     }
 
-    /**
-     * Update the specified resource in storage.
+ /**
+     * Update the specified manga in storage, given the id and the request with the new data
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request New manga info
+     * @param  int  $id Database Ip of the given manga to update
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
@@ -234,10 +238,10 @@ class MangaController extends Controller
           }
     }
 
-    /**
-     * Remove the specified resource from storage.
+   /**
+     * Delete a manga from the database.
      *
-     * @param  int  $id
+     * @param  int  $id Database Ip of the given manga to delete
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

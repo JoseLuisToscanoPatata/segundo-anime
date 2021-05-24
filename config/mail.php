@@ -33,14 +33,28 @@ return [
     |
     */
 
+
+    /**
+     * Configuración a utilizar en el fichero .env
+     * 
+     * MAIL_MAILER=smtp
+    *MAIL_HOST=smtp.gmail.com
+    *MAIL_PORT=587
+    *MAIL_USERNAME=ejemplogimnasio@gmail.com
+    *MAIL_PASSWORD=pixgledhjragixzu
+    *MAIL_ENCRYPTION=tls
+    *MAIL_FROM_ADDRESS=ejemplogimnasio@gmail.com
+    *MAIL_FROM_NAME="${APP_NAME}"
+     */
+
     'mailers' => [
         'smtp' => [
-            'transport' => 'smtp',
-            'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-            'port' => env('MAIL_PORT', 587),
-            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
+            'transport' => 'smtp', //Transport
+            'host' => 'smtp.gmail.com', //Host
+            'port' => 587, //puerto
+            'encryption' => 'tls', //Encriptación
+            'username' => 'ejemplogimnasio@gmail.com', //Correo desde el que enviamos el correo
+            'password' => 'pixgledhjragixzu', //Contraseña dle correo encriptada
             'timeout' => null,
         ],
 

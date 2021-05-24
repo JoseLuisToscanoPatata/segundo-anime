@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#F43F5E">
+  <app-layout color="#A78BFA">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ANIME</h2>
     </template>
@@ -16,14 +16,14 @@
 
       <jet-dialog-modal :show="añadiendo" @close="añadiendo = false">
         <template #title>
-          <span class="text-rose-500 font-bold">ANIME ADD FORM </span>
+          <span class="text-purple-500 font-bold">ANIME ADD FORM </span>
         </template>
 
         <template #content>
           <form @submit.prevent="crear">
             <div class="flex flex-col sm:flex-row m-5 justify-evenly">
               <div class="text-center sm:max-w-sm">
-                <span class="font-semibold text-lg text-rose-400 text-center">{{
+                <span class="font-semibold text-lg text-purple-400 text-center">{{
                   nuevo["title"]
                 }}</span>
 
@@ -102,7 +102,7 @@
           </jet-secondary-button>
 
           <jet-secondary-button
-            class="mt-2 ml-2 text-white bg-rose-400 hover:bg-rose-600"
+            class="mt-2 ml-2 text-white bg-purple-400 hover:bg-purple-600"
             type="button"
             @click.prevent="crear"
           >
@@ -125,7 +125,7 @@
       >
       </data-grid-area>
 
-      <loading v-else color="rose"></loading>
+      <loading v-else color="purple"></loading>
     </div>
   </app-layout>
 </template>
@@ -176,8 +176,8 @@ export default {
       year: "",
 
       colores: {
-        color: "rose",
-        hexa: " rgb(254, 205, 211)",
+        color: "purple",
+        hexa: "#DDD6FE;",
       },
 
       filtros: [

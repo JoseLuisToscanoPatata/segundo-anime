@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'links' => [
+    'links' => [ //Links utilizados entre la carpeta storage y la carpeta public, usados para acceder y almacenar nuevas imágenes
         public_path('storage') => storage_path('app/public'),
         public_path('storage/profile-photos') => storage_path('app/public/profile-photos'),
         public_path('storage/manga-photos') => storage_path('app/public/manga-photos'),

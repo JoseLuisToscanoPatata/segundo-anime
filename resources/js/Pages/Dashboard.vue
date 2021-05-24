@@ -1,12 +1,12 @@
 <template>
-  <app-layout color="#d61dc9;">
+  <app-layout color="#EC4899;">
     <template #header>
       <h2 class="text-xl text-gray-800 leading-tight">BIG CHUNGUS</h2>
     </template>
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
       <div
-        class="p-6 bg-fuchsia-100 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
+        class="p-6 bg-pink-100 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
       >
         <template v-if="!cargando">
           <div
@@ -450,13 +450,13 @@ export default {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #d61dc9;
+  background: #ec4899;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #a7189d;
+  background: #ed4197;
 }
 
 ::-webkit-scrollbar-track-piece {

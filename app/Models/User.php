@@ -60,15 +60,31 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    /**
+      * Relationship between user and animes
+      *
+      * @return Illuminate\Database\Eloquent\Model Every anime seen by that user, with that anime info included
+      */
     public function animes() {
         return $this->belongsToMany(Anime::class,'watches')->withPivot('watchStatus','score','favourite');
     }
 
+    /**
+      * Relationship between user and mangas
+      *
+      * @return Illuminate\Database\Eloquent\Model Every manga seen by that user, with that manga info included
+      */
     public function mangas() {
         return $this->belongsToMany(Manga::class,'reades')->withPivot('readStatus','score','favourite');
     }
 
 
+    /**
+     * Relationship between users
+     *
+     * @param boolean $confirmado Value that define if you want to get accepted or not accepted friendships
+     * @return Illuminate\Database\Eloquent\Model Every friendship the user has started
+     */
     function friendsOfMine($confirmado)
     {
         if($confirmado == true) {
@@ -83,7 +99,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
-    // friendship that I was invited to 
+       /**
+     * Relationship between users
+     *
+     * @param boolean $confirmado Value that define if you want to get accepted or not accepted friendships
+     * @return Illuminate\Database\Eloquent\Model Every friendship the user was invited to
+     */
     function friendOf($confirmado)
     {
       if($confirmado == true) {
@@ -97,7 +118,12 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
-    // accessor allowing you call $user->friends
+
+    /**
+     * Functions that allows you to call $user->friends relationship
+     *
+     * @return void
+     */
     public function getFriendsAttribute()
     {
         if ( ! array_key_exists('friends', $this->relations)) $this->loadFriends();

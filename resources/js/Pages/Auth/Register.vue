@@ -89,7 +89,7 @@
         </inertia-link>
 
         <jet-button
-          class="bg-red-300 hover:bg-red-500 ml-4"
+          class="bg-pink-300 hover:bg-pink-500 ml-4"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >

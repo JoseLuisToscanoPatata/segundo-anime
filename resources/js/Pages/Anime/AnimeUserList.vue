@@ -23,7 +23,7 @@
 
             <div class="block mt-4">
               <label class="flex items-start">
-                <jet-checkbox v-model="saltarModal" class="text-pink-400" />
+                <jet-checkbox v-model="saltarModal" class="text-purple-400" />
                 <span class="ml-2 text-sm text-gray-600">Dont ask me again lol</span>
               </label>
             </div>
@@ -293,7 +293,6 @@ export default {
           tipo: "imagen",
           sorteable: false,
           filtrable: false,
-          color: "text-violet-500",
           width: "min-width: 80px",
           alineacion: "justificado",
         },
@@ -303,7 +302,6 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-purple-500",
           width: "min-width: 250px; max-width: 250px;",
           alineacion: "izquierda",
         },
@@ -313,7 +311,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-violet-600",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -324,7 +321,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-purple-400",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -335,7 +331,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-purple-700",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -346,7 +341,6 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-violet-400",
           width: "min-width: 100px; max-width: 100px",
           alineacion: "izquierda",
         },
@@ -357,7 +351,6 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-purple-600",
           width: "min-width: 150px",
           alineacion: "izquierda",
         },
@@ -368,7 +361,6 @@ export default {
           tipo: "botones",
           sorteable: false,
           filtrable: false,
-          color: "text-violet-800",
           width: "min-width: 125px",
           alineacion: "centrado",
         },

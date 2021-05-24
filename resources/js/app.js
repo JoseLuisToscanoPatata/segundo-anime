@@ -3,7 +3,7 @@ require("./bootstrap");
 // Import modules...
 
 import { createApp, h } from "vue";
-import { Doughnut } from "vue3-chart-v2";
+import { Doughnut } from "vue3-chart-v2"; //Modulo de las gráficas
 
 import {
     App as InertiaApp,
@@ -21,7 +21,7 @@ createApp({
         }),
 })
     .mixin({ methods: { route } })
-    .use(InertiaPlugin,Doughnut)
+    .use(InertiaPlugin,Doughnut) //Añadimos el modulo de la gráfica con forma de donut
     .mount(el);
 
 InertiaProgress.init({ color: "#4B5563" });

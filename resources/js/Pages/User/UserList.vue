@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#FB923C">
+  <app-layout color="#84CC16">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN USERS LIST</h2>
     </template>
@@ -60,7 +60,7 @@
       </template>
 
       <template v-else>
-        <loading color="orange"></loading>
+        <loading color="lime"></loading>
       </template>
     </div>
   </app-layout>
@@ -104,8 +104,8 @@ export default {
       imagenes: "h-10 w-10 rounded-full m-1",
 
       colores: {
-        color: "orange",
-        hexa: "border:  #FED7AA;",
+        color: "lime",
+        hexa: "border:  #A3E635;",
       },
 
       botones: [
@@ -127,14 +127,14 @@ export default {
 
       iconos: [
         {
-          icono: "img/start.svg",
+          icono: "img/star.svg",
           abbr: "This user is admin, click no remove admin",
           alt: "Admin logo",
           valor: "admin",
           emit: "cambiar-rol",
         },
         {
-          icono: "img/startNot.svg",
+          icono: "img/starNot.svg",
           abbr: "This user is not an admin, click to make him admin",
           alt: "Normal user logo",
           valor: "user",
@@ -149,7 +149,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-orange-500",
           width: "min-width: 60px",
           alineacion: "izquierda",
         },
@@ -160,7 +159,6 @@ export default {
           tipo: "imagen",
           sorteable: false,
           filtrable: false,
-          color: "text-orange-700",
           width: "min-width: 65px",
           alineacion: "izquierda",
         },
@@ -170,7 +168,6 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-orange-400",
           width: "min-width: 215px",
           alineacion: "izquierda",
         },
@@ -180,7 +177,6 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-orange-800",
           width: "min-width: 325px",
           alineacion: "izquierda",
         },
@@ -190,7 +186,6 @@ export default {
           tipo: "date",
           sorteable: true,
           filtrable: false,
-          color: "text-orange-600",
           width: "min-width: 315px",
           alineacion: "izquierda",
         },
@@ -201,7 +196,6 @@ export default {
           tipo: "botones",
           sorteable: false,
           filtrable: false,
-          color: "text-orange-300",
           width: "min-width: 125px",
           alineacion: "centrado",
         },

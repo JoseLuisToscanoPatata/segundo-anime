@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 class ReadController extends Controller
 {
       /**
-     * Get all animes in an user list
+     * Get all mangas in an user list
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,9 +34,9 @@ class ReadController extends Controller
     }
 
     /**
-     * Add a new anime to the current user list.
+     * Add a new manga to the current user list.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request New read status
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -90,7 +90,8 @@ class ReadController extends Controller
     /**
      * Get the manga read status from any user
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the manga you want to show from an user list
+     * @param int $user Database ip of the user which list you want to show a manga
      * @return \Illuminate\Http\Response
      */
     public function show($id,$user)
@@ -106,10 +107,11 @@ class ReadController extends Controller
     }
 
     /**
-     * Update the specified manga read status form an user
+     * Update the specified manga read status, score or favourite from an user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request New status info
+     * @param  int  $id Database ip of the manga you want to update from an user list
+     * @param int $user Database ip of the user which list you want to update a manga
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id, $user)
@@ -158,7 +160,8 @@ class ReadController extends Controller
     /**
      * Delete the manga from an user list.
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the manga you want to remove from an user list
+     * @param int $user Database ip of the user which list you want to remove the manga
      * @return \Illuminate\Http\Response
      */
     public function destroy($id,$user)

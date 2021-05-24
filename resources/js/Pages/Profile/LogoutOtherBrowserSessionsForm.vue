@@ -1,11 +1,11 @@
 <template>
   <jet-action-section>
     <template #title>
-      <div class="text-blue-500 font-extrabold">Browser Sessions</div>
+      <div class="text-purple-500 font-extrabold">Browser Sessions</div>
     </template>
 
     <template #description>
-      <div class="text-blue-400 font-bold">
+      <div class="text-purple-400 font-bold">
         Manage and log out your active sessions on other browsers and devices.
       </div>
     </template>
@@ -55,7 +55,7 @@
           </div>
 
           <div class="ml-3">
-            <div class="text-sm text-blue-600">
+            <div class="text-sm text-purple-600">
               {{ session.agent.platform }} - {{ session.agent.browser }}
             </div>
 
@@ -63,7 +63,9 @@
               <div class="text-xs text-gray-500">
                 {{ session.ip_address }},
 
-                <span class="text-blue-500 font-semibold" v-if="session.is_current_device"
+                <span
+                  class="text-purple-500 font-semibold"
+                  v-if="session.is_current_device"
                   >This device</span
                 >
                 <span v-else>Last active {{ session.last_active }}</span>
@@ -75,7 +77,7 @@
 
       <div class="flex items-center mt-5">
         <jet-button
-          class="bg-blue-400 hover:bg-blue-400 text-white"
+          class="bg-purple-400 hover:bg-purple-400 text-white"
           @click="confirmLogout"
         >
           Log Out Other Browser Sessions

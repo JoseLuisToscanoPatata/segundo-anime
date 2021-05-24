@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#F472B6">
+  <app-layout color="#EAB308">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">MANGA</h2>
     </template>
@@ -14,14 +14,14 @@
 
       <jet-dialog-modal :show="añadiendo" @close="añadiendo = false">
         <template #title>
-          <span class="text-pink-500 font-bold">MANGA ADD FORM </span>
+          <span class="text-yellow-500 font-bold">MANGA ADD FORM </span>
         </template>
 
         <template #content>
           <form @submit.prevent="crear">
             <div class="flex flex-col sm:flex-row m-5 justify-evenly">
               <div class="text-center sm:max-w-sm">
-                <span class="font-semibold text-lg text-pink-400 text-center">{{
+                <span class="font-semibold text-lg text-yellow-400 text-center">{{
                   nuevo["title"]
                 }}</span>
 
@@ -78,7 +78,7 @@
                       v-model="nuevo['favourite']"
                       true-value="1"
                       false-value="0"
-                      class="rounded border-gray-300 text-pink-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      class="rounded border-gray-300 text-yellow-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     />
                     <span class="ml-2 text-sm text-gray-600">Favourite</span>
                   </div>
@@ -100,7 +100,7 @@
           </jet-secondary-button>
 
           <jet-secondary-button
-            class="mt-2 ml-2 text-white bg-pink-400 hover:bg-pink-600"
+            class="mt-2 ml-2 text-white bg-yellow-400 hover:bg-yellow-600"
             type="button"
             @click.prevent="crear"
           >
@@ -122,7 +122,7 @@
       >
       </data-grid-area>
 
-      <loading v-else color="pink"></loading>
+      <loading v-else color="yellow"></loading>
     </div>
   </app-layout>
 </template>
@@ -171,8 +171,8 @@ export default {
       vistos: [],
 
       colores: {
-        color: "pink",
-        hexa: " rgb(251, 207, 232)",
+        color: "yellow",
+        hexa: "#FDE68A;",
       },
 
       filtros: [

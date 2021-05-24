@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#22D3EE">
+  <app-layout color="#FBBF24">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN MANGA LIST</h2>
     </template>
@@ -45,7 +45,7 @@
 
         <jet-dialog-modal :show="operacion == 'crearEditar'" @close="operacion = ''">
           <template #title>
-            <span class="text-cyan-500 font-bold">MANGA FORM </span>
+            <span class="text-yellow-500 font-bold">MANGA FORM </span>
           </template>
 
           <template #content>
@@ -83,7 +83,7 @@
                   </div>
 
                   <jet-secondary-button
-                    class="mt-2 mr-2 text-white bg-cyan-400 hover:bg-cyan-600"
+                    class="mt-2 mr-2 text-white bg-yellow-400 hover:bg-yellow-600"
                     type="button"
                     @click.prevent="selectNewPhoto"
                   >
@@ -215,7 +215,7 @@
             </jet-secondary-button>
 
             <jet-secondary-button
-              class="mt-2 ml-2 text-white bg-cyan-400 hover:bg-cyan-600"
+              class="mt-2 ml-2 text-white bg-yellow-400 hover:bg-yellow-600"
               type="button"
               @click.prevent="crearOEditar"
             >
@@ -245,7 +245,7 @@
       </template>
 
       <template v-else>
-        <loading color="cyan"></loading>
+        <loading color="yellow"></loading>
       </template>
     </div>
   </app-layout>
@@ -297,7 +297,7 @@ export default {
       imagenes: "h-14 w-14 rounded-full m-1 object-cover",
 
       colores: {
-        color: "cyan",
+        color: "yellow",
         hexa: "border:  #bee3f8;",
       },
 
@@ -324,7 +324,7 @@ export default {
         {
           texto: "New Manga",
           emit: "crear-manga",
-          clases: "text-white bg-cyan-400 hover:bg-cyan-600",
+          clases: "text-white bg-yellow-400 hover:bg-yellow-600",
         },
       ],
 
@@ -360,7 +360,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-cyan-500",
           width: "min-width: 60px",
           alineacion: "izquierda",
         },
@@ -371,7 +370,6 @@ export default {
           tipo: "imagen",
           sorteable: false,
           filtrable: false,
-          color: "text-lightBlue-500",
           width: "min-width: 80px",
           alineacion: "izquierda",
         },
@@ -381,7 +379,6 @@ export default {
           tipo: "texto",
           sorteable: true,
           filtrable: true,
-          color: "text-teal-400",
           width: "min-width: 250px; max-width: 250px;",
           alineacion: "izquierda",
         },
@@ -391,7 +388,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-teal-600",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -401,7 +397,6 @@ export default {
           tipo: "numero",
           sorteable: true,
           filtrable: false,
-          color: "text-lightBlue-600",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -412,7 +407,6 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-indigo-600",
           width: "min-width: 115px",
           alineacion: "centrado",
         },
@@ -423,7 +417,6 @@ export default {
           tipo: "texto",
           sorteable: false,
           filtrable: false,
-          color: "text-cyan-600",
           width: "min-width: 125px",
           alineacion: "izquierda",
         },
@@ -434,7 +427,6 @@ export default {
           tipo: "botones",
           sorteable: false,
           filtrable: false,
-          color: "text-indigo-400",
           width: "min-width: 125px",
         },
       ],

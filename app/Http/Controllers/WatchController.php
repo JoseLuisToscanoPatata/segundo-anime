@@ -37,7 +37,7 @@ class WatchController extends Controller
     /**
      * Add a new anime to an user list.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request New watch status
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -83,9 +83,10 @@ class WatchController extends Controller
     }
 
     /**
-     * Get the anime watch status from an user
+     * Get the anime watch status from any user
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the anime you want to show from an user list
+     * @param int $user Database ip of the user which list you want to show a anime
      * @return \Illuminate\Http\Response
      */
     public function show($id, $user)
@@ -100,11 +101,12 @@ class WatchController extends Controller
         }
     }
 
-    /**
-     * Update the specified anime watch status form an user
+     /**
+     * Update the specified anime watch status, score or favourite from an user
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request New status info
+     * @param  int  $id Database ip of the anime you want to update from an user list
+     * @param int $user Database ip of the user which list you want to update a anime
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id,$user)
@@ -146,7 +148,8 @@ class WatchController extends Controller
     /**
      * Delete the anime from an user list.
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the anime you want to remove from an user list
+     * @param int $user Database ip of the user which list you want to remove the anime
      * @return \Illuminate\Http\Response
      */
     public function destroy($id,$user)

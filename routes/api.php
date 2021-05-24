@@ -59,7 +59,6 @@ Route::middleware('auth:sanctum')->delete("/watches/{anime}/{user}", [watchContr
 //Friend Controller
 Route::apiResource('friends',FriendController::class)->middleware('auth:sanctum')->except(['index']);
 Route::middleware('auth:sanctum')->get("/friendsIndex/{friend}", [FriendController::class, "index"])->name('friends.index');
-//Route::middleware('auth:sanctum')->post("/friends/{friend}", [FriendController::class, "store"])->name('friends.store');
 
 //Message Controller
 Route::apiResource('messages',MessageController::class)->middleware('auth:sanctum')->except(['update']);

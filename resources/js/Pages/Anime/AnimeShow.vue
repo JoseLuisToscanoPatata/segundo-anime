@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#F43F5E">
+  <app-layout color="#A78BFA">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ actual.title }}
@@ -16,7 +16,7 @@
       />
 
       <div
-        class="flex flex-col p-6 bg-rose-200 rounded-lg justify-start items-start"
+        class="flex flex-col p-6 bg-purple-200 rounded-lg justify-start items-start"
         v-if="cargado"
       >
         <div class="flex flex-col xs2:flex-row w-full">
@@ -53,7 +53,7 @@
             />
             <jet-button
               v-if="actual.trailer != 'undefined'"
-              class="text-white bg-rose-500 hover:bg-rose-600 text-white"
+              class="text-white bg-purple-500 hover:bg-purple-600 text-white"
               @click="abrirTrailer"
             >
               Trailer
@@ -180,7 +180,7 @@
               <div
                 class="flex flex-col justfy-evenly items-center col-span-3 md:col-span-2 mb-3 md:mb-0"
               >
-                <div class="bg-rose-400 text-white font-semibold rounded-sm px-2">
+                <div class="bg-purple-400 text-white font-semibold rounded-sm px-2">
                   SCORE
                 </div>
                 <span class="text-lg font-bold text-black">{{ actual.score }}</span>
@@ -208,56 +208,56 @@
             <div
               class="flex flex-col items-start justify-evenly w-full rounded-md bg-gray-50 p-2 pt-4"
             >
-              <span class="font-bold text-lg mb-2 w-full text-center text-rose-500"
+              <span class="font-bold text-lg mb-2 w-full text-center text-purple-500"
                 >INFORMATION</span
               >
 
               <div class="flex flex-col md:flex-row w-full text-gray-400">
                 <div class="flex flex-col items-start justify-evenly w-full md:w-1/2">
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Type:</b>
+                    ><b class="text-base text-purple-400">Type:</b>
                     {{ actual.subType }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Status:</b>
+                    ><b class="text-base text-purple-400">Status:</b>
                     {{ actual.status }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Start Date:</b>
+                    ><b class="text-base text-purple-400">Start Date:</b>
                     {{ actual.startDate }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">End Date:</b>
+                    ><b class="text-base text-purple-400">End Date:</b>
                     {{ actual.endDate }}</span
                   >
                 </div>
 
                 <div class="flex flex-col items-start justify-evenly w-full md:w-1/2">
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Premierose:</b>
+                    ><b class="text-base text-purple-400">Premiepurple:</b>
                     {{ actual.startDatePretty }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Episodes:</b>
+                    ><b class="text-base text-purple-400">Episodes:</b>
                     {{ actual.subType }}</span
                   >
 
                   <span class="text-sm" v-if="actual.episodes <= 1"
-                    ><b class="text-base text-rose-400">Duration:</b>
+                    ><b class="text-base text-purple-400">Duration:</b>
                     {{ actual.episodeLength }} min.</span
                   >
 
                   <span class="text-sm" v-else
-                    ><b class="text-base text-rose-400">Duration:</b>
+                    ><b class="text-base text-purple-400">Duration:</b>
                     {{ actual.episodeLength }} min. per ep.</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-rose-400">Rating:</b>
+                    ><b class="text-base text-purple-400">Rating:</b>
                     {{ actual.ageRating }}</span
                   >
                 </div>
@@ -265,7 +265,7 @@
             </div>
 
             <div class="hidden md:flex flex-col w-full rounded-lg bg-gray-50 mt-2 p-2">
-              <span class="text-xl font-bold text-rose-500 mb-5 w-full text-center"
+              <span class="text-xl font-bold text-purple-500 mb-5 w-full text-center"
                 >SYNOPSIS</span
               >
               <div class="text-gray-400 max-h-40 overflow-y-auto text-justify p-1">
@@ -276,7 +276,7 @@
         </div>
 
         <div class="p-3 mt-3 md:hidden flex flex-col w-full rounded-lg bg-gray-50">
-          <span class="text-xl font-bold text-rose-500 mb-5 w-full text-center"
+          <span class="text-xl font-bold text-purple-500 mb-5 w-full text-center"
             >SYNOPSIS</span
           >
           <div class="text-gray-400 max-h-40 overflow-y-auto text-justify p-1">
@@ -285,7 +285,7 @@
         </div>
       </div>
 
-      <loading v-else color="rose"></loading>
+      <loading v-else color="purple"></loading>
     </div>
   </app-layout>
 </template>
@@ -531,7 +531,7 @@ export default {
           })
           .then((res) => {
             this.visto = true;
-            this.datosInfo["color"] = "rose";
+            this.datosInfo["color"] = "purple";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
@@ -570,7 +570,7 @@ export default {
           this.visto = false;
           this.estado.favourite = 0;
 
-          this.datosInfo["color"] = "rose";
+          this.datosInfo["color"] = "purple";
           this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;

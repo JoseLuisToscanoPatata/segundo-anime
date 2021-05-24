@@ -6,6 +6,9 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+/**
+ * New listener that happens everytime an user logs in, which set the last_online column is his database table to "now"
+ */
 class LastLoggedIn
 {
     /**

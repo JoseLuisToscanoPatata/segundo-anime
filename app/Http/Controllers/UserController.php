@@ -10,6 +10,15 @@ use Auth;
 
 class UserController extends Controller
 {
+
+
+        /**
+         * Register a new user in the database
+         *  @param  \Illuminate\Http\Request  $request New user info
+         * 
+         * @return \Illuminate\Http\Response
+         */
+
      public function register(Request $request) {
         
         $validator  =   Validator::make($request->all(), [
@@ -26,7 +35,7 @@ class UserController extends Controller
         $inputs["password"] = Hash::make($request->password);
 
         $user   =   User::create($inputs);
-        $user->role = "user";
+        $user->role = "user"; //Cada usuario será por defecto un no-admin
         $user->save();
 
         if(!is_null($user)) {
@@ -37,7 +46,12 @@ class UserController extends Controller
         }       
     }
 
-    // User login
+    /**
+     * Undocumented function
+     *
+     * @param Request $request Email and password of the user you want to log in
+     * @return \Illuminate\Http\Response
+     */
     public function login(Request $request) {
 
         $validator = Validator::make($request->all(), [
@@ -66,7 +80,11 @@ class UserController extends Controller
         }
     }
 
-    // User Detail
+    /**
+     * Get the user info of the authenticated user you call the method from
+     *
+    * @return \Illuminate\Http\Response
+     */
     public function user() {
         $user = Auth::user();
 
@@ -121,10 +139,10 @@ class UserController extends Controller
     }
 
 
-        /**
+    /**
      * Update the user role from user to admin or viceversa.
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the user you want to update
      * @return \Illuminate\Http\Response
      */
     public function update($id)
@@ -162,7 +180,7 @@ class UserController extends Controller
     /**
      * Remove the specified user from storage.
      *
-     * @param  int  $id
+     * @param  int  $id Database ip of the user you want to destroy
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

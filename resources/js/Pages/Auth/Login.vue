@@ -6,7 +6,7 @@
 
     <jet-validation-errors class="mb-4" />
 
-    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+    <div v-if="status" class="mb-4 font-medium text-sm text-yellow-600">
       {{ status }}
     </div>
 
@@ -52,7 +52,7 @@
         </inertia-link>
 
         <jet-button
-          class="bg-green-300 hover:bg-green-500 ml-4"
+          class="bg-yellow-300 hover:bg-yellow-500 ml-4"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >

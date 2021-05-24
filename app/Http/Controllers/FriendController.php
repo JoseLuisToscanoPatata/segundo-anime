@@ -13,7 +13,7 @@ use Auth;
 class FriendController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get every friend of the specified user, both confirmed as not confirmed yet.
      *@param $id
      * @return \Illuminate\Http\Response
      */
@@ -22,12 +22,12 @@ class FriendController extends Controller
 
         if(!is_null(User::find($id))) {
                 
-            $enviadas = User::find($id)->friendsOfMine(true)->get()->all();
-            $recibidas = User::find($id)->friendOf(true)->get()->all();
-            $amigos = array_merge($enviadas,$recibidas);
+            $enviadas = User::find($id)->friendsOfMine(true)->get()->all(); //Todos los amigos a los que ha invitado el usuario
+            $recibidas = User::find($id)->friendOf(true)->get()->all(); //Todos los amigos que han invitado a este usuario
+            $amigos = array_merge($enviadas,$recibidas);  //Unimos estos
 
-            $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all();
-            $recibidasFalse = User::find($id)->friendOf(false)->get()->all();
+            $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all(); //Todas las peticiones de amistad sin confirmar mandadas por el usuario
+            $recibidasFalse = User::find($id)->friendOf(false)->get()->all(); //Todas las peticiones de amistad sin confirmar que le llegan a este
 
             $total = [$amigos,$enviadasFalse,$recibidasFalse];
 
@@ -40,9 +40,9 @@ class FriendController extends Controller
     }
 
     /**
-     * Add an user as friend
+     * Add an existing user as friend
      *
-     * @param  $id
+     * @param \Illuminate\Http\Request Request with the database IP of the user you want to add as friend
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -73,7 +73,7 @@ class FriendController extends Controller
     /**
      * Get a friend info (useless)
      *
-     * @param  int  $id
+     * @param  int  $id database IP of the user friendship you want to show
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -98,7 +98,8 @@ class FriendController extends Controller
     /**
      * Confirm a friend invitation you recieve (set the confirmation date to now)
      *
-     * @param  int  $id
+     * @param  int  $id database IP of the user which friendship you want to confirm
+     * @param  \Illuminate\Http\Request Request which contains the PUT method to call the api
      * @return \Illuminate\Http\Response
      */
     public function update($id, Request $request)
@@ -124,7 +125,7 @@ class FriendController extends Controller
     /**
      * Remove a friendship you belong to
      *
-     * @param  int  $id
+     * @param  int  $id database IP of the user which friendship you want to delete
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

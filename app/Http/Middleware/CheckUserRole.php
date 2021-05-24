@@ -6,6 +6,10 @@ use Inertia\Inertia;
 use Closure;
 use Illuminate\Http\Request;
 
+
+/**
+ * Middleware that check if an user is an admin or not, redirecting to dashboard with a message if he is not
+ */
 class checkUserRole
 {
     /**
