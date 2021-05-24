@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/JoseLusiToscanoPatata/segundo-anime/master/.github/images/mrsaturn3.svg" width="250" height="250"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mrsaturn3.svg" width="250" height="250"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
