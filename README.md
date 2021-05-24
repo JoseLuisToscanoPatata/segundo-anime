@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/mrsaturn3.svg" width="250" height="250"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mrsaturn3.svg" width="250" height="250"></p>
 
 <p align="center" style="font-size: 22px;">BIG CHUNGUS</p>
 
@@ -30,7 +30,7 @@ Por otro lado, estos frameworks nos proporcionan un fácil sistema de enrutamien
 
 En el caso de que quieras instalar la aplicación en tu equipo (aunque en un principio está pensado utilizar un host gratuito) será necesario disponer de los siguientes componentes en tu equipo:
 
-- [Git](https://git-scm.com), así como una cuenta de [GitHub](https://github.com).
+- <p align="justify">[Git](https://git-scm.com), así como una cuenta de [GitHub](https://github.com)</p>.
 - PHP 8+ (preferiblemente [XAMPP](https://www.apachefriends.org/es/index.html)).
 - [Composer](https://getcomposer.org)
 - [NPM](https://getcomposer.org)
@@ -47,7 +47,7 @@ Una vez instalado todo lo necesario, habrá que seguir los siguientes pasos:
 
 - Copiar el fichero .env.example, y renombrar la copia a ".env" a secas, dentro de este fichero habrá que establecer la variable APP_URL a "http://localhost:8000", en el caso de querer habiltiar los correos electrónicos, habrá que poner lo siguiente en las siguientes líneas:
 
-<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/mail_data.jpg" width="200" height="200"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.jpg" width="200" height="200"></p>
 
 Una vez realizado esto, habrá que que poner los siguientes comandos en orden en el directorio inicial del proyecto:
 
