@@ -22037,9 +22037,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
 /* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
-/* harmony import */ var _Componentes_Loading_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Componentes/Loading.vue */ "./resources/js/Pages/Componentes/Loading.vue");
-/* harmony import */ var _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Pages/Componentes/BannerPropio */ "./resources/js/Pages/Componentes/BannerPropio.vue");
-
+/* harmony import */ var _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Pages/Componentes/BannerPropio */ "./resources/js/Pages/Componentes/BannerPropio.vue");
 
 
 
@@ -22049,19 +22047,31 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
     JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_2__.default,
     JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__.default,
-    Loading: _Componentes_Loading_vue__WEBPACK_IMPORTED_MODULE_3__.default,
-    BannerPropio: _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_4__.default
+    Loading: Loading,
+    BannerPropio: _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_3__.default
   },
-  props: ["clave", "usu1", "usu2", "ambos", "tipo", "usuario"],
+  props: ["clave", "usu2", "ambos", "tipo", "usuario", "listaUsers"],
   data: function data() {
     return {
-      mostrar: "no",
+      mostrar: "cargando",
       procesosTerminados: 0,
-      usuario1: "",
-      usuario2: "",
+      comparado: "",
       lista: "nada",
       existencia: "nada",
-      usuCorrectos: false,
+      usuarios: [],
+      datosComparado: {},
+      misAnimes: [],
+      misMangas: [],
+      animesComparado: [],
+      mangasComparado: [],
+      listasObtenidas: 0,
+      listaActual: [],
+      animesIguales: [],
+      animesSoloYo: [],
+      animesSoloEl: [],
+      mangasIguales: [],
+      mangasSoloYo: [],
+      mangasSoloEl: [],
       datosInfo: {
         mostrar: false,
         style: "",
@@ -22071,20 +22081,381 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.usuario1 = this.usu1;
-    this.usuario2 = this.usu2;
     this.lista = this.tipo;
+    this.usuarios = this.listaUsers;
 
     if (this.ambos) {
       this.existencia = "ambos";
     }
 
-    if (this.usuario1.trim() != "" && this.usuario2.trim() != "") {
-      this.comprobarUsuarios();
+    this.operacionesIniciales();
+  },
+  computed: {
+    desactivarInputs: function desactivarInputs() {
+      if (this.comparado.trim() == "") {
+        this.lista = "nada";
+        this.existencia = "nada";
+        return true;
+      } else {
+        return false;
+      }
+    },
+    listaElegida: function listaElegida() {
+      if (this.mostrar != "vacio" && this.mostrar != "cargando") {
+        if (this.existencia == "nada" || this.lista == "nada") {
+          this.mostrar = "nada";
+        } else {
+          this.mostrar = "mostrarLista";
+        }
+      }
     }
   },
   methods: {
-    comprobarUsuarios: function comprobarUsuarios() {}
+    operacionesIniciales: function operacionesIniciales() {
+      var _this = this;
+
+      axios.get(route("watches.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        res.data.data.forEach(function (anime) {
+          _this.misAnimes.push({
+            id: anime.id,
+            title: anime.title,
+            status: anime.pivot.watchStatus,
+            score: anime.pivot.score
+          });
+        });
+        _this.listasObtenidas++;
+
+        if (_this.listasObtenidas == 4) {
+          _this.compararListas();
+        }
+      });
+      axios.get(route("reads.index", this.usuario.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        res.data.data.forEach(function (manga) {
+          _this.misMangas.push({
+            id: manga.id,
+            title: manga.title,
+            status: manga.pivot.readStatus,
+            score: manga.pivot.score
+          });
+        });
+        _this.listasObtenidas++;
+
+        if (_this.listasObtenidas == 4) {
+          _this.compararListas();
+        }
+      });
+
+      if (this.usu2 != null) {
+        var busqueda = this.usuarios.find(function (usuario) {
+          return usuario.id == _this.usu2;
+        });
+
+        if (busqueda != undefined) {
+          this.datosComparado = busqueda;
+          this.comparado = busqueda.name;
+          this.obtenerListas();
+        }
+      } else {
+        this.mostrar = "vacio";
+      }
+
+      this.usuarios = this.sortear(this.usuarios, "nombre");
+    },
+    comprobarUsuario: function comprobarUsuario() {
+      var _this2 = this;
+
+      var busqueda = this.usuarios.find(function (usuario) {
+        return usuario.nombre == _this2.comparado;
+      });
+      this.mostrar = "cargando";
+      this.lista = "nada";
+      this.existencia = "nada";
+      this.animesIguales = [];
+      this.animesSoloYo = [];
+      this.animesSoloEl = [];
+      this.mangasIguales = [];
+      this.mangasSoloYo = [];
+      this.mangasSoloEl = [];
+      this.listaActual = [];
+
+      if (busqueda != undefined) {
+        this.datosComparado = busqueda;
+        this.obtenerListas();
+      } else {
+        this.datosInfo["color"] = "red";
+        this.datosInfo["style"] = "danger";
+        this.datosInfo["mensaje"] = "There is no user with that name :(";
+        this.datosInfo["mostrar"] = true;
+        this.comparado = "";
+        this.mostrar = "vacio";
+      }
+    },
+    obtenerListas: function obtenerListas() {
+      var _this3 = this;
+
+      if (this.listasObtenidas > 2) {
+        this.listasObtenidas = 2;
+      }
+
+      this.animesComparado = [];
+      this.mangasComparado = [];
+      axios.get(route("watches.index", this.datosComparado.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        res.data.data.forEach(function (anime) {
+          _this3.animesComparado.push({
+            id: anime.id,
+            title: anime.title,
+            status: anime.pivot.watchStatus,
+            score: anime.pivot.score
+          });
+        });
+        _this3.listasObtenidas++;
+
+        if (_this3.listasObtenidas == 4) {
+          _this3.compararListas();
+        }
+      });
+      axios.get(route("reads.index", this.datosComparado.id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        res.data.data.forEach(function (manga) {
+          _this3.mangasComparado.push({
+            id: manga.id,
+            title: manga.title,
+            status: manga.pivot.readStatus,
+            score: manga.pivot.score
+          });
+        });
+        _this3.listasObtenidas++;
+
+        if (_this3.listasObtenidas == 4) {
+          _this3.compararListas();
+        }
+      });
+    },
+    compararListas: function compararListas() {
+      if (this.misAnimes.length >= this.animesComparado.length) {
+        var grande = this.misAnimes;
+        var pequeña = this.animesComparado;
+      } else {
+        var pequeña = this.misAnimes;
+        var grande = this.animesComparado;
+      }
+
+      var pararGrande = 0;
+      var pararPequeño = 0;
+
+      if (pequeña.length != 0) {
+        for (var anime = 0; anime - pararGrande < grande.length; anime++) {
+          if (anime - pararPequeño < pequeña.length) {
+            if (grande[anime - pararGrande].id == pequeña[anime - pararPequeño].id) {
+              if (grande[anime - pararGrande].score != null && pequeña[anime - pararPequeño].score != null) {
+                if (grande[anime - pararGrande].score > pequeña[anime - pararPequeño].score) {
+                  var diferencia = grande[anime - pararGrande].score - pequeña[anime - pararPequeño].score;
+                } else {
+                  var diferencia = pequeña[anime - pararPequeño].score - grande[anime - pararGrande].score;
+                }
+              } else {
+                var diferencia = "-";
+              }
+
+              if (grande == this.misAnimes) {
+                this.animesIguales.push({
+                  id: grande[anime - pararGrande].id,
+                  title: grande[anime - pararGrande].title,
+                  myScore: grande[anime - pararGrande].score,
+                  compScore: pequeña[anime - pararPequeño].score,
+                  myStatus: grande[anime - pararGrande].status,
+                  compStatus: pequeña[anime - pararPequeño].status,
+                  scoreDif: diferencia
+                });
+              } else {
+                this.animesIguales.push({
+                  id: grande[anime - pararGrande].id,
+                  title: grande[anime - pararGrande].title,
+                  myScore: pequeña[anime - pararPequeño].score,
+                  compScore: grande[anime - pararGrande].score,
+                  myStatus: pequeña[anime - pararPequeño].status,
+                  compStatus: grande[anime - pararGrande].status,
+                  scoreDif: diferencia
+                });
+              }
+            } else if (grande[anime - pararGrande].id > pequeña[anime - pararPequeño].id) {
+              if (pequeña == this.misAnimes) {
+                this.animesSoloYo.push({
+                  id: pequeña[anime - pararPequeño].id,
+                  title: pequeña[anime - pararPequeño].title,
+                  score: pequeña[anime - pararPequeño].score,
+                  status: pequeña[anime - pararPequeño].status
+                });
+              } else {
+                this.animesSoloEl.push({
+                  id: pequeña[anime - pararPequeño].id,
+                  title: pequeña[anime - pararPequeño].title,
+                  score: pequeña[anime - pararPequeño].score,
+                  status: pequeña[anime - pararPequeño].status
+                });
+              }
+
+              pararGrande++;
+            } else {
+              if (grande == this.misAnimes) {
+                this.animesSoloYo.push({
+                  id: grande[anime - pararGrande].id,
+                  title: grande[anime - pararGrande].title,
+                  score: grande[anime - pararGrande].score,
+                  status: grande[anime - pararGrande].status
+                });
+              } else {
+                this.animesSoloEl.push({
+                  id: grande[anime - pararGrande].id,
+                  title: grande[anime - pararGrande].title,
+                  score: grande[anime - pararGrande].score,
+                  status: grande[anime - pararGrande].status
+                });
+              }
+
+              pararPequeño++;
+            }
+          } else {
+            if (grande[anime - pararGrande].score == null) {
+              grande[anime - pararGrande].score = "-";
+            }
+
+            var nuevo = {
+              id: grande[anime - pararGrande].id,
+              title: grande[anime - pararGrande].title,
+              score: grande[anime - pararGrande].score,
+              status: grande[anime - pararGrande].status
+            };
+            grande == this.misAnimes ? this.animesSoloYo.push(nuevo) : this.animesSoloEl.push(nuevo);
+          }
+        }
+      }
+
+      if (this.misMangas.length >= this.mangasComparado.length) {
+        grande = this.misMangas;
+        pequeña = this.mangasComparado;
+      } else {
+        pequeña = this.misMangas;
+        grande = this.mangasComparado;
+      }
+
+      pararGrande = 0;
+      pararPequeño = 0;
+
+      if (pequeña.length != 0) {
+        for (var manga = 0; manga - pararGrande < grande.length; manga++) {
+          if (manga - pararPequeño < pequeña.length) {
+            if (grande[manga - pararGrande].id == pequeña[manga - pararPequeño].id) {
+              if (grande[manga - pararGrande].score != null && pequeña[manga - pararPequeño].score != null) {
+                if (grande[manga - pararGrande].score > pequeña[manga - pararPequeño].score) {
+                  var diferencia = grande[manga - pararGrande].score - pequeña[manga - pararPequeño].score;
+                } else {
+                  var diferencia = pequeña[manga - pararPequeño].score - grande[manga - pararGrande].score;
+                }
+              } else {
+                var diferencia = "-";
+              }
+
+              if (grande == this.misAnimes) {
+                this.mangasIguales.push({
+                  id: grande[manga - pararGrande].id,
+                  title: grande[manga - pararGrande].title,
+                  myScore: grande[manga - pararGrande].score,
+                  compScore: pequeña[manga - pararPequeño].score,
+                  myStatus: grande[manga - pararGrande].status,
+                  compStatus: pequeña[manga - pararPequeño].status,
+                  scoreDif: diferencia
+                });
+              } else {
+                this.mangasIguales.push({
+                  id: grande[manga - pararGrande].id,
+                  title: grande[manga - pararGrande].title,
+                  myScore: pequeña[manga - pararPequeño].score,
+                  compScore: grande[manga - pararGrande].score,
+                  myStatus: pequeña[manga - pararPequeño].status,
+                  compStatus: grande[manga - pararGrande].status,
+                  scoreDif: diferencia
+                });
+              }
+            } else if (grande[manga - pararGrande].id > pequeña[manga - pararPequeño].id) {
+              if (pequeña == this.misAnimes) {
+                this.mangasSoloYo.push({
+                  id: pequeña[manga - pararPequeño].id,
+                  title: pequeña[manga - pararPequeño].title,
+                  score: pequeña[manga - pararPequeño].score,
+                  status: pequeña[manga - pararPequeño].status
+                });
+              } else {
+                this.mangasSoloEl.push({
+                  id: pequeña[manga - pararPequeño].id,
+                  title: pequeña[manga - pararPequeño].title,
+                  score: pequeña[manga - pararPequeño].score,
+                  status: pequeña[manga - pararPequeño].status
+                });
+              }
+
+              pararGrande++;
+            } else {
+              if (grande == this.misAnimes) {
+                this.mangasSoloYo.push({
+                  id: grande[manga - pararGrande].id,
+                  title: grande[manga - pararGrande].title,
+                  score: grande[manga - pararGrande].score,
+                  status: grande[manga - pararGrande].status
+                });
+              } else {
+                this.mangasSoloEl.push({
+                  id: grande[manga - pararGrande].id,
+                  title: grande[manga - pararGrande].title,
+                  score: grande[manga - pararGrande].score,
+                  status: grande[manga - pararGrande].status
+                });
+              }
+
+              pararPequeño++;
+            }
+          } else {
+            if (grande[manga - pararGrande].score == null) {
+              grande[manga - pararGrande].score = "-";
+            }
+
+            var nuevo = {
+              id: grande[manga - pararGrande].id,
+              title: grande[manga - pararGrande].title,
+              score: grande[manga - pararGrande].score,
+              status: grande[manga - pararGrande].status
+            };
+            grande == this.misAnimes ? this.mangasSoloYo.push(nuevo) : this.mangasSoloEl.push(nuevo);
+          }
+        }
+      }
+
+      this.mostrar = "nada";
+    },
+    sortear: function sortear(datos, campo) {
+      datos = datos.sort(function (a, b) {
+        var x = a[campo];
+        var y = b[campo];
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      return datos;
+    },
+    cambiarLista: function cambiarLista() {}
   }
 });
 
@@ -32394,23 +32765,26 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-70fbb575");
 
-var _hoisted_1 = {
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
-};
+}, "Shared Lists", -1
+/* HOISTED */
+);
+
 var _hoisted_2 = {
   "class": "max-w-7xl w-full sm:mx-auto px-3 xs3:px-6 lg:px-8 py-12"
 };
-var _hoisted_3 = {
-  key: 1,
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "flex flex-col xs3:flex-row p-6 bg-lime-100 rounded-lg justify-start items-start"
-};
+}, null, -1
+/* HOISTED */
+);
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   var _component_banner_propio = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("banner-propio");
-
-  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
 
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
@@ -32418,9 +32792,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     color: "#A3E635"
   }, {
     header: _withId(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.perfilUsu.name) + " Shared Lists ", 1
-      /* TEXT */
-      )];
+      return [_hoisted_1];
     }),
     "default": _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [$data.datosInfo['mostrar'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_banner_propio, {
@@ -32433,11 +32805,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         message: $data.datosInfo['mensaje']
       }, null, 8
       /* PROPS */
-      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.mostrar == 'si' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading, {
-        color: "lime"
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.mostrar == 'no']])])];
+      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_3])];
     }),
     _: 1
     /* STABLE */
@@ -33337,7 +33705,6 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       /* TEXT */
       ), $data.afinidadAnimes > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
         href: _ctx.route('SharedLists', {
-          usu1: $props.usuario.id,
           usu2: $props.perfil,
           tipo: 'anime',
           ambos: true
@@ -33350,7 +33717,6 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       /* TEXT */
       ), $data.afinidadMangas > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
         href: _ctx.route('SharedLists', {
-          usu1: $props.usuario.id,
           usu2: $props.perfil,
           tipo: 'manga',
           ambos: true

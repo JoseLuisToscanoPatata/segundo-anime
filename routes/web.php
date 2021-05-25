@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,9 +78,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
         return Inertia::render('User/UserShow',['perfil'=>$id]);
     })->name('UserShow');
 
-    //LISTA DE ANIMES COMPARTIDOS ENTRE DOS USUARIOS
-    route::get('/SharedLists/{usu1?}/{usu2?}/{tipo?}/{ambos?}', function ($usu1 = '', $usu2 = '', $tipo ='nada', $ambos = false) {
-        return Inertia::render('User/SharedLists',['usu1' => $usu1, 'usu2' => $usu2, 'tipo' => $tipo, 'ambos' => $ambos]);
+    //COMPARACIÓN DE LISTAS ENTRE DOS USUARIOS
+    route::get('/SharedLists/{usu2?}/{tipo?}/{ambos?}', function ($usu2 = null, $tipo ='nada', $ambos = false) {
+
+        $usuarios = array();
+        
+        $datos = User::get();
+
+            foreach ($datos as  $usuario) {
+                
+            $actual = array('id'=>$usuario->id,'nombre'=>$usuario->name);
+
+            array_push($usuarios, $actual);
+            }
+
+        return Inertia::render('User/SharedLists',['usu2' => $usu2, 'tipo' => $tipo, 'ambos' => $ambos, 'listaUsers' => $usuarios]);
     })->name('SharedLists');
 
 });

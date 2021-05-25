@@ -198,7 +198,6 @@
                 ><a
                   :href="
                     route('SharedLists', {
-                      usu1: usuario.id,
                       usu2: perfil,
                       tipo: 'anime',
                       ambos: true,
@@ -220,7 +219,6 @@
                 ><a
                   :href="
                     route('SharedLists', {
-                      usu1: usuario.id,
                       usu2: perfil,
                       tipo: 'manga',
                       ambos: true,
