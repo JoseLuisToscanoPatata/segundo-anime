@@ -1,5 +1,5 @@
 <template>
-  <app-layout color="#F472B6">
+  <app-layout color="#EAB308">
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ actual.title }}
@@ -15,8 +15,8 @@
       />
 
       <div
-        class="flex flex-col p-6 bg-pink-200 rounded-lg justify-start items-start"
-        v-if="cargado"
+        class="flex flex-col p-6 bg-yellow-200 rounded-lg justify-start items-start"
+        v-if="mostrar == 'si'"
       >
         <div class="flex flex-col xs2:flex-row w-full">
           <div class="flex flex-col items-center mb-4 xs2:mb-0 min-w-full xs2:min-w-min">
@@ -155,7 +155,7 @@
               <div
                 class="flex flex-col justfy-evenly items-center col-span-3 md:col-span-2 mb-3 md:mb-0"
               >
-                <div class="bg-pink-400 text-white font-semibold rounded-sm px-2">
+                <div class="bg-yellow-400 text-white font-semibold rounded-sm px-2">
                   SCORE
                 </div>
                 <span class="text-lg font-bold text-black">{{ actual.score }}</span>
@@ -183,41 +183,41 @@
             <div
               class="flex flex-col items-start justify-evenly w-full rounded-md bg-gray-50 p-2 pt-4"
             >
-              <span class="font-bold text-lg mb-2 w-full text-center text-pink-500"
+              <span class="font-bold text-lg mb-2 w-full text-center text-yellow-500"
                 >INFORMATION</span
               >
 
               <div class="flex flex-col md:flex-row w-full text-gray-400">
                 <div class="flex flex-col items-start justify-evenly w-full md:w-1/2">
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">Type:</b>
+                    ><b class="text-base text-yellow-400">Type:</b>
                     {{ actual.subType }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">Start Date:</b>
+                    ><b class="text-base text-yellow-400">Start Date:</b>
                     {{ actual.startDate }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">End Date:</b>
+                    ><b class="text-base text-yellow-400">End Date:</b>
                     {{ actual.endDate }}</span
                   >
                 </div>
 
                 <div class="flex flex-col items-start justify-evenly w-full md:w-1/2">
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">Status:</b>
+                    ><b class="text-base text-yellow-400">Status:</b>
                     {{ actual.status }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">Chapters:</b>
+                    ><b class="text-base text-yellow-400">Chapters:</b>
                     {{ actual.subType }}</span
                   >
 
                   <span class="text-sm"
-                    ><b class="text-base text-pink-400">Rating:</b>
+                    ><b class="text-base text-yellow-400">Rating:</b>
                     {{ actual.ageRating }}</span
                   >
                 </div>
@@ -225,7 +225,7 @@
             </div>
 
             <div class="hidden md:flex flex-col w-full rounded-lg bg-gray-50 mt-2 p-2">
-              <span class="text-xl font-bold text-pink-500 mb-5 w-full text-center"
+              <span class="text-xl font-bold text-yellow-500 mb-5 w-full text-center"
                 >SYNOPSIS</span
               >
               <div class="text-gray-400 max-h-40 overflow-y-auto text-justify p-1">
@@ -236,7 +236,7 @@
         </div>
 
         <div class="p-3 mt-3 md:hidden flex flex-col w-full rounded-lg bg-gray-50">
-          <span class="text-xl font-bold text-pink-500 mb-5 w-full text-center"
+          <span class="text-xl font-bold text-yellow-500 mb-5 w-full text-center"
             >SYNOPSIS</span
           >
           <div class="text-gray-400 max-h-40 overflow-y-auto text-justify p-1">
@@ -245,7 +245,7 @@
         </div>
       </div>
 
-      <loading v-else color="pink"></loading>
+      <loading v-show="mostrar == 'no'" color="yellow"></loading>
     </div>
   </app-layout>
 </template>
@@ -256,6 +256,7 @@ import JetButton from "@/Jetstream/Button";
 import JetModal from "@/Jetstream/Modal";
 import JetInput from "@/Jetstream/Input";
 import BannerPropio from "@/Pages/Componentes/BannerPropio";
+import Loading from "@/Pages/Componentes/Loading";
 
 export default {
   components: {
@@ -264,6 +265,7 @@ export default {
     JetModal,
     JetInput,
     BannerPropio,
+    Loading,
   },
 
   props: ["clave", "manga", "usuario"],
@@ -289,7 +291,8 @@ export default {
 
       visto: false,
 
-      cargando: { datos: 0, vistos: 0, posiciones: 0 },
+      mostrar: "no",
+      preparados: 0,
       mostrarTrailer: false,
 
       estado: {
@@ -311,20 +314,6 @@ export default {
     this.obtenerDatos();
     this.obtenerPosiciones();
     this.obtenerVistos();
-  },
-
-  computed: {
-    cargado() {
-      if (
-        this.cargando.vistos == 1 &&
-        this.cargando.datos == 1 &&
-        this.cargando.posiciones == 1
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
 
   methods: {
@@ -392,7 +381,17 @@ export default {
           this.actual.ratingCount = res.data.data.ratingCount;
           this.actual.status = res.data.data.status;
 
-          this.cargando.datos = 1;
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -419,9 +418,18 @@ export default {
               this.actual.topUsers = actual + 1;
             }
           }
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
-
-      this.cargando.posiciones = 1;
     },
 
     obtenerVistos() {
@@ -446,7 +454,17 @@ export default {
             }
           }
 
-          this.cargando.vistos = 1;
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -474,7 +492,7 @@ export default {
           })
           .then((res) => {
             this.visto = true;
-            this.datosInfo["color"] = "pink";
+            this.datosInfo["color"] = "yellow";
             this.datosInfo["style"] = "success";
             this.datosInfo["mensaje"] = res.data.message;
             this.datosInfo["mostrar"] = true;
@@ -512,7 +530,7 @@ export default {
           this.estado.score = 0;
           this.visto = false;
           this.estado.favourite = 0;
-          this.datosInfo["color"] = "pink";
+          this.datosInfo["color"] = "yellow";
           this.datosInfo["style"] = "success";
           this.datosInfo["mensaje"] = res.data.message;
           this.datosInfo["mostrar"] = true;

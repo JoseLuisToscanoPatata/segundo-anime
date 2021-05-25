@@ -4,15 +4,15 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN ANIME LIST</h2>
     </template>
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
-      <template v-if="!cargando">
-        <banner-propio
-          v-if="datosInfo['mostrar']"
-          @close="datosInfo['mostrar'] = false"
-          :color="datosInfo['color']"
-          :style="datosInfo['style']"
-          :message="datosInfo['mensaje']"
-        />
+      <banner-propio
+        v-if="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
 
+      <template v-if="mostrar == 'si'">
         <jet-dialog-modal :show="operacion == 'borrar'" @close="operacion = ''">
           <template #title> Delete Anime </template>
 
@@ -452,7 +452,7 @@ export default {
           width: "min-width: 125px",
         },
       ],
-      cargando: true,
+      mostrar: "no",
       datosInfo: {
         mostrar: false,
         style: "",
@@ -537,7 +537,14 @@ export default {
         })
         .then((res) => {
           this.datos = res.data.data;
-          this.cargando = false;
+          this.mostrar = "si";
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 

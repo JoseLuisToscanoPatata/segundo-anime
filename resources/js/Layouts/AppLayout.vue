@@ -97,6 +97,20 @@
                       >
                         Manga List
                       </jet-dropdown-link>
+
+                      <jet-dropdown-link
+                        :href="route('SharedLists')"
+                        :color="[
+                          'text-lime-400',
+                          'bg-white',
+                          'hover:text-white',
+                          'hover:bg-lime-400',
+                          'border-lime-400',
+                        ]"
+                        :active="route().current('SharedLists')"
+                      >
+                        Shared Lists
+                      </jet-dropdown-link>
                     </template>
                   </jet-dropdown>
                 </div>
@@ -179,7 +193,11 @@
             <div class="hidden sm:flex sm:items-center sm:ml-4">
               <!-- Settings Dropdown -->
               <div class="ml-3 relative">
-                <jet-dropdown align="right" width="48">
+                <jet-dropdown
+                  align="right"
+                  width="48"
+                  :estilos="['background-color: white;']"
+                >
                   <template #trigger>
                     <button
                       v-if="$page.props.jetstream.managesProfilePhotos"
@@ -195,23 +213,61 @@
 
                   <template #content>
                     <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-white font-extrabold">
+                    <div
+                      class="block px-4 py-2 text-xs bg-white text-gray-700 font-extrabold"
+                    >
                       My Account
                     </div>
 
-                    <jet-dropdown-link :href="route('UserShow', $page.props.user.id)">
+                    <jet-dropdown-link
+                      :href="route('UserShow', $page.props.user.id)"
+                      :color="[
+                        'text-lime-400',
+                        'bg-white',
+                        'hover:text-white',
+                        'hover:bg-lime-400',
+                        'border-lime-400',
+                      ]"
+                    >
                       Profile
                     </jet-dropdown-link>
 
-                    <jet-dropdown-link :href="route('profile.show')">
+                    <jet-dropdown-link
+                      :href="route('profile.show')"
+                      :color="[
+                        'text-pink-400',
+                        'bg-white',
+                        'hover:text-white',
+                        'hover:bg-pink-400',
+                        'border-pink-400',
+                      ]"
+                    >
                       Account Settings
                     </jet-dropdown-link>
 
-                    <jet-dropdown-link :href="route('FriendsList', $page.props.user.id)">
+                    <jet-dropdown-link
+                      :href="route('FriendsList', $page.props.user.id)"
+                      :color="[
+                        'text-yellow-400',
+                        'bg-white',
+                        'hover:text-white',
+                        'hover:bg-yellow-400',
+                        'border-yellow-400',
+                      ]"
+                    >
                       Friends
                     </jet-dropdown-link>
 
-                    <jet-dropdown-link :href="route('MessagesList')">
+                    <jet-dropdown-link
+                      :href="route('MessagesList')"
+                      :color="[
+                        'text-purple-400',
+                        'bg-white',
+                        'hover:text-white',
+                        'hover:bg-purple-400',
+                        'border-purple-400',
+                      ]"
+                    >
                       Messages
                     </jet-dropdown-link>
 
@@ -219,7 +275,18 @@
 
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
-                      <jet-dropdown-link as="button"> Log Out </jet-dropdown-link>
+                      <jet-dropdown-link
+                        as="button"
+                        :color="[
+                          'text-gray-700',
+                          'bg-white',
+                          'hover:text-white',
+                          'hover:bg-gray-700',
+                          'border-gray-700',
+                        ]"
+                      >
+                        Log Out
+                      </jet-dropdown-link>
                     </form>
                   </template>
                 </jet-dropdown>
@@ -338,6 +405,19 @@
                   MANGA LIST
                 </jet-responsive-nav-link>
               </div>
+
+              <div class="pt-2 pb-3 space-y-1">
+                <jet-responsive-nav-link
+                  :href="route('SharedLists')"
+                  :active="route().current('SharedLists')"
+                  class="text-lime-500 hover:text-lime-700 focus:text-lime-800 hover:border-lime-700 focus:border-lime-800"
+                  :class="{
+                    'border-white': route().current('SharedLists'),
+                  }"
+                >
+                  SHARED LISTS
+                </jet-responsive-nav-link>
+              </div>
             </div>
           </div>
 
@@ -426,7 +506,7 @@
               <jet-responsive-nav-link
                 :href="route('UserShow', $page.props.user.id)"
                 :active="route().current('UserShow', $page.props.user.id)"
-                class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
+                class="text-lime-400 hover:text-lime-500 focus:text-lime-600 hover:border-lime-500 focus:border-lime-600"
                 :class="{
                   'border-white': route().current('UserShow', $page.props.user.id),
                 }"
@@ -437,7 +517,7 @@
               <jet-responsive-nav-link
                 :href="route('profile.show')"
                 :active="route().current('profile.show')"
-                class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
+                class="text-pink-400 hover:text-pink-500 focus:text-pink-600 hover:border-pink-500 focus:border-pink-600"
                 :class="{
                   'border-white': route().current('profile.show'),
                 }"
@@ -448,7 +528,7 @@
               <jet-responsive-nav-link
                 :href="route('FriendsList', $page.props.user.id)"
                 :active="route().current('FriendsList', $page.props.user.id)"
-                class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
+                class="text-yellow-400 hover:text-yellow-500 focus:text-yellow-600 hover:border-yellow-500 focus:border-yellow-600"
                 :class="{
                   'border-white': route().current('FriendsList'),
                 }"
@@ -459,7 +539,7 @@
               <jet-responsive-nav-link
                 :href="route('MessagesList')"
                 :active="route().current('MessagesList')"
-                class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
+                class="text-purple-400 hover:text-yellow-500 focus:text-yellow-600 hover:border-yellow-500 focus:border-yellow-600"
                 :class="{
                   'border-white': route().current('MessagesList'),
                 }"
@@ -471,7 +551,7 @@
               <form method="POST" @submit.prevent="logout">
                 <jet-responsive-nav-link
                   as="button"
-                  class="text-white hover:text-gray-50 focus:text-gray-100 hover:border-gray-50 focus:border-gray-100"
+                  class="text-gray-100 hover:text-gray-300 focus:text-gray-400 hover:border-gray-300 focus:border-gray-400"
                 >
                   Log Out
                 </jet-responsive-nav-link>

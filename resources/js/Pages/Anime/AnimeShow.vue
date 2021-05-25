@@ -17,7 +17,7 @@
 
       <div
         class="flex flex-col p-6 bg-purple-200 rounded-lg justify-start items-start"
-        v-if="cargado"
+        v-if="mostrar == 'si'"
       >
         <div class="flex flex-col xs2:flex-row w-full">
           <jet-modal
@@ -285,7 +285,7 @@
         </div>
       </div>
 
-      <loading v-else color="purple"></loading>
+      <loading v-show="mostrar == 'no'" color="purple"></loading>
     </div>
   </app-layout>
 </template>
@@ -295,6 +295,7 @@ import AppLayout from "@/Layouts/AppLayout";
 import JetButton from "@/Jetstream/Button";
 import JetModal from "@/Jetstream/Modal";
 import JetInput from "@/Jetstream/Input";
+import Loading from "@/Pages/Componentes/Loading";
 import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
@@ -304,6 +305,7 @@ export default {
     JetModal,
     JetInput,
     BannerPropio,
+    Loading,
   },
 
   props: ["clave", "anime", "usuario"],
@@ -333,7 +335,8 @@ export default {
       trailer: null,
       visto: false,
 
-      cargando: { datos: 0, vistos: 0, posiciones: 0 },
+      mostrar: "no",
+      preparados: 0,
       mostrarTrailer: false,
 
       datosInfo: {
@@ -355,20 +358,6 @@ export default {
     this.obtenerDatos();
     this.obtenerPosiciones();
     this.obtenerVistos();
-  },
-
-  computed: {
-    cargado() {
-      if (
-        this.cargando.vistos == 1 &&
-        this.cargando.datos == 1 &&
-        this.cargando.posiciones == 1
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
 
   methods: {
@@ -449,7 +438,17 @@ export default {
           this.actual.ratingCount = res.data.data.ratingCount;
           this.actual.status = res.data.data.status;
 
-          this.cargando.datos = 1;
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -476,9 +475,18 @@ export default {
               this.actual.topUsers = actual + 1;
             }
           }
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
-
-      this.cargando.posiciones = 1;
     },
 
     obtenerVistos() {
@@ -503,7 +511,17 @@ export default {
             }
           }
 
-          this.cargando.vistos = 1;
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 

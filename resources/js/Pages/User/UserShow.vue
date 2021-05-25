@@ -17,7 +17,7 @@
 
       <div
         class="flex flex-col xs3:flex-row p-6 bg-lime-100 rounded-lg justify-start items-start"
-        v-if="!cargando"
+        v-if="mostrar == 'si'"
       >
         <jet-dialog-modal :show="creandoMensaje" @close="creandoMensaje = false">
           <template #title>
@@ -141,8 +141,8 @@
             </div>
           </div>
 
-          <div class="flex flex-col justify-evenly w-44 xs3:w-full text-gray-500">
-            <div class="flex flex-row justify-between items-center w-full text-lime-600">
+          <div class="flex flex-col justify-evenly w-44 xs3:w-full">
+            <div class="flex flex-row justify-between items-center w-full text-gray-600">
               <span class="font-semibold">Last Online</span>
               <span
                 v-if="perfilUsu.last_online == 'now'"
@@ -152,14 +152,14 @@
               <span v-else>{{ perfilUsu.last_online }}</span>
             </div>
 
-            <div class="flex flex-row justify-between items-cente w-full text-lime-600">
+            <div class="flex flex-row justify-between items-cente w-full text-gray-600">
               <span class="font-semibold">Gender</span>
               <span>{{ perfilUsu.gender }}</span>
             </div>
 
-            <div class="flex flex-row justify-between items-center w-full text-lime-600">
+            <div class="flex flex-row justify-between items-center w-full text-gray-600">
               <span class="font-semibold">Joined</span>
-              <span>{{ perfilUsu.joined }}</span>
+              <span class="">{{ perfilUsu.joined }}</span>
             </div>
           </div>
 
@@ -195,7 +195,15 @@
               <span
                 class="text-purple-400 text-xs cursor-pointer hover:underline"
                 v-if="afinidadAnimes > 0"
-                ><a :href="route('SharedAnimes', perfil)"
+                ><a
+                  :href="
+                    route('SharedLists', {
+                      usu1: usuario.id,
+                      usu2: perfil,
+                      tipo: 'anime',
+                      ambos: true,
+                    })
+                  "
                   >({{ afinidadAnimes }} shared)</a
                 >
               </span>
@@ -209,7 +217,15 @@
               <span
                 class="text-yellow-400 text-xs cursor-pointer hover:underline"
                 v-if="afinidadMangas > 0"
-                ><a :href="route('SharedMangas', perfil)"
+                ><a
+                  :href="
+                    route('SharedLists', {
+                      usu1: usuario.id,
+                      usu2: perfil,
+                      tipo: 'manga',
+                      ambos: true,
+                    })
+                  "
                   >({{ afinidadMangas }} shared)</a
                 >
               </span>
@@ -554,7 +570,7 @@
         </div>
       </div>
 
-      <loading v-else color="lime" />
+      <loading v-show="mostrar == 'no'" color="lime" />
     </div>
   </app-layout>
 </template>
@@ -671,7 +687,7 @@ export default {
       borrandoAmigo: false,
       solicitudAmistad: null,
 
-      cargando: true,
+      mostrar: "no",
       procesosTerminados: 0,
 
       datosInfo: {
@@ -826,6 +842,7 @@ export default {
           this.datosInfo["style"] = "danger";
           this.datosInfo["mensaje"] = err.response.data.message;
           this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -939,7 +956,7 @@ export default {
 
           this.procesosTerminados++;
           if (this.procesosTerminados == 3) {
-            this.cargando = false;
+            this.mostrar = "si";
           }
         });
     },
@@ -1053,7 +1070,7 @@ export default {
 
           this.procesosTerminados++;
           if (this.procesosTerminados == 3) {
-            this.cargando = false;
+            this.mostrar = "si";
           }
         });
     },
@@ -1104,7 +1121,7 @@ export default {
           this.procesosTerminados++;
 
           if (this.procesosTerminados == 3) {
-            this.cargando = false;
+            this.mostrar = "si";
           }
         });
     },

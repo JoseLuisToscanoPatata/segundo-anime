@@ -78,14 +78,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     })->name('UserShow');
 
     //LISTA DE ANIMES COMPARTIDOS ENTRE DOS USUARIOS
-    route::get('/SharedAnimes/{id}', function ($id) {
-        return Inertia::render('Anime/sharedAnimes',['perfil' => $id]);
-    })->name('SharedAnimes');
+    route::get('/SharedLists/{usu1?}/{usu2?}/{tipo?}/{ambos?}', function ($usu1 = '', $usu2 = '', $tipo ='nada', $ambos = false) {
+        return Inertia::render('User/SharedLists',['usu1' => $usu1, 'usu2' => $usu2, 'tipo' => $tipo, 'ambos' => $ambos]);
+    })->name('SharedLists');
 
-    //LISTA DE MANGAS COMPARTIDOS ENTRE DOS USUARIOS
-    route::get('/SharedMangas/{id}', function ($id) {
-        return Inertia::render('Manga/sharedMangas',['perfil'=>$id]);
-    })->name('SharedMangas');
 });
 
 //Rutas a las que solo pueden acceder adminsitradores

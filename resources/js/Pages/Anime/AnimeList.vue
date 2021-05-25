@@ -112,7 +112,7 @@
       </jet-dialog-modal>
 
       <data-grid-area
-        v-if="!cargando"
+        v-if="mostrar == 'si'"
         :datos="datos"
         :cantidadPaginas="paginacion"
         :filtros="filtros"
@@ -125,7 +125,7 @@
       >
       </data-grid-area>
 
-      <loading v-else color="purple"></loading>
+      <loading v-show="mostrar == 'no'" color="purple"></loading>
     </div>
   </app-layout>
 </template>
@@ -200,7 +200,8 @@ export default {
         },
       ],
 
-      cargando: true,
+      mostrar: "no",
+      preparados: 0,
       añadiendo: false,
       idActual: 1,
 
@@ -246,6 +247,18 @@ export default {
         })
         .then((res) => {
           this.vistos = res.data.data;
+
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -323,8 +336,17 @@ export default {
               season: season,
             });
           }
-
-          this.cargando = false;
+          this.preparados++;
+          if (this.preparados == 3) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -343,6 +365,11 @@ export default {
       }
 
       this.year = fecha.getFullYear().toString();
+
+      this.preparados++;
+      if (this.preparados == 3) {
+        this.mostrar = "si";
+      }
     },
 
     pulsadoNuevo(id) {

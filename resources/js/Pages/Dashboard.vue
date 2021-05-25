@@ -5,10 +5,17 @@
     </template>
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12 overflow-hidden">
+      <banner-propio
+        v-if="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
       <div
         class="p-6 bg-pink-100 overflow-hidden shadow-xl rounded-lg grid gap-x-2 grid-cols-12"
       >
-        <template v-if="!cargando">
+        <template v-if="mostrar == 'si'">
           <div
             class="col-span-12 dashboard:col-span-9 flex flex-col mr-5 overflow-hidden"
           >
@@ -279,6 +286,8 @@
             </div>
           </div>
         </template>
+
+        <loading v-show="mostrar == 'no'" color="pink"></loading>
       </div>
     </div>
   </app-layout>
@@ -286,10 +295,14 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import Loading from "@/Pages/Componentes/Loading";
+import BannerPropio from "@/Pages/Componentes/BannerPropio";
 
 export default {
   components: {
     AppLayout,
+    Loading,
+    BannerPropio,
   },
 
   props: ["clave", "usuario"],
@@ -304,13 +317,21 @@ export default {
       mejoresMangas: [],
       trailers: [],
       animesActuales: [],
-      cargando: true,
+      mostrar: "no",
+      preparados: 0,
       dentro1: false,
       dentro2: false,
       dentro3: false,
       dentro4: false,
       dentro5: false,
       seleccionado: "seleccionado",
+
+      datosInfo: {
+        mostrar: false,
+        style: "",
+        mensaje: "",
+        color: "",
+      },
     };
   },
   methods: {
@@ -392,6 +413,17 @@ export default {
 
             return x < y ? -1 : x > y ? 1 : 0;
           });
+          this.preparados++;
+          if (this.preparados == 2) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
 
       axios
@@ -419,13 +451,24 @@ export default {
               Math.floor(Math.random() * (this.mangas.length - 1))
             ];
           }
+
+          this.preparados++;
+          if (this.preparados == 2) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
   },
 
   created() {
     this.prepararDatos();
-    this.cargando = false;
   },
 };
 </script>

@@ -28,7 +28,7 @@
     },
     "dependencies": {
         "alga-js": "0.0.1-alpha9",
-        "chart.js": "^3.2.1",
+        "chart.js": "^3.3.0",
         "vue3-chart-v2": "^0.8.2"
     }
 }

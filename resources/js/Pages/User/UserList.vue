@@ -5,15 +5,15 @@
     </template>
 
     <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
-      <template v-if="!cargando">
-        <banner-propio
-          v-if="datosInfo['mostrar']"
-          @close="datosInfo['mostrar'] = false"
-          :color="datosInfo['color']"
-          :style="datosInfo['style']"
-          :message="datosInfo['mensaje']"
-        />
+      <banner-propio
+        v-if="datosInfo['mostrar']"
+        @close="datosInfo['mostrar'] = false"
+        :color="datosInfo['color']"
+        :style="datosInfo['style']"
+        :message="datosInfo['mensaje']"
+      />
 
+      <template v-if="mostrar == 'si'">
         <jet-dialog-modal :show="borrandoUsu" @close="borrandoUsu = false">
           <template #title> Delete User </template>
 
@@ -59,9 +59,7 @@
         </data-table-area>
       </template>
 
-      <template v-else>
-        <loading color="lime"></loading>
-      </template>
+      <loading v-show="mostrar == 'no'" color="lime"></loading>
     </div>
   </app-layout>
 </template>
@@ -200,7 +198,7 @@ export default {
           alineacion: "centrado",
         },
       ],
-      cargando: true,
+      mostrar: "no",
       datosInfo: {
         mostrar: false,
         style: "",
@@ -227,13 +225,21 @@ export default {
         })
         .then((res) => {
           this.datos = res.data.data;
-          this.cargando = false;
 
           this.datos.forEach((usuario) => {
             if (usuario.profile_photo_url.includes("https://picsum.photos/500/500")) {
               usuario.profile_photo_url = usuario.profile_photo_path;
             }
           });
+
+          this.mostrar = "si";
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 

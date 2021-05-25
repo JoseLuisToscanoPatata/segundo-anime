@@ -110,7 +110,7 @@
       </jet-dialog-modal>
 
       <data-grid-area
-        v-if="!cargando"
+        v-if="mostrar == 'si'"
         :datos="datos"
         :cantidadPaginas="paginacion"
         :filtros="filtros"
@@ -122,7 +122,7 @@
       >
       </data-grid-area>
 
-      <loading v-else color="yellow"></loading>
+      <loading v-show="mostrar == 'no'" color="yellow"></loading>
     </div>
   </app-layout>
 </template>
@@ -213,7 +213,8 @@ export default {
         },
       ],
 
-      cargando: true,
+      mostrar: "no",
+      preparados: 0,
       añadiendo: false,
       idActual: 1,
 
@@ -258,6 +259,18 @@ export default {
         })
         .then((res) => {
           this.vistos = res.data.data;
+
+          this.preparados++;
+          if (this.preparados == 2) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
@@ -320,7 +333,17 @@ export default {
             });
           }
 
-          this.cargando = false;
+          this.preparados++;
+          if (this.preparados == 2) {
+            this.mostrar = "si";
+          }
+        })
+        .catch((err) => {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = err.response.data.message;
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "error";
         });
     },
 
