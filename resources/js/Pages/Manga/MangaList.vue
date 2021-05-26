@@ -356,6 +356,8 @@ export default {
         }
       }
 
+      this.nuevo.favourite = 0;
+
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
           this.nuevo.title = this.datos[actual].title;

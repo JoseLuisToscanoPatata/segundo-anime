@@ -14,8 +14,176 @@
       />
 
       <div
-        class="flex flex-col xs3:flex-row p-6 bg-lime-100 rounded-lg justify-start items-start"
-      ></div>
+        class="flex flex-col p-2 sm:p-6 bg-lime-200 rounded-lg justify-start items-center overflow-hidden"
+        style="max-height: 75vh"
+      >
+        <div
+          class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 lg:grid-cols-11 gap-x-2 pb-6 gap-y-4 sticky z-10 top-3 bg-lime-200 m-3"
+          v-show="mostrarInputs"
+        >
+          <jet-button
+            class="text-white bg-lime-400 hover:bg-lime-600 col-span-2"
+            style="max-width: 100px"
+            @click="comprobarUsuario"
+          >
+            SEARCH
+          </jet-button>
+
+          <jet-input
+            type="text"
+            class="max-w-xs mr-6 col-span-2"
+            placeholder="usuario.."
+            v-model="comparado"
+          />
+
+          <select
+            v-model="lista"
+            class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6 col-span-2"
+            @change="existencia = 'nada'"
+            :disabled="inputs.lista"
+          >
+            <option value="nada">List</option>
+            <option class="shadow-sm" value="anime" :disabled="inputs.anime">
+              Anime
+            </option>
+
+            <option class="shadow-sm" value="manga" :disabled="inputs.manga">
+              Manga
+            </option>
+          </select>
+
+          <select
+            v-model="existencia"
+            class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6 col-span-2"
+            @change="cambiarLista"
+            :disabled="lista == 'nada'"
+          >
+            <option value="nada">User</option>
+            <option
+              class="shadow-sm"
+              value="ambos"
+              :disabled="lista == 'anime' ? inputs.animeAmbos : inputs.mangaAmbos"
+            >
+              Both lists
+            </option>
+
+            <option
+              class="shadow-sm"
+              value="soloYo"
+              :disabled="lista == 'anime' ? inputs.animeSoloYo : inputs.mangaSoloYo"
+            >
+              Only you
+            </option>
+
+            <option
+              class="shadow-sm"
+              value="soloEl"
+              :disabled="lista == 'anime' ? inputs.animeSoloEl : inputs.mangaSoloEl"
+            >
+              Only him/her
+            </option>
+          </select>
+
+          <jet-button
+            class="text-white bg-lime-400 hover:bg-lime-600 col-span-1"
+            @click="mostrarInputs = false"
+            style="max-width: 45px; heigth: 45px"
+          >
+            X
+          </jet-button>
+        </div>
+
+        <div
+          v-show="!mostrarInputs"
+          class="pb-6 sticky z-10 top-0 flex flex-row justify-start w-full bg-lime-200 m-3"
+        >
+          <jet-button
+            class="text-white bg-lime-400 hover:bg-lime-600"
+            @click="mostrarInputs = true"
+          >
+            SHOW INPUTS
+          </jet-button>
+        </div>
+
+        <div v-show="mostrar == 'cargando'" class="w-full bg-lime-200">
+          <p class="font-bold text-lg w-full text-center my-5 px-5 text-lime-700">
+            LOADING...
+          </p>
+        </div>
+
+        <div v-show="mostrar == 'sinUser'" class="w-full bg-lime-200">
+          <p class="font-bold text-lg w-full text-center my-5 px-5 text-lime-700">
+            SELECT AN USER TO COMPARE WITH
+          </p>
+        </div>
+        <div v-show="mostrar == 'elegirLista'" class="w-full bg-lime-200">
+          <p class="font-bold text-lg w-full text-center my-5 px-5 text-lime-700">
+            SELECT A LIST TO SHOW
+          </p>
+        </div>
+        <div
+          v-show="mostrar == 'mostrarLista' && tipoLista == 'unica'"
+          class="w-full bg-lime-200 px-2 sm:px-6 w-full overflow-auto"
+        >
+          <table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
+            <thead>
+              <tr>
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200 w-72 md:w-min"
+                >
+                  <span class="text-lime-600 font-semibold text-lg">Title</span>
+                </th>
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
+                  style="min-width: 100px"
+                >
+                  <span class="text-lime-600 font-semibold text-lg"
+                    >{{ userActual }} Score</span
+                  >
+                </th>
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
+                  style="min-width: 150px"
+                >
+                  <span class="text-lime-600 font-semibold text-lg"
+                    >{{ userActual }} Status</span
+                  >
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="overflow-y-auto">
+              <tr
+                v-for="(dato, indice) in listaActual"
+                :key="indice"
+                class="hover:bg-lime-400 mb-3"
+              >
+                <td
+                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  v-if="lista == 'anime'"
+                >
+                  <a :href="route('AnimeProfile', dato.id)"> {{ dato.title }}</a>
+                </td>
+                <td
+                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  v-else
+                >
+                  <a :href="route('MangaProfile', dato.id)"> {{ dato.title }}</a>
+                </td>
+                <td
+                  class="text-center"
+                  style="min-width: 100px"
+                  v-if="dato.score != null"
+                >
+                  {{ dato.score }}
+                </td>
+                <td class="text-center" style="min-width: 100px" v-else>-</td>
+                <td class="text-center" style="min-width: 150px">{{ dato.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </app-layout>
 </template>
@@ -57,6 +225,8 @@ export default {
       listasObtenidas: 0,
 
       listaActual: [],
+      tipoLista: "",
+      userActual: "",
 
       animesIguales: [],
       animesSoloYo: [],
@@ -66,11 +236,26 @@ export default {
       mangasSoloYo: [],
       mangasSoloEl: [],
 
+      mostrarInputs: false,
+
       datosInfo: {
         mostrar: false,
         style: "",
         mensaje: "",
         color: "",
+      },
+
+      inputs: {
+        lista: true,
+        existencia: true,
+        anime: false,
+        manga: false,
+        animeSoloYo: false,
+        animeSoloEl: false,
+        animeAmbos: false,
+        mangaSoloYo: false,
+        mangaSoloEl: false,
+        mangaAmbos: false,
       },
     };
   },
@@ -86,29 +271,64 @@ export default {
     this.operacionesIniciales();
   },
 
-  computed: {
-    desactivarInputs() {
-      if (this.datosComparado == []) {
-        this.lista = "nada";
-        this.existencia = "nada";
-        return true;
-      } else {
-        return false;
-      }
-    },
-
-    listaElegida() {
-      if (this.mostrar != "vacio" && this.mostrar != "cargando") {
-        if (this.existencia == "nada" || this.lista == "nada") {
-          this.mostrar = "nada";
-        } else {
-          this.mostrar = "mostrarLista";
-        }
-      }
-    },
-  },
-
   methods: {
+    desactivarOpciones() {
+      console.log("todos tus animes");
+      console.log(this.misAnimes);
+      console.log("todos sus animes");
+      console.log(this.animesComparado);
+      console.log("animes solo yo");
+      console.log(this.animesSoloYo);
+      console.log("animes iguales");
+      console.log(this.animesIguales);
+      console.log("animes solo el");
+      console.log(this.animesSoloEl);
+
+      if (
+        this.animesSoloYo.length == 0 &&
+        this.animesSoloEl.length == 0 &&
+        this.animesIguales.length == 0
+      ) {
+        this.inputs.anime = true;
+      }
+      if (this.animesSoloYo.length == 0) {
+        this.inputs.animeSoloYo = true;
+      }
+
+      if (this.animesSoloEl.length == 0) {
+        this.inputs.animeSoloEl = true;
+      }
+
+      if (this.animesIguales.length == 0) {
+        this.inputs.animeAmbos = true;
+      }
+
+      if (
+        this.mangasSoloYo.length == 0 &&
+        this.mangasSoloEl.length == 0 &&
+        this.mangasIguales.length == 0
+      ) {
+        this.inputs.manga = true;
+      }
+      if (this.mangasSoloYo.length == 0) {
+        this.inputs.mangaSoloYo = true;
+      }
+
+      if (this.mangasSoloEl.length == 0) {
+        this.inputs.mangaSoloEl = true;
+      }
+
+      if (this.mangasIguales.length == 0) {
+        this.inputs.mangaAmbos = true;
+      }
+
+      if (this.inputs.anime && this.inputs.manga) {
+        this.inputs.lista = true;
+      } else {
+        this.inputs.lista = false;
+      }
+    },
+
     operacionesIniciales() {
       axios
         .get(route("watches.index", this.usuario.id), {
@@ -166,13 +386,13 @@ export default {
           this.datosInfo["style"] = "danger";
           this.datosInfo["mensaje"] = "User not found :(";
           this.datosInfo["mostrar"] = true;
-          this.mostrar = "vacio";
+          this.mostrar = "sinUser";
         }
       } else {
-        this.mostrar = "vacio";
+        this.mostrar = "sinUser";
       }
 
-      this.usuarios = this.sortear(this.usuarios, "nombre");
+      this.usuarios = this.sortear(this.usuarios, "name");
     },
 
     comprobarUsuario() {
@@ -188,18 +408,43 @@ export default {
       this.mangasSoloEl = [];
       this.listaActual = [];
 
-      var busqueda = this.usuarios.find((usuario) => usuario.nombre == this.comparado);
+      if (this.comparado.trim().length > 0) {
+        var busqueda = this.usuarios.find((usuario) => usuario.name == this.comparado);
 
-      if (busqueda != undefined) {
-        this.datosComparado = busqueda;
-        this.obtenerListas();
+        if (busqueda != undefined) {
+          this.datosComparado = busqueda;
+
+          if (busqueda.id == this.usuario.id) {
+            this.datosInfo["color"] = "red";
+            this.datosInfo["style"] = "danger";
+            this.datosInfo["mensaje"] = "You cant look for yourself in the list :(";
+            this.datosInfo["mostrar"] = true;
+            this.comparado = "";
+            this.mostrar = "sinUser";
+
+            this.desactivarOpciones();
+          } else {
+            this.obtenerListas();
+          }
+        } else {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = "There is no user with that name :(";
+          this.datosInfo["mostrar"] = true;
+          this.comparado = "";
+          this.mostrar = "sinUser";
+
+          this.desactivarOpciones();
+        }
       } else {
         this.datosInfo["color"] = "red";
         this.datosInfo["style"] = "danger";
-        this.datosInfo["mensaje"] = "There is no user with that name :(";
+        this.datosInfo["mensaje"] = "You need to specify an user :(";
         this.datosInfo["mostrar"] = true;
         this.comparado = "";
-        this.mostrar = "vacio";
+        this.mostrar = "sinUser";
+
+        this.desactivarOpciones();
       }
     },
 
@@ -332,7 +577,9 @@ export default {
               }
 
               pararGrande++;
-            } else {
+            } else if (
+              grande[anime - pararGrande].id < pequeña[anime - pararPequeño].id
+            ) {
               if (grande == this.misAnimes) {
                 this.animesSoloYo.push({
                   id: grande[anime - pararGrande].id,
@@ -347,6 +594,24 @@ export default {
                   score: grande[anime - pararGrande].score,
                   status: grande[anime - pararGrande].status,
                 });
+              }
+
+              if (anime - pararGrande == grande.length - 1) {
+                if (pequeña == this.misAnimes) {
+                  this.animesSoloYo.push({
+                    id: pequeña[anime - pararPequeño].id,
+                    title: pequeña[anime - pararPequeño].title,
+                    score: pequeña[anime - pararPequeño].score,
+                    status: pequeña[anime - pararPequeño].status,
+                  });
+                } else {
+                  this.animesSoloEl.push({
+                    id: pequeña[anime - pararPequeño].id,
+                    title: pequeña[anime - pararPequeño].title,
+                    score: pequeña[anime - pararPequeño].score,
+                    status: pequeña[anime - pararPequeño].status,
+                  });
+                }
               }
 
               pararPequeño++;
@@ -462,6 +727,24 @@ export default {
                 });
               }
 
+              if (manga - pararGrande == grande.length - 1) {
+                if (pequeña == this.misMangas) {
+                  this.mangasSoloYo.push({
+                    id: pequeña[manga - pararPequeño].id,
+                    title: pequeña[manga - pararPequeño].title,
+                    score: pequeña[manga - pararPequeño].score,
+                    status: pequeña[manga - pararPequeño].status,
+                  });
+                } else {
+                  this.mangasSoloEl.push({
+                    id: pequeña[manga - pararPequeño].id,
+                    title: pequeña[manga - pararPequeño].title,
+                    score: pequeña[manga - pararPequeño].score,
+                    status: pequeña[manga - pararPequeño].status,
+                  });
+                }
+              }
+
               pararPequeño++;
             }
           } else {
@@ -476,14 +759,15 @@ export default {
               status: grande[manga - pararGrande].status,
             };
 
-            grande == this.misAnimes
+            grande == this.misMangas
               ? this.mangasSoloYo.push(nuevo)
               : this.mangasSoloEl.push(nuevo);
           }
         }
       }
 
-      this.mostrar = "nada";
+      this.mostrar = "elegirLista";
+      this.desactivarOpciones();
     },
 
     sortear(datos, campo) {
@@ -497,7 +781,42 @@ export default {
       return datos;
     },
 
-    cambiarLista() {},
+    cambiarLista() {
+      if (this.lista == "nada" || this.existencia == "nada") {
+        this.mostrar = "elegirLista";
+        this.listaActual = [];
+      } else {
+        this.mostrar = "mostrarLista";
+
+        if (this.lista == "anime") {
+          if (this.existencia == "soloYo") {
+            this.listaActual = this.animesSoloYo;
+            this.tipoLista = "unica";
+            this.userActual = this.usuario.name;
+          } else if (this.existencia == "soloEl") {
+            this.listaActual = this.animesSoloEl;
+            this.tipoLista = "unica";
+            this.userActual = this.datosComparado.name;
+          } else {
+            this.listaActual = this.animesIguales;
+            this.tipoLista = "ambos";
+          }
+        } else {
+          if (this.existencia == "soloYo") {
+            this.listaActual = this.mangasSoloYo;
+            this.tipoLista = "unica";
+            this.userActual = this.usuario.name;
+          } else if (this.existencia == "soloEl") {
+            this.listaActual = this.mangasSoloEl;
+            this.tipoLista = "unica";
+            this.userActual = this.datosComparado.name;
+          } else {
+            this.listaActual = this.mangasIguales;
+            this.tipoLista = "ambos";
+          }
+        }
+      }
+    },
   },
 };
 </script>

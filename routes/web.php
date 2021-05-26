@@ -87,7 +87,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
             foreach ($datos as  $usuario) {
                 
-            $actual = array('id'=>$usuario->id,'nombre'=>$usuario->name);
+            $actual = array('id'=>$usuario->id,'name'=>$usuario->name);
 
             array_push($usuarios, $actual);
             }
