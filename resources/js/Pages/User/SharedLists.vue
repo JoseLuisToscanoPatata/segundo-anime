@@ -31,7 +31,6 @@ export default {
     AppLayout,
     JetInput,
     JetButton,
-    Loading,
     BannerPropio,
   },
 
@@ -89,7 +88,7 @@ export default {
 
   computed: {
     desactivarInputs() {
-      if (this.comparado.trim() == "") {
+      if (this.datosComparado == []) {
         this.lista = "nada";
         this.existencia = "nada";
         return true;
@@ -162,6 +161,12 @@ export default {
           this.datosComparado = busqueda;
           this.comparado = busqueda.name;
           this.obtenerListas();
+        } else {
+          this.datosInfo["color"] = "red";
+          this.datosInfo["style"] = "danger";
+          this.datosInfo["mensaje"] = "User not found :(";
+          this.datosInfo["mostrar"] = true;
+          this.mostrar = "vacio";
         }
       } else {
         this.mostrar = "vacio";
@@ -171,7 +176,7 @@ export default {
     },
 
     comprobarUsuario() {
-      var busqueda = this.usuarios.find((usuario) => usuario.nombre == this.comparado);
+      this.datosComparado = [];
       this.mostrar = "cargando";
       this.lista = "nada";
       this.existencia = "nada";
@@ -182,6 +187,8 @@ export default {
       this.mangasSoloYo = [];
       this.mangasSoloEl = [];
       this.listaActual = [];
+
+      var busqueda = this.usuarios.find((usuario) => usuario.nombre == this.comparado);
 
       if (busqueda != undefined) {
         this.datosComparado = busqueda;

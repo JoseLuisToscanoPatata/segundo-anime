@@ -7,6 +7,7 @@
       class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0 mt-2 py-2"
       :class="'bg-' + color.color + '-200'"
       :style="'box-shadow: 0px 10px 5px 3px ' + color.hexa + ';'"
+      v-show="mostrarInputs"
     >
       <jet-input
         type="text"
@@ -15,21 +16,6 @@
         v-model="filtrado"
         @keyup="filtrar"
       />
-      <select
-        v-model="paginas"
-        class="rounded-md col-span-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
-        @change="paginacion = 0"
-        style="max-width: 110px"
-      >
-        <option
-          v-for="opcion in cantidadPaginas"
-          :value="opcion.numero"
-          :key="opcion.numero"
-          class="shadow-sm"
-        >
-          {{ opcion.texto }}
-        </option>
-      </select>
 
       <template v-for="filtro in filtros" :key="filtro">
         <select
@@ -87,6 +73,39 @@
         placeholder="Year"
         @change="filtrar"
       />
+
+      <jet-button
+        :class="'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600'"
+        class="col-span-1"
+        @click="mostrarInputs = false"
+        style="max-width: 45px; heigth: 45px"
+      >
+        X
+      </jet-button>
+    </div>
+
+    <div
+      v-show="!mostrarInputs"
+      class="p-6 sticky z-10 top-0 w-full"
+      :style="'box-shadow: 0px 10px 5px 3px ' + color.hexa + ';'"
+      :class="'bg-' + color.color + '-200'"
+    >
+      <jet-button
+        :class="'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600'"
+        @click="mostrarInputs = true"
+      >
+        INPUTS
+      </jet-button>
+
+      <jet-button
+        :class="
+          'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600 ml-1'
+        "
+        @click="mostrarPagination = true"
+        v-show="!mostrarPagination"
+      >
+        PAGS
+      </jet-button>
     </div>
 
     <div
@@ -98,7 +117,7 @@
         :key="indice"
       >
         <div
-          class="rounded-lg mx-4 my-5 flex col-span-4 w-80 flex-col items-center bg-white"
+          class="rounded-lg mx-4 my-5 flex col-span-4 max-w-full w-80 flex-col items-center bg-white"
         >
           <div
             class="h-16 p-2 font-bold text-center"
@@ -226,13 +245,13 @@
     </div>
 
     <div
-      class="my-4 sticky z-10 bottom-0 w-full"
+      class="flex flex-col xs3:flex-row w-full justify-between items-center py-2 px-2 my-4 sticky z-10 bottom-0"
+      v-show="mostrarPagination && datosOrdenados.length > 0"
       :class="'bg-' + color.color + '-200'"
-      v-show="datosOrdenados.length > 0"
       :style="'box-shadow: 0px -10px 5px 3px ' + color.hexa + ';'"
     >
-      <div class="grid py-2 grid-cols-7 justify-start max-w-md">
-        <span class="col-span-7 sm:col-span-4 mt-1 text-gray-500" style="min-width: 270px"
+      <div class="grid grid-cols-8 justify-start items-center max-w-xl">
+        <span class="col-span-8 sm:col-span-4 mt-1 text-gray-500" style="min-width: 270px"
           >Showing results {{ primero }} to {{ ultimo }} of
           {{ datosOrdenados.length }}
         </span>
@@ -257,7 +276,7 @@
           </jet-button>
         </div>
 
-        <div class="col-span-2 sm:col-span-1 mt-1 sm:mt-0">
+        <div class="col-span-4 sm:col-span-2 ml-3 sm:ml-0 mt-1 sm:mt-0">
           <jet-button
             style="min-width: 70px"
             class="ml-2 disabled:opacity-60"
@@ -276,6 +295,34 @@
             Next
           </jet-button>
         </div>
+      </div>
+
+      <div class="mr-1 flex flex-row items-center justify-evenly">
+        <select
+          v-model="paginas"
+          class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm ml-2 mt-1 sm:mt-0"
+          @change="paginacion = 0"
+          style="max-width: 110px"
+        >
+          <option
+            v-for="opcion in cantidadPaginas"
+            :value="opcion.numero"
+            :key="opcion.numero"
+            class="shadow-sm"
+          >
+            {{ opcion.texto }}
+          </option>
+        </select>
+
+        <jet-button
+          :class="
+            'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600 ml-1'
+          "
+          @click="mostrarPagination = false"
+          style="max-width: 45px; heigth: 45px"
+        >
+          X
+        </jet-button>
       </div>
     </div>
 
@@ -307,6 +354,8 @@ export default {
       year: null,
       cargado: false,
       season: "any",
+      mostrarInputs: false,
+      mostrarPagination: true,
     };
   },
 
