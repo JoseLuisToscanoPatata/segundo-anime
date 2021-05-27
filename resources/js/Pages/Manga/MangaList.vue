@@ -39,6 +39,7 @@
                     v-model="nuevo['readStatus']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
+                    <option value="">Status</option>
                     <option value="PlanToRead">Plan To Read</option>
                     <option value="Reading" v-if="nuevo['status'] != 'tba'">
                       Reading
@@ -350,13 +351,9 @@ export default {
     pulsadoNuevo(id) {
       this.idActual = id;
 
-      for (const key in this.nuevo) {
-        if (Object.hasOwnProperty.call(this.nuevo, key)) {
-          this.nuevo[key] = null;
-        }
-      }
-
       this.nuevo.favourite = 0;
+      this.nuevo.readStatus = "";
+      this.nuevo.score = null;
 
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {

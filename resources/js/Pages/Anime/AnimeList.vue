@@ -41,6 +41,7 @@
                     v-model="nuevo['watchStatus']"
                     class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                   >
+                    <option value="">Status</option>
                     <option value="PlanToWatch">Plan To Watch</option>
                     <option value="Watching" v-if="nuevo['status'] != 'tba'">
                       Watching
@@ -214,7 +215,7 @@ export default {
 
       nuevo: {
         watchStatus: "",
-        score: "",
+        score: null,
         favourite: 0,
         title: "",
         cover: "",
@@ -375,13 +376,9 @@ export default {
     pulsadoNuevo(id) {
       this.idActual = id;
 
-      for (const key in this.nuevo) {
-        if (Object.hasOwnProperty.call(this.nuevo, key)) {
-          this.nuevo[key] = null;
-        }
-      }
-
       this.nuevo.favourite = 0;
+      this.nuevo.watchStatus = "";
+      this.nuevo.score = null;
 
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
@@ -406,7 +403,9 @@ export default {
       datos.append("anime_id", this.idActual);
       datos.append("user_id", this.usuario.id);
       datos.append("watchStatus", this.nuevo["watchStatus"]);
+
       datos.append("favourite", this.nuevo["favourite"]);
+
       if (this.nuevo["score"] != null) {
         datos.append("score", this.nuevo["score"]);
       }

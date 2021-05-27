@@ -76,7 +76,7 @@
 
       <jet-button
         :class="'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600'"
-        class="col-span-1"
+        class="col-span-1 ml-2"
         @click="mostrarInputs = false"
         style="max-width: 45px; heigth: 45px"
       >
@@ -86,7 +86,7 @@
 
     <div
       v-show="!mostrarInputs"
-      class="p-6 sticky z-10 top-0 w-full"
+      class="py-6 px-2 sm:px-6 sticky z-10 top-0 w-full"
       :style="'box-shadow: 0px 10px 5px 3px ' + color.hexa + ';'"
       :class="'bg-' + color.color + '-200'"
     >
@@ -105,6 +105,16 @@
         v-show="!mostrarPagination"
       >
         PAGS
+      </jet-button>
+
+      <jet-button
+        :class="
+          'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600 ml-1'
+        "
+        @click="toTop"
+        v-show="mostrarBoton"
+      >
+        TOP
       </jet-button>
     </div>
 
@@ -356,6 +366,7 @@ export default {
       season: "any",
       mostrarInputs: false,
       mostrarPagination: true,
+      mostrarBoton: false,
     };
   },
 
@@ -373,6 +384,10 @@ export default {
   emits: ["nuevo"],
 
   created() {
+    window.addEventListener("scroll", this.handleScroll);
+
+    this.mostrarBoton = window.scrollY > 300;
+
     this.datosOrdenados = this.datos;
     this.year = this.yearActual;
     if (this.tipo == "anime") {
@@ -380,6 +395,10 @@ export default {
     }
     this.filtrar();
     this.cargado = true;
+  },
+
+  unmounted() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
 
   computed: {
@@ -392,6 +411,14 @@ export default {
         return this.datosOrdenados.length;
       } else {
         return this.paginas + this.paginacion * this.paginas;
+      }
+    },
+
+    scrollAltura() {
+      if (window.scrollY < 300) {
+        return true;
+      } else {
+        return false;
       }
     },
   },
@@ -476,6 +503,17 @@ export default {
         } else {
           return x > y ? -1 : x < y ? 1 : 0;
         }
+      });
+    },
+
+    handleScroll() {
+      window.scrollY > 300 ? (this.mostrarBoton = true) : (this.mostrarBoton = false);
+    },
+
+    toTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
       });
     },
   },

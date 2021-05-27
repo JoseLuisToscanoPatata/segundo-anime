@@ -148,7 +148,7 @@
                 </th>
                 <th
                   class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
-                  style="min-width: 100px"
+                  style="width: 100px"
                 >
                   <span class="text-lime-600 font-semibold text-lg"
                     >{{ userActual }} Score
@@ -174,25 +174,18 @@
                 class="hover:bg-lime-400 mb-3"
               >
                 <td
-                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  class="text-left text-gray-600 hover:text-gray-800 w-72"
                   v-if="lista == 'anime'"
                 >
                   <a :href="route('AnimeProfile', dato.id)"> {{ dato.title }}</a>
                 </td>
-                <td
-                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
-                  v-else
-                >
+                <td class="text-left text-gray-600 hover:text-gray-800 w-72" v-else>
                   <a :href="route('MangaProfile', dato.id)"> {{ dato.title }}</a>
                 </td>
-                <td
-                  class="text-center"
-                  style="min-width: 100px"
-                  v-if="dato.score != null"
-                >
+                <td class="text-center" style="width: 100px" v-if="dato.score != null">
                   {{ dato.score }}
                 </td>
-                <td class="text-center" style="min-width: 100px" v-else>-</td>
+                <td class="text-center" style="width: 100px" v-else>-</td>
               </tr>
             </tbody>
           </table>
@@ -206,7 +199,7 @@
                 <th
                   class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200 w-52"
                 >
-                  <span class="text-lime-600 font-semibold text-lg">Title</span>
+                  <span class="text-lime-600 font-semibold text-lg w-72">Title</span>
                   <button
                     @click="sortear(listaActual, 'title')"
                     class="focus:outline-none outline-none"
@@ -220,10 +213,10 @@
                 </th>
                 <th
                   class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
-                  style="min-width: 100px"
+                  style="width: 100px"
                 >
                   <span class="text-lime-600 font-semibold text-lg"
-                    >{{ userActual }} Score
+                    >{{ usuario.name }} Score
                   </span>
                   <button
                     @click="sortear(listaActual, 'myScore')"
@@ -239,7 +232,7 @@
 
                 <th
                   class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
-                  style="min-width: 100px"
+                  style="width: 100px"
                 >
                   <span class="text-lime-600 font-semibold text-lg"
                     >{{ datosComparado.name }} Score
@@ -255,6 +248,13 @@
                     />
                   </button>
                 </th>
+
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
+                  style="width: 100px"
+                >
+                  <span class="text-lime-600 font-semibold text-lg">Score Diff </span>
+                </th>
               </tr>
             </thead>
 
@@ -265,38 +265,33 @@
                 class="hover:bg-lime-400 mb-3"
               >
                 <td
-                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  class="text-left text-gray-600 hover:text-gray-800 w-72"
                   v-if="lista == 'anime'"
                 >
                   <a :href="route('AnimeProfile', dato.id)"> {{ dato.title }}</a>
                 </td>
-                <td
-                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
-                  v-else
-                >
+
+                <td class="text-left text-gray-600 hover:text-gray-800 w-72" v-else>
                   <a :href="route('MangaProfile', dato.id)"> {{ dato.title }}</a>
                 </td>
-                <td
-                  class="text-center"
-                  style="min-width: 100px"
-                  v-if="dato.myScore != null"
-                >
+
+                <td class="text-center" style="width: 100px" v-if="dato.myScore != null">
                   {{ dato.myScore }}
                 </td>
-                <td class="text-center" style="min-width: 100px" v-else>-</td>
+
+                <td class="text-center" style="width: 100px" v-else>-</td>
+
                 <td
                   class="text-center"
-                  style="min-width: 100px"
+                  style="width: 100px"
                   v-if="dato.compScore != null"
                 >
                   {{ dato.compScore }}
                 </td>
-                <td class="text-center" style="min-width: 100px" v-else>-</td>
-                <td
-                  class="text-center"
-                  style="min-width: 100px"
-                  v-if="dato.compScore != null"
-                >
+
+                <td class="text-center" style="width: 100px" v-else>-</td>
+
+                <td class="text-center" style="width: 100px">
                   {{ dato.scoreDif }}
                 </td>
               </tr>
@@ -395,70 +390,29 @@ export default {
 
   methods: {
     desactivarOpciones() {
-      console.log("todos tus animes");
-      console.log(this.misAnimes);
-      console.log("todos sus animes");
-      console.log(this.animesComparado);
-      console.log("animes solo yo");
-      console.log(this.animesSoloYo);
-      console.log("animes iguales");
-      console.log(this.animesIguales);
-      console.log("animes solo el");
-      console.log(this.animesSoloEl);
-      console.log("todos tus mangas");
-      console.log(this.misMangas);
-      console.log("todos sus mangas");
-      console.log(this.mangasComparado);
-      console.log("mangas solo yo");
-      console.log(this.mangasSoloYo);
-      console.log("mangas iguales");
-      console.log(this.mangasIguales);
-      console.log("mangas solo el");
-      console.log(this.mangasSoloEl);
-
-      if (
+      this.inputs.anime =
         this.animesSoloYo.length == 0 &&
         this.animesSoloEl.length == 0 &&
-        this.animesIguales.length == 0
-      ) {
-        this.inputs.anime = true;
-      }
-      if (this.animesSoloYo.length == 0) {
-        this.inputs.animeSoloYo = true;
-      }
+        this.animesIguales.length == 0;
 
-      if (this.animesSoloEl.length == 0) {
-        this.inputs.animeSoloEl = true;
-      }
+      this.inputs.animeSoloYo = this.animesSoloYo.length == 0;
 
-      if (this.animesIguales.length == 0) {
-        this.inputs.animeAmbos = true;
-      }
+      this.inputs.animeSoloEl = this.animesSoloEl.length == 0;
 
-      if (
+      this.inputs.animeAmbos = this.animesIguales.length == 0;
+
+      this.inputs.manga =
         this.mangasSoloYo.length == 0 &&
         this.mangasSoloEl.length == 0 &&
-        this.mangasIguales.length == 0
-      ) {
-        this.inputs.manga = true;
-      }
-      if (this.mangasSoloYo.length == 0) {
-        this.inputs.mangaSoloYo = true;
-      }
+        this.mangasIguales.length == 0;
 
-      if (this.mangasSoloEl.length == 0) {
-        this.inputs.mangaSoloEl = true;
-      }
+      this.inputs.mangaSoloYo = this.mangasSoloYo.length == 0;
 
-      if (this.mangasIguales.length == 0) {
-        this.inputs.mangaAmbos = true;
-      }
+      this.inputs.mangaSoloEl = this.mangasSoloEl.length == 0;
 
-      if (this.inputs.anime && this.inputs.manga) {
-        this.inputs.lista = true;
-      } else {
-        this.inputs.lista = false;
-      }
+      this.inputs.mangaAmbos = this.mangasIguales.length == 0;
+
+      this.inputs.lista = this.inputs.anime && this.inputs.manga;
     },
 
     operacionesIniciales() {
@@ -473,7 +427,6 @@ export default {
             this.misAnimes.push({
               id: anime.id,
               title: anime.title,
-              //status: anime.pivot.watchStatus,
               score: anime.pivot.score,
             });
           });
@@ -495,7 +448,6 @@ export default {
             this.misMangas.push({
               id: manga.id,
               title: manga.title,
-              //status: manga.pivot.readStatus,
               score: manga.pivot.score,
             });
           });
@@ -528,7 +480,7 @@ export default {
     },
 
     comprobarUsuario() {
-      this.datosComparado = [];
+      this.datosComparado = {};
       this.mostrar = "cargando";
       this.lista = "nada";
       this.existencia = "nada";
@@ -544,8 +496,6 @@ export default {
         var busqueda = this.usuarios.find((usuario) => usuario.name == this.comparado);
 
         if (busqueda != undefined) {
-          this.datosComparado = busqueda;
-
           if (busqueda.id == this.usuario.id) {
             this.datosInfo["color"] = "red";
             this.datosInfo["style"] = "danger";
@@ -556,6 +506,7 @@ export default {
 
             this.desactivarOpciones();
           } else {
+            this.datosComparado = busqueda;
             this.obtenerListas();
           }
         } else {
@@ -599,7 +550,6 @@ export default {
             this.animesComparado.push({
               id: anime.id,
               title: anime.title,
-              //status: anime.pivot.watchStatus,
               score: anime.pivot.score,
             });
           });
@@ -621,7 +571,6 @@ export default {
             this.mangasComparado.push({
               id: manga.id,
               title: manga.title,
-              //status: manga.pivot.readStatus,
               score: manga.pivot.score,
             });
           });
@@ -676,8 +625,6 @@ export default {
               title: grande[actual1].title,
               myScore: miScore,
               compScore: suScore,
-              //myStatus: grande[anime - pararGrande].status,
-              //compStatus: pequeña[anime - pararPequeño].status,
               scoreDif: diferencia,
             });
           } else if (grande[actual1].id > pequeña[actual2].id) {
@@ -697,7 +644,6 @@ export default {
               id: grande[actual1].id,
               title: grande[actual1].title,
               score: grande[actual1].score,
-              //status: grande[anime - pararGrande].status,
             };
 
             grande == this.misAnimes
@@ -709,7 +655,6 @@ export default {
                 id: pequeña[actual2].id,
                 title: pequeña[actual2].title,
                 score: pequeña[actual2].score,
-                //status: grande[anime - pararGrande].status,
               };
 
               pequeña == this.misAnimes
@@ -724,7 +669,6 @@ export default {
             id: grande[actual1].id,
             title: grande[actual1].title,
             score: grande[actual1].score,
-            //status: grande[anime - pararGrande].status,
           };
 
           grande == this.misAnimes
@@ -775,8 +719,6 @@ export default {
               title: grande[actual1].title,
               myScore: miScore,
               compScore: suScore,
-              //myStatus: grande[anime - pararGrande].status,
-              //compStatus: pequeña[anime - pararPequeño].status,
               scoreDif: diferencia,
             });
           } else if (grande[actual1].id > pequeña[actual2].id) {
@@ -796,7 +738,6 @@ export default {
               id: grande[actual1].id,
               title: grande[actual1].title,
               score: grande[actual1].score,
-              //status: grande[anime - pararGrande].status,
             };
 
             grande == this.misMangas
@@ -808,7 +749,6 @@ export default {
                 id: pequeña[actual2].id,
                 title: pequeña[actual2].title,
                 score: pequeña[actual2].score,
-                //status: grande[anime - pararGrande].status,
               };
 
               pequeña == this.misMangas
@@ -823,7 +763,6 @@ export default {
             id: grande[actual1].id,
             title: grande[actual1].title,
             score: grande[actual1].score,
-            //status: grande[anime - pararGrande].status,
           };
 
           grande == this.misMangas

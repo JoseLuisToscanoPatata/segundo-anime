@@ -46,7 +46,7 @@ class WatchController extends Controller
                "anime_id"=>"required|integer ",
                "score"=>"sometimes|nullable|integer|between:1,10",
                "favourite"=>"required","boolean",
-                "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
+                "watchStatus"=>"required","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
             ]);
 
             if($validator->fails()) {
@@ -121,7 +121,7 @@ class WatchController extends Controller
                 $validator = Validator::make($request->all(), [
                 "score"=>"sometimes|nullable|integer|between:1,10",
                 "favourite"=>"required","boolean",
-                    "watchStatus"=>"nullable","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
+                    "watchStatus"=>"required","string",Rule::in(['Watching','PlanToWatch','Completed','Dropped','OnHold']),
                 ]);
 
                 if($validator->fails()) {
