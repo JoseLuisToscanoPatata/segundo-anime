@@ -122,32 +122,47 @@
           </p>
         </div>
         <div
-          v-show="mostrar == 'mostrarLista' && tipoLista == 'unica'"
+          v-show="mostrar == 'mostrarLista'"
           class="w-full bg-lime-200 px-2 sm:px-6 w-full overflow-auto"
         >
-          <table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
+          <table
+            class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
+            v-if="tipoLista == 'unica'"
+          >
             <thead>
               <tr>
                 <th
-                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200 w-72 md:w-min"
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200 w-72"
                 >
                   <span class="text-lime-600 font-semibold text-lg">Title</span>
+                  <button
+                    @click="sortear(listaActual, 'title')"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      src="/img/sort.svg"
+                      alt="sortear por columna"
+                      class="h-3 ml-2 w-auto"
+                    />
+                  </button>
                 </th>
                 <th
                   class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
                   style="min-width: 100px"
                 >
                   <span class="text-lime-600 font-semibold text-lg"
-                    >{{ userActual }} Score</span
+                    >{{ userActual }} Score
+                  </span>
+                  <button
+                    @click="sortear(listaActual, 'score')"
+                    class="focus:outline-none outline-none"
                   >
-                </th>
-                <th
-                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
-                  style="min-width: 150px"
-                >
-                  <span class="text-lime-600 font-semibold text-lg"
-                    >{{ userActual }} Status</span
-                  >
+                    <img
+                      src="/img/sort.svg"
+                      alt="sortear por columna"
+                      class="h-3 ml-2 w-auto"
+                    />
+                  </button>
                 </th>
               </tr>
             </thead>
@@ -178,7 +193,112 @@
                   {{ dato.score }}
                 </td>
                 <td class="text-center" style="min-width: 100px" v-else>-</td>
-                <td class="text-center" style="min-width: 150px">{{ dato.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table
+            class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed"
+            v-if="tipoLista == 'ambos'"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200 w-52"
+                >
+                  <span class="text-lime-600 font-semibold text-lg">Title</span>
+                  <button
+                    @click="sortear(listaActual, 'title')"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      src="/img/sort.svg"
+                      alt="sortear por columna"
+                      class="h-3 ml-2 w-auto"
+                    />
+                  </button>
+                </th>
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
+                  style="min-width: 100px"
+                >
+                  <span class="text-lime-600 font-semibold text-lg"
+                    >{{ userActual }} Score
+                  </span>
+                  <button
+                    @click="sortear(listaActual, 'myScore')"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      src="/img/sort.svg"
+                      alt="sortear por columna"
+                      class="h-3 ml-2 w-auto"
+                    />
+                  </button>
+                </th>
+
+                <th
+                  class="z-10 top-0 sticky border-b border-lime-300 border-solid bg-lime-200"
+                  style="min-width: 100px"
+                >
+                  <span class="text-lime-600 font-semibold text-lg"
+                    >{{ datosComparado.name }} Score
+                  </span>
+                  <button
+                    @click="sortear(listaActual, 'compScore')"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      src="/img/sort.svg"
+                      alt="sortear por columna"
+                      class="h-3 ml-2 w-auto"
+                    />
+                  </button>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody class="overflow-y-auto">
+              <tr
+                v-for="(dato, indice) in listaActual"
+                :key="indice"
+                class="hover:bg-lime-400 mb-3"
+              >
+                <td
+                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  v-if="lista == 'anime'"
+                >
+                  <a :href="route('AnimeProfile', dato.id)"> {{ dato.title }}</a>
+                </td>
+                <td
+                  class="text-left text-gray-600 hover:text-gray-800 w-72 md:w-min"
+                  v-else
+                >
+                  <a :href="route('MangaProfile', dato.id)"> {{ dato.title }}</a>
+                </td>
+                <td
+                  class="text-center"
+                  style="min-width: 100px"
+                  v-if="dato.myScore != null"
+                >
+                  {{ dato.myScore }}
+                </td>
+                <td class="text-center" style="min-width: 100px" v-else>-</td>
+                <td
+                  class="text-center"
+                  style="min-width: 100px"
+                  v-if="dato.compScore != null"
+                >
+                  {{ dato.compScore }}
+                </td>
+                <td class="text-center" style="min-width: 100px" v-else>-</td>
+                <td
+                  class="text-center"
+                  style="min-width: 100px"
+                  v-if="dato.compScore != null"
+                >
+                  {{ dato.scoreDif }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -237,6 +357,8 @@ export default {
       mangasSoloEl: [],
 
       mostrarInputs: false,
+      orden: "desc",
+      sorteado: "id",
 
       datosInfo: {
         mostrar: false,
@@ -283,6 +405,16 @@ export default {
       console.log(this.animesIguales);
       console.log("animes solo el");
       console.log(this.animesSoloEl);
+      console.log("todos tus mangas");
+      console.log(this.misMangas);
+      console.log("todos sus mangas");
+      console.log(this.mangasComparado);
+      console.log("mangas solo yo");
+      console.log(this.mangasSoloYo);
+      console.log("mangas iguales");
+      console.log(this.mangasIguales);
+      console.log("mangas solo el");
+      console.log(this.mangasSoloEl);
 
       if (
         this.animesSoloYo.length == 0 &&
@@ -341,7 +473,7 @@ export default {
             this.misAnimes.push({
               id: anime.id,
               title: anime.title,
-              status: anime.pivot.watchStatus,
+              //status: anime.pivot.watchStatus,
               score: anime.pivot.score,
             });
           });
@@ -363,7 +495,7 @@ export default {
             this.misMangas.push({
               id: manga.id,
               title: manga.title,
-              status: manga.pivot.readStatus,
+              //status: manga.pivot.readStatus,
               score: manga.pivot.score,
             });
           });
@@ -467,7 +599,7 @@ export default {
             this.animesComparado.push({
               id: anime.id,
               title: anime.title,
-              status: anime.pivot.watchStatus,
+              //status: anime.pivot.watchStatus,
               score: anime.pivot.score,
             });
           });
@@ -489,7 +621,7 @@ export default {
             this.mangasComparado.push({
               id: manga.id,
               title: manga.title,
-              status: manga.pivot.readStatus,
+              //status: manga.pivot.readStatus,
               score: manga.pivot.score,
             });
           });
@@ -512,270 +644,231 @@ export default {
 
       var pararGrande = 0;
       var pararPequeño = 0;
+      var actual1 = 0;
+      var actual2 = 0;
+      var diferencia = 0;
+      var miScore = 0;
+      var suScore = 0;
 
-      if (pequeña.length != 0) {
-        for (let anime = 0; anime - pararGrande < grande.length; anime++) {
-          if (anime - pararPequeño < pequeña.length) {
-            if (grande[anime - pararGrande].id == pequeña[anime - pararPequeño].id) {
-              if (
-                grande[anime - pararGrande].score != null &&
-                pequeña[anime - pararPequeño].score != null
-              ) {
-                if (
-                  grande[anime - pararGrande].score > pequeña[anime - pararPequeño].score
-                ) {
-                  var diferencia =
-                    grande[anime - pararGrande].score -
-                    pequeña[anime - pararPequeño].score;
-                } else {
-                  var diferencia =
-                    pequeña[anime - pararPequeño].score -
-                    grande[anime - pararGrande].score;
-                }
-              } else {
-                var diferencia = "-";
-              }
+      for (let anime = 0; anime - pararGrande < grande.length; anime++) {
+        actual1 = anime - pararGrande;
+        actual2 = anime - pararPequeño;
 
-              if (grande == this.misAnimes) {
-                this.animesIguales.push({
-                  id: grande[anime - pararGrande].id,
-                  title: grande[anime - pararGrande].title,
-                  myScore: grande[anime - pararGrande].score,
-                  compScore: pequeña[anime - pararPequeño].score,
-                  myStatus: grande[anime - pararGrande].status,
-                  compStatus: pequeña[anime - pararPequeño].status,
-                  scoreDif: diferencia,
-                });
-              } else {
-                this.animesIguales.push({
-                  id: grande[anime - pararGrande].id,
-                  title: grande[anime - pararGrande].title,
-                  myScore: pequeña[anime - pararPequeño].score,
-                  compScore: grande[anime - pararGrande].score,
-                  myStatus: pequeña[anime - pararPequeño].status,
-                  compStatus: grande[anime - pararGrande].status,
-                  scoreDif: diferencia,
-                });
-              }
-            } else if (
-              grande[anime - pararGrande].id > pequeña[anime - pararPequeño].id
-            ) {
-              if (pequeña == this.misAnimes) {
-                this.animesSoloYo.push({
-                  id: pequeña[anime - pararPequeño].id,
-                  title: pequeña[anime - pararPequeño].title,
-                  score: pequeña[anime - pararPequeño].score,
-                  status: pequeña[anime - pararPequeño].status,
-                });
-              } else {
-                this.animesSoloEl.push({
-                  id: pequeña[anime - pararPequeño].id,
-                  title: pequeña[anime - pararPequeño].title,
-                  score: pequeña[anime - pararPequeño].score,
-                  status: pequeña[anime - pararPequeño].status,
-                });
-              }
+        if (actual2 < pequeña.length) {
+          if (grande[actual1].id == pequeña[actual2].id) {
+            diferencia =
+              grande[actual1].score != null && pequeña[actual2].score != null
+                ? grande[actual1].score > pequeña[actual2].score
+                  ? grande[actual1].score - pequeña[actual2].score
+                  : pequeña[actual2].score - grande[actual1].score
+                : "-";
 
-              pararGrande++;
-            } else if (
-              grande[anime - pararGrande].id < pequeña[anime - pararPequeño].id
-            ) {
-              if (grande == this.misAnimes) {
-                this.animesSoloYo.push({
-                  id: grande[anime - pararGrande].id,
-                  title: grande[anime - pararGrande].title,
-                  score: grande[anime - pararGrande].score,
-                  status: grande[anime - pararGrande].status,
-                });
-              } else {
-                this.animesSoloEl.push({
-                  id: grande[anime - pararGrande].id,
-                  title: grande[anime - pararGrande].title,
-                  score: grande[anime - pararGrande].score,
-                  status: grande[anime - pararGrande].status,
-                });
-              }
-
-              if (anime - pararGrande == grande.length - 1) {
-                if (pequeña == this.misAnimes) {
-                  this.animesSoloYo.push({
-                    id: pequeña[anime - pararPequeño].id,
-                    title: pequeña[anime - pararPequeño].title,
-                    score: pequeña[anime - pararPequeño].score,
-                    status: pequeña[anime - pararPequeño].status,
-                  });
-                } else {
-                  this.animesSoloEl.push({
-                    id: pequeña[anime - pararPequeño].id,
-                    title: pequeña[anime - pararPequeño].title,
-                    score: pequeña[anime - pararPequeño].score,
-                    status: pequeña[anime - pararPequeño].status,
-                  });
-                }
-              }
-
-              pararPequeño++;
-            }
-          } else {
-            if (grande[anime - pararGrande].score == null) {
-              grande[anime - pararGrande].score = "-";
+            if (grande == this.misAnimes) {
+              miScore = grande[actual1].score;
+              suScore = pequeña[actual2].score;
+            } else {
+              suScore = grande[actual1].score;
+              miScore = pequeña[actual2].score;
             }
 
+            this.animesIguales.push({
+              id: grande[actual1].id,
+              title: grande[actual1].title,
+              myScore: miScore,
+              compScore: suScore,
+              //myStatus: grande[anime - pararGrande].status,
+              //compStatus: pequeña[anime - pararPequeño].status,
+              scoreDif: diferencia,
+            });
+          } else if (grande[actual1].id > pequeña[actual2].id) {
             var nuevo = {
-              id: grande[anime - pararGrande].id,
-              title: grande[anime - pararGrande].title,
-              score: grande[anime - pararGrande].score,
-              status: grande[anime - pararGrande].status,
+              id: pequeña[actual2].id,
+              title: pequeña[actual2].title,
+              score: pequeña[actual2].score,
+            };
+
+            pequeña == this.misAnimes
+              ? this.animesSoloYo.push(nuevo)
+              : this.animesSoloEl.push(nuevo);
+
+            pararGrande++;
+          } else if (grande[actual1].id < pequeña[actual2].id) {
+            var nuevo = {
+              id: grande[actual1].id,
+              title: grande[actual1].title,
+              score: grande[actual1].score,
+              //status: grande[anime - pararGrande].status,
             };
 
             grande == this.misAnimes
               ? this.animesSoloYo.push(nuevo)
               : this.animesSoloEl.push(nuevo);
+
+            if (actual1 == grande.length - 1) {
+              var nuevo = {
+                id: pequeña[actual2].id,
+                title: pequeña[actual2].title,
+                score: pequeña[actual2].score,
+                //status: grande[anime - pararGrande].status,
+              };
+
+              pequeña == this.misAnimes
+                ? this.animesSoloYo.push(nuevo)
+                : this.animesSoloEl.push(nuevo);
+            }
+
+            pararPequeño++;
           }
+        } else {
+          var nuevo = {
+            id: grande[actual1].id,
+            title: grande[actual1].title,
+            score: grande[actual1].score,
+            //status: grande[anime - pararGrande].status,
+          };
+
+          grande == this.misAnimes
+            ? this.animesSoloYo.push(nuevo)
+            : this.animesSoloEl.push(nuevo);
         }
       }
 
-      if (this.misMangas.length >= this.mangasComparado.length) {
-        grande = this.misMangas;
-        pequeña = this.mangasComparado;
+      if (this.misAnimes.length >= this.animesComparado.length) {
+        var grande = this.misAnimes;
+        var pequeña = this.animesComparado;
       } else {
-        pequeña = this.misMangas;
-        grande = this.mangasComparado;
+        var pequeña = this.misAnimes;
+        var grande = this.animesComparado;
       }
 
       pararGrande = 0;
       pararPequeño = 0;
+      actual1 = 0;
+      actual2 = 0;
+      diferencia = 0;
+      miScore = 0;
+      suScore = 0;
 
-      if (pequeña.length != 0) {
-        for (let manga = 0; manga - pararGrande < grande.length; manga++) {
-          if (manga - pararPequeño < pequeña.length) {
-            if (grande[manga - pararGrande].id == pequeña[manga - pararPequeño].id) {
-              if (
-                grande[manga - pararGrande].score != null &&
-                pequeña[manga - pararPequeño].score != null
-              ) {
-                if (
-                  grande[manga - pararGrande].score > pequeña[manga - pararPequeño].score
-                ) {
-                  var diferencia =
-                    grande[manga - pararGrande].score -
-                    pequeña[manga - pararPequeño].score;
-                } else {
-                  var diferencia =
-                    pequeña[manga - pararPequeño].score -
-                    grande[manga - pararGrande].score;
-                }
-              } else {
-                var diferencia = "-";
-              }
+      for (let manga = 0; manga - pararGrande < grande.length; manga++) {
+        actual1 = manga - pararGrande;
+        actual2 = manga - pararPequeño;
 
-              if (grande == this.misAnimes) {
-                this.mangasIguales.push({
-                  id: grande[manga - pararGrande].id,
-                  title: grande[manga - pararGrande].title,
-                  myScore: grande[manga - pararGrande].score,
-                  compScore: pequeña[manga - pararPequeño].score,
-                  myStatus: grande[manga - pararGrande].status,
-                  compStatus: pequeña[manga - pararPequeño].status,
-                  scoreDif: diferencia,
-                });
-              } else {
-                this.mangasIguales.push({
-                  id: grande[manga - pararGrande].id,
-                  title: grande[manga - pararGrande].title,
-                  myScore: pequeña[manga - pararPequeño].score,
-                  compScore: grande[manga - pararGrande].score,
-                  myStatus: pequeña[manga - pararPequeño].status,
-                  compStatus: grande[manga - pararGrande].status,
-                  scoreDif: diferencia,
-                });
-              }
-            } else if (
-              grande[manga - pararGrande].id > pequeña[manga - pararPequeño].id
-            ) {
-              if (pequeña == this.misAnimes) {
-                this.mangasSoloYo.push({
-                  id: pequeña[manga - pararPequeño].id,
-                  title: pequeña[manga - pararPequeño].title,
-                  score: pequeña[manga - pararPequeño].score,
-                  status: pequeña[manga - pararPequeño].status,
-                });
-              } else {
-                this.mangasSoloEl.push({
-                  id: pequeña[manga - pararPequeño].id,
-                  title: pequeña[manga - pararPequeño].title,
-                  score: pequeña[manga - pararPequeño].score,
-                  status: pequeña[manga - pararPequeño].status,
-                });
-              }
+        if (actual2 < pequeña.length) {
+          if (grande[actual1].id == pequeña[actual2].id) {
+            diferencia =
+              grande[actual1].score != null && pequeña[actual2].score != null
+                ? grande[actual1].score > pequeña[actual2].score
+                  ? grande[actual1].score - pequeña[actual2].score
+                  : pequeña[actual2].score - grande[actual1].score
+                : "-";
 
-              pararGrande++;
+            if (grande == this.misAnimes) {
+              miScore = grande[actual1].score;
+              suScore = pequeña[actual2].score;
             } else {
-              if (grande == this.misAnimes) {
-                this.mangasSoloYo.push({
-                  id: grande[manga - pararGrande].id,
-                  title: grande[manga - pararGrande].title,
-                  score: grande[manga - pararGrande].score,
-                  status: grande[manga - pararGrande].status,
-                });
-              } else {
-                this.mangasSoloEl.push({
-                  id: grande[manga - pararGrande].id,
-                  title: grande[manga - pararGrande].title,
-                  score: grande[manga - pararGrande].score,
-                  status: grande[manga - pararGrande].status,
-                });
-              }
-
-              if (manga - pararGrande == grande.length - 1) {
-                if (pequeña == this.misMangas) {
-                  this.mangasSoloYo.push({
-                    id: pequeña[manga - pararPequeño].id,
-                    title: pequeña[manga - pararPequeño].title,
-                    score: pequeña[manga - pararPequeño].score,
-                    status: pequeña[manga - pararPequeño].status,
-                  });
-                } else {
-                  this.mangasSoloEl.push({
-                    id: pequeña[manga - pararPequeño].id,
-                    title: pequeña[manga - pararPequeño].title,
-                    score: pequeña[manga - pararPequeño].score,
-                    status: pequeña[manga - pararPequeño].status,
-                  });
-                }
-              }
-
-              pararPequeño++;
-            }
-          } else {
-            if (grande[manga - pararGrande].score == null) {
-              grande[manga - pararGrande].score = "-";
+              suScore = grande[actual1].score;
+              miScore = pequeña[actual2].score;
             }
 
+            this.mangasIguales.push({
+              id: grande[actual1].id,
+              title: grande[actual1].title,
+              myScore: miScore,
+              compScore: suScore,
+              //myStatus: grande[anime - pararGrande].status,
+              //compStatus: pequeña[anime - pararPequeño].status,
+              scoreDif: diferencia,
+            });
+          } else if (grande[actual1].id > pequeña[actual2].id) {
             var nuevo = {
-              id: grande[manga - pararGrande].id,
-              title: grande[manga - pararGrande].title,
-              score: grande[manga - pararGrande].score,
-              status: grande[manga - pararGrande].status,
+              id: pequeña[actual2].id,
+              title: pequeña[actual2].title,
+              score: pequeña[actual2].score,
+            };
+
+            pequeña == this.misMangas
+              ? this.mangasSoloYo.push(nuevo)
+              : this.mangasSoloEl.push(nuevo);
+
+            pararGrande++;
+          } else if (grande[actual1].id < pequeña[actual2].id) {
+            var nuevo = {
+              id: grande[actual1].id,
+              title: grande[actual1].title,
+              score: grande[actual1].score,
+              //status: grande[anime - pararGrande].status,
             };
 
             grande == this.misMangas
               ? this.mangasSoloYo.push(nuevo)
               : this.mangasSoloEl.push(nuevo);
+
+            if (actual1 == grande.length - 1) {
+              var nuevo = {
+                id: pequeña[actual2].id,
+                title: pequeña[actual2].title,
+                score: pequeña[actual2].score,
+                //status: grande[anime - pararGrande].status,
+              };
+
+              pequeña == this.misMangas
+                ? this.mangasSoloYo.push(nuevo)
+                : this.mangasSoloEl.push(nuevo);
+            }
+
+            pararPequeño++;
           }
+        } else {
+          var nuevo = {
+            id: grande[actual1].id,
+            title: grande[actual1].title,
+            score: grande[actual1].score,
+            //status: grande[anime - pararGrande].status,
+          };
+
+          grande == this.misMangas
+            ? this.mangasSoloYo.push(nuevo)
+            : this.mangasSoloEl.push(nuevo);
         }
       }
 
       this.mostrar = "elegirLista";
+      this.animesIguales = this.sortear(this.animesIguales, "title", 0);
+      this.animesSoloYo = this.sortear(this.animesSoloYo, "title", 0);
+      this.animesSoloEl = this.sortear(this.animesSoloEl, "title", 0);
+      this.mangasIguales = this.sortear(this.mangasIguales, "title", 0);
+      this.mangasSoloYo = this.sortear(this.mangasSoloYo, "title", 0);
+      this.mangasSoloEl = this.sortear(this.mangasSoloEl, "title", 0);
       this.desactivarOpciones();
     },
 
-    sortear(datos, campo) {
+    sortear(datos, campo, nuevo = 1) {
+      if (this.sorteado == campo && nuevo == 1) {
+        this.orden = this.orden == "desc" ? "asc" : "desc";
+      } else {
+        this.orden = "asc";
+
+        if (this.sorteado != campo) {
+          this.sorteado = campo;
+        }
+      }
+
+      var orden = this.orden;
+
       datos = datos.sort(function (a, b) {
         var x = a[campo];
         var y = b[campo];
 
-        return x < y ? -1 : x > y ? 1 : 0;
+        if (campo == "title" || campo == "name") {
+          x = x.toLowerCase();
+          y = y.toLowerCase();
+        }
+
+        if (orden == "asc") {
+          return x < y ? -1 : x > y ? 1 : 0;
+        } else {
+          return x > y ? -1 : x < y ? 1 : 0;
+        }
       });
 
       return datos;

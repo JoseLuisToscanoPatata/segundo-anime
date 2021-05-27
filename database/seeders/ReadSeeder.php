@@ -36,7 +36,7 @@ class ReadSeeder extends Seeder
                 $votado = rand(0,5);
 
                 if($votado) {
-                    $nota = rand(0,10);
+                    $nota = rand(1,10);
                     $mangaActual->ratingCount = 1;
                     $mangaActual->rating = $nota;
                     $mangaActual->save();
@@ -49,7 +49,7 @@ class ReadSeeder extends Seeder
                 'manga_id'=>$i,
                 'readStatus'=>$estadoLeer,
                 'score'=>$votado ? $nota :null,
-                'favourite'=>rand(0,10)>8?true:false,
+                'favourite'=>rand(0,80)>78?true:false,
                 'created_at'=>now(),
             ]);
         }
@@ -88,7 +88,7 @@ class ReadSeeder extends Seeder
                         'manga_id'=>$j,
                         'readStatus'=>$estadoLeer,
                         'score'=>$votado? $nota :null,
-                        'favourite'=>rand(0,10)>8?true:false,
+                        'favourite'=>rand(0,80)>75?true:false,
                         'created_at'=>now(),
                     ]);
 

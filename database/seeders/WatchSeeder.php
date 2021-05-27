@@ -35,7 +35,7 @@ class WatchSeeder extends Seeder
                 $votado = rand(0,5);
 
                 if($votado) {
-                    $nota = rand(0,10);
+                    $nota = rand(1,10);
                     $animeActual->ratingCount = 1;
                     $animeActual->rating = $nota;
                     $animeActual->save();
@@ -48,7 +48,7 @@ class WatchSeeder extends Seeder
                 'anime_id'=>$i,
                 'watchStatus'=>$estadoVer,
                 'score'=>$votado ? $nota :null,
-                'favourite'=>rand(0,10)>8?true:false,
+                'favourite'=>rand(0,80)>78?true:false,
                 'created_at'=>now(),
             ]);
         }
@@ -75,7 +75,7 @@ class WatchSeeder extends Seeder
                     $votado = rand(0,5);
 
                     if($votado) {
-                        $nota = rand(0,10);
+                        $nota = rand(1,10);
                         $animeActual->rating = round((($nota + ($animeActual->rating * $animeActual->ratingCount)) / ($animeActual->ratingCount + 1)),2);
                         $animeActual->ratingCount = $animeActual->ratingCount + 1;
                         $animeActual->save();
@@ -87,7 +87,7 @@ class WatchSeeder extends Seeder
                         'anime_id'=>$j,
                         'watchStatus'=>$estadoVer,
                         'score'=>$votado? $nota :null,
-                        'favourite'=>rand(0,10)>8?true:false,
+                        'favourite'=>rand(0,80)>75?true:false,
                         'created_at'=>now(),
                     ]);
 
