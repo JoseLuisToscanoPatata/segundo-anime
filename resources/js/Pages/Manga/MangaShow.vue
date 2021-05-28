@@ -5,7 +5,7 @@
         {{ actual.title }}
       </h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl xs2:mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <banner-propio
         v-if="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"

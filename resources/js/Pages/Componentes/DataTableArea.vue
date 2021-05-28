@@ -55,6 +55,17 @@
       >
         X
       </jet-button>
+
+      <select
+        class="col-span-2 md:hidden rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
+        @change="ordenarSmall"
+        v-model="ordenacionSmall"
+      >
+        <option value="id" disabled>Sort</option>
+        <template v-for="(columna, indice) in ordenacionesSmall" :key="indice">
+          <option :value="columna.valor">{{ columna.nombre }}</option>
+        </template>
+      </select>
     </div>
 
     <div v-show="!mostrarInputs" class="p-6 pb-6 sticky z-10 top-0">
@@ -76,7 +87,10 @@
       </jet-button>
     </div>
 
-    <div class="px-6 w-full overflow-auto" v-show="datosOrdenados.length > 0">
+    <div
+      class="px-6 w-full overflow-auto hidden md:block"
+      v-show="datosOrdenados.length > 0"
+    >
       <table class="min-w-full divide-y divide-gray-200 my-3 rounded-lg table-fixed">
         <thead>
           <tr>
@@ -218,8 +232,140 @@
     </div>
 
     <div
+      class="pr-3 pl-1 py-1 w-full overflow-y-auto md:hidden flex flex-col justify-start items-center"
+      v-show="datosOrdenados.length > 0"
+    >
+      <div
+        v-for="(dato, indice) in datosOrdenados.slice(primero - 1, ultimo)"
+        :key="indice"
+        class="w-full flex flex-row justify-between items-center flex-shrink-0 py-2"
+        :class="'border-b-2 border-' + color.color + '-400'"
+      >
+        <div class="flex flex-row justify-start items-center">
+          <div
+            v-if="camposSmall.color != null"
+            class="w-3 h-20 flex-shrink-0"
+            :style="coloresSmall[dato[camposSmall.color]]"
+          ></div>
+          <div class="h-full px-2 mx-1 py-1 flex-shrink-0">
+            <a
+              :href="dato[camposSmall.imagen]"
+              target="_blank"
+              v-if="dato[camposSmall.imagen] != null"
+            >
+              <img :src="dato[camposSmall.imagen]" alt="image" :class="imagenes" />
+            </a>
+
+            <img v-else src="/img/no_foto.jpg" alt="image" :class="imagenes" />
+          </div>
+
+          <div class="flex flex-col justify-start items-start flex-shrink ml-1">
+            <span
+              class="leading-3 mb-2 underline break-all"
+              :class="'text-' + color.color + '-500'"
+              @click="$emit(botones[botones.length - 1].emit, dato.id)"
+            >
+              {{ dato[camposSmall.arriba] }}</span
+            >
+            <div
+              class="flex flex-col xs2:flex-row justify-start items-center text-xs text-gray-600"
+            >
+              <div
+                v-for="(campo, indiceCampo) in camposSmall.abajoNum"
+                :key="indiceCampo"
+                class="flex flex-row xs2:mr-6 items-center h-6 w-full"
+              >
+                <template v-if="dato[campo] != null">
+                  <img src="/img/star.svg" alt="Star" class="h-5 mr-2 w-auto" />
+                  <span>{{ dato[campo] }}</span>
+                </template>
+              </div>
+
+              <template
+                v-for="(campo, indiceCampo) in camposSmall.abajoOtros"
+                :key="indiceCampo"
+              >
+                <div
+                  class="ml-6 h-6 flex flex-row items-center justify-start w-full xs2:mr-3"
+                >
+                  <span>{{ dato[campo.name] }}</span>
+                  <span v-if="campo.letras != null" class="ml-2">{{ campo.letras }}</span>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col xs2:flex-row flex-shrink-0">
+          <div class="mx-4" v-if="columnaIcono != 'nada'">
+            <template v-if="dato[nombreValorIcono] == iconos[0]['valor']">
+              <template v-if="listaPropia == 'propia'">
+                <abbr :title="iconos[0]['abbr']">
+                  <button
+                    @click="$emit(iconos[0]['emit'], dato.id)"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      :src="iconos[0]['icono']"
+                      :alt="iconos[0]['alt']"
+                      class="h-5 ml-2 w-auto transform active:scale-110"
+                    />
+                  </button>
+                </abbr>
+              </template>
+
+              <template v-else>
+                <abbr :title="iconos[0]['abbr']">
+                  <img
+                    :src="iconos[0]['icono']"
+                    :alt="iconos[0]['alt']"
+                    class="h-5 ml-2 w-auto transform active:scale-110"
+                  />
+                </abbr>
+              </template>
+            </template>
+            <template v-else>
+              <template v-if="listaPropia == 'propia'">
+                <abbr :title="iconos[1]['abbr']">
+                  <button
+                    @click="$emit(iconos[1]['emit'], dato.id)"
+                    class="focus:outline-none outline-none"
+                  >
+                    <img
+                      :src="iconos[1]['icono']"
+                      :alt="iconos[1]['alt']"
+                      class="h-5 ml-2 w-auto transform active:scale-110"
+                    />
+                  </button>
+                </abbr>
+              </template>
+            </template>
+          </div>
+
+          <div class="flex justify-evenly">
+            <template v-for="boton in botones" :key="boton">
+              <template v-if="(!boton.ocultar || listaPropia == 'propia') && boton.small">
+                <abbr :title="boton.abbr">
+                  <button
+                    :alt="boton.alt"
+                    @click="$emit(boton.emit, dato.id)"
+                    class="mr-4 focus:outline-none outline-none"
+                  >
+                    <img
+                      :src="boton.icono"
+                      class="h-6 w-auto transform active:scale-110"
+                    />
+                  </button>
+                </abbr>
+              </template>
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
       class="flex flex-col xs3:flex-row w-full justify-between items-center py-2 px-2"
-      v-show="mostrarPagination"
+      v-show="mostrarPagination && datosOrdenados.length > 0"
     >
       <div class="grid grid-cols-8 justify-start items-center max-w-xl">
         <span class="col-span-8 sm:col-span-4 mt-1 text-gray-500" style="min-width: 270px"
@@ -325,23 +471,27 @@ export default {
       datosOrdenados: {},
       mostrarInputs: false,
       mostrarPagination: true,
+      ordenacionSmall: "id",
     };
   },
 
   props: {
-    datos: {},
-    columnas: {},
-    cantidadPaginas: {},
-    botones: {},
-    emisiones: [],
-    imagenes: "",
-    botonesExtras: {},
-    filtros: {},
-    color: {},
-    columnaIcono: "",
-    nombreValorIcono: "",
-    iconos: "",
-    listaPropia: "",
+    datos: Array,
+    columnas: Array,
+    cantidadPaginas: Array,
+    botones: Object,
+    emisiones: Array,
+    imagenes: String,
+    botonesExtras: Array,
+    filtros: Array,
+    color: Object,
+    columnaIcono: { type: String, default: "nada" },
+    nombreValorIcono: String,
+    iconos: Array,
+    listaPropia: String,
+    camposSmall: Object,
+    coloresSmall: Object,
+    ordenacionesSmall: Array,
   },
 
   emits: [],
@@ -423,6 +573,10 @@ export default {
       var orden = this.orden;
       var tipoColumnas = this.columnas;
 
+      var signo = this.orden == "asc" ? " +" : " -";
+
+      this.ordenacionSmall = this.sorteado + signo;
+
       this.datosOrdenados = this.datosOrdenados.sort(function (a, b) {
         var x = a[key];
         var y = b[key];
@@ -437,6 +591,31 @@ export default {
         });
 
         if (orden == "asc") {
+          return x < y ? -1 : x > y ? 1 : 0;
+        } else {
+          return x > y ? -1 : x < y ? 1 : 0;
+        }
+      });
+    },
+
+    ordenarSmall() {
+      var campo = this.ordenacionSmall.split(" ")[0];
+      var orden = this.ordenacionSmall.split(" ")[1];
+
+      this.sorteado = campo;
+
+      orden == "+" ? (this.orden = "asc") : (this.orden = "desc");
+
+      this.datosOrdenados = this.datosOrdenados.sort(function (a, b) {
+        var x = a[campo];
+        var y = b[campo];
+
+        if (campo == "title" || campo == "email" || campo == "name") {
+          x = x.toLowerCase();
+          y = y.toLowerCase();
+        }
+
+        if (orden == "+") {
           return x < y ? -1 : x > y ? 1 : 0;
         } else {
           return x > y ? -1 : x < y ? 1 : 0;

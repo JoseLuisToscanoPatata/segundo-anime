@@ -47,7 +47,6 @@
         <option value="score -">Score (Desc)</option>
         <option value="startDate +">Start Date (First)</option>
         <option value="startDate -">Start Date (Last)</option>
-
         <option value="users -">Most members</option>
       </select>
 

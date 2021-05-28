@@ -4,7 +4,7 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Shared Lists</h2>
     </template>
 
-    <div class="max-w-7xl w-full sm:mx-auto px-3 xs3:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl w-full sm:mx-auto xs2:px-3 xs3:px-6 lg:px-8 py-12">
       <banner-propio
         v-if="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"

@@ -55,6 +55,9 @@
           columnaIcono="name"
           nombreValorIcono="role"
           listaPropia="propia"
+          :camposSmall="camposSmall"
+          :coloresSmall="coloresSmall"
+          :ordenacionesSmall="ordenacionesSmall"
         >
         </data-table-area>
       </template>
@@ -113,6 +116,7 @@ export default {
           emit: "borrar-usu",
           alt: "Delete user button",
           ocultar: false,
+          small: true,
         },
         {
           abbr: "Check user",
@@ -120,6 +124,7 @@ export default {
           emit: "ver-usu",
           alt: "Check user button",
           ocultar: false,
+          small: false,
         },
       ],
 
@@ -138,6 +143,25 @@ export default {
           valor: "user",
           emit: "cambiar-rol",
         },
+      ],
+
+      camposSmall: {
+        color: null,
+        imagen: "profile_photo_url",
+        arriba: "email",
+        abajoNum: [],
+        abajoOtros: [{ name: "name", letras: null }],
+      },
+
+      coloresSmall: {},
+
+      ordenacionesSmall: [
+        { nombre: "Email (a-z)", valor: "email +" },
+        { nombre: "Email (z-a)", valor: "email -" },
+        { nombre: "Name +", valor: "name +" },
+        { nombre: "Name -", valor: "name -" },
+        { nombre: "Joined +", valor: "created_at +" },
+        { nombre: "Joined -", valor: "created_at -" },
       ],
 
       campos: [

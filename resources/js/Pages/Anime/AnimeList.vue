@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ANIME</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl xs:mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <!-- MODAL DE MENSAJES-->
 
       <banner-propio

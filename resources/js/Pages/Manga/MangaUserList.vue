@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">MANGA LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl xs2:mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <banner-propio
         v-if="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"
@@ -158,6 +158,9 @@
           nombreValorIcono="favourite"
           columnaIcono="title"
           :iconos="iconos"
+          :camposSmall="camposSmall"
+          :coloresSmall="coloresSmall"
+          :ordenacionesSmall="ordenacionesSmall"
         >
         </data-table-area>
       </template>
@@ -249,6 +252,7 @@ export default {
           emit: "editar-read",
           alt: "Read status edition button",
           ocultar: true,
+          small: true,
         },
         {
           abbr: "Delete from my list",
@@ -256,6 +260,7 @@ export default {
           emit: "borrar-read",
           alt: "Read deletion button",
           ocultar: true,
+          small: true,
         },
 
         {
@@ -264,6 +269,7 @@ export default {
           emit: "ver-manga",
           alt: "See Manga button",
           ocultar: false,
+          small: false,
         },
       ],
 
@@ -283,6 +289,34 @@ export default {
           emit: "cambiar-fav",
         },
       ],
+
+      camposSmall: {
+        color: "readStatus",
+        imagen: "cover",
+        arriba: "title",
+        abajoNum: ["rating", "score"],
+        abajoOtros: [{ name: "chapters", letras: "chaps" }],
+      },
+
+      coloresSmall: {
+        OnHold: "background-color: #F9D457;",
+        Completed: " background-color: #26448F;",
+        Reading: " background-color: #2DB039;",
+        Dropped: " background-color: #A12F31;",
+        PlanToRead: " background-color: #C3C3C3;",
+      },
+
+      ordenacionesSmall: [
+        { nombre: "Title (a-z)", valor: "title +" },
+        { nombre: "Title (z-a)", valor: "title -" },
+        { nombre: "Rating +", valor: "rating +" },
+        { nombre: "Rating -", valor: "rating -" },
+        { nombre: "Score +", valor: "score +" },
+        { nombre: "Score -", valor: "score -" },
+        { nombre: "Chapters +", valor: "chapters +" },
+        { nombre: "Chapters -", valor: "chapters -" },
+      ],
+
       campos: [
         {
           nombre: "cover",

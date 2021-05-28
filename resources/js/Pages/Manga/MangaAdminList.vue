@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">ADMIN MANGA LIST</h2>
     </template>
-    <div class="max-w-7xl mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
+    <div class="max-w-7xl xs2:mx-3 sm:mx-auto sm:px-6 lg:px-8 py-12">
       <banner-propio
         v-if="datosInfo['mostrar']"
         @close="datosInfo['mostrar'] = false"
@@ -238,6 +238,9 @@
           :key="datos"
           :color="colores"
           listaPropia="propia"
+          :camposSmall="camposSmall"
+          :coloresSmall="coloresSmall"
+          :ordenacionesSmall="ordenacionesSmall"
         >
         </data-table-area>
       </template>
@@ -331,6 +334,7 @@ export default {
           emit: "editar-manga",
           alt: "Manga edition button",
           ocultar: false,
+          small: true,
         },
         {
           abbr: "Delete manga",
@@ -338,6 +342,7 @@ export default {
           emit: "borrar-manga",
           alt: "Manga deletion button",
           ocultar: false,
+          small: true,
         },
 
         {
@@ -346,7 +351,33 @@ export default {
           emit: "ver-manga",
           alt: "Manga Page button",
           ocultar: false,
+          small: false,
         },
+      ],
+
+      camposSmall: {
+        color: "status",
+        imagen: "cover",
+        arriba: "title",
+        abajoNum: ["rating"],
+        abajoOtros: [
+          { name: "userCount", letras: "users" },
+          { name: "ageRating", letras: null },
+        ],
+      },
+
+      coloresSmall: {
+        tba: "background-color: #F9D457;",
+        finished: " background-color: #26448F;",
+        current: " background-color: #2DB039;",
+      },
+
+      ordenacionesSmall: [
+        { nombre: "Title (a-z)", valor: "title +" },
+        { nombre: "Title (z-a)", valor: "title -" },
+        { nombre: "Rating +", valor: "rating +" },
+        { nombre: "Rating -", valor: "rating -" },
+        { nombre: "Most members", valor: "userCount -" },
       ],
 
       campos: [
