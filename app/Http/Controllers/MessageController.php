@@ -46,7 +46,7 @@ class MessageController extends Controller
     public function store(Request $request)
     {
 
-           $ids = User::where('id','>',0)->pluck('id')->toArray();
+           $ids = User::where('id','>',0)->pluck('name')->toArray();
 
             $validator = Validator::make($request->all(), [
                 "message" =>  "required|string|max:250",
@@ -55,6 +55,10 @@ class MessageController extends Controller
 
             if($validator->fails()) {
                 return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
+            }
+
+            if($request->recipient == Auth::user()->name) {
+                return response()->json(["status"=>"failed","message" => "You cant send a message to yourself :("],401);
             }
 
             $message = new Message;
