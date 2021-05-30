@@ -10,6 +10,7 @@ class Manga extends Model
     use HasFactory;
 
     protected $table = 'mangas';
+    public $timestamps = true;
 
          /**
       * Relationship between user and mangas

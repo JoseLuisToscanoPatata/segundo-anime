@@ -584,6 +584,7 @@ import JetInputError from "@/Jetstream/InputError";
 import Loading from "../Componentes/Loading.vue";
 import BannerPropio from "@/Pages/Componentes/BannerPropio";
 import Donnut from "@/Pages/Componentes/Donnut";
+var moment = require("moment");
 
 export default {
   components: {
@@ -603,6 +604,8 @@ export default {
 
   data() {
     return {
+      moment: moment,
+
       perfilUsu: {
         name: "",
         profilePhoto: "",
@@ -760,75 +763,7 @@ export default {
           } else if (res.data.data.last_online == "now") {
             this.perfilUsu.last_online = res.data.data.last_online;
           } else {
-            var meses = [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-            ];
-
-            var actual = new Date();
-            var ultima = res.data.data.last_online;
-            var diferencia;
-
-            if (
-              actual.getFullYear() != parseInt(ultima.split(" ")[3]) &&
-              meses.indexOf(ultima.split(" ")[2]) <= actual.getUTCMonth()
-            ) {
-              diferencia = actual.getFullYear() - parseInt(ultima.split(" ")[3]);
-              this.perfilUsu.last_online = diferencia + " years ago";
-            } else if (
-              actual.getUTCMonth() != meses.indexOf(ultima.split(" ")[2]) &&
-              parseInt(ultima.split(" ")[1]) <= actual.getUTCDate()
-            ) {
-              diferencia = actual.getUTCMonth() - meses.indexOf(ultima.split(" ")[2]);
-
-              if (diferencia < 0) {
-                diferencia += 12;
-              }
-              this.perfilUsu.last_online = diferencia + " months ago";
-            } else if (
-              actual.getUTCDate() != parseInt(ultima.split(" ")[1]) &&
-              parseInt(ultima.split(" ")[4].split(":")[0]) <=
-                parseInt(actual.getUTCHours())
-            ) {
-              diferencia = actual.getUTCDate() - parseInt(ultima.split(" ")[1]);
-
-              if (diferencia < 0) {
-                diferencia += 30;
-              }
-
-              this.perfilUsu.last_online = diferencia + " days ago";
-            } else if (
-              actual.getUTCHours() != parseInt(ultima.split(" ")[4].split(":")[0]) &&
-              parseInt(ultima.split(" ")[4].split(":")[1]) <= actual.getUTCMinutes()
-            ) {
-              diferencia =
-                actual.getUTCHours() - parseInt(ultima.split(" ")[4].split(":")[0]);
-
-              if (diferencia < 0) {
-                diferencia += 24;
-              }
-
-              this.perfilUsu.last_online = diferencia + " hours ago";
-            } else {
-              diferencia =
-                actual.getUTCMinutes() - parseInt(ultima.split(" ")[4].split(":")[1]);
-
-              if (diferencia < 0) {
-                diferencia += 60;
-              }
-
-              this.perfilUsu.last_online = diferencia + " minutes ago";
-            }
+            this.perfilUsu.last_online = this.moment(res.data.data.last_online).fromNow();
           }
 
           this.obtenerAnimes();

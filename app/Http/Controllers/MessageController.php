@@ -19,19 +19,11 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $entrantes = DB::table('users')
-                                ->join('messages','users.id','=','messages.recipient')
-                                ->select('users.name','messages.message','messages.created_at')
-                                ->where('recipient','=',Auth::user()->id)
-                                ->orderBy('messages.created_at','desc')->get();
 
-        $enviadas = DB::table('users')
-                                ->join('messages','users.id','=','messages.recipient')
-                                ->select('users.name','messages.message','messages.created_at')
-                                ->where('emisor','=',Auth::user()->id)
-                                ->orderBy('messages.created_at','desc')->get();
+        $enviados = Auth::user()->messages_sent()->get()->all(); //Todos los amigos a los que ha invitado el usuario
+        $recibidos = Auth::user()->messages_recieved()->get()->all(); //Todos los amigos que han invitado a este usuario
 
-        $totales = [$entrantes, $enviadas];
+        $totales = [$recibidos, $enviados];
         
           return response()->json(["status"=>"success","data"=>$totales],200);
 
@@ -46,7 +38,7 @@ class MessageController extends Controller
     public function store(Request $request)
     {
 
-           $ids = User::where('id','>',0)->pluck('name')->toArray();
+           $ids = User::where('id','>',0)->pluck('id')->toArray();
 
             $validator = Validator::make($request->all(), [
                 "message" =>  "required|string|max:250",
@@ -108,7 +100,7 @@ class MessageController extends Controller
 
         if(!is_null($message)) {
             
-            if($message->emisor == Auth::user->id) {
+            if($message->emisor == Auth::user()->id) {
 
                 $message->delete();
                 return response()->json(["status"=>"success","message" => "Message deleted successfully :) "],200);

@@ -21,7 +21,7 @@ createApp({
         }),
 })
     .mixin({ methods: { route } })
-    .use(InertiaPlugin,Doughnut) //Añadimos el modulo de la gráfica con forma de donut
+    .use(InertiaPlugin, Doughnut)
     .mount(el);
 
 InertiaProgress.init({ color: "#4B5563" });

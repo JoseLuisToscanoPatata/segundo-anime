@@ -78,6 +78,26 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Manga::class,'reades')->withPivot('readStatus','score','favourite');
     }
 
+        /**
+      * Relationship between user and messages
+      *
+      * @return Illuminate\Database\Eloquent\Model Every message sent by that user, with that recipient info added
+            */
+    public function messages_sent() {
+         return $this->belongsToMany(User::class, 'messages', 'emisor', 'recipient')
+                ->withPivot('message','created_at','id'); // or to fetch accepted value
+    }
+
+            /**
+      * Relationship between user and messages
+      *
+      * @return Illuminate\Database\Eloquent\Model Every message recieved by that user, with that emisor info added
+            */
+    public function messages_recieved() {
+         return $this->belongsToMany(User::class, 'messages', 'recipient', 'emisor')
+                ->withPivot('message','created_at','id'); // or to fetch accepted value
+    }
+
 
     /**
      * Relationship between users

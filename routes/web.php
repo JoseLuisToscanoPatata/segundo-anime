@@ -70,7 +70,18 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     //LISTA DE MENSAJES DEL USUARIO AUTENTICADO
     route::get('/MessagesList', function () {
-        return Inertia::render('User/Messages');
+
+        $usuarios = array();
+        
+        $datos = User::get();
+
+        foreach ($datos as  $usuario) {
+                
+            $actual = array('id'=>$usuario->id,'name'=>$usuario->name);
+
+            array_push($usuarios, $actual);
+        }
+        return Inertia::render('User/Messages',['listaUsuarios' => $usuarios]);
     })->name('MessagesList');
 
     //PERFIL DE UN USUARIO

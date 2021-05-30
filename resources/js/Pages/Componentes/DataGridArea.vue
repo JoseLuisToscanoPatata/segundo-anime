@@ -4,7 +4,7 @@
     :class="'bg-' + color.color + '-200'"
   >
     <div
-      class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0 mt-2 py-2"
+      class="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-11 2xl:grid-cols-12 pb-6 gap-y-5 sticky z-10 top-0 mt-2 py-2 items-center"
       :class="'bg-' + color.color + '-200'"
       :style="'box-shadow: 0px 10px 5px 3px ' + color.hexa + ';'"
       v-show="mostrarInputs"
@@ -259,16 +259,15 @@
       :class="'bg-' + color.color + '-200'"
       :style="'box-shadow: 0px -10px 5px 3px ' + color.hexa + ';'"
     >
-      <div class="grid grid-cols-8 justify-start items-center max-w-xl">
-        <span class="col-span-8 sm:col-span-4 mt-1 text-gray-500" style="min-width: 270px"
+      <div class="grid grid-cols-8 w-full justify-start items-center max-w-xl">
+        <span class="col-span-8 sm2:col-span-4 mt-1 text-gray-500"
           >Showing results {{ primero }} to {{ ultimo }} of
           {{ datosOrdenados.length }}
         </span>
 
-        <div class="col-span-4 sm:col-span-2 mt-1 sm:mt-0">
+        <div class="col-span-4 sm2:col-span-2 mt-1 sm:mt-0">
           <jet-button
-            style="min-width: 110px"
-            class="ml-2 disabled:opacity-60"
+            class="disabled:opacity-60"
             :class="
               'bg-' +
               color.color +
@@ -285,10 +284,9 @@
           </jet-button>
         </div>
 
-        <div class="col-span-4 sm:col-span-2 ml-3 sm:ml-0 mt-1 sm:mt-0">
+        <div class="col-span-4 sm2:col-span-2 mt-1 sm:mt-0">
           <jet-button
-            style="min-width: 70px"
-            class="ml-2 disabled:opacity-60"
+            class="disabled:opacity-60"
             :class="
               'bg-' +
               color.color +
@@ -306,10 +304,12 @@
         </div>
       </div>
 
-      <div class="mr-1 flex flex-row items-center justify-evenly">
+      <div
+        class="xs3:mr-1 mt-2 xs3:mt-0 grid grid-cols-8 w-full xs3:w-min xs3:flex xs3:flex-row items-center justify-start"
+      >
         <select
           v-model="paginas"
-          class="rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm ml-2 mt-1 sm:mt-0"
+          class="rounded-md col-span-4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm"
           @change="paginacion = 0"
           style="max-width: 110px"
         >
@@ -325,8 +325,13 @@
 
         <jet-button
           :class="
-            'text-white bg-' + color.color + '-400 hover:bg-' + color.color + '-600 ml-1'
+            'text-white bg-' +
+            color.color +
+            '-400 hover:bg-' +
+            color.color +
+            '-600 xs3:ml-1'
           "
+          class="col-span-4"
           @click="mostrarPagination = false"
           style="max-width: 45px; heigth: 45px"
         >
@@ -370,14 +375,14 @@ export default {
   },
 
   props: {
-    datos: {},
-    cantidadPaginas: [],
-    columnas: [],
-    filtros: [],
-    color: {},
-    tipo: "",
-    yearActual: "",
-    seasonActual: "",
+    datos: Array,
+    cantidadPaginas: Array,
+    columnas: Array,
+    filtros: Array,
+    color: Object,
+    tipo: String,
+    yearActual: String,
+    seasonActual: String,
   },
 
   emits: ["nuevo"],
