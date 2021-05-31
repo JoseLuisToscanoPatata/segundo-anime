@@ -101,7 +101,7 @@
           >
             <jet-button
               @click="ordenar"
-              class="text-white bg-lime-300 hover:bg-lime-400 focus:bg-lime-500"
+              class="text-white bg-lime-400 hover:bg-lime-500 focus:bg-lime-600"
             >
               {{ ordenacionActual }}
             </jet-button>
@@ -139,6 +139,14 @@
             >
               SENT
             </div>
+
+            <jet-button
+              @click="mostrarPagination = true"
+              class="text-white bg-lime-400 hover:bg-lime-500 focus:bg-lime-600 ml-2"
+              v-show="!mostrarPagination"
+            >
+              SHOW PAGS
+            </jet-button>
           </div>
         </div>
 

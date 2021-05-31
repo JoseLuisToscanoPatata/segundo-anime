@@ -22,6 +22,6 @@ class MessageSeeder extends Seeder
             'message'=>'ostia pilotes',
         ]);
 
-         \App\Models\Message::factory(30)->create();
+         \App\Models\Message::factory(500)->create();
     }
 }

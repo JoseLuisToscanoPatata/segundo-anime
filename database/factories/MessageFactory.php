@@ -22,17 +22,17 @@ class MessageFactory extends Factory
     public function definition()
     {
 
-        $emisor = mt_rand(1,50);
+        $emisor = mt_rand(1,200);
 
         do{
-            $receptor = mt_rand(1,50);
+            $receptor = mt_rand(1,200);
         
         }while($receptor == $emisor);
 
         return [
             'emisor' => $emisor,
             'recipient' => $receptor,
-            'message'=>$this->faker->text($maxNbChars = 200),
+            'message'=>$this->faker->realText(200,1),
         ];
     }
 }
