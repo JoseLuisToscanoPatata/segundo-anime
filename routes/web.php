@@ -65,7 +65,17 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
 
     //LISTA DE AMIGOS DE UN USUARIO
     route::get('/FriendsList/{id}', function ($id) {
-        return Inertia::render('User/Friends',['usuLista'=>$id]);
+         $usuarios = array();
+        
+        $datos = User::get();
+
+        foreach ($datos as  $usuario) {
+                
+            $actual = array('id'=>$usuario->id,'name'=>$usuario->name);
+
+            array_push($usuarios, $actual);
+        }
+        return Inertia::render('User/Friends',['usuLista'=>$id,'listaUsuarios' => $usuarios]);
     })->name('FriendsList');
 
     //LISTA DE MENSAJES DEL USUARIO AUTENTICADO

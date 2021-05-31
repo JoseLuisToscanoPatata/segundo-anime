@@ -22210,12 +22210,435 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+/* harmony import */ var _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/SecondaryButton */ "./resources/js/Jetstream/SecondaryButton.vue");
+/* harmony import */ var _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Jetstream/Input */ "./resources/js/Jetstream/Input.vue");
+/* harmony import */ var _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Pages/Componentes/BannerPropio */ "./resources/js/Pages/Componentes/BannerPropio.vue");
+/* harmony import */ var _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Jetstream/DialogModal */ "./resources/js/Jetstream/DialogModal.vue");
+/* harmony import */ var _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Pages/Componentes/Loading */ "./resources/js/Pages/Componentes/Loading.vue");
+/* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+
+
+
+
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    JetDialogModal: _Jetstream_DialogModal__WEBPACK_IMPORTED_MODULE_5__.default,
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_1__.default,
+    JetSecondaryButton: _Jetstream_SecondaryButton__WEBPACK_IMPORTED_MODULE_2__.default,
+    Loading: _Pages_Componentes_Loading__WEBPACK_IMPORTED_MODULE_6__.default,
+    BannerPropio: _Pages_Componentes_BannerPropio__WEBPACK_IMPORTED_MODULE_4__.default,
+    JetInput: _Jetstream_Input__WEBPACK_IMPORTED_MODULE_3__.default,
+    JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_7__.default
   },
-  props: ["clave", "usuLista"]
+  data: function data() {
+    return {
+      moment: moment,
+      nombreLista: "",
+      paginas: 10,
+      paginacion: 0,
+      datosActuales: [],
+      mostrarPagination: true,
+      recibidos: [],
+      enviados: [],
+      amigos: [],
+      modo: "amigos",
+      ordenacion: "name +",
+      modalNuevo: false,
+      modoModal: "amigo",
+      validezUsuario: {
+        tipo: null,
+        mensaje: null
+      },
+      paginaciones: [{
+        texto: "10",
+        numero: 10
+      }, {
+        texto: "25",
+        numero: 25
+      }, {
+        texto: "50",
+        numero: 50
+      }, {
+        texto: "75",
+        numero: 75
+      }, {
+        texto: "100",
+        numero: 100
+      }],
+      datosInfo: {
+        mostrar: false,
+        style: "",
+        mensaje: "",
+        color: ""
+      },
+      actual: {
+        name: "",
+        id: "",
+        mensaje: "",
+        imagen: ""
+      },
+      errorMensaje: null,
+      mostrar: "no"
+    };
+  },
+  watch: {
+    modo: function modo(nuevo) {
+      if (nuevo == "recibidos") {
+        this.datosActuales = this.recibidos;
+      }
+
+      if (nuevo == "enviados") {
+        this.datosActuales = this.enviados;
+      }
+
+      if (nuevo == "amigos") {
+        this.datosActuales = this.amigos;
+      }
+    }
+  },
+  computed: {
+    modoRecibidos: function modoRecibidos() {
+      return this.modo == "recibidos" ? "bg-yellow-500 text-white hover:bg-yellow-600 active:bg-yellow-700" : "bg-white hover:bg-gray-50 focus:bg-gray-100 text-yellow-500 hover:text-yellow-600 active:text-yellow-700";
+    },
+    modoEnviados: function modoEnviados() {
+      return this.modo == "enviados" ? "bg-purple-500 text-white hover:bg-purple-600 active:bg-purple-700" : "bg-white hover:bg-gray-50 focus:bg-gray-100 text-purple-500 hover:text-purple-600 active:text-purple-700";
+    },
+    modoAmigos: function modoAmigos() {
+      return this.modo == "amigos" ? "bg-pink-500 text-white hover:bg-pink-600 active:bg-pink-700" : "bg-white hover:bg-gray-50 focus:bg-gray-100 text-pink-500 hover:text-pink-600 active:text-pink-700";
+    },
+    primero: function primero() {
+      if (this.datosActuales.length == 0) {
+        return 0;
+      } else {
+        return 1 + this.paginacion * this.paginas;
+      }
+    },
+    ultimo: function ultimo() {
+      if (this.paginas + this.paginacion * this.paginas > this.datosActuales.length) {
+        return this.datosActuales.length;
+      } else {
+        return this.paginas + this.paginacion * this.paginas;
+      }
+    },
+    colorValidez: function colorValidez() {
+      if (this.validezUsuario == "valido") {
+        return "text-green-500";
+      } else {
+        return "text-red-500";
+      }
+    }
+  },
+  props: ["clave", "usuario", "usuLista", "listaUsuarios"],
+  created: function created() {
+    this.buscarAmigos();
+    this.buscarNombreLista();
+  },
+  methods: {
+    buscarNombreLista: function buscarNombreLista() {
+      var _this = this;
+
+      this.listaUsuarios.forEach(function (usuario) {
+        if (usuario.id == _this.usuLista) {
+          _this.nombreLista = usuario.name;
+        }
+      });
+    },
+    buscarAmigos: function buscarAmigos() {
+      var _this2 = this;
+
+      this.mostrar = "no";
+      this.enviados = [];
+      this.amigos = [];
+      this.recibidos = [];
+      axios.get(route("friends.index", this.usuLista), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        res.data.data[0].forEach(function (amigo) {
+          if (amigo.profile_photo_url.includes("https://picsum.photos/500/500")) {
+            amigo.profile_photo_url = amigo.profile_photo_path;
+          }
+
+          var ultimo;
+
+          if (amigo.last_online == null) {
+            ultimo = "never";
+          } else if (amigo.last_online == "now") {
+            ultimo = amigo.last_online;
+          } else {
+            ultimo = _this2.moment(amigo.last_online).fromNow();
+          }
+
+          _this2.amigos.push({
+            id: amigo.id,
+            name: amigo.name,
+            imagen: amigo.profile_photo_url,
+            date: amigo.pivot.confirmation_date,
+            last_online: ultimo
+          });
+        });
+        res.data.data[2].forEach(function (amigo) {
+          if (amigo.profile_photo_url.includes("https://picsum.photos/500/500")) {
+            amigo.profile_photo_url = amigo.profile_photo_path;
+          }
+
+          var ultimo;
+
+          if (amigo.last_online == null) {
+            ultimo = "never";
+          } else if (amigo.last_online == "now") {
+            ultimo = amigo.last_online;
+          } else {
+            ultimo = _this2.moment(amigo.last_online).fromNow();
+          }
+
+          _this2.recibidos.push({
+            id: amigo.id,
+            name: amigo.name,
+            imagen: amigo.profile_photo_url,
+            date: amigo.pivot.created_at,
+            last_online: ultimo
+          });
+        });
+        res.data.data[1].forEach(function (amigo) {
+          if (amigo.profile_photo_url.includes("https://picsum.photos/500/500")) {
+            amigo.profile_photo_url = amigo.profile_photo_path;
+          }
+
+          var ultimo;
+
+          if (amigo.last_online == null) {
+            ultimo = "never";
+          } else if (amigo.last_online == "now") {
+            ultimo = amigo.last_online;
+          } else {
+            ultimo = _this2.moment(amigo.last_online).fromNow();
+          }
+
+          _this2.enviados.push({
+            id: amigo.id,
+            name: amigo.name,
+            imagen: amigo.profile_photo_url,
+            date: amigo.pivot.created_at,
+            last_online: ultimo
+          });
+        });
+        _this2.mostrar = "si";
+        _this2.modo = "amigos";
+        _this2.datosActuales = _this2.amigos;
+
+        _this2.ordenar();
+      })["catch"](function (err) {
+        _this2.datosInfo["color"] = "red";
+        _this2.datosInfo["style"] = "danger";
+        _this2.datosInfo["mensaje"] = err.response.data.message;
+        _this2.datosInfo["mostrar"] = true;
+        _this2.mostrar = "error";
+      });
+    },
+    pulsadoNuevo: function pulsadoNuevo(tipo) {
+      this.modoModal = tipo;
+
+      if (tipo == "amigo") {
+        this.actual.name = "";
+        this.actual.id = "";
+      }
+
+      this.actual.mensaje = "";
+      this.validezUsuario.tipo = null;
+      this.validezUsuario.mensaje = null;
+      this.errorMensaje = null;
+      this.modalNuevo = true;
+    },
+    aceptarModal: function aceptarModal() {
+      var _this3 = this;
+
+      var datos = new FormData();
+
+      if (this.modoModal == "amigo") {
+        datos.append("id", this.actual.id);
+        axios.post(route("friends.store"), datos, {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          _this3.datosInfo["color"] = "gray";
+          _this3.datosInfo["style"] = "success";
+          _this3.datosInfo["mensaje"] = res.data.message;
+          _this3.datosInfo["mostrar"] = true;
+
+          _this3.buscarAmigos();
+
+          _this3.modalNuevo = false;
+        })["catch"](function (err) {
+          if (err.response.data.message != null) {
+            _this3.datosInfo["color"] = "red";
+            _this3.datosInfo["style"] = "danger";
+            _this3.datosInfo["mensaje"] = err.response.data.message;
+            _this3.datosInfo["mostrar"] = true;
+            _this3.modalNuevo = false;
+          } else if (err.response.data.validation_errors != null) {
+            _this3.errores.mensaje = err.response.data.validation_errors["id"];
+          }
+        });
+      } else {
+        datos.append("message", this.actual.mensaje);
+        datos.append("recipient", this.actual.id);
+        axios.post(route("messages.store"), datos, {
+          headers: {
+            Authorization: "Bearer " + this.clave
+          }
+        }).then(function (res) {
+          _this3.datosInfo["color"] = "gray";
+          _this3.datosInfo["style"] = "success";
+          _this3.datosInfo["mensaje"] = res.data.message;
+          _this3.datosInfo["mostrar"] = true;
+          _this3.modalNuevo = false;
+        })["catch"](function (err) {
+          if (err.response.data.message != null) {
+            _this3.datosInfo["color"] = "red";
+            _this3.datosInfo["style"] = "danger";
+            _this3.datosInfo["mensaje"] = err.response.data.message;
+            _this3.datosInfo["mostrar"] = true;
+            _this3.modalNuevo = false;
+          } else if (err.response.data.validation_errors != null) {
+            _this3.errores.mensaje = err.response.data.validation_errors["message"];
+          }
+        });
+      }
+    },
+    aceptarAmigo: function aceptarAmigo(id) {
+      var _this4 = this;
+
+      var datos = new FormData();
+      datos.append("_method", "PUT");
+      axios.post(route("friends.update", id), datos, {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this4.datosInfo["color"] = "gray";
+        _this4.datosInfo["style"] = "success";
+        _this4.datosInfo["mensaje"] = res.data.message;
+        _this4.datosInfo["mostrar"] = true;
+        var cambiado;
+
+        for (var actual = 0; actual < _this4.recibidos.length; actual++) {
+          if (_this4.recibidos[actual].id == id) {
+            cambiado = _this4.recibidos[actual];
+
+            _this4.recibidos.splice(actual, 1);
+          }
+        }
+
+        _this4.amigos.push(cambiado);
+      })["catch"](function (err) {
+        _this4.datosInfo["color"] = "red";
+        _this4.datosInfo["style"] = "danger";
+        _this4.datosInfo["mensaje"] = err.response.data.message;
+        _this4.datosInfo["mostrar"] = true;
+      });
+    },
+    borrarAmigo: function borrarAmigo(id) {
+      var _this5 = this;
+
+      axios["delete"](route("friends.destroy", id), {
+        headers: {
+          Authorization: "Bearer " + this.clave
+        }
+      }).then(function (res) {
+        _this5.datosInfo["color"] = "gray";
+        _this5.datosInfo["style"] = "success";
+        _this5.datosInfo["mensaje"] = res.data.message;
+        _this5.datosInfo["mostrar"] = true;
+
+        if (_this5.datosActuales == _this5.enviados) {
+          for (var actual = 0; actual < _this5.enviados.length; actual++) {
+            if (_this5.enviados[actual].id == id) {
+              _this5.enviados.splice(actual, 1);
+            }
+          }
+        }
+
+        if (_this5.datosActuales == _this5.amigos) {
+          for (var _actual = 0; _actual < _this5.amigos.length; _actual++) {
+            if (_this5.amigos[_actual].id == id) {
+              _this5.amigos.splice(_actual, 1);
+            }
+          }
+        }
+
+        if (_this5.datosActuales == _this5.recibidos) {
+          for (var _actual2 = 0; _actual2 < _this5.recibidos.length; _actual2++) {
+            if (_this5.recibidos[_actual2].id == id) {
+              _this5.recibidos.splice(_actual2, 1);
+            }
+          }
+        }
+      })["catch"](function (err) {
+        _this5.datosInfo["color"] = "red";
+        _this5.datosInfo["style"] = "danger";
+        _this5.datosInfo["mensaje"] = err.response.data.message;
+        _this5.datosInfo["mostrar"] = true;
+      });
+    },
+    ordenar: function ordenar() {
+      var campo = this.ordenacion.split(" ")[0];
+      var orden = this.ordenacion.split(" ")[1];
+      this.datosActuales = this.datosActuales.sort(function (a, b) {
+        var x = a[campo];
+        var y = b[campo];
+
+        if (campo == "name") {
+          x = x.toLowerCase();
+          y = y.toLowerCase();
+        }
+
+        if (orden == "+") {
+          return x < y ? -1 : x > y ? 1 : 0;
+        } else {
+          return x > y ? -1 : x < y ? 1 : 0;
+        }
+      });
+    },
+    mostrarUsuario: function mostrarUsuario(id) {
+      window.location.href = route("UserShow", id);
+    },
+    comprobarUsuario: function comprobarUsuario() {
+      var _this6 = this;
+
+      this.validezUsuario.tipo = null;
+      var encontrado = false;
+      this.listaUsuarios.forEach(function (usuario) {
+        if (usuario.name == _this6.actual.name) {
+          encontrado = true;
+
+          if (usuario.name == _this6.usuario.name) {
+            _this6.validezUsuario.tipo = "error";
+            _this6.validezUsuario.mensaje = "You cant send a friend invitation to yourself :(";
+          } else {
+            _this6.validezUsuario.tipo = "valido";
+            _this6.validezUsuario.mensaje = "User found :)";
+            _this6.actual.id = usuario.id;
+          }
+        }
+      });
+
+      if (!encontrado) {
+        this.validezUsuario.tipo = "error";
+        this.validezUsuario.mensaje = "User not found :(";
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -22422,7 +22845,6 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
           _this2.modalMensaje = false;
         } else if (err.response.data.validation_errors != null) {
           _this2.errores.mensaje = err.response.data.validation_errors["message"];
-          _this2.errores.mensaje = err.response.data.validation_errors["recipient"];
         }
       });
     },
@@ -33639,21 +34061,477 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", {
+var _hoisted_1 = {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
-}, "MY FRIENDS", -1
+};
+var _hoisted_2 = {
+  "class": "max-w-7xl w-full sm:mx-auto xs2:px-3 xs3:px-6 lg:px-8 py-12"
+};
+var _hoisted_3 = {
+  "class": "flex flex-col p-4 sm:p-6 bg-gray-50 rounded-lg justify-start items-center overflow-hidden",
+  style: {
+    "max-height": "75vh"
+  }
+};
+var _hoisted_4 = {
+  key: 0,
+  "class": "text-gray-600 font-bold"
+};
+var _hoisted_5 = {
+  key: 1,
+  "class": "text-gray-600 font-bold"
+};
+var _hoisted_6 = {
+  key: 0,
+  "class": "flex flex-col items-start"
+};
+var _hoisted_7 = {
+  key: 1,
+  "class": "flex flex-col items-start"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Cancel ");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Send ");
+
+var _hoisted_10 = {
+  "class": "pt-3 flex flex-col xs3:flex-row-reverse xs3:justify-between xs3:items-end sticky z-10 top-0 items-start bg-gray-50 w-full"
+};
+var _hoisted_11 = {
+  "class": "flex flex-row w-full xs3:w-min justify-evenly items-center mb-4 xs3:ml-0"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "name +"
+}, "Name (a-z)", -1
 /* HOISTED */
 );
 
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "name -"
+}, "Name (z-a)", -1
+/* HOISTED */
+);
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "date +"
+}, "Date (Asc)", -1
+/* HOISTED */
+);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+  value: "date -"
+}, "Date (Desc)", -1
+/* HOISTED */
+);
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" NEW ");
+
+var _hoisted_17 = {
+  key: 0,
+  "class": "flex flex-row justify-start items-end"
+};
+var _hoisted_18 = {
+  "class": "w-full flex flex-col overflow-y-auto"
+};
+var _hoisted_19 = {
+  "class": "mr-2"
+};
+var _hoisted_20 = {
+  key: 1,
+  src: "/img/no_foto.jpg",
+  alt: "image",
+  "class": "h-14 w-14 rounded-full m-1"
+};
+var _hoisted_21 = {
+  "class": "flex flex-row xs3:items-center w-full justify-between"
+};
+var _hoisted_22 = {
+  "class": "flex-col flex justify-between"
+};
+var _hoisted_23 = {
+  "class": "flex flex-row"
+};
+
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "hidden xs3:block mr-2"
+}, "Online: ", -1
+/* HOISTED */
+);
+
+var _hoisted_25 = {
+  "class": "flex flex-row justify-evenly items-center mt-4 xs3:mt-0"
+};
+var _hoisted_26 = {
+  "class": "self-center mt-5 my-8"
+};
+var _hoisted_27 = {
+  "class": "flex flex-col xs3:flex-row w-full justify-between items-center py-2 px-2"
+};
+var _hoisted_28 = {
+  "class": "grid grid-cols-8 w-full justify-start items-center max-w-xl"
+};
+var _hoisted_29 = {
+  "class": "col-span-8 sm2:col-span-4 mt-1 text-gray-500"
+};
+var _hoisted_30 = {
+  "class": "col-span-4 sm2:col-span-2 mt-1 sm:mt-0"
+};
+
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Previous ");
+
+var _hoisted_32 = {
+  "class": "col-span-4 sm2:col-span-2 mt-1 sm:mt-0"
+};
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Next ");
+
+var _hoisted_34 = {
+  "class": "xs3:mr-1 mt-2 xs3:mt-0 grid grid-cols-8 w-full xs3:w-min xs3:flex xs3:flex-row items-center justify-start"
+};
+
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" X ");
+
+var _hoisted_36 = {
+  "class": "w-full py-2 px-2 flex flex-row justify-evenly items-center"
+};
+
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" SHOW PAGS ");
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_banner_propio = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("banner-propio");
+
+  var _component_jet_input = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input");
+
+  var _component_jet_input_error = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-input-error");
+
+  var _component_jet_secondary_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-secondary-button");
+
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
+
+  var _component_jet_dialog_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-dialog-modal");
+
+  var _component_loading = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
     color: "#E5E7EB"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_1];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.nombreLista) + " FRIEND LIST ", 1
+      /* TEXT */
+      )];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [$data.datosInfo['mostrar'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_banner_propio, {
+        key: 0,
+        onClose: _cache[1] || (_cache[1] = function ($event) {
+          return $data.datosInfo['mostrar'] = false;
+        }),
+        color: $data.datosInfo['color'],
+        style: $data.datosInfo['style'],
+        message: $data.datosInfo['mensaje']
+      }, null, 8
+      /* PROPS */
+      , ["color", "style", "message"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_dialog_modal, {
+        show: $data.modalNuevo,
+        onClose: _cache[6] || (_cache[6] = function ($event) {
+          return $data.modalNuevo = false;
+        })
+      }, {
+        title: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [$data.modoModal == 'amigo' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_4, "Add Friend ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.modoModal == 'mensaje' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_5, "Send Message to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.actual.name), 1
+          /* TEXT */
+          )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+        }),
+        content: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+            onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+              return $options.aceptarModal && $options.aceptarModal.apply($options, arguments);
+            }, ["prevent"]))
+          }, [$data.modoModal == 'amigo' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input, {
+            id: "usuario",
+            type: "text",
+            "class": "mt-1 block w-full",
+            modelValue: $data.actual.name,
+            "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+              return $data.actual.name = $event;
+            }),
+            placeholder: "User",
+            onBlur: $options.comprobarUsuario
+          }, null, 8
+          /* PROPS */
+          , ["modelValue", "onBlur"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+            "class": ["mt-2", $options.colorValidez]
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.validezUsuario.mensaje), 3
+          /* TEXT, CLASS */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.validezUsuario.tipo != null]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.modoModal == 'mensaje' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+            id: "mensaje",
+            "class": "mt-1 block w-full border-indigo-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm",
+            style: {
+              "resize": "none"
+            },
+            rows: "5",
+            "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+              return $data.actual.mensaje = $event;
+            })
+          }, null, 512
+          /* NEED_PATCH */
+          ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.actual.mensaje]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_input_error, {
+            message: $data.errorMensaje,
+            "class": "mt-2"
+          }, null, 8
+          /* PROPS */
+          , ["message"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 32
+          /* HYDRATE_EVENTS */
+          )];
+        }),
+        footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_secondary_button, {
+            type: "button",
+            onClick: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+              return $data.modalNuevo = false;
+            }, ["prevent"])),
+            "class": "mr-2"
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_8];
+            }),
+            _: 1
+            /* STABLE */
+
+          }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+            "class": "mt-2 ml-2 text-white bg-gray-500 hover:bg-gray-600 disabled:opacity-40",
+            type: "button",
+            onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.aceptarModal, ["prevent"]),
+            disabled: ($data.validezUsuario.tipo == null || $data.validezUsuario.tipo == 'error') && $data.modoModal == 'amigo'
+          }, {
+            "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+              return [_hoisted_9];
+            }),
+            _: 1
+            /* STABLE */
+
+          }, 8
+          /* PROPS */
+          , ["onClick", "disabled"])];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["show"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $data.ordenacion = $event;
+        }),
+        onChange: _cache[8] || (_cache[8] = function () {
+          return $options.ordenar && $options.ordenar.apply($options, arguments);
+        }),
+        "class": "col-span-2 rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm mr-6"
+      }, [_hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.ordenacion]]), $props.usuLista == $props.usuario.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_jet_button, {
+        key: 0,
+        onClick: _cache[9] || (_cache[9] = function ($event) {
+          return $options.pulsadoNuevo('amigo');
+        }),
+        "class": "text-white bg-yellow-300 hover:bg-yellow-400 focus:bg-yellow-500 ml-3"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_16];
+        }),
+        _: 1
+        /* STABLE */
+
+      })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $props.usuLista == $props.usuario.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+        onClick: _cache[10] || (_cache[10] = function ($event) {
+          return $data.modo = 'amigos', $options.ordenar;
+        }),
+        "class": ["mr-0 py-2 px-3 rounded-tl-md cursor-pointer font-semibold border-2 border-pink-500 hover:border-pink-600", $options.modoAmigos]
+      }, " FRIENDS ", 2
+      /* CLASS */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+        onClick: _cache[11] || (_cache[11] = function ($event) {
+          return $data.modo = 'enviados', $options.ordenar;
+        }),
+        "class": ["ml-0 py-2 px-3 cursor-pointer font-semibold border-2 border-purple-500 hover:border-purple-600", $options.modoEnviados]
+      }, " SENT ", 2
+      /* CLASS */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+        onClick: _cache[12] || (_cache[12] = function ($event) {
+          return $data.modo = 'recibidos', $options.ordenar;
+        }),
+        "class": ["ml-0 py-2 px-3 rounded-tr-md cursor-pointer font-semibold border-2 border-yellow-500 hover:border-yellow-600", $options.modoRecibidos]
+      }, " RECIEVED ", 2
+      /* CLASS */
+      )])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.datosActuales.slice($options.primero - 1, $options.ultimo), function (amigo, indice) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+          key: indice,
+          "class": "flex flex-row justify-start items-center py-2 border-b-2 border-gray-500 bg-gray-50 hover:bg-gray-200 p-2 pr-4 w-full"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [amigo.imagen != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+          key: 0,
+          href: amigo.imagen,
+          target: "_blank"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          src: amigo.imagen,
+          alt: "image",
+          "class": "h-14 w-14 rounded-full m-1"
+        }, null, 8
+        /* PROPS */
+        , ["src"])], 8
+        /* PROPS */
+        , ["href"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", _hoisted_20))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+          onClick: function onClick($event) {
+            return $options.mostrarUsuario(amigo.id);
+          },
+          "class": "mr-2 flex-shrink-0 hover:underline cursor-pointer h-7"
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(amigo.name), 9
+        /* TEXT, PROPS */
+        , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(amigo.last_online), 1
+        /* TEXT */
+        )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [$data.modo == 'recibidos' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+          key: 0,
+          src: "/img/addFriend.svg",
+          alt: "Send message",
+          "class": "h-7 w-auto transform active:scale-120 hover:scale-110 cursor-pointer mr-1",
+          onClick: function onClick($event) {
+            return $options.aceptarAmigo(amigo.id);
+          }
+        }, null, 8
+        /* PROPS */
+        , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          src: "/img/remove-friend.svg",
+          alt: "Send message",
+          "class": "h-8 w-auto transform active:scale-120 hover:scale-110 cursor-pointer mr-1",
+          onClick: function onClick($event) {
+            return $options.borrarAmigo(amigo.id);
+          }
+        }, null, 8
+        /* PROPS */
+        , ["onClick"]), $data.modo == 'amigos' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+          key: 1,
+          src: "/img/sendMessage.svg",
+          alt: "Send message",
+          "class": "h-8 w-auto transform active:scale-120 hover:scale-110 cursor-pointer",
+          onClick: function onClick($event) {
+            return $data.actual.id = amigo.id, $data.actual.name = amigo.name, $options.pulsadoNuevo('mensaje');
+          }
+        }, null, 8
+        /* PROPS */
+        , ["onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
+        /* NEED_PATCH */
+        ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.usuLista == $props.usuario.id]])])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.datosActuales.length > 0]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [$data.modo == 'recibidos' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", {
+        key: 0,
+        "class": ["font-extrabold text-2xl", 'text-gray-700']
+      }, "You havent recieved any friend invitation :(")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.modo == 'enviados' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", {
+        key: 1,
+        "class": ["font-extrabold text-2xl", 'text-gray-700']
+      }, "You havent sent any friend invitation :(")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.modo == 'amigos' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", {
+        key: 2,
+        "class": ["font-extrabold text-2xl", 'text-gray-700']
+      }, "You dont have any friend (In the app) :(")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.datosActuales.length == 0]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_29, "Showing results " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.primero) + " to " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.ultimo) + " of " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.datosActuales.length), 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        "class": "disabled:opacity-60 bg-purple-400 hover:bg-purple-500 active:bg-purple-700 text-white",
+        onClick: _cache[13] || (_cache[13] = function ($event) {
+          return $data.paginacion = $data.paginacion - 1;
+        }),
+        disabled: $data.paginacion == 0
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_31];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        "class": "disabled:opacity-60 bg-pink-400 hover:bg-pink-500 active:bg-pink-700 text-white",
+        onClick: _cache[14] || (_cache[14] = function ($event) {
+          return $data.paginacion = $data.paginacion + 1;
+        }),
+        disabled: $options.ultimo >= $data.datosActuales.length
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_33];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["disabled"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
+          return $data.paginas = $event;
+        }),
+        "class": "rounded-md col-span-4 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 shadow-sm",
+        onChange: _cache[16] || (_cache[16] = function ($event) {
+          return $data.paginacion = 0;
+        }),
+        style: {
+          "max-width": "110px"
+        }
+      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.paginaciones, function (opcion) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
+          value: opcion.numero,
+          key: opcion.numero,
+          "class": "shadow-sm"
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(opcion.texto), 9
+        /* TEXT, PROPS */
+        , ["value"]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.paginas]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        "class": "col-span-4 text-white bg-yellow-400 hover:bg-yellow-500 xs3:ml-1",
+        onClick: _cache[17] || (_cache[17] = function ($event) {
+          return $data.mostrarPagination = false;
+        }),
+        style: {
+          "max-width": "45px",
+          "heigth": "45px"
+        }
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_35];
+        }),
+        _: 1
+        /* STABLE */
+
+      })])], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.mostrarPagination && $data.datosActuales.length > 0]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        onClick: _cache[18] || (_cache[18] = function ($event) {
+          return $data.mostrarPagination = true;
+        }),
+        "class": "text-white bg-lime-400 hover:bg-lime-500 focus:bg-lime-600 ml-2"
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_37];
+        }),
+        _: 1
+        /* STABLE */
+
+      })], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, !$data.mostrarPagination]])], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.mostrar == 'si']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_loading, {
+        color: "gray"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.mostrar == 'no']])])];
     }),
     _: 1
     /* STABLE */

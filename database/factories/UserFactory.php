@@ -33,6 +33,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'role' => rand(0,4)? 'user' : 'admin', //Role random, con un cuarto de posibilidad de ser admin
             'profile_photo_path' =>  "https://picsum.photos/500/500",
+            'created_at'=>now(),
         ];
     }
 

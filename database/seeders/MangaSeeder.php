@@ -48,6 +48,7 @@ class MangaSeeder extends Seeder
                     'ratingCount'=>0,
                     'userCount'=>0,
                     'cover'=>$manga['attributes']['posterImage']?$manga['attributes']['posterImage']['original']: null,
+                    'created_at'=>now(),
                 ]);
             }
         }

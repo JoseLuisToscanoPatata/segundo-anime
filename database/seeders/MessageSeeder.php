@@ -20,6 +20,7 @@ class MessageSeeder extends Seeder
             'recipient'=>1,
             'emisor'=>2,
             'message'=>'ostia pilotes',
+            'created_at'=>now(),
         ]);
 
          \App\Models\Message::factory(500)->create();

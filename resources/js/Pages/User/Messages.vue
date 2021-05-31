@@ -481,7 +481,6 @@ export default {
             this.modalMensaje = false;
           } else if (err.response.data.validation_errors != null) {
             this.errores.mensaje = err.response.data.validation_errors["message"];
-            this.errores.mensaje = err.response.data.validation_errors["recipient"];
           }
         });
     },

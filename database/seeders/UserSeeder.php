@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
             'biography' => "Me gustan las patatas",
             "gender" => "female",
             'profile_photo_path' => 'profile-photos/BigChungus.png',
+            'created_at'=>now(),
         ]);
         
 

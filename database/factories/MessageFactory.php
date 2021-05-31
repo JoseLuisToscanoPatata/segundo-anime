@@ -33,6 +33,7 @@ class MessageFactory extends Factory
             'emisor' => $emisor,
             'recipient' => $receptor,
             'message'=>$this->faker->realText(200,1),
+            'created_at'=>now(),
         ];
     }
 }

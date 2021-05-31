@@ -19,6 +19,7 @@ class FriendSeeder extends Seeder
          DB::table('friends')->insert([
             'user1_id'=>1,
             'user2_id'=>2,
+            'created_at'=>now(),
             'confirmation_date'=>now(),
         ]);
 
@@ -34,6 +35,7 @@ class FriendSeeder extends Seeder
             DB::table('friends')->insert([
                    'user1_id'=>$i,
                    'user2_id'=>$n,
+                   'created_at'=>now(),
                    'confirmation_date'=>rand(0,4)?null:now(),
                 ]);
            }  

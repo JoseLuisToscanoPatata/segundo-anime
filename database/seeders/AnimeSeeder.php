@@ -50,6 +50,7 @@ class AnimeSeeder extends Seeder
                     'ratingCount'=>0,
                     'userCount'=>0,
                     'cover'=>$anime['attributes']['posterImage']?$anime['attributes']['posterImage']['original']: null,
+                    'created_at'=>now(),
                 ]);
             }
         }

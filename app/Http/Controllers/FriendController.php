@@ -133,7 +133,7 @@ class FriendController extends Controller
         $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id)->first();
 
         if(is_null($friendship)) {
-            $friendship = Friend::where('user2_id',$id)->where('user1_id',Auth::user()->id);     
+            $friendship = Friend::where('user2_id',$id)->where('user1_id',Auth::user()->id)->first();     
         }
 
         if(!is_null($friendship)) {

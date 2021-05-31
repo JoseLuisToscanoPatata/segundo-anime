@@ -110,11 +110,11 @@ class User extends Authenticatable implements MustVerifyEmail
         if($confirmado == true) {
                  return $this->belongsToMany(User::class, 'friends', 'user1_id', 'user2_id')
                  ->wherePivot('confirmation_date','<>',null)
-                ->withPivot('user1_id','confirmation_date'); // or to fetch accepted value
+                ->withPivot('user1_id','confirmation_date','created_at'); // or to fetch accepted value
         } else {
                 return $this->belongsToMany(User::class, 'friends', 'user1_id', 'user2_id')
                  ->wherePivot('confirmation_date','=',null)
-                ->withPivot('user1_id','confirmation_date'); // or to fetch accepted value
+                ->withPivot('user1_id','confirmation_date','created_at'); // or to fetch accepted value
         }
 
     }
@@ -130,11 +130,11 @@ class User extends Authenticatable implements MustVerifyEmail
       if($confirmado == true) {
                  return $this->belongsToMany(User::class, 'friends', 'user2_id', 'user1_id')
                  ->wherePivot('confirmation_date','<>',null)
-                ->withPivot('user2_id','confirmation_date'); // or to fetch accepted value
+                ->withPivot('user2_id','confirmation_date','created_at'); // or to fetch accepted value
         } else {
                 return $this->belongsToMany(User::class, 'friends', 'user2_id', 'user1_id')
                  ->wherePivot('confirmation_date','=',null)
-                ->withPivot('user2_id','confirmation_date'); // or to fetch accepted value
+                ->withPivot('user2_id','confirmation_date','created_at'); // or to fetch accepted value
         }
     }
 
