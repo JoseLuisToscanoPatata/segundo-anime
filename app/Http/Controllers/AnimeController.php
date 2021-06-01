@@ -50,7 +50,7 @@ class AnimeController extends Controller
                 "startDate" =>  "sometimes|nullable|string",
                 "endDate" =>  "sometimes|nullable|string|after_or_equal:startDate",
                "trailer" => ["sometimes","nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
-                "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:1000'],
+                "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:1000','file'],
             ]);
 
             if($validator->fails()) {
@@ -111,15 +111,14 @@ class AnimeController extends Controller
             $image = $request->file('cover');
 
             //Si hemos introducido una imagen, la guardamos en el storage y establecemos como nombre de imagen la url de la imagen
-            
+
                 if($image) {
 
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $image_name = strval($anime->id) . '.' . $extension;
-                    
+                    $nueva = strval($anime->id) . '.' . $extension;
 
-                    Storage::disk('public')->put("/anime-photos/".$image_name,File::get($image));
-                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$image_name;
+                    Storage::disk('public')->put("/anime-photos/".$nueva,File::get($image));
+                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$nueva;
 
                     $anime->save();
                 }
@@ -176,7 +175,7 @@ class AnimeController extends Controller
                     "startDate" =>  "sometimes|nullable|string",
                      "endDate" =>  "sometimes|nullable|string|after_or_equal:startDate",
                      "trailer" => ["sometimes","nullable","string","regex:/^https:\/\/www.youtube.com\/embed\/.+$/"],
-                    "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'max:255'],
+                    "cover" => ['nullable', 'mimes:jpg,jpeg,png', 'file', 'max:1000'],
                 ]);
 
                 if($validator->fails()) {
@@ -234,7 +233,7 @@ class AnimeController extends Controller
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
                     $nueva = strval($anime->id) . '.' . $extension;
 
-                    if(!is_null(Storage::disk('public')->get("/anime-photos/".substr($anime->cover,43)))) {
+                    if(($anime->cover != null && strpos($anime->cover,'original') === false)) {
                         Storage::disk('public')->delete("/anime-photos/".substr($anime->cover,43));
                     }
 
