@@ -1,8 +1,11 @@
 /node_modules
 /public/hot
+/public/storage
+/public/storage/*
 /public/storage/profile-photos/*
 /public/storage/manga-photos/*
 /public/storage/anime-photos/*
+
 /storage/*.key
 /vendor
 .env
@@ -13,10 +16,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
-!/public/storage/profile-photos
-!/public/storage/manga-photos
-!/public/storage/anime-photos
-!/public/storage/profile-photos/knucles.png
-!/public/storage/manga-photos/1.png
-!/public/storage/anime-photos/1.png
