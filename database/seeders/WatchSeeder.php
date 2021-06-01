@@ -17,7 +17,7 @@ class WatchSeeder extends Seeder
     {
         $estadosAnime = ['PlanToWatch','Watching','OnHold','Dropped','Completed'];
 
-        for ($i=1; $i < 3500; $i++) {  //CAMBIAR POR 500
+        for ($i=1; $i < 300; $i++) {  //CAMBIAR POR 500
 
                 $animeActual = Anime::find($i);
                 $animeActual->userCount = 1;
@@ -55,7 +55,7 @@ class WatchSeeder extends Seeder
 
         for ($i=2; $i <= 100; $i++) { 
             
-            for ($j=1; $j < 3000; $j++) { //CAMBIAR POR 300
+            for ($j=1; $j < 300; $j++) { //CAMBIAR POR 300
 
                 if(mt_rand(0,9) > 8) {
 
