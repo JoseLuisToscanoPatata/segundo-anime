@@ -55,6 +55,8 @@ class WatchController extends Controller
 
              $existe = Watch::where('user_id',Auth::user()->id)->where('anime_id',$request->anime_id)->get()->all();
 
+             
+
         if(count($existe)>0) {
              return response()->json(["status"=>"failed","message" => "An user cant watch the same anime twice :("],400);
   

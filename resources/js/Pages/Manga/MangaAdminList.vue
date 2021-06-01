@@ -472,7 +472,7 @@ export default {
       datosActual: {
         title: "",
         synopsis: "",
-        chapters: 0,
+        chapters: "",
         ageRating: "",
         subType: "",
         status: "",
@@ -616,11 +616,6 @@ export default {
 
       datos.append("title", this.datosActual["title"]);
       datos.append("synopsis", this.datosActual["synopsis"]);
-
-      if (this.datosActual["chapters"] == "") {
-        alert("paco");
-        this.datosActual["chapters"] = null;
-      }
 
       datos.append("chapters", this.datosActual["chapters"]);
 

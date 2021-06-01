@@ -401,7 +401,6 @@ export default {
       var datos = new FormData();
 
       datos.append("anime_id", this.idActual);
-      datos.append("user_id", this.usuario.id);
       datos.append("watchStatus", this.nuevo["watchStatus"]);
 
       datos.append("favourite", this.nuevo["favourite"]);

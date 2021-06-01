@@ -539,7 +539,7 @@
               <jet-responsive-nav-link
                 :href="route('MessagesList')"
                 :active="route().current('MessagesList')"
-                class="text-purple-400 hover:text-yellow-500 focus:text-yellow-600 hover:border-yellow-500 focus:border-yellow-600"
+                class="text-purple-400 hover:text-purple-500 focus:text-purple-600 hover:border-purple-500 focus:border-purple-600"
                 :class="{
                   'border-white': route().current('MessagesList'),
                 }"

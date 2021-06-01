@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DRIVER', 'public'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +69,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('storage/profile-photos') => storage_path('app/public/profile-photos'),
         public_path('storage/manga-photos') => storage_path('app/public/manga-photos'),
+        public_path('storage/anime-photos') => storage_path('app/public/anime-photos'),
     ],
 
 ];

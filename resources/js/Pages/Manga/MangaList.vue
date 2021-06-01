@@ -376,7 +376,6 @@ export default {
       var datos = new FormData();
 
       datos.append("manga_id", this.idActual);
-      datos.append("user_id", this.usuario.id);
       datos.append("readStatus", this.nuevo["readStatus"]);
       datos.append("favourite", this.nuevo["favourite"]);
       if (this.nuevo["score"] != null) {

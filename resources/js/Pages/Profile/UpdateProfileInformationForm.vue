@@ -105,7 +105,7 @@
           class="mt-6 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
           v-model="form.gender"
         >
-          <option value="">Gender</option>
+          <option value="nada">Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
           <option value="non binary">Non binary</option>
@@ -161,7 +161,7 @@ export default {
         email: this.user.email,
         photo: null,
         bio: this.user.biography,
-        gender: this.user.gender ? this.user.gender : "",
+        gender: this.user.gender ? this.user.gender : "nada",
       }),
 
       photoPreview: null,
@@ -174,7 +174,7 @@ export default {
         this.form.photo = this.$refs.photo.files[0];
       }
 
-      if (this.form.gender == "") {
+      if (this.form.gender == "nada") {
         this.form.gender = null;
       }
 

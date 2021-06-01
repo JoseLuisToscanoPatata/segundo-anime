@@ -18,7 +18,7 @@ class AnimeSeeder extends Seeder
     {
         $url = 'https://kitsu.io/api/edge/anime';
 
-        for ($i=45000; $i > 40000 ; $i--) { 
+        for ($i=45000; $i > 40000 ; $i--) {  //CAMBIAR 40000 POR 44000
             
             $response = Http::get($url."/".($i));
 
