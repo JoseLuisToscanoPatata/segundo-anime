@@ -649,10 +649,6 @@ export default {
       datos.append("title", this.datosActual["title"]);
       datos.append("synopsis", this.datosActual["synopsis"]);
 
-      if (this.datosActual["episodes"] == "") {
-        this.datosActual["episodes"] = null;
-      }
-
       if (this.datosActual["episodeLength"] == "") {
         this.datosActual["episodeLength"] = null;
       }

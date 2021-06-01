@@ -472,7 +472,6 @@ export default {
       var datos = new FormData();
 
       datos.append("manga_id", this.manga);
-      datos.append("user_id", this.usuario.id);
       if (this.estado.readStatus == "") {
         this.estado.readStatus = "PlanToRead";
       }

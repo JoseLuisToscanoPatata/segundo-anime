@@ -22,10 +22,10 @@ class MessageFactory extends Factory
     public function definition()
     {
 
-        $emisor = mt_rand(1,200);
+        $emisor = mt_rand(1,100);
 
         do{
-            $receptor = mt_rand(1,200);
+            $receptor = mt_rand(1,100);
         
         }while($receptor == $emisor);
 

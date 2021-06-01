@@ -139,14 +139,6 @@
             >
               SENT
             </div>
-
-            <jet-button
-              @click="mostrarPagination = true"
-              class="text-white bg-lime-400 hover:bg-lime-500 focus:bg-lime-600 ml-2"
-              v-show="!mostrarPagination"
-            >
-              SHOW PAGS
-            </jet-button>
           </div>
         </div>
 
@@ -269,6 +261,17 @@
               X
             </jet-button>
           </div>
+        </div>
+        <div
+          v-show="!mostrarPagination"
+          class="w-full py-2 px-2 flex flex-row justify-evenly items-center"
+        >
+          <jet-button
+            @click="mostrarPagination = true"
+            class="text-white bg-lime-400 hover:bg-lime-500 focus:bg-lime-600 ml-2"
+          >
+            SHOW PAGS
+          </jet-button>
         </div>
       </div>
 

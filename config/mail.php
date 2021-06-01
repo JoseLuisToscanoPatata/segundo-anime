@@ -56,6 +56,13 @@ return [
             'username' => 'ejemplogimnasio@gmail.com', //Correo desde el que enviamos el correo
             'password' => 'pixgledhjragixzu', //Contraseña dle correo encriptada
             'timeout' => null,
+             'stream' => [
+                'ssl' => [
+                    'allow_self_signed' => true,
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                ],
+            ],
         ],
 
         'ses' => [

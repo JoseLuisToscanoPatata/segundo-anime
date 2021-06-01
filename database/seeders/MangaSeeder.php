@@ -18,7 +18,7 @@ class MangaSeeder extends Seeder
     {
         $url = 'https://kitsu.io/api/edge/manga';
 
-        for ($i=58000; $i > 53000 ; $i--) { 
+        for ($i=58000; $i > 53000 ; $i--) {  //CAMBIAR 53000 POR 57000
             
             $response = Http::get($url."/".($i));
 

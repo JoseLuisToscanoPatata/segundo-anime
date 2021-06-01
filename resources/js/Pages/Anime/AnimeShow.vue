@@ -237,7 +237,7 @@
 
                 <div class="flex flex-col items-start justify-evenly w-full md:w-1/2">
                   <span class="text-sm"
-                    ><b class="text-base text-purple-400">Premiepurple:</b>
+                    ><b class="text-base text-purple-400">Premiere:</b>
                     {{ actual.startDatePretty }}</span
                   >
 
@@ -529,7 +529,6 @@ export default {
       var datos = new FormData();
 
       datos.append("anime_id", this.anime);
-      datos.append("user_id", this.usuario.id);
       if (this.estado.watchStatus == "") {
         this.estado.watchStatus = "PlanToWatch";
       }

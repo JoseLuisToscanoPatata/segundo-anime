@@ -24,10 +24,10 @@ class FriendSeeder extends Seeder
         ]);
 
 
-        for ($i=1; $i < 500 ; $i++) { 
+        for ($i=1; $i < 100 ; $i++) { 
 
            do {
-                $n = mt_rand(1,500);
+                $n = mt_rand(1,100);
            }while ($n == $i);
 
            if(!Friend::class::where('user1_id',$i)->where('user2_id',$n)->first() && !Friend::class::where('user2_id', $i)->where('user1_id', $n)->first()) {
