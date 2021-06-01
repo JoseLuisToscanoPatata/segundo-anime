@@ -18,7 +18,7 @@ class ReadSeeder extends Seeder
 
         $estadosManga = ['PlanToRead','Reading','OnHold','Dropped','Completed'];
 
-        for ($i=1; $i < 4500; $i++) {  //CAMBIAR POR 600
+        for ($i=1; $i < 300; $i++) {  //CAMBIAR POR 600
 
                 $mangaActual = Manga::find($i);
                 $mangaActual->userCount = 1;
@@ -56,7 +56,7 @@ class ReadSeeder extends Seeder
 
         for ($i=2; $i <= 100; $i++) { 
             
-            for ($j=1; $j < 4000; $j++) { //CAMBIAR POR 400
+            for ($j=1; $j < 300; $j++) { //CAMBIAR POR 400
 
                 if(mt_rand(0,9) > 8) {
 
