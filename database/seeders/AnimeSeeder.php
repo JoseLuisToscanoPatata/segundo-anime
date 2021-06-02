@@ -44,7 +44,7 @@ class AnimeSeeder extends Seeder
                     'ageRating'=>$anime['attributes']['ageRating'],
                     'startDate'=>$anime['attributes']['startDate'],
                     'endDate'=>$anime['attributes']['endDate'],
-                    'subtype' =>  $anime['attributes']['subtype'],
+                    'subType' =>  $anime['attributes']['subType'],
                     'status'=>$anime['attributes']['status'],
                     'trailer'=>$anime['attributes'][''.'youtubeVideoId']?'https://www.youtube.com/embed/'.$anime['attributes'][''.'youtubeVideoId']: null,
                     'ratingCount'=>0,

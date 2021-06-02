@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         
-          /*DB::table('users')->insert([
+          DB::table('users')->insert([
            'name' => 'patata',
             'email' => 'jl.toscano@hotmail.com',
             'email_verified_at' => now(),
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             "gender" => "female",
             'profile_photo_path' => 'profile-photos/BigChungus.png',
             'created_at'=>now(),
-        ]);*/
+        ]);
         
 
         \App\Models\User::factory(25)->create(); 
