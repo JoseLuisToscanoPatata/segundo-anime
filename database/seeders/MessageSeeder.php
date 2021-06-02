@@ -23,6 +23,6 @@ class MessageSeeder extends Seeder
             'created_at'=>now(),
         ]);
 
-         \App\Models\Message::factory(300)->create();
+         \App\Models\Message::factory(200)->create();
     }
 }

@@ -53,7 +53,7 @@ class WatchSeeder extends Seeder
             ]);
         }
 
-        for ($i=2; $i <= 100; $i++) { 
+        for ($i=2; $i <= 25; $i++) { 
             
             for ($j=1; $j < 300; $j++) { //CAMBIAR POR 300
 
