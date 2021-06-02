@@ -41,7 +41,7 @@ class MangaSeeder extends Seeder
                     'synopsis' =>$manga['attributes']['synopsis'],
                     'chapters' => $manga['attributes']['chapterCount']? $manga['attributes']['chapterCount']: 0,
                     'ageRating'=>$manga['attributes']['ageRating'],
-                    'subType' =>  $manga['attributes']['subtype'],
+                    'subType' =>  $manga['attributes']['subType'],
                     'status'=>$manga['attributes']['status'],
                       'startDate'=>$manga['attributes']['startDate'],
                     'endDate'=>$manga['attributes']['endDate'],
