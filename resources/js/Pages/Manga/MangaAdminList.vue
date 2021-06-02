@@ -563,6 +563,8 @@ export default {
         }
       }
 
+      this.photoPreview = null;
+
       this.modoManga = "nuevo";
       this.operacion = "crearEditar";
       this.photoPreview = null;
@@ -581,6 +583,7 @@ export default {
       this.modoManga = "editar";
       this.operacion = "crearEditar";
       this.idActual = id;
+      this.photoPreview = null;
 
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {
