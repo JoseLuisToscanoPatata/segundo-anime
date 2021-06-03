@@ -50,7 +50,15 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
+            'visibility'=>'public',
         ],
+
+        /**
+         * AWS_ACCESS_KEY_ID=AKIA4QTBKCG5GEJXOJUT
+        *AWS_SECRET_ACCESS_KEY=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
+        *AWS_DEFAULT_REGION=us-east-2
+        *AWS_BUCKET=proyectobigchungus
+         */
 
     ],
 

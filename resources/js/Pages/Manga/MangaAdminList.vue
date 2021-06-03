@@ -502,12 +502,14 @@ export default {
   computed: {
     //METODO PARA MOSTRAR / NO MOSTRAR IMÁGENES EN EL MODAL DEL FORMULARIO
     mostrarImagen() {
-      if (this.photoPreview == null && this.modoManga == "editar") {
-        return "original";
-      } else if (this.photoPreview) {
+      if (this.photoPreview) {
         return "preview";
       } else {
-        return "nada";
+        if (this.datosActual.cover == null) {
+          return "nada";
+        } else {
+          return "original";
+        }
       }
     },
   },

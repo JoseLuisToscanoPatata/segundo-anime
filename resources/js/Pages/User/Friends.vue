@@ -472,7 +472,7 @@ export default {
         })
         .then((res) => {
           res.data.data[0].forEach((amigo) => {
-            if (amigo.profile_photo_url.includes("https://picsum.photos/500/500")) {
+            if (amigo.profile_photo_url.includes("https")) {
               amigo.profile_photo_url = amigo.profile_photo_path;
             }
 

@@ -47,6 +47,13 @@ import UpdateProfileInformationForm from "./UpdateProfileInformationForm";
 
 export default {
   props: ["sessions"],
+  /*
+  methods: {
+    imagen() {
+      this.$page.props.user.profile_photo_url = this.$page.props.user.profile_photo_path;
+    },
+  },
+  */
 
   components: {
     AppLayout,

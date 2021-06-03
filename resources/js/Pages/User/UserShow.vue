@@ -715,7 +715,7 @@ export default {
         .then((res) => {
           this.perfilUsu.name = res.data.data.name;
 
-          if (res.data.data.profile_photo_url.includes("https://picsum.photos/500/500")) {
+          if (res.data.data.profile_photo_url.includes("https:")) {
             this.perfilUsu.profilePhoto = res.data.data.profile_photo_path;
           } else {
             this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;

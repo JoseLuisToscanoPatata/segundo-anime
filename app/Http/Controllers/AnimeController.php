@@ -114,11 +114,14 @@ class AnimeController extends Controller
 
                 if($image) {
 
+                    $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
+
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
                     $nueva = strval($anime->id) . '.' . $extension;
+                    $image->storeAs('images/animes',$image_name,'s3');
 
-                    Storage::disk('public')->put("/anime-photos/".$nueva,File::get($image));
-                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$nueva;
+                    //Storage::disk('public')->put("/anime-photos/".$nueva,File::get($image));
+                   $manga->cover = $url .  'images/animes/' .$image_name;
 
                     $anime->save();
                 }
@@ -230,15 +233,18 @@ class AnimeController extends Controller
 
                 if($image) {
 
-                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $nueva = strval($anime->id) . '.' . $extension;
+                    $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
 
                     if(($anime->cover != null && strpos($anime->cover,'original') === false)) {
-                        Storage::disk('public')->delete("/anime-photos/".substr($anime->cover,43));
+                        Storage::disk('s3')->delete("images/animes/".substr($anime->cover,68));
                     }
 
-                    Storage::disk('public')->put("/anime-photos/".$nueva,File::get($image));
-                    $anime->cover = env('APP_URL') . "/storage/anime-photos/" .$nueva;
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $image_name = strval($anime->id) . '.' . $extension;
+                    $image->storeAs('images/animes',$image_name,'s3');
+                    
+                    //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
+                    $anime->cover = $url .  'images/animes/' .$image_name;
 
                     $anime->save();
                 }
@@ -269,8 +275,13 @@ class AnimeController extends Controller
         if(Auth::user()->role=="admin") {
 
             if(!is_null($anime)) {
+
+                if(($anime->cover != null && strpos($anime->cover,'original') === false)) {
+                    Storage::disk('s3')->delete("images/animes/".substr($anime->cover,68));
+                }
+
                 $anime->delete();
-            return response()->json(["status"=>"success","message"=>"Anime deleted successfully"],200);
+                return response()->json(["status"=>"success","message"=>"Anime deleted successfully"],200);
 
             } else {
                 return response()->json(["status"=>"failed","message"=>"No anime found :("],404);

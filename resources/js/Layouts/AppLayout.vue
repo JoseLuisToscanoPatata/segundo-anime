@@ -205,7 +205,7 @@
                     >
                       <img
                         class="h-11 w-11 rounded-full object-cover"
-                        :src="$page.props.user.profile_photo_url"
+                        :src="imagen"
                         :alt="$page.props.user.name"
                       />
                     </button>
@@ -487,7 +487,7 @@
               >
                 <img
                   class="h-10 w-10 rounded-full object-cover m-1"
-                  :src="$page.props.user.profile_photo_url"
+                  :src="imagen"
                   :alt="$page.props.user.name"
                 />
               </div>
@@ -606,7 +606,8 @@ export default {
 
   created() {
     if (
-      this.$page.props.user.profile_photo_url.includes("https://picsum.photos/500/500")
+      this.$page.props.user.profile_photo_url.includes("https") &&
+      this.$page.props.user.profile_photo_path != null
     ) {
       this.$page.props.user.profile_photo_url = this.$page.props.user.profile_photo_path;
     }
@@ -615,6 +616,14 @@ export default {
   computed: {
     headerColor() {
       return "background-color: " + this.color;
+    },
+
+    imagen() {
+      if (this.$page.props.user.profile_photo_path != null) {
+        return this.$page.props.user.profile_photo_path;
+      } else {
+        return this.$page.props.user.profile_photo_url;
+      }
     },
   },
 

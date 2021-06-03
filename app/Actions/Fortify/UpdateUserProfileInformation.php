@@ -27,13 +27,33 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
-            $user->updateProfilePhoto($input['photo']);
+            //$user->updateProfilePhoto($input['photo']);
+
+            $image = $input['photo'];
+
+                    $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
+
+                    if(($user->profile_photo_path != null && strpos($user->profile_photo_path,'https://picsum.photos/500/500') === false)) {
+                        Storage::disk('s3')->delete("images/perfiles/".substr($user->profile_photo_path,72));
+                    }
+
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $image_name = strval($user->id) . '.' . $extension;
+                    $image->storeAs('images/perfiles',$image_name,'s3');
+                    
+                    //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
+                    $user->profile_photo_path = $url .  'images/perfiles/' .$image_name;
+
+                    $user->save();
+                
         }
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
+
         } else {
+            
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
