@@ -103,12 +103,15 @@ class MangaController extends Controller
 
                 if($image) {
 
+                    $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
+
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
                     $image_name = strval($manga->id) . '.' . $extension;
+                    $image->storeAs('images/mangas',$image_name,'s3');
                     
 
-                    Storage::disk('public')->put("/manga-photos/".$image_name,File::get($image));
-                    $manga->cover = env('APP_URL') . "/storage/manga-photos/" .$image_name;
+                    //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
+                    $manga->cover = $url .  'images/mangas/' .$image_name;
 
                     $manga->save();
                 }
@@ -211,20 +214,21 @@ class MangaController extends Controller
 
                 if($image) {
 
-                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $nueva = strval($manga->id) . '.' . $extension;
+                    $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
 
                     if(($manga->cover != null && strpos($manga->cover,'original') === false)) {
-                        Storage::disk('public')->delete("/manga-photos/".substr($manga->cover,43));
+                        Storage::disk('s3')->delete("images/mangas/".substr($manga->cover,68));
                     }
 
-                    Storage::disk('public')->put("/manga-photos/".$nueva,File::get($image));
-                    $manga->cover = env('APP_URL') . "/storage/manga-photos/" .$nueva;
+                    $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+                    $image_name = strval($manga->id) . '.' . $extension;
+                    $image->storeAs('images/mangas',$image_name,'s3');
+                    
+                    //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
+                    $manga->cover = $url .  'images/mangas/' .$image_name;
 
                     $manga->save();
                 }
-
-                
 
                 return response()->json(["status"=>"success","message" => "Manga updated successfully :)","data"=>$manga],200);
             
@@ -251,8 +255,13 @@ class MangaController extends Controller
         if(Auth::user()->role=="admin") {
 
             if(!is_null($manga)) {
+
+                if(($manga->cover != null && strpos($manga->cover,'original') === false)) {
+                    Storage::disk('s3')->delete("images/mangas/".substr($manga->cover,68));
+                }
+
                 $manga->delete();
-            return response()->json(["status"=>"success","message"=>"Manga deleted successfully"],200);
+                return response()->json(["status"=>"success","message"=>"Manga deleted successfully"],200);
 
             } else {
                 return response()->json(["status"=>"failed","message"=>"No manga found :("],404);

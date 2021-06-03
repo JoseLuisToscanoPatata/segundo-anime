@@ -605,9 +605,7 @@ export default {
   },
 
   created() {
-    if (
-      this.$page.props.user.profile_photo_url.includes("https://picsum.photos/500/500")
-    ) {
+    if (this.$page.props.user.profile_photo_url.includes("https")) {
       this.$page.props.user.profile_photo_url = this.$page.props.user.profile_photo_path;
     }
   },

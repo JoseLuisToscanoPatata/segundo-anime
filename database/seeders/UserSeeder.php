@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'role' => "admin",
             'biography' => "Me gustan las patatas",
             "gender" => "female",
-            'profile_photo_path' => 'profile-photos/BigChungus.png',
+            'profile_photo_path' => null,
             'created_at'=>now(),
         ]);
         

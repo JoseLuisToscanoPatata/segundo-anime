@@ -251,7 +251,7 @@ export default {
           this.datos = res.data.data;
 
           this.datos.forEach((usuario) => {
-            if (usuario.profile_photo_url.includes("https://picsum.photos/500/500")) {
+            if (usuario.profile_photo_url.includes("https")) {
               usuario.profile_photo_url = usuario.profile_photo_path;
             }
           });

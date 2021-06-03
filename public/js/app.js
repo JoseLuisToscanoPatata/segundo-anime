@@ -17173,7 +17173,7 @@ __webpack_require__.r(__webpack_exports__);
     color: ""
   },
   created: function created() {
-    if (this.$page.props.user.profile_photo_url.includes("https://picsum.photos/500/500")) {
+    if (this.$page.props.user.profile_photo_url.includes("https")) {
       this.$page.props.user.profile_photo_url = this.$page.props.user.profile_photo_path;
     }
   },
@@ -22354,7 +22354,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
         }
       }).then(function (res) {
         res.data.data[0].forEach(function (amigo) {
-          if (amigo.profile_photo_url.includes("https://picsum.photos/500/500")) {
+          if (amigo.profile_photo_url.includes("https")) {
             amigo.profile_photo_url = amigo.profile_photo_path;
           }
 
@@ -23629,7 +23629,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.datos = res.data.data;
 
         _this.datos.forEach(function (usuario) {
-          if (usuario.profile_photo_url.includes("https://picsum.photos/500/500")) {
+          if (usuario.profile_photo_url.includes("https")) {
             usuario.profile_photo_url = usuario.profile_photo_path;
           }
         });
@@ -23858,7 +23858,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
       }).then(function (res) {
         _this.perfilUsu.name = res.data.data.name;
 
-        if (res.data.data.profile_photo_url.includes("https://picsum.photos/500/500")) {
+        if (res.data.data.profile_photo_url.includes("https:")) {
           _this.perfilUsu.profilePhoto = res.data.data.profile_photo_path;
         } else {
           _this.perfilUsu.profilePhoto = res.data.data.profile_photo_url;
