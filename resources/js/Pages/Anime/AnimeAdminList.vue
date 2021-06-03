@@ -587,6 +587,8 @@ export default {
         }
       }
 
+      this.photoPreview = null;
+
       this.modoAnime = "nuevo";
       this.operacion = "crearEditar";
       this.photoPreview = null;
@@ -610,6 +612,7 @@ export default {
       }
 
       this.idActual = id;
+      this.photoPreview = null;
 
       for (let actual = 0; actual < this.datos.length; actual++) {
         if (this.datos[actual].id == this.idActual) {

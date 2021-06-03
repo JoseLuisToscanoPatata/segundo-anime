@@ -31,7 +31,7 @@
 
     <div class="rounded-full flex justify-center my-4">
       <img
-        src="img/bigChungus.png"
+        src="img/BigChungus.png"
         alt="bigChungus"
         class="h-52 w-auto lg:h-60 xl:h-72 2xl:h-80"
       />

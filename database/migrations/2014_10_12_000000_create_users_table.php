@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('last_online')->nullable();
             $table->enum('gender',['male','female','non binary', 'other'])->nullable();
             $table->timestamps();
-            $table->enum('role',['admin','user']);
+            $table->enum('role',['admin','user'])->default('user');
         });
     }
 
