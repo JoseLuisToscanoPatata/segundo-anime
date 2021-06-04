@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use Auth;
 
+/**
+ * @group User
+ * 
+ * API Endpoints for working with users, as well as registering and login
+ */
+
 class UserController extends Controller
 {
 
@@ -47,10 +53,15 @@ class UserController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Log in the user.
      *
-     * @param Request $request Email and password of the user you want to log in
-     * @return \Illuminate\Http\Response
+     * @bodyParam   email    string  required    The email of the  user.      Example: testuser@example.com
+     * @bodyParam   password    string  required    The password of the  user.   Example: secret
+     *
+     * @response {
+     *  "access_token": "eyJ0eXA...",
+     *  "token_type": "Bearer",
+     * }
      */
     public function login(Request $request) {
 

@@ -10,6 +10,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
+/**
+ * @group Friend
+ * 
+ * API Endpoints for working with friends
+ */
+
 class FriendController extends Controller
 {
     /**

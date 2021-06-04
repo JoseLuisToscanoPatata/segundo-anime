@@ -10,6 +10,13 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+
+/**
+ * @group Read (Manga Lists)
+ * 
+ * API Endpoints for working with users manga lists
+ */
+
 class ReadController extends Controller
 {
       /**

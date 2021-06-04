@@ -10,6 +10,11 @@ use Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
+/**
+ * @group Watch (Anime List)
+ * 
+ * API Endpoints for working with users anime lists
+ */
 
 class WatchController extends Controller
 {

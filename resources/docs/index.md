@@ -12,7 +12,7 @@ includes:
 - "./errors.md"
 - "./append.md"
 
-logo: 
+logo: ../img/mrsaturn3.svg
 
 toc_footers:
 - <a href="./collection.json">View Postman collection</a>
@@ -23,18 +23,11 @@ toc_footers:
 
 # Introduction
 
-In this document you can check for info about the api Rest created with our website
-
-This documentation aims to provide all the information you need to work with our API.
+<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses. </p>
 
 <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
 You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
-<script>
-    var baseUrl = "http://localhost:8000";
-</script>
-<script src="js/tryitout-2.7.6.js"></script>
 
 > Base URL
 

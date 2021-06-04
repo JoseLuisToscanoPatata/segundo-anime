@@ -10,6 +10,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
+
+/**
+ * @group Message
+ * 
+ * API Endpoints for working with user messages
+ */
 class MessageController extends Controller
 {
     /**

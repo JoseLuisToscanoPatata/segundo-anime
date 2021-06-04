@@ -10,6 +10,11 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
+/**
+ * @group Anime
+ * 
+ * API Endpoints for working with animes
+ */
 
 class AnimeController extends Controller
 {

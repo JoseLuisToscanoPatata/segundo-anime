@@ -1,0 +1,384 @@
+# Read (Manga Lists)
+
+API Endpoints for working with users manga lists
+
+## Get all mangas in an user list
+
+
+
+
+> Example request:
+
+```bash
+curl -X GET \
+    -G "http://localhost:8000/api/reads/qui" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads/qui"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response => response.json());
+```
+
+
+> Example response (401):
+
+```json
+{
+    "message": "Unauthenticated."
+}
+```
+<div id="execution-results-GETapi-reads--user-" hidden>
+    <blockquote>Received response<span id="execution-response-status-GETapi-reads--user-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-reads--user-"></code></pre>
+</div>
+<div id="execution-error-GETapi-reads--user-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-reads--user-"></code></pre>
+</div>
+<form id="form-GETapi-reads--user-" data-method="GET" data-path="api/reads/{user}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('GETapi-reads--user-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-green">GET</small>
+ <b><code>api/reads/{user}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>user</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="user" data-endpoint="GETapi-reads--user-" data-component="url" required  hidden>
+<br>
+
+</p>
+</form>
+
+
+## Get the manga read status from any user
+
+
+
+
+> Example request:
+
+```bash
+curl -X GET \
+    -G "http://localhost:8000/api/reads/et/perferendis" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads/et/perferendis"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response => response.json());
+```
+
+
+> Example response (401):
+
+```json
+{
+    "message": "Unauthenticated."
+}
+```
+<div id="execution-results-GETapi-reads--manga---user-" hidden>
+    <blockquote>Received response<span id="execution-response-status-GETapi-reads--manga---user-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-reads--manga---user-"></code></pre>
+</div>
+<div id="execution-error-GETapi-reads--manga---user-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-reads--manga---user-"></code></pre>
+</div>
+<form id="form-GETapi-reads--manga---user-" data-method="GET" data-path="api/reads/{manga}/{user}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('GETapi-reads--manga---user-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-green">GET</small>
+ <b><code>api/reads/{manga}/{user}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>manga</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="manga" data-endpoint="GETapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+<p>
+<b><code>user</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="user" data-endpoint="GETapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+</form>
+
+
+## Add a new manga to the current user list.
+
+
+
+
+> Example request:
+
+```bash
+curl -X POST \
+    "http://localhost:8000/api/reads" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "POST",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-POSTapi-reads" hidden>
+    <blockquote>Received response<span id="execution-response-status-POSTapi-reads"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-reads"></code></pre>
+</div>
+<div id="execution-error-POSTapi-reads" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-reads"></code></pre>
+</div>
+<form id="form-POSTapi-reads" data-method="POST" data-path="api/reads" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('POSTapi-reads', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-black">POST</small>
+ <b><code>api/reads</code></b>
+</p>
+</form>
+
+
+## Update the specified manga read status, score or favourite from an user
+
+
+
+
+> Example request:
+
+```bash
+curl -X PUT \
+    "http://localhost:8000/api/reads/ut/nulla" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads/ut/nulla"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PUT",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-PUTapi-reads--manga---user-" hidden>
+    <blockquote>Received response<span id="execution-response-status-PUTapi-reads--manga---user-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-reads--manga---user-"></code></pre>
+</div>
+<div id="execution-error-PUTapi-reads--manga---user-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-reads--manga---user-"></code></pre>
+</div>
+<form id="form-PUTapi-reads--manga---user-" data-method="PUT" data-path="api/reads/{manga}/{user}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('PUTapi-reads--manga---user-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-darkblue">PUT</small>
+ <b><code>api/reads/{manga}/{user}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>manga</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="manga" data-endpoint="PUTapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+<p>
+<b><code>user</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="user" data-endpoint="PUTapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+</form>
+
+
+## Update the specified manga read status, score or favourite from an user
+
+
+
+
+> Example request:
+
+```bash
+curl -X PATCH \
+    "http://localhost:8000/api/reads/dignissimos/sunt" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads/dignissimos/sunt"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "PATCH",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-PATCHapi-reads--manga---user-" hidden>
+    <blockquote>Received response<span id="execution-response-status-PATCHapi-reads--manga---user-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-PATCHapi-reads--manga---user-"></code></pre>
+</div>
+<div id="execution-error-PATCHapi-reads--manga---user-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PATCHapi-reads--manga---user-"></code></pre>
+</div>
+<form id="form-PATCHapi-reads--manga---user-" data-method="PATCH" data-path="api/reads/{manga}/{user}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('PATCHapi-reads--manga---user-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-purple">PATCH</small>
+ <b><code>api/reads/{manga}/{user}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>manga</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="manga" data-endpoint="PATCHapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+<p>
+<b><code>user</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="user" data-endpoint="PATCHapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+</form>
+
+
+## Delete the manga from an user list.
+
+
+
+
+> Example request:
+
+```bash
+curl -X DELETE \
+    "http://localhost:8000/api/reads/sapiente/perspiciatis" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json"
+```
+
+```javascript
+const url = new URL(
+    "http://localhost:8000/api/reads/sapiente/perspiciatis"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response => response.json());
+```
+
+
+<div id="execution-results-DELETEapi-reads--manga---user-" hidden>
+    <blockquote>Received response<span id="execution-response-status-DELETEapi-reads--manga---user-"></span>:</blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-reads--manga---user-"></code></pre>
+</div>
+<div id="execution-error-DELETEapi-reads--manga---user-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-reads--manga---user-"></code></pre>
+</div>
+<form id="form-DELETEapi-reads--manga---user-" data-method="DELETE" data-path="api/reads/{manga}/{user}" data-authed="0" data-hasfiles="0" data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}' onsubmit="event.preventDefault(); executeTryOut('DELETEapi-reads--manga---user-', this);">
+<h3>
+    Request&nbsp;&nbsp;&nbsp;
+    </h3>
+<p>
+<small class="badge badge-red">DELETE</small>
+ <b><code>api/reads/{manga}/{user}</code></b>
+</p>
+<h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+<p>
+<b><code>manga</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="manga" data-endpoint="DELETEapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+<p>
+<b><code>user</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
+<input type="text" name="user" data-endpoint="DELETEapi-reads--manga---user-" data-component="url" required  hidden>
+<br>
+
+</p>
+</form>
+
+
+

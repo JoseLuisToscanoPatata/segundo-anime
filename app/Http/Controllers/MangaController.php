@@ -10,6 +10,13 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
+
+/**
+ * @group Manga
+ * 
+ * API Endpoints for working with mangas
+ */
+
 class MangaController extends Controller
 {
     /**

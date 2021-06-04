@@ -10,7 +10,7 @@ return [
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
      */
-    'description' => 'In this document you can check for info about the api Rest created with our website',
+    'description' => '<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses. </p>',
 
 
     /*
@@ -28,7 +28,7 @@ return [
                 /*
                  * Match only routes whose domains match this pattern (use * as a wildcard to match any characters). Example: 'api.*'.
                  */
-                'domains' => ['api.*'],
+                'domains' => ['*'],
 
                 /*
                  * Match only routes whose paths match this pattern (use * as a wildcard to match any characters). Example: 'users/*'.
@@ -54,7 +54,7 @@ return [
              * The route can be referenced by name or path here. Wildcards are supported.
              */
             'exclude' => [
-                // '/health', 'admin.*'
+                //
             ],
 
             /*
@@ -169,7 +169,7 @@ return [
      * Add a Try It Out button to your endpoints so consumers can test endpoints right from their browser.
      * Don't forget to enable CORS headers for your endpoints.
      */
-    'interactive' => true,
+    'interactive' => false,
 
     /*
      * How is your API authenticated? This information will be used in the displayed docs, generated examples and response calls.
@@ -221,8 +221,6 @@ return [
      * Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
      */
     'intro_text' => <<<INTRO
-This documentation aims to provide all the information you need to work with our API.
-
 <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
 You can switch the language used with the tabs at the top right (or from the nav menu at the top left on mobile).</aside>
 INTRO
@@ -281,7 +279,7 @@ INTRO
     /*
      * Name for the group of endpoints which do not have a @group set.
      */
-    'default_group' => 'Endpoints',
+    'default_group' => 'User',
 
     /*
      * Custom logo path. This will be used as the value of the src attribute for the <img> tag,
@@ -293,7 +291,7 @@ INTRO
      * - 'logo' => 'img/logo.png' // for `laravel` type
      *
      */
-    'logo' => false,
+    'logo' => '../img/mrsaturn3.svg',
 
     /*
      * The router your API is using (Laravel or Dingo).
