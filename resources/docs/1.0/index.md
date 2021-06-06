@@ -1,3 +1,0 @@
-- ## Get Started
-    - [Overview](/{{route}}/{{version}}/overview)
-    - [paco](/{{route}}/{{version}}/paco)

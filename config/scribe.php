@@ -10,7 +10,7 @@ return [
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
      */
-    'description' => '<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses. </p>',
+    'description' => '<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses.  <p style="text-align:justify;">PD: In end Points which return arrays as data said array is not shown (for space purposes) and is replace with the simbol "[]", in any case, that array will contain objects of the data returned in the shown end point of thar table </p>',
 
 
     /*
@@ -178,13 +178,13 @@ return [
         /*
          * Set this to true if any endpoints in your API use authentication.
          */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * Set this to true if your API should be authenticated by default. If so, you must also set `enabled` (above) to true.
          * You can then use @unauthenticated or @authenticated on individual endpoints to change their status from the default.
          */
-        'default' => false,
+        'default' => true,
 
         /*
          * Where is the auth value meant to be sent in a request?
@@ -195,7 +195,7 @@ return [
         /*
          * The name of the auth parameter (eg token, key, apiKey) or header (eg Authorization, Api-Key).
          */
-        'name' => 'key',
+        'name' => 'authentication',
 
         /*
          * The value of the parameter to be used by Scribe to authenticate response calls.
@@ -208,13 +208,13 @@ return [
          * Placeholder your users will see for the auth parameter in the example requests.
          * Set this to null if you want Scribe to use a random value as placeholder instead.
          */
-        'placeholder' => '{YOUR_AUTH_KEY}',
+        'placeholder' => '9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj',
 
         /*
          * Any extra authentication-related info for your users. For instance, you can describe how to find or generate their auth credentials.
          * Markdown and HTML are supported.
          */
-        'extra_info' => 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.',
+        'extra_info' => 'The bearer token shown is just an example, a bearer token associated to your account will be given to you once you login',
     ],
 
     /*

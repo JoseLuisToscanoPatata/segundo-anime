@@ -18,11 +18,16 @@ use Illuminate\Support\Facades\File;
 
 class AnimeController extends Controller
 {
+
+
     /**
-     * Get every anime on the database
+     * Index
+     * 
+     * Get info of every anime on the database
      *
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200  storage/responses/anime/index/200.json
+     * @responseFile status=404  storage/responses/anime/index/404.json
+     */ 
     public function index()
     {
         $animes = Anime::get();
@@ -34,12 +39,27 @@ class AnimeController extends Controller
         }
     }
 
-    /**
-     * Store a newly created anime in storage.
+   /**
+     * Store
+     * 
+     * Create a new anime on the database
+     * 
+     * @bodyParam Anime object required Anime details
+     * @bodyParam Anime.title string required Anime title Example: One piece
+     * @bodyParam Anime.synopsis string required Anime synopsis  Example: too many episodes
+     * @bodyParam Anime.episodes integer required Number of episodes Example: 900
+     * @bodyParam Anime.episodeLength integer required Length of each episode  Example: 25
+     * @bodyParam Anime.status string Anime required status Example: current
+     * @bodyParam Anime.subType string Anime subtype Example: TV
+     * @bodyParam Anime.subType string Anime ageRating Example: G
+     * @bodyParam Anime.startDate string  Anime startDate No-example
+     * @bodyParam Anime.endDate string  Anime endDate No-example
+     * @bodyParam Anime.trailer string  Anime trailer  Example: https://www.youtube.com/embed/tM7qJQ1MVZY
+     * @bodyParam Anime.cover file  Anime cover No-example
      *
-     * @param  \Illuminate\Http\Request $request Anime data
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200 storage/responses/anime/store/200.json
+     * @responseFile status=401 storage/responses/401-admin.json 
+     */ 
     public function store(Request $request)
     {
           if(Auth::user()->role=="admin") {
@@ -140,37 +160,57 @@ class AnimeController extends Controller
     }
 
     /**
-     * Get the data of the anime.
+     * Show
+     * 
+     * Get info about the specified anime
      *
-     * @param  int  $id Database Ip of the given anime to show
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+     * @urlParam anime integer required The ID of the anime. Example: 1
+     * 
+     * @responseFile status=200  storage/responses/anime/show/200.json
+     * @responseFile status=404  storage/responses/anime/show/404.json
+     */ 
+    public function show($anime)
     {
-        $anime  =  Anime::find($id);
+        $animeFound  =  Anime::find($anime);
 
-            if(!is_null($anime)) {
-                return response()->json(["status" => "success", "data" => $anime], 200);
+            if(!is_null($animeFound)) {
+                return response()->json(["status" => "success", "data" => $animeFound], 200);
             }
             else {
                 return response()->json(["status" => "failed", "message" => "Failed! no anime found"], 404);
             }
     }
 
-    /**
-     * Update the specified anime in storage, given the id and the request with the new data
+   /**
+     * Update
+     * 
+     * Update an existing anime from the database
+     * 
+     * @bodyParam anime integer required The ID of the anime Example: 1
+     * @bodyParam Anime object required Anime details
+     * @bodyParam Anime.title string required Anime title Example: One piece
+     * @bodyParam Anime.synopsis string required Anime synopsis  Example: too many episodes
+     * @bodyParam Anime.episodes integer required Number of episodes Example: 900
+     * @bodyParam Anime.episodeLength integer required Length of each episode  Example: 25
+     * @bodyParam Anime.status string Anime required status Example: current
+     * @bodyParam Anime.subType string Anime subtype Example: TV
+     * @bodyParam Anime.subType string Anime ageRating Example: G
+     * @bodyParam Anime.startDate string  Anime startDate No-example
+     * @bodyParam Anime.endDate string  Anime endDate No-example
+     * @bodyParam Anime.trailer string  Anime trailer  Example: https://www.youtube.com/embed/tM7qJQ1MVZY
+     * @bodyParam Anime.cover file  Anime cover No-example
      *
-     * @param  \Illuminate\Http\Request  $request New anime info
-     * @param  int  $id Database Ip of the given anime to update
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id, Request $request)
+     * @responseFile status=200 storage/responses/anime/update/200.json
+     * @responseFile status=401 storage/responses/401-admin.json 
+     * @responseFile status=404 storage/responses/anime/update/404.json
+     */ 
+    public function update($anime, Request $request)
     {
            if(Auth::user()->role=="admin") {
 
-            $anime = Anime::find($id);
+            $animeFound = Anime::find($anime);
 
-            if(!is_null($anime)) {
+            if(!is_null($animeFound)) {
 
                 $validator = Validator::make($request->all(), [
                     "title" =>  "required|string|filled",
@@ -190,49 +230,49 @@ class AnimeController extends Controller
                     return response()->json(["status"=>"failed","validation_errors" => $validator->errors()],400);
                 }
 
-                $anime->title = $request->title;
+                $animeFound->title = $request->title;
                 
                 if($request->synopsis) {
-                    $anime->synopsis = $request->synopsis;
+                    $animeFound->synopsis = $request->synopsis;
                 }
 
-                $anime->episodes = $request->episodes;
+                $animeFound->episodes = $request->episodes;
 
-                $anime->episodeLength = $request->episodeLength;
+                $animeFound->episodeLength = $request->episodeLength;
 
                 if($request->ageRating) {
-                    $anime->ageRating = $request->ageRating;
+                    $animeFound->ageRating = $request->ageRating;
                 } else {
-                    $anime->ageRating = null;
+                    $animeFound->ageRating = null;
                 }
 
                 if($request->subType) {
-                    $anime->subType = $request->subType;
+                    $animeFound->subType = $request->subType;
                 } else {
-                    $anime->subType = null;
+                    $animeFound->subType = null;
                 }
                 
                 if($request->trailer) {
-                    $anime->trailer = $request->trailer;
+                    $animeFound->trailer = $request->trailer;
                 } else {
-                    $anime->trailer = null;
+                    $animeFound->trailer = null;
                 }
 
                 if($request->startDate) {
-                    $anime->startDate = $request->startDate;
+                    $animeFound->startDate = $request->startDate;
                 } else {
-                    $anime->startDate = null;
+                    $animeFound->startDate = null;
                 }
 
                 if($request->endDate) {
-                    $anime->endDate = $request->endDate;
+                    $animeFound->endDate = $request->endDate;
                 } else {
-                    $anime->endDate = null;
+                    $animeFound->endDate = null;
                 }
 
-                $anime->status = $request->status;
+                $animeFound->status = $request->status;
 
-                $anime->save();
+                $animeFound->save();
 
                 $image = $request->cover;
 
@@ -240,22 +280,22 @@ class AnimeController extends Controller
 
                     $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
 
-                    if(($anime->cover != null && strpos($anime->cover,'original') === false)) {
-                        Storage::disk('s3')->delete("images/animes/".substr($anime->cover,68));
+                    if(($animeFound->cover != null && strpos($animeFound->cover,'original') === false)) {
+                        Storage::disk('s3')->delete("images/animes/".substr($animeFound->cover,68));
                     }
 
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $image_name = strval($anime->id) . '.' . $extension;
+                    $image_name = strval($animeFound->id) . '.' . $extension;
                     $image->storeAs('images/animes',$image_name,'s3');
                     
                     //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
-                    $anime->cover = $url .  'images/animes/' .$image_name;
+                    $animeFound->cover = $url .  'images/animes/' .$image_name;
 
-                    $anime->save();
+                    $animeFound->save();
                 }
                 
 
-                return response()->json(["status"=>"success","message" => "Anime updated successfully :)","data"=>$anime],200);
+                return response()->json(["status"=>"success","message" => "Anime updated successfully :)","data"=>$animeFound],200);
             
             } else {
                 return response()->json(["status"=>"failed","message"=>"Anime not found :("],404);
@@ -267,25 +307,31 @@ class AnimeController extends Controller
           }
     }
 
+
     /**
-     * Delete an anime from the database.
+     * Destroy
+     * 
+     * Delete the given anime from the database
      *
-     * @param  int  $id Database Ip of the given anime to delete
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     * @urlParam anime integer required The ID of the anime. Example: 1
+     * 
+     * @responseFile status=200  storage/responses/anime/destroy/200.json
+     * @responseFile status=401  storage/responses/401-admin.json
+     * @responseFile status=404  storage/responses/anime/destroy/404.json
+     */ 
+    public function destroy($anime)
     {
-        $anime = Anime::find($id);
+        $animeFound = Anime::find($anime);
 
         if(Auth::user()->role=="admin") {
 
-            if(!is_null($anime)) {
+            if(!is_null($animeFound)) {
 
-                if(($anime->cover != null && strpos($anime->cover,'original') === false)) {
-                    Storage::disk('s3')->delete("images/animes/".substr($anime->cover,68));
+                if(($animeFound->cover != null && strpos($animeFound->cover,'original') === false)) {
+                    Storage::disk('s3')->delete("images/animes/".substr($animeFound->cover,68));
                 }
 
-                $anime->delete();
+                $animeFound->delete();
                 return response()->json(["status"=>"success","message"=>"Anime deleted successfully"],200);
 
             } else {

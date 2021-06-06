@@ -19,21 +19,26 @@ use Auth;
 class FriendController extends Controller
 {
     /**
-     * Get every friend of the specified user, both confirmed as not confirmed yet.
-     *@param $id
-     * @return \Illuminate\Http\Response
-     */
-    public function index($id)
+     * Index
+     * 
+     * See all friend a user have, as well as invitations if the user is the currently logged
+     * 
+     * @bodyParam user integer required User whose list you want to see Example: 3
+     *
+     * @responseFile status=200  storage/responses/friend/index/200.json
+     * @responseFile status=404  storage/responses/friend/index/404.json
+     */ 
+    public function index($user)
     {
 
-        if(!is_null(User::find($id))) {
+        if(!is_null(User::find($user))) {
                 
-            $enviadas = User::find($id)->friendsOfMine(true)->get()->all(); //Todos los amigos a los que ha invitado el usuario
-            $recibidas = User::find($id)->friendOf(true)->get()->all(); //Todos los amigos que han invitado a este usuario
+            $enviadas = User::find($user)->friendsOfMine(true)->get()->all(); //Todos los amigos a los que ha invitado el usuario
+            $recibidas = User::find($user)->friendOf(true)->get()->all(); //Todos los amigos que han invitado a este usuario
             $amigos = array_merge($enviadas,$recibidas);  //Unimos estos
 
-            $enviadasFalse = User::find($id)->friendsOfMine(false)->get()->all(); //Todas las peticiones de amistad sin confirmar mandadas por el usuario
-            $recibidasFalse = User::find($id)->friendOf(false)->get()->all(); //Todas las peticiones de amistad sin confirmar que le llegan a este
+            $enviadasFalse = User::find($user)->friendsOfMine(false)->get()->all(); //Todas las peticiones de amistad sin confirmar mandadas por el usuario
+            $recibidasFalse = User::find($user)->friendOf(false)->get()->all(); //Todas las peticiones de amistad sin confirmar que le llegan a este
 
             $total = [$amigos,$enviadasFalse,$recibidasFalse];
 
@@ -45,12 +50,18 @@ class FriendController extends Controller
 
     }
 
-    /**
-     * Add an existing user as friend
+   /**
+     * Store
+     * 
+     * Add an user as a friend
+     * 
+     * @bodyParam Friendship object required Message defailts
+     * @bodyParam Friendship.id integer required User you want to add Example: 3
      *
-     * @param \Illuminate\Http\Request Request with the database IP of the user you want to add as friend
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200 storage/responses/friend/store/200.json
+     * @responseFile status=403 storage/responses/friend/store/403.json
+     * @responseFile status=404 storage/responses/friend/store/404.json
+     */ 
     public function store(Request $request)
     {
         if($request->id != Auth::user()->id) {
@@ -76,20 +87,24 @@ class FriendController extends Controller
         
     }
 
-    /**
-     * Get a friend info (useless)
+   /**
+     * Show
+     * 
+     * Show a friendship between users (quite useless)
+     * @urlParam friend integer required The ID of the friendship. Example: 104
      *
-     * @param  int  $id database IP of the user friendship you want to show
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+     * @responseFile status=200  storage/responses/friend/show/200.json
+     * @responseFile status=403  storage/responses/friend/show/403.json
+     * @responseFile status=404  storage/responses/friend/show/404.json
+     */ 
+    public function show($friend)
     {
-        $friend = Friend::find($id);
+        $friendship = Friend::find($friend);
 
-        if(!is_null($friend)) {
+        if(!is_null($friendship)) {
             
-            if(Auth::user()->id == $friend->user1_id ||Auth::user()->id == $friend->user2_id ) {
-                 return response()->json(["status"=>"success","data" => $friend],200);
+            if(Auth::user()->id == $friendship->user1_id ||Auth::user()->id == $friendship->user2_id ) {
+                 return response()->json(["status"=>"success","data" => $friendship],200);
             
             } else {
                  return response()->json(["status"=>"failed","message"=>"You cant get data from other users relations :("],403);
@@ -101,16 +116,20 @@ class FriendController extends Controller
         }
     }
 
-    /**
-     * Confirm a friend invitation you recieve (set the confirmation date to now)
+   /**
+     * Update
+     * 
+     * Accept an user sent invitation to you
+     * 
+     * @bodyParam friend integer required User you want to add Example: 3
      *
-     * @param  int  $id database IP of the user which friendship you want to confirm
-     * @param  \Illuminate\Http\Request Request which contains the PUT method to call the api
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id, Request $request)
+     * @responseFile status=200 storage/responses/friend/update/200.json
+     * @responseFile status=403 storage/responses/friend/update/403.json
+     * @responseFile status=404 storage/responses/friend/update/404.json
+     */ 
+    public function update($friend, Request $request)
     {
-        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id)->first();
+        $friendship = Friend::where('user1_id',$friend)->where('user2_id',Auth::user()->id)->first();
 
         if(!is_null($friendship)) {
 
@@ -129,17 +148,22 @@ class FriendController extends Controller
     }
 
     /**
-     * Remove a friendship you belong to
+     * Destroy
+     * 
+     * Delete a friendship you belong to
      *
-     * @param  int  $id database IP of the user which friendship you want to delete
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     * @urlParam friend integer required The ID of the friendship. Example: 14
+     * 
+     * @responseFile status=200  storage/responses/friend/destroy/200.json
+     * @responseFile status=403 storage/responses/friend/destroy/403.json
+     * @responseFile status=404  storage/responses/friend/destroy/404.json
+     */ 
+    public function destroy($friend)
     {
-        $friendship = Friend::where('user1_id',$id)->where('user2_id',Auth::user()->id)->first();
+        $friendship = Friend::where('user1_id',$friend)->where('user2_id',Auth::user()->id)->first();
 
         if(is_null($friendship)) {
-            $friendship = Friend::where('user2_id',$id)->where('user1_id',Auth::user()->id)->first();     
+            $friendship = Friend::where('user2_id',$friend)->where('user1_id',Auth::user()->id)->first();     
         }
 
         if(!is_null($friendship)) {

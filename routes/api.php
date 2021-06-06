@@ -24,7 +24,17 @@ use App\Models\User;
 */
 
 //Ruta por defecto de inertia para obtener usuarios
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', 
+
+
+        /**
+         * Inertia user
+         * 
+         * Inertia default route for getting the current user
+        *
+        * @responseFile status=200  storage/responses/user/200-inertia.json 
+         */
+function (Request $request) {
     return $request->user();
 });
 
@@ -57,8 +67,9 @@ Route::middleware('auth:sanctum')->patch("/watches/{anime}/{user}", [watchContro
 Route::middleware('auth:sanctum')->delete("/watches/{anime}/{user}", [watchController::class, "destroy"])->name('watches.destroy');
 
 //Friend Controller
+Route::middleware('auth:sanctum')->get("/friendsIndex/{user}", [FriendController::class, "index"])->name('friends.index');
 Route::apiResource('friends',FriendController::class)->middleware('auth:sanctum')->except(['index']);
-Route::middleware('auth:sanctum')->get("/friendsIndex/{friend}", [FriendController::class, "index"])->name('friends.index');
+
 
 //Message Controller
 Route::apiResource('messages',MessageController::class)->middleware('auth:sanctum')->except(['update']);

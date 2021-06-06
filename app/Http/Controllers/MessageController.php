@@ -18,11 +18,14 @@ use Auth;
  */
 class MessageController extends Controller
 {
+
     /**
+     * Index
+     * 
      * See all message you belong to (both sent by and to you)
      *
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200  storage/responses/message/index/200.json
+     */ 
     public function index()
     {
 
@@ -35,12 +38,19 @@ class MessageController extends Controller
 
     }
 
-    /**
+
+   /**
+     * Store
+     * 
      * Send a new message
+     * 
+     * @bodyParam Message object required Message defailts
+     * @bodyParam Message.message string required Message you want to send Example: "Me gustan las patatas"
+     * @bodyParam Message.recipient integer required anime synopsis Example: 3
      *
-     * @param  \Illuminate\Http\Request  $request message and user of the new message
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200 storage/responses/message/store/200.json
+     * @responseFile status=404 storage/responses/message/store/403.json
+     */ 
     public function store(Request $request)
     {
 
@@ -56,7 +66,7 @@ class MessageController extends Controller
             }
 
             if($request->recipient == Auth::user()->name) {
-                return response()->json(["status"=>"failed","message" => "You cant send a message to yourself :("],401);
+                return response()->json(["status"=>"failed","message" => "You cant send a message to yourself :("],403);
             }
 
             $message = new Message;
@@ -71,23 +81,27 @@ class MessageController extends Controller
 
     }
 
-    /**
-     * Display a message you belong to
+   /**
+     * Show
+     * 
+     * Show a message you have sent or recieved
+     * @urlParam user integer required The ID of the another user. Example: 1
      *
-     * @param  int  $id Database Id of the message you want to show
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+     * @responseFile status=200  storage/responses/message/show/200.json
+     * @responseFile status=403  storage/responses/message/show/403.json
+     * @responseFile status=404  storage/responses/message/show/404.json
+     */ 
+    public function show($message)
     {
-        $message = Message::find($id);
+        $messageFound = Message::find($message);
 
-        if(!is_null($message)) {
+        if(!is_null($messageFound)) {
             
-            if($message->recipient == Auth::user->id || $message->emisor == Auth::user->id) {
-                return response()->json(["status"=>"success","data" => $message],200);
+            if($messageFound->recipient == Auth::user->id || $messageFound->emisor == Auth::user->id) {
+                return response()->json(["status"=>"success","data" => $messageFound],200);
             
             } else {
-                return response()->json(["status"=>"failed","message"=>"You cant get a message you dont belong :("],401);
+                return response()->json(["status"=>"failed","message"=>"You cant get a message you dont belong :("],403);
             }
         } else {
             return response()->json(["status"=>"failed","message"=>"Message not found :("],404);
@@ -95,24 +109,29 @@ class MessageController extends Controller
     }
 
     /**
-     * Delete a message you have created
+     * Destroy
+     * 
+     * Delete a message you have sent
      *
-     * @param  int  $id Database ip of the message you want to delete
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     * @urlParam id integer required The ID of the message. Example: 5
+     * 
+     * @responseFile status=200  storage/responses/message/destroy/200.json
+     * @responseFile status=403 storage/responses/message/destroy/403.json
+     * @responseFile status=404  storage/responses/message/destroy/404.json
+     */ 
+    public function destroy($message)
     {
-        $message = Message::find($id);
+        $messageFound = Message::find($message);
 
-        if(!is_null($message)) {
+        if(!is_null($messageFound)) {
             
-            if($message->emisor == Auth::user()->id) {
+            if($messageFound->emisor == Auth::user()->id) {
 
-                $message->delete();
+                $messageFound->delete();
                 return response()->json(["status"=>"success","message" => "Message deleted successfully :) "],200);
             
             } else {
-                return response()->json(["status"=>"failed","message"=>"You cant get a message you dont own :("],401);
+                return response()->json(["status"=>"failed","message"=>"You cant destroy a message you dont own :("],403);
             }
         } else {
             return response()->json(["status"=>"failed","message"=>"Message not found :("],404);

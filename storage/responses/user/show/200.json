@@ -1,0 +1,17 @@
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "name": "patata",
+        "email": "jl.toscano@hotmail.com",
+        "biography": "Me gustan las patatas",
+        "email_verified_at": "2021-06-01T13:31:45.000000Z",
+        "profile_photo_path": "https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png",
+        "last_online": "now",
+        "gender": "female",
+        "created_at": "2021-06-01T13:31:45.000000Z",
+        "updated_at": "2021-06-03T14:54:57.000000Z",
+        "role": "admin",
+        "profile_photo_url": "http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png"
+    }
+}

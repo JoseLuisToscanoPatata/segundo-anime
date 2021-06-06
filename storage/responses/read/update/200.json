@@ -1,0 +1,12 @@
+{
+    "status": "success",
+    "message": "Manga updated on your list  :)",
+    "data": {
+        "id": 1,
+        "user_id": 1,
+        "manga_id": 1,
+        "score": 10,
+        "favourite": 0,
+        "readStatus": "Reading"
+    }
+}

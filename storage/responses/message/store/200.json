@@ -1,0 +1,10 @@
+{
+    "status": "success",
+    "message": "Message send successfully :)",
+    "data": {
+        "id": 1,
+        "recipient": 1,
+        "emisor": 3,
+        "message": "Me gustan las patatas"
+    }
+}

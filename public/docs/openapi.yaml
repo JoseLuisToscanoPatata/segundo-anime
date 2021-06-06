@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
     title: 'Big Chungus api Documentation'
-    description: '<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses. </p>'
+    description: '<p style="text-align:justify;">Here you can check info about the rest API created for our web app, like descriptions, parámeters or even posibles responses.  <p style="text-align:justify;">PD: In end Points which return arrays as data said array is not shown (for space purposes) and is replace with the simbol "[]", in any case, that array will contain objects of the data returned in the shown end point of thar table </p>'
     version: 1.0.0
 servers:
     -
@@ -9,917 +9,16 @@ servers:
 paths:
     /api/animes:
         get:
-            summary: 'Get every anime on the database'
-            description: ''
+            summary: Index
+            description: 'Get info of every anime on the database'
             parameters:
                 -
                     in: header
-                    name: Content-Type
+                    name: Authorization
                     description: ''
-                    example: application/json
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
                     schema:
                         type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Anime
-            security: []
-        post:
-            summary: 'Store a newly created anime in storage.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Anime
-            security: []
-    '/api/animes/{anime}':
-        get:
-            summary: 'Get the data of the anime.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Anime
-            security: []
-        put:
-            summary: 'Update the specified anime in storage, given the id and the request with the new data'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Anime
-            security: []
-        delete:
-            summary: 'Delete an anime from the database.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Anime
-            security: []
-        parameters:
-            -
-                in: path
-                name: anime
-                description: ''
-                example: omnis
-                required: true
-                schema:
-                    type: string
-    /api/friends:
-        post:
-            summary: 'Add an existing user as friend'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Friend
-            security: []
-    '/api/friends/{friend}':
-        get:
-            summary: 'Get a friend info (useless)'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Friend
-            security: []
-        put:
-            summary: 'Confirm a friend invitation you recieve (set the confirmation date to now)'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Friend
-            security: []
-        delete:
-            summary: 'Remove a friendship you belong to'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Friend
-            security: []
-        parameters:
-            -
-                in: path
-                name: friend
-                description: ''
-                example: reprehenderit
-                required: true
-                schema:
-                    type: string
-    '/api/friendsIndex/{friend}':
-        get:
-            summary: 'Get every friend of the specified user, both confirmed as not confirmed yet.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Friend
-            security: []
-        parameters:
-            -
-                in: path
-                name: friend
-                description: ''
-                example: facilis
-                required: true
-                schema:
-                    type: string
-    /api/mangas:
-        get:
-            summary: 'Get every manga on the database'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Manga
-            security: []
-        post:
-            summary: 'Store a newly created anime in storage.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Manga
-            security: []
-    '/api/mangas/{manga}':
-        get:
-            summary: 'Get the data of the manga.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Manga
-            security: []
-        put:
-            summary: 'Update the specified manga in storage, given the id and the request with the new data'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Manga
-            security: []
-        delete:
-            summary: 'Delete a manga from the database.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Manga
-            security: []
-        parameters:
-            -
-                in: path
-                name: manga
-                description: ''
-                example: fuga
-                required: true
-                schema:
-                    type: string
-    /api/messages:
-        get:
-            summary: 'See all message you belong to (both sent by and to you)'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Message
-            security: []
-        post:
-            summary: 'Send a new message'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Message
-            security: []
-    '/api/messages/{message}':
-        get:
-            summary: 'Display a message you belong to'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - Message
-            security: []
-        delete:
-            summary: 'Delete a message you have created'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - Message
-            security: []
-        parameters:
-            -
-                in: path
-                name: message
-                description: ''
-                example: eum
-                required: true
-                schema:
-                    type: string
-    '/api/reads/{user}':
-        get:
-            summary: 'Get all mangas in an user list'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-        parameters:
-            -
-                in: path
-                name: user
-                description: ''
-                example: qui
-                required: true
-                schema:
-                    type: string
-    '/api/reads/{manga}/{user}':
-        get:
-            summary: 'Get the manga read status from any user'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-        put:
-            summary: 'Update the specified manga read status, score or favourite from an user'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-        patch:
-            summary: 'Update the specified manga read status, score or favourite from an user'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-        delete:
-            summary: 'Delete the manga from an user list.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-        parameters:
-            -
-                in: path
-                name: manga
-                description: ''
-                example: et
-                required: true
-                schema:
-                    type: string
-            -
-                in: path
-                name: user
-                description: ''
-                example: perferendis
-                required: true
-                schema:
-                    type: string
-    /api/reads:
-        post:
-            summary: 'Add a new manga to the current user list.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - 'Read (Manga Lists)'
-            security: []
-    /api/user:
-        get:
-            summary: ''
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - User
-            security: []
-    /api/users:
-        get:
-            summary: 'Obtains a list of all users'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - User
-            security: []
-    '/api/users/{user}':
-        get:
-            summary: 'Obtains the specified user.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses:
-                401:
-                    description: ''
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                example:
-                                    message: Unauthenticated.
-                                properties:
-                                    message: { type: string, example: Unauthenticated. }
-            tags:
-                - User
-            security: []
-        put:
-            summary: 'Update the user role from user to admin or viceversa.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - User
-            security: []
-        delete:
-            summary: 'Remove the specified user from storage.'
-            description: ''
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - User
-            security: []
-        parameters:
-            -
-                in: path
-                name: user
-                description: ''
-                example: eos
-                required: true
-                schema:
-                    type: string
-    /api/register:
-        post:
-            summary: 'Register a new user in the database'
-            description: '@param  \Illuminate\Http\Request  $request New user info'
-            parameters:
-                -
-                    in: header
-                    name: Content-Type
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-                -
-                    in: header
-                    name: Accept
-                    description: ''
-                    example: application/json
-                    schema:
-                        type: string
-            responses: {  }
-            tags:
-                - User
-            security: []
-    /api/login:
-        post:
-            summary: 'Log in the user.'
-            description: ''
-            parameters:
                 -
                     in: header
                     name: Content-Type
@@ -938,10 +37,2065 @@ paths:
                 200:
                     description: '200'
                     content:
-                        text/plain:
+                        application/json:
                             schema:
-                                type: string
-                                example: "{\n \"access_token\": \"eyJ0eXA...\",\n \"token_type\": \"Bearer\",\n}"
+                                type: object
+                                example:
+                                    status: success
+                                    data: []
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: [] }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No animes found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No animes found :(' }
+            tags:
+                - Anime
+        post:
+            summary: Store
+            description: 'Create a new anime on the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime created successfully :)'
+                                    data: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: null, endDate: null, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime created successfully :)' }
+                                    data: { type: object, example: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: null, endDate: null, cover: null } }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+            tags:
+                - Anime
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Anime:
+                                    type: object
+                                    description: 'Anime details'
+                                    example: []
+                                    properties: { title: { type: string, description: 'Anime title', example: 'One piece' }, synopsis: { type: string, description: 'Anime synopsis', example: 'too many episodes' }, episodes: { type: integer, description: 'Number of episodes', example: 900 }, episodeLength: { type: integer, description: 'Length of each episode', example: 25 }, status: { type: string, description: 'Anime required status', example: current }, subType: { type: string, description: 'Anime ageRating', example: G }, startDate: { type: string, description: 'Anime startDate', example: null }, endDate: { type: string, description: 'Anime endDate', example: null }, trailer: { type: string, description: 'Anime trailer', example: 'https://www.youtube.com/embed/tM7qJQ1MVZY' }, cover: { type: string, format: binary, description: 'Anime cover' } }
+                            required:
+                                - Anime
+    '/api/animes/{anime}':
+        get:
+            summary: Show
+            description: 'Get info about the specified anime'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: 25-04-2011, endDate: 27-10-2017, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: 25-04-2011, endDate: 27-10-2017, cover: null } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! no anime found'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! no anime found' }
+            tags:
+                - Anime
+        put:
+            summary: Update
+            description: 'Update an existing anime from the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime updated successfully :)'
+                                    data: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: null, endDate: null, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime updated successfully :)' }
+                                    data: { type: object, example: { id: 1, title: 'One piece', synopsis: 'Too many episodes', episodes: 900, episodeLength: 25, subtype: TV, status: current, ageRating: G, trailer: 'https://www.youtube.com/embed/tM7qJQ1MVZY', startDate: null, endDate: null, cover: null } }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Anime not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Anime not found :(' }
+            tags:
+                - Anime
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                anime:
+                                    type: integer
+                                    description: 'The ID of the anime'
+                                    example: 1
+                                Anime:
+                                    type: object
+                                    description: 'Anime details'
+                                    example: []
+                                    properties: { title: { type: string, description: 'Anime title', example: 'One piece' }, synopsis: { type: string, description: 'Anime synopsis', example: 'too many episodes' }, episodes: { type: integer, description: 'Number of episodes', example: 900 }, episodeLength: { type: integer, description: 'Length of each episode', example: 25 }, status: { type: string, description: 'Anime required status', example: current }, subType: { type: string, description: 'Anime ageRating', example: G }, startDate: { type: string, description: 'Anime startDate', example: null }, endDate: { type: string, description: 'Anime endDate', example: null }, trailer: { type: string, description: 'Anime trailer', example: 'https://www.youtube.com/embed/tM7qJQ1MVZY' }, cover: { type: string, format: binary, description: 'Anime cover' } }
+                            required:
+                                - anime
+                                - Anime
+        delete:
+            summary: Destroy
+            description: 'Delete the given anime from the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime deleted successfully :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime deleted successfully :)' }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'No anime found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'No anime found :(' }
+            tags:
+                - Anime
+        parameters:
+            -
+                in: path
+                name: anime
+                description: 'The ID of the anime.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    '/api/friendsIndex/{user}':
+        get:
+            summary: Index
+            description: 'See all friend a user have, as well as invitations if the user is the currently logged'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: ['Array of friends', 'Array of invitation sends', 'Array of invitations recieved']
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: ['Array of friends', 'Array of invitation sends', 'Array of invitations recieved'], items: { type: string } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'User not found:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'User not found:(' }
+            tags:
+                - Friend
+        parameters:
+            -
+                in: path
+                name: user
+                description: ''
+                example: eius
+                required: true
+                schema:
+                    type: string
+    /api/friends:
+        post:
+            summary: Store
+            description: 'Add an user as a friend'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Friend invitation sent to that user :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Friend invitation sent to that user :)' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant send a message to yourself'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant send a message to yourself' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'User not found:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'User not found:(' }
+            tags:
+                - Friend
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Friendship:
+                                    type: object
+                                    description: 'Message defailts'
+                                    example: []
+                                    properties: { id: { type: integer, description: 'User you want to add', example: 3 } }
+                            required:
+                                - Friendship
+    '/api/friends/{friend}':
+        get:
+            summary: Show
+            description: 'Show a friendship between users (quite useless)'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, user1_id: 1, user2_id: 2, confirmation_date: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, user1_id: 1, user2_id: 2, confirmation_date: null } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant get data from other users relations :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant get data from other users relations :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Friendship not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Friendship not found :(' }
+            tags:
+                - Friend
+        put:
+            summary: Update
+            description: 'Accept an user sent invitation to you'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'You have confirmed his friend invitation :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'You have confirmed his friend invitation :)' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant confirm a friendship you have already acepted'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant confirm a friendship you have already acepted' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Friendship not found:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Friendship not found:(' }
+            tags:
+                - Friend
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                friend:
+                                    type: integer
+                                    description: 'User you want to add'
+                                    example: 3
+                            required:
+                                - friend
+        delete:
+            summary: Destroy
+            description: 'Delete a friendship you belong to'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'You have deleted this relationship :('
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'You have deleted this relationship :(' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant delete a friendship you dont belong to :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant delete a friendship you dont belong to :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Friendship not found:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Friendship not found:(' }
+            tags:
+                - Friend
+        parameters:
+            -
+                in: path
+                name: friend
+                description: 'The ID of the friendship.'
+                example: 104
+                required: true
+                schema:
+                    type: integer
+    /api/mangas:
+        get:
+            summary: Index
+            description: 'Get info of every manga on the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: []
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: [] }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No mangas found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No mangas found :(' }
+            tags:
+                - Manga
+        post:
+            summary: Store
+            description: 'Create a new manga on the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga created successfully :)'
+                                    data: { id: 5, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: null, endDate: null, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga created successfully :)' }
+                                    data: { type: object, example: { id: 5, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: null, endDate: null, cover: null } }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+            tags:
+                - Manga
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Manga:
+                                    type: object
+                                    description: 'Manga details'
+                                    example: 1
+                                    properties: { title: { type: string, description: 'Manga title', example: Naruto }, synopsis: { type: string, description: 'Manga synopsis', example: Ugh }, chapters: { type: integer, description: 'Number of chapters', example: 500 }, status: { type: string, description: 'Manga required status', example: current }, subType: { type: string, description: 'Manga ageRating', example: G }, startDate: { type: string, description: 'Manga startDate', example: null }, endDate: { type: string, description: 'Manga endDate', example: null }, cover: { type: string, format: binary, description: 'Manga cover' } }
+                            required:
+                                - Manga
+    '/api/mangas/{manga}':
+        get:
+            summary: Show
+            description: 'Get info about the specified manga'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: 25-04-2011, endDate: 27-10-2017, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: 25-04-2011, endDate: 27-10-2017, cover: null } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! no manga found'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! no manga found' }
+            tags:
+                - Manga
+        put:
+            summary: Update
+            description: 'Update an existing manga from the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga updated successfully :)'
+                                    data: { id: 5, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: null, endDate: null, cover: null }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga updated successfully :)' }
+                                    data: { type: object, example: { id: 5, title: Naruto, synopsis: Ugh, chapters: 500, subtype: manga, status: current, ageRating: G, startDate: null, endDate: null, cover: null } }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Manga not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Manga not found :(' }
+            tags:
+                - Manga
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                manga:
+                                    type: integer
+                                    description: 'The ID of the manga'
+                                    example: 1
+                                Manga:
+                                    type: object
+                                    description: 'Manga details'
+                                    example: []
+                                    properties: { title: { type: string, description: 'Manga title', example: Naruto }, synopsis: { type: string, description: 'Manga synopsis', example: Ugh }, chapters: { type: integer, description: 'Number of chapters', example: 500 }, status: { type: string, description: 'Manga required status', example: current }, subType: { type: string, description: 'Manga ageRating', example: G }, startDate: { type: string, description: 'Manga startDate', example: null }, endDate: { type: string, description: 'Manga endDate', example: null }, cover: { type: string, format: binary, description: 'Manga cover' } }
+                            required:
+                                - manga
+                                - Manga
+        delete:
+            summary: Destroy
+            description: 'Delete the given manga from the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga deleted successfully :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga deleted successfully :)' }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'No manga found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'No manga found :(' }
+            tags:
+                - Manga
+        parameters:
+            -
+                in: path
+                name: manga
+                description: 'The ID of the manga.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    /api/messages:
+        get:
+            summary: Index
+            description: 'See all message you belong to (both sent by and to you)'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: ['Array of messages recieved', 'Array of messages sent']
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: ['Array of messages recieved', 'Array of messages sent'], items: { type: string } }
+            tags:
+                - Message
+        post:
+            summary: Store
+            description: 'Send a new message'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Message send successfully :)'
+                                    data: { id: 1, recipient: 1, emisor: 3, message: 'Me gustan las patatas' }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Message send successfully :)' }
+                                    data: { type: object, example: { id: 1, recipient: 1, emisor: 3, message: 'Me gustan las patatas' } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant send a message to yourself'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant send a message to yourself' }
+            tags:
+                - Message
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                Message:
+                                    type: object
+                                    description: 'Message defailts'
+                                    example: []
+                                    properties: { message: { type: string, description: 'Message you want to send', example: '"Me gustan las patatas"' }, recipient: { type: integer, description: 'anime synopsis', example: 3 } }
+                            required:
+                                - Message
+    '/api/messages/{message}':
+        get:
+            summary: Show
+            description: 'Show a message you have sent or recieved'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, recipient: 1, emisor: 2, message: 'Ostia pilotes' }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, recipient: 1, emisor: 2, message: 'Ostia pilotes' } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant get a message you dont own :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant get a message you dont own :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Message not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Message not found :(' }
+            tags:
+                - Message
+        delete:
+            summary: Destroy
+            description: 'Delete a message you have sent'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Message deleted successfully :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Message deleted successfully :)' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant destroy a message you dont own :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant destroy a message you dont own :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Message not found:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Message not found:(' }
+            tags:
+                - Message
+        parameters:
+            -
+                in: path
+                name: message
+                description: ''
+                example: dolore
+                required: true
+                schema:
+                    type: string
+            -
+                in: path
+                name: user
+                description: 'The ID of the another user.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    '/api/reads/{user}':
+        get:
+            summary: Index
+            description: 'Get info of every manga on the list of an user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: []
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: [] }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'User not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'User not found :(' }
+            tags:
+                - 'Read (Manga Lists)'
+        parameters:
+            -
+                in: path
+                name: user
+                description: ''
+                example: molestias
+                required: true
+                schema:
+                    type: string
+            -
+                in: path
+                name: id
+                description: 'The ID of the user.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    '/api/reads/{manga}/{user}':
+        get:
+            summary: show
+            description: 'Show the read status of a manga on an user list'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Manga not found in any list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Manga not found in any list :(' }
+            tags:
+                - 'Read (Manga Lists)'
+        put:
+            summary: Update
+            description: 'Change the read status of a manga on an user list'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga updated on your list  :)'
+                                    data: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga updated on your list  :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant update an anime from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant update an anime from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Manga read not found in your list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Manga read not found in your list :(' }
+            tags:
+                - 'Read (Manga Lists)'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List read details'
+                                    example: []
+                                    properties: { manga_id: { type: integer, description: 'Id of the manga to add to the list', example: 1 }, score: { type: string, description: 'Manga synopsis', example: '10' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite manga', example: 0 }, readStatus: { type: string, description: 'Status of read', example: Reading } }
+                            required:
+                                - List
+        patch:
+            summary: Update
+            description: 'Change the read status of a manga on an user list'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga updated on your list  :)'
+                                    data: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga updated on your list  :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant update an anime from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant update an anime from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Manga read not found in your list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Manga read not found in your list :(' }
+            tags:
+                - 'Read (Manga Lists)'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List read details'
+                                    example: []
+                                    properties: { manga_id: { type: integer, description: 'Id of the manga to add to the list', example: 1 }, score: { type: string, description: 'Manga synopsis', example: '10' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite manga', example: 0 }, readStatus: { type: string, description: 'Status of read', example: Reading } }
+                            required:
+                                - List
+        delete:
+            summary: Destroy
+            description: 'Delete the given manga from an user list'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga deleted from your list :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga deleted from your list :)' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant delete a manga from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant delete a manga from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Manga not found on your list:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Manga not found on your list:(' }
+            tags:
+                - 'Read (Manga Lists)'
+        parameters:
+            -
+                in: path
+                name: manga
+                description: 'The ID of the manga.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+            -
+                in: path
+                name: user
+                description: 'The ID of the user.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    /api/reads:
+        post:
+            summary: Store
+            description: 'Add a manga to the list of an user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Manga added successfully to your list :)'
+                                    data: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Manga added successfully to your list :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 1, score: 10, favourite: 0, readStatus: Reading } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'An user cant read the same manga twice'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'An user cant read the same manga twice' }
+            tags:
+                - 'Read (Manga Lists)'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List read details'
+                                    example: []
+                                    properties: { manga_id: { type: integer, description: 'Id of the manga to add to the list', example: 1 }, score: { type: string, description: 'Manga synopsis', example: '10' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite manga', example: 0 }, readStatus: { type: string, description: 'Status of read', example: Reading } }
+                            required:
+                                - List
+    /api/user:
+        get:
+            summary: 'Inertia user'
+            description: 'Inertia default route for getting the current user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    id: 1
+                                    name: patata
+                                    email: jl.toscano@hotmail.com
+                                    biography: 'Me gustan las patatas'
+                                    email_verified_at: '2021-06-01T13:31:45.000000Z'
+                                    profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png'
+                                    last_online: now
+                                    gender: female
+                                    created_at: '2021-06-01T13:31:45.000000Z'
+                                    updated_at: '2021-06-03T14:54:57.000000Z'
+                                    role: admin
+                                    profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png'
+                                properties:
+                                    id: { type: integer, example: 1 }
+                                    name: { type: string, example: patata }
+                                    email: { type: string, example: jl.toscano@hotmail.com }
+                                    biography: { type: string, example: 'Me gustan las patatas' }
+                                    email_verified_at: { type: string, example: '2021-06-01T13:31:45.000000Z' }
+                                    profile_photo_path: { type: string, example: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' }
+                                    last_online: { type: string, example: now }
+                                    gender: { type: string, example: female }
+                                    created_at: { type: string, example: '2021-06-01T13:31:45.000000Z' }
+                                    updated_at: { type: string, example: '2021-06-03T14:54:57.000000Z' }
+                                    role: { type: string, example: admin }
+                                    profile_photo_url: { type: string, example: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' }
+            tags:
+                - User
+    /api/users:
+        get:
+            summary: Index
+            description: 'Get info of every user on the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: []
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: [] }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No user found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No user found :(' }
+            tags:
+                - User
+    '/api/users/{user}':
+        get:
+            summary: Show
+            description: 'Get info about the specified user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' }
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'No user found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'No user found :(' }
+            tags:
+                - User
+        put:
+            summary: Update
+            description: 'Change the role of the given user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'User role changed successfully :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'User role changed successfully :)' }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant change your own permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant change your own permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No user found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No user found :(' }
+            tags:
+                - User
+        delete:
+            summary: Destroy
+            description: 'Delete the given user from the database'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'User deleted successfully :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'User deleted successfully :)' }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No user found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No user found :(' }
+            tags:
+                - User
+        parameters:
+            -
+                in: path
+                name: user
+                description: 'The ID of the user.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
+    /api/register:
+        post:
+            summary: Register
+            description: "@unauthenticated\n\nRegister a new user in the database"
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Success! registration completed'
+                                    data: { email: jl.toscano@hotmail.es, name: asdasd, updated_at: '2021-06-06T13:46:04.000000Z', created_at: '2021-06-06T13:46:04.000000Z', id: 103, role: user, profile_photo_url: 'https://ui-avatars.com/api/?name=asdasd&color=7F9CF5&background=EBF4FF' }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Success! registration completed' }
+                                    data: { type: object, example: { email: jl.toscano@hotmail.es, name: asdasd, updated_at: '2021-06-06T13:46:04.000000Z', created_at: '2021-06-06T13:46:04.000000Z', id: 103, role: user, profile_photo_url: 'https://ui-avatars.com/api/?name=asdasd&color=7F9CF5&background=EBF4FF' } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! Registration failed :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! Registration failed :(' }
             tags:
                 - User
             requestBody:
@@ -954,20 +2108,36 @@ paths:
                                 email:
                                     type: string
                                     description: 'The email of the  user.'
-                                    example: testuser@example.com
+                                    example: jl.toscano4@hotmail.es
                                 password:
                                     type: string
                                     description: 'The password of the  user.'
-                                    example: secret
+                                    example: patata12
+                                password_confirmation:
+                                    type: string
+                                    description: 'The password of the  user.'
+                                    example: patata12
+                                name:
+                                    type: string
+                                    description: 'The password of the  user.'
+                                    example: asdasd
                             required:
                                 - email
                                 - password
-            security: []
-    /api/userApi:
-        get:
-            summary: 'Get the user info of the authenticated user you call the method from'
-            description: ''
+                                - password_confirmation
+                                - name
+    /api/login:
+        post:
+            summary: 'Log in'
+            description: '@unauthenticated'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -983,24 +2153,78 @@ paths:
                     schema:
                         type: string
             responses:
-                401:
-                    description: ''
+                200:
+                    description: '200'
                     content:
                         application/json:
                             schema:
                                 type: object
                                 example:
-                                    message: Unauthenticated.
+                                    status: success
+                                    login: true
+                                    token: 8|qAFYmSZgBu0fp5c4jiG4FwWIouHffSLh5FeONz1r
+                                    data: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' }
                                 properties:
-                                    message: { type: string, example: Unauthenticated. }
+                                    status: { type: string, example: success }
+                                    login: { type: boolean, example: true }
+                                    token: { type: string, example: 8|qAFYmSZgBu0fp5c4jiG4FwWIouHffSLh5FeONz1r }
+                                    data: { type: object, example: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' } }
+                401:
+                    description: '401'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You dont have permissions'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You dont have permissions' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Failed! No user found with this email :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Failed! No user found with this email :(' }
             tags:
                 - User
-            security: []
-    '/api/watches/{user}':
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'The email of the  user.'
+                                    example: jl.toscano@hotmail.com
+                                password:
+                                    type: string
+                                    description: 'The password of the  user.'
+                                    example: patata12
+                            required:
+                                - email
+                                - password
+    /api/userApi:
         get:
-            summary: 'Get all animes in an user list'
-            description: ''
+            summary: 'Auth User'
+            description: 'Get the user info of the current logged user who called for it'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1016,33 +2240,114 @@ paths:
                     schema:
                         type: string
             responses:
-                401:
-                    description: ''
+                200:
+                    description: '200'
                     content:
                         application/json:
                             schema:
                                 type: object
                                 example:
-                                    message: Unauthenticated.
+                                    status: success
+                                    data: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' }
                                 properties:
-                                    message: { type: string, example: Unauthenticated. }
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, name: patata, email: jl.toscano@hotmail.com, biography: 'Me gustan las patatas', email_verified_at: '2021-06-01T13:31:45.000000Z', profile_photo_path: 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png', last_online: now, gender: female, created_at: '2021-06-01T13:31:45.000000Z', updated_at: '2021-06-03T14:54:57.000000Z', role: admin, profile_photo_url: 'http://localhost:8000/storage/https://s3.us-east-2.amazonaws.com/proyectobigchungus/images/perfiles/1.png' } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Whoops! no user found'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Whoops! no user found' }
+            tags:
+                - User
+    '/api/watches/{user}':
+        get:
+            summary: Index
+            description: 'Get info of every anime on the list of an user'
+            parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Content-Type
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+                -
+                    in: header
+                    name: Accept
+                    description: ''
+                    example: application/json
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    data: []
+                                properties:
+                                    status: { type: string, example: success }
+                                    data: { type: array, example: [] }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'User not found :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'User not found :(' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
         parameters:
             -
                 in: path
                 name: user
                 description: ''
-                example: architecto
+                example: fugit
                 required: true
                 schema:
                     type: string
+            -
+                in: path
+                name: id
+                description: 'The ID of the user.'
+                example: 1
+                required: true
+                schema:
+                    type: integer
     '/api/watches/{anime}/{user}':
         get:
-            summary: 'Get the anime watch status from any user'
-            description: ''
+            summary: show
+            description: 'Show the watch status of an anime on an user list'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1058,23 +2363,43 @@ paths:
                     schema:
                         type: string
             responses:
-                401:
-                    description: ''
+                200:
+                    description: '200'
                     content:
                         application/json:
                             schema:
                                 type: object
                                 example:
-                                    message: Unauthenticated.
+                                    status: success
+                                    data: { id: 1, user_id: 1, anime_id: 3, score: 5, favourite: 1, watchStatus: Watching }
                                 properties:
-                                    message: { type: string, example: Unauthenticated. }
+                                    status: { type: string, example: success }
+                                    data: { type: object, example: { id: 1, user_id: 1, anime_id: 3, score: 5, favourite: 1, watchStatus: Watching } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Anime not found in any list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Anime not found in any list :(' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
         put:
-            summary: 'Update the specified anime watch status, score or favourite from an user'
-            description: ''
+            summary: Update
+            description: 'Change the watch status of a anime on an user list'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1089,14 +2414,72 @@ paths:
                     example: application/json
                     schema:
                         type: string
-            responses: {  }
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime updated on your list  :)'
+                                    data: { id: 1, user_id: 1, manga_id: 3, score: 5, favourite: 1, readStatus: Watching }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime updated on your list  :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 3, score: 5, favourite: 1, readStatus: Watching } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant update an anime from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant update an anime from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Anime read not found in your list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Anime read not found in your list :(' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List watch details'
+                                    example: []
+                                    properties: { anime_id: { type: integer, description: 'Id of the anime to add to the list', example: 1 }, score: { type: string, description: 'anime synopsis', example: '5' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite anime', example: 1 }, watchStatus: { type: string, description: 'Status of watch', example: Watching } }
+                            required:
+                                - List
         patch:
-            summary: 'Update the specified anime watch status, score or favourite from an user'
-            description: ''
+            summary: Update
+            description: 'Change the watch status of a anime on an user list'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1111,14 +2494,72 @@ paths:
                     example: application/json
                     schema:
                         type: string
-            responses: {  }
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime updated on your list  :)'
+                                    data: { id: 1, user_id: 1, manga_id: 3, score: 5, favourite: 1, readStatus: Watching }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime updated on your list  :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, manga_id: 3, score: 5, favourite: 1, readStatus: Watching } }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant update an anime from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant update an anime from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Anime read not found in your list :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Anime read not found in your list :(' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List watch details'
+                                    example: []
+                                    properties: { anime_id: { type: integer, description: 'Id of the anime to add to the list', example: 1 }, score: { type: string, description: 'anime synopsis', example: '5' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite anime', example: 1 }, watchStatus: { type: string, description: 'Status of watch', example: Watching } }
+                            required:
+                                - List
         delete:
-            summary: 'Delete the anime from an user list.'
-            description: ''
+            summary: Destroy
+            description: 'Delete the given anime from an user list'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1133,32 +2574,74 @@ paths:
                     example: application/json
                     schema:
                         type: string
-            responses: {  }
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime deleted from your list :)'
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime deleted from your list :)' }
+                403:
+                    description: '403'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'You cant delete an anime from other people lists :('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'You cant delete an anime from other people lists :(' }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'Anime not found on your list:('
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'Anime not found on your list:(' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
         parameters:
             -
                 in: path
                 name: anime
-                description: ''
-                example: modi
+                description: 'The ID of the anime.'
+                example: 3
                 required: true
                 schema:
-                    type: string
+                    type: integer
             -
                 in: path
                 name: user
-                description: ''
-                example: temporibus
+                description: 'The ID of the user.'
+                example: 1
                 required: true
                 schema:
-                    type: string
+                    type: integer
     /api/watches:
         post:
-            summary: 'Add a new anime to an user list.'
-            description: ''
+            summary: Store
+            description: 'Add an anime to the list of an user'
             parameters:
+                -
+                    in: header
+                    name: Authorization
+                    description: ''
+                    example: 'Bearer 9|DHkymJIqAO1g3mkS2rACLjhIzwny0BBV6wdvRIwj'
+                    schema:
+                        type: string
                 -
                     in: header
                     name: Content-Type
@@ -1173,7 +2656,55 @@ paths:
                     example: application/json
                     schema:
                         type: string
-            responses: {  }
+            responses:
+                200:
+                    description: '200'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: success
+                                    message: 'Anime added successfully to your list :)'
+                                    data: { id: 1, user_id: 1, anime_id: 3, score: 5, favourite: 1, readStatus: Watching }
+                                properties:
+                                    status: { type: string, example: success }
+                                    message: { type: string, example: 'Anime added successfully to your list :)' }
+                                    data: { type: object, example: { id: 1, user_id: 1, anime_id: 3, score: 5, favourite: 1, readStatus: Watching } }
+                404:
+                    description: '404'
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                example:
+                                    status: failed
+                                    message: 'An user cant watch the same anime twice'
+                                properties:
+                                    status: { type: string, example: failed }
+                                    message: { type: string, example: 'An user cant watch the same anime twice' }
             tags:
                 - 'Watch (Anime List)'
-            security: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                List:
+                                    type: object
+                                    description: 'List watch details'
+                                    example: []
+                                    properties: { anime_id: { type: integer, description: 'Id of the anime to add to the list', example: 3 }, score: { type: string, description: 'anime synopsis', example: '5' }, favourite: { type: integer, description: 'Boolean declaring if its a favourite anime', example: 1 }, watchStatus: { type: string, description: 'Status of watch', example: Watching } }
+                            required:
+                                - List
+components:
+    securitySchemes:
+        default:
+            type: http
+            scheme: bearer
+            description: ''
+security:
+    -
+        default: []

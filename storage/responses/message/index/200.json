@@ -1,0 +1,4 @@
+{
+    "status": "success",
+    "data": ["Array of messages recieved", "Array of messages sent"]
+}

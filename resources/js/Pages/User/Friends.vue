@@ -234,7 +234,7 @@
             class="font-extrabold text-2xl"
             :class="'text-gray-700'"
             v-if="modo == 'amigos'"
-            >You dont have any friend (In the app) :(</span
+            >This user doesn't have any friend (In the app) :(</span
           >
         </div>
 

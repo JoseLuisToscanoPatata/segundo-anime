@@ -1,0 +1,17 @@
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "One piece",
+        "synopsis": "Too many episodes",
+        "episodes": 900,
+        "episodeLength": 25,
+        "subtype": "TV",
+        "status": "current",
+        "ageRating": "G",
+        "trailer": "https://www.youtube.com/embed/tM7qJQ1MVZY",
+        "startDate": "25-04-2011",
+        "endDate": "27-10-2017",
+        "cover": null
+    }
+}

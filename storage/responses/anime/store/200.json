@@ -1,0 +1,18 @@
+{
+    "status": "success",
+    "message": "Anime created successfully :)",
+    "data": {
+        "id": 1,
+        "title": "One piece",
+        "synopsis": "Too many episodes",
+        "episodes": 900,
+        "episodeLength": 25,
+        "subtype": "TV",
+        "status": "current",
+        "ageRating": "G",
+        "trailer": "https://www.youtube.com/embed/tM7qJQ1MVZY",
+        "startDate": null,
+        "endDate": null,
+        "cover": null
+    }
+}

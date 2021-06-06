@@ -1,0 +1,16 @@
+{
+    "status": "success",
+    "message": "Manga updated successfully :)",
+    "data": {
+        "id": 5,
+        "title": "Naruto",
+        "synopsis": "Ugh",
+        "chapters": 500,
+        "subtype": "manga",
+        "status": "current",
+        "ageRating": "G",
+        "startDate": null,
+        "endDate": null,
+        "cover": null
+    }
+}

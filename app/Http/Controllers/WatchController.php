@@ -19,18 +19,22 @@ use Illuminate\Validation\Rule;
 class WatchController extends Controller
 {
     /**
-     * Get all animes in an user list
+     * Index
+     * 
+     * Get info of every anime on the list of an user
+     * @urlParam id integer required The ID of the user. Example: 1
      *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($id)
+     * @responseFile status=200  storage/responses/watch/index/200.json
+     * @responseFile status=404  storage/responses/watch/index/404.json
+     */ 
+    public function index($user)
     {
         
-        $user = User::find($id);
+        $userFound = User::find($user);
 
-        if(!is_null($user)) {
+        if(!is_null($userFound)) {
 
-            $watches = $user->animes()->get()->all();
+            $watches = $userFound->animes()->get()->all();
 
             return response()->json(["status"=>"success","data"=>$watches],200);
 
@@ -39,12 +43,20 @@ class WatchController extends Controller
         }
     }
 
-    /**
-     * Add a new anime to an user list.
+   /**
+     * Store
+     * 
+     * Add an anime to the list of an user
+     * 
+     * @bodyParam List object required List watch details
+     * @bodyParam List.anime_id integer required Id of the anime to add to the list Example: 3
+     * @bodyParam List.score string required anime synopsis Example: 5
+     * @bodyParam List.favourite integer required Boolean declaring if its a favourite anime Example: 1
+     * @bodyParam List.watchStatus string Status of watch Example: Watching
      *
-     * @param  \Illuminate\Http\Request  $request New watch status
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200 storage/responses/watch/store/200.json
+     * @responseFile status=404 storage/responses/watch/store/403.json
+     */ 
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
@@ -63,7 +75,7 @@ class WatchController extends Controller
              
 
         if(count($existe)>0) {
-             return response()->json(["status"=>"failed","message" => "An user cant watch the same anime twice :("],400);
+             return response()->json(["status"=>"failed","message" => "An user cant watch the same anime twice :("],403);
   
         } else {
 
@@ -89,17 +101,20 @@ class WatchController extends Controller
         }
     }
 
-    /**
-     * Get the anime watch status from any user
+   /**
+     * show
+     * 
+     * Show the watch status of an anime on an user list
+     * @urlParam anime integer required The ID of the anime. Example: 3
+     * @urlParam user integer required The ID of the user. Example: 1
      *
-     * @param  int  $id Database ip of the anime you want to show from an user list
-     * @param int $user Database ip of the user which list you want to show a anime
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id, $user)
+     * @responseFile status=200  storage/responses/watch/show/200.json
+     * @responseFile status=404  storage/responses/watch/show/404.json
+     */ 
+    public function show($anime, $user)
     {
 
-        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
+        $watch = Watch::where('anime_id',$anime)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
              return response()->json(["status"=>"success","data"=>$watch],200);
@@ -108,18 +123,28 @@ class WatchController extends Controller
         }
     }
 
-     /**
-     * Update the specified anime watch status, score or favourite from an user
+   /**
+     * Update
+     * 
+     * Change the watch status of a anime on an user list
+     * 
+     * @urlParam anime integer required The ID of the anime. Example: 3
+     * @urlParam user integer required The ID of the user. Example: 1
+     * 
+     * @bodyParam List object required List watch details
+     * @bodyParam List.anime_id integer required Id of the anime to add to the list Example: 1
+     * @bodyParam List.score string required anime synopsis Example: 5
+     * @bodyParam List.favourite integer required Boolean declaring if its a favourite anime Example: 1
+     * @bodyParam List.watchStatus string Status of watch Example: Watching
      *
-     * @param  \Illuminate\Http\Request  $request New status info
-     * @param  int  $id Database ip of the anime you want to update from an user list
-     * @param int $user Database ip of the user which list you want to update a anime
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id,$user)
+     * @responseFile status=200 storage/responses/watch/update/200.json
+     * @responseFile status=403 storage/responses/watch/update/403.json
+     * @responseFile status=404 storage/responses/watch/update/404.json
+     */ 
+    public function update(Request $request, $anime,$user)
     {
         
-        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
+        $watch = Watch::where('anime_id',$anime)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
 
@@ -153,15 +178,20 @@ class WatchController extends Controller
     }
 
     /**
-     * Delete the anime from an user list.
+     * Destroy
+     * 
+     * Delete the given anime from an user list
      *
-     * @param  int  $id Database ip of the anime you want to remove from an user list
-     * @param int $user Database ip of the user which list you want to remove the anime
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id,$user)
+     * @urlParam anime integer required The ID of the user. Example: 1
+     * @urlParam user integer required The ID of the anime. Example: 1
+     * 
+     * @responseFile status=200  storage/responses/watch/destroy/200.json
+     * @responseFile status=403 storage/responses/watch/destroy/403.json
+     * @responseFile status=404  storage/responses/watch/destroy/404.json
+     */ 
+    public function destroy($anime,$user)
     {
-        $watch = Watch::where('anime_id',$id)->where('user_id',$user)->get()->first();
+        $watch = Watch::where('anime_id',$anime)->where('user_id',$user)->get()->first();
 
         if(!is_null($watch)) {
             

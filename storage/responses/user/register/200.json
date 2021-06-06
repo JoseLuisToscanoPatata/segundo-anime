@@ -1,0 +1,13 @@
+{
+    "status": "success",
+    "message": "Success! registration completed",
+    "data": {
+        "email": "jl.toscano@hotmail.es",
+        "name": "asdasd",
+        "updated_at": "2021-06-06T13:46:04.000000Z",
+        "created_at": "2021-06-06T13:46:04.000000Z",
+        "id": 103,
+        "role": "user",
+        "profile_photo_url": "https://ui-avatars.com/api/?name=asdasd&color=7F9CF5&background=EBF4FF"
+    }
+}

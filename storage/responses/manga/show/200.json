@@ -1,0 +1,15 @@
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "Naruto",
+        "synopsis": "Ugh",
+        "chapters": 500,
+        "subtype": "manga",
+        "status": "current",
+        "ageRating": "G",
+        "startDate": "25-04-2011",
+        "endDate": "27-10-2017",
+        "cover": null
+    }
+}

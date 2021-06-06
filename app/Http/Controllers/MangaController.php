@@ -20,10 +20,13 @@ use Illuminate\Support\Facades\File;
 class MangaController extends Controller
 {
     /**
-     * Get every manga on the database
+     * Index
+     * 
+     * Get info of every manga on the database
      *
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200  storage/responses/manga/index/200.json
+     * @responseFile status=404  storage/responses/manga/index/404.json
+     */ 
     public function index()
     {
          $mangas = Manga::get();
@@ -35,12 +38,25 @@ class MangaController extends Controller
         }
     }
 
-    /**
-     * Store a newly created anime in storage.
+   /**
+     * Store
+     * 
+     * Create a new manga on the database
+     * 
+     * @bodyParam Manga object required Manga details Example: 1
+     * @bodyParam Manga.title string required Manga title Example: Naruto
+     * @bodyParam Manga.synopsis string required Manga synopsis  Example: Ugh
+     * @bodyParam Manga.chapters integer required Number of chapters Example: 500
+     * @bodyParam Manga.status string Manga required status Example: current
+     * @bodyParam Manga.subType string Manga subtype Example: manga
+     * @bodyParam Manga.subType string Manga ageRating Example: G
+     * @bodyParam Manga.startDate string  Manga startDate No-example
+     * @bodyParam Manga.endDate string  Manga endDate No-example
+     * @bodyParam Manga.cover file  Manga cover No-example
      *
-     * @param  \Illuminate\Http\Request $request Anime data
-     * @return \Illuminate\Http\Response
-     */
+     * @responseFile status=200 storage/responses/manga/store/200.json
+     * @responseFile status=401 storage/responses/401-admin.json 
+     */ 
     public function store(Request $request)
     {
         if(Auth::user()->role=="admin") {
@@ -132,38 +148,56 @@ class MangaController extends Controller
     }
 
     /**
-     * Get the data of the manga.
+     * Show
+     * 
+     * Get info about the specified manga
      *
-     * @param  int  $id Database Ip of the given manga to show
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+     * @urlParam manga integer required The ID of the manga. Example: 1
+     * 
+     * @responseFile status=200  storage/responses/manga/show/200.json
+     * @responseFile status=404  storage/responses/manga/show/404.json
+     */ 
+    public function show($manga)
     {
-         $manga  =  Manga::find($id);
+         $mangaFound  =  Manga::find($manga);
 
-            if(!is_null($manga)) {
-                return response()->json(["status" => "success", "data" => $manga], 200);
+            if(!is_null($mangaFound)) {
+                return response()->json(["status" => "success", "data" => $mangaFound], 200);
             }
             else {
                 return response()->json(["status" => "failed", "message" => "Failed! no manga found"], 404);
             }
     }
 
- /**
-     * Update the specified manga in storage, given the id and the request with the new data
+   /**
+     * Update
+     * 
+     * Update an existing manga from the database 
+     * 
+     * @bodyParam manga integer required The ID of the manga Example: 1
+     * @bodyParam Manga object required Manga details
+     * @bodyParam Manga.title string required Manga title Example: Naruto
+     * @bodyParam Manga.synopsis string required Manga synopsis  Example: Ugh
+     * @bodyParam Manga.chapters integer required Number of chapters Example: 500
+     * @bodyParam Manga.status string Manga required status Example: current
+     * @bodyParam Manga.subType string Manga subtype Example: manga
+     * @bodyParam Manga.subType string Manga ageRating Example: G
+     * @bodyParam Manga.startDate string  Manga startDate No-example
+     * @bodyParam Manga.endDate string  Manga endDate No-example
+     * @bodyParam Manga.cover file  Manga cover No-example
      *
-     * @param  \Illuminate\Http\Request  $request New manga info
-     * @param  int  $id Database Ip of the given manga to update
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id, Request $request)
+     * @responseFile status=200 storage/responses/manga/update/200.json
+     * @responseFile status=401 storage/responses/401-admin.json 
+     * @responseFile status=404 storage/responses/manga/update/404.json
+     */ 
+    public function update($manga, Request $request)
     {
            if(Auth::user()->role=="admin") {
 
 
-            $manga = Manga::find($id);
+            $mangaFound = Manga::find($manga);
 
-            if(!is_null($manga)) {
+            if(!is_null($mangaFound)) {
 
                 $validator = Validator::make($request->all(), [
                 "title" =>  "required|string|filled",
@@ -184,38 +218,38 @@ class MangaController extends Controller
                 $manga->title = $request->title;
 
                 if($request->synopsis) {
-                    $manga->synopsis = $request->synopsis;
+                    $mangaFound->synopsis = $request->synopsis;
                 }
 
-                $manga->chapters = $request->chapters;
+                $mangaFound->chapters = $request->chapters;
 
                 if($request->ageRating) {
-                    $manga->ageRating = $request->ageRating;
+                    $mangaFound->ageRating = $request->ageRating;
                 } else {
-                    $manga->ageRating = null;
+                    $mangaFound->ageRating = null;
                 }
 
                 if($request->subType) {
-                    $manga->subType = $request->subType;
+                    $mangaFound->subType = $request->subType;
                 } else {
-                    $manga->subType = null;
+                    $mangaFound->subType = null;
                 }
 
                 if($request->startDate) {
-                    $manga->startDate = $request->startDate;
+                    $mangaFound->startDate = $request->startDate;
                 } else {
-                    $manga->startDate = null;
+                    $mangaFound->startDate = null;
                 }
 
                 if($request->endDate) {
-                    $manga->endDate = $request->endDate;
+                    $mangaFound->endDate = $request->endDate;
                 } else {
-                    $manga->endDate = null;
+                    $mangaFound->endDate = null;
                 }
 
-                $manga->status = $request->status;
+                $mangaFound->status = $request->status;
                 
-                $manga->save();
+                $mangaFound->save();
 
                 $image = $request->cover;
 
@@ -223,21 +257,21 @@ class MangaController extends Controller
 
                     $url = 'https://s3.us-east-2.amazonaws.com/proyectobigchungus/';
 
-                    if(($manga->cover != null && strpos($manga->cover,'original') === false)) {
-                        Storage::disk('s3')->delete("images/mangas/".substr($manga->cover,68));
+                    if(($mangaFound->cover != null && strpos($mangaFound->cover,'original') === false)) {
+                        Storage::disk('s3')->delete("images/mangas/".substr($mangaFound->cover,68));
                     }
 
                     $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
-                    $image_name = strval($manga->id) . '.' . $extension;
+                    $image_name = strval($mangaFound->id) . '.' . $extension;
                     $image->storeAs('images/mangas',$image_name,'s3');
                     
                     //Storage::disk('s3')->put("/images/".$image_name,File::get($image));
-                    $manga->cover = $url .  'images/mangas/' .$image_name;
+                    $mangaFound->cover = $url .  'images/mangas/' .$image_name;
 
-                    $manga->save();
+                    $mangaFound->save();
                 }
 
-                return response()->json(["status"=>"success","message" => "Manga updated successfully :)","data"=>$manga],200);
+                return response()->json(["status"=>"success","message" => "Manga updated successfully :)","data"=>$mangaFound],200);
             
             } else {
                 return response()->json(["status"=>"failed","message"=>"Manga not found :("],404);
@@ -249,22 +283,27 @@ class MangaController extends Controller
           }
     }
 
-   /**
-     * Delete a manga from the database.
+    /**
+     * Destroy
+     * 
+     * Delete the given manga from the database
      *
-     * @param  int  $id Database Ip of the given manga to delete
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+     * @urlParam manga integer required The ID of the manga. Example: 1
+     * 
+     * @responseFile status=200  storage/responses/manga/destroy/200.json
+     * @responseFile status=401  storage/responses/401-admin.json
+     * @responseFile status=404  storage/responses/manga/destroy/404.json
+     */ 
+    public function destroy($manga)
     {
-        $manga = Manga::find($id);
+        $mangaFound = Manga::find($manga);
 
         if(Auth::user()->role=="admin") {
 
-            if(!is_null($manga)) {
+            if(!is_null($mangaFound)) {
 
-                if(($manga->cover != null && strpos($manga->cover,'original') === false)) {
-                    Storage::disk('s3')->delete("images/mangas/".substr($manga->cover,68));
+                if(($mangaFound->cover != null && strpos($mangaFound->cover,'original') === false)) {
+                    Storage::disk('s3')->delete("images/mangas/".substr($mangaFound->cover,68));
                 }
 
                 $manga->delete();
