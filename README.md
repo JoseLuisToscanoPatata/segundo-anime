@@ -49,6 +49,13 @@ Una vez instalado todo lo necesario, habrá que seguir los siguientes pasos:
 
 <p align="center"><img src="https://raw.githubusercontent.com/JoseLuisToscanoPatata/segundo-anime/master/.github/images/mail_data.JPG" width="350" height="200"></p>
 
+- <p align="justify">Por otro lado, habrá que configurar en ese mismo fichero las siguientes líneas, que serán las que permitirán el almacenamiento de imágenes en el servidor de amazon aws:</p>
+
+    AWS_ACCESS_KEY_ID=Preguntar por correo
+    AWS_SECRET_ACCESS_KEY=Preguntar por correo
+    AWS_DEFAULT_REGION=us-east-2
+    AWS_BUCKET=proyectobigchungus
+
 <p align="justify">Una vez realizado esto, habrá que que poner los siguientes comandos en orden en el directorio inicial del proyecto:</p>
 
 - Composer install
